@@ -61,7 +61,7 @@ namespace Tasko.Repository
                 objOrder.ServiceId = BinaryConverter.ConvertByteToString((byte[])reader["SERVICE_ID"]);
                 objOrder.ServiceName = reader["SERVICE_NAME"].ToString();
 
-                objOrder.OrderStatusId = BinaryConverter.ConvertByteToString((byte[])reader["ORDER_STATUS_ID"]);
+                objOrder.OrderStatusId = Convert.ToInt16(reader["ORDER_STATUS_ID"]);
                 objOrder.OrderStatus = reader["ORDERSTATUS_NAME"].ToString();
 
                 objOrder.RequestedDate = Convert.ToDateTime(reader["REQUESTED_DATE"]);

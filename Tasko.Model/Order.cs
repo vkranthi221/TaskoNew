@@ -34,7 +34,7 @@ namespace Tasko.Model
         public string ServiceName { get; set; }
 
         [DataMember]
-        public string OrderStatusId { get; set; }
+        public short OrderStatusId { get; set; }
 
         [DataMember]
         public string OrderStatus { get; set; }
