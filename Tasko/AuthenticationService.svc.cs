@@ -9,6 +9,7 @@ using System.Text;
 using Tasko.Common;
 using Tasko.Model;
 using Tasko.BL;
+using Tasko.Repository;
 
 namespace Tasko
 {
@@ -93,11 +94,11 @@ namespace Tasko
         {
             Vendor v1 = new Model.Vendor();
             v1.Name = "Vendor1";
-            v1.Id = 1;
+            v1.Id = "1";
 
             Vendor v2 = new Model.Vendor();
             v2.Name = "Vendor2";
-            v1.Id = 2;
+            v1.Id = "2";
 
             VendorList vendorList = new VendorList();
             vendorList.Add(v1);
@@ -108,7 +109,122 @@ namespace Tasko
 
         public Vendor GetVendor(int id)
         {
-            return new Vendor { Id = 2, Name = "V2" };
+            return new Vendor { Id = "2", Name = "V2" };
+        }
+
+        public Response GetVendorDetails(string vendorId)
+        {
+            Response r = new Response();
+
+            Vendor objVendor = VendorData.GetVendor(vendorId);
+
+            if (objVendor != null)
+            {
+                r.Error = false;
+                r.Message = "success";
+                r.Status = 200;
+                r.Data = objVendor;
+            }
+            else
+            {
+                r.Error = true;
+                r.Message = "Vendor not found";
+                r.Status = 400;
+            }
+
+            return r;
+        }
+
+
+        public Response GetOrderDetails(string orderId)
+        {
+            Response r = new Response();
+
+            Order objOrder = VendorData.GetOrderDetails(orderId);
+
+            if (objOrder != null)
+            {
+                r.Error = false;
+                r.Message = "success";
+                r.Status = 200;
+                r.Data = objOrder;
+            }
+            else
+            {
+                r.Error = true;
+                r.Message = "Order not found";
+                r.Status = 400;
+            }
+
+            return r;
+        }
+
+        public Response GetVendorServices(string vendorId)
+        {
+            Response r = new Response();
+
+            List<VendorService> vendorServices = VendorData.GetVendorServices(vendorId);
+
+            if (vendorServices != null)
+            {
+                r.Error = false;
+                r.Message = "success";
+                r.Status = 200;
+                r.Data = vendorServices;
+            }
+            else
+            {
+                r.Error = true;
+                r.Message = "No services available";
+                r.Status = 400;
+            }
+
+            return r;
+        }
+
+        public Response GetVendorSubServices(string vendorServiceId)
+        {
+            Response r = new Response();
+
+            List<VendorService> vendorSubServices = VendorData.GetVendorSubServices(vendorServiceId);
+
+            if (vendorSubServices != null)
+            {
+                r.Error = false;
+                r.Message = "success";
+                r.Status = 200;
+                r.Data = vendorSubServices;
+            }
+            else
+            {
+                r.Error = true;
+                r.Message = "No services available";
+                r.Status = 400;
+            }
+
+            return r;
+        }
+
+        public Response UpdateOrderStatus(string orderId, short orderStatus)
+        {
+            Response r = new Response();
+
+            try
+            {
+                VendorData.UpdateOrderStatus(orderId, orderStatus);
+
+                r.Error = false;
+                r.Message = "success";
+                r.Status = 200;
+            }
+            catch
+            {
+                r.Error = true;
+                r.Message = "Error on updating OrderStatus";
+                r.Status = 400;
+            }
+
+            return r;
         }
     }
 }

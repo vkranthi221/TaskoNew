@@ -36,5 +36,30 @@ namespace Tasko
         [OperationContract]
         [WebInvoke(Method="POST", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped )]
         Vendor GetVendor(int id);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetVendorDetails(string vendorId);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetOrderDetails(string orderId);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetVendorServices(string vendorId);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetVendorSubServices(string vendorServiceId);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response UpdateOrderStatus(string orderId, short orderStatus);
     }
 }

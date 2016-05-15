@@ -15,9 +15,39 @@ namespace Tasko.Model
     public class Vendor
     {
         [DataMember]
-        public int Id;
+        public string Id { get; set; }
 
         [DataMember]
-        public string Name;
+        public string Name { get; set; }
+
+        [DataMember]
+        public string MobileNumber { get; set; }
+
+        [DataMember]
+        public double BaseRate { get; set; }
+
+        [DataMember]
+        public bool IsVendorLive { get; set; }
+
+        [DataMember]
+        public string Address { get; set; }
+
+        [DataMember]
+        public int NoOfEmployees { get; set; }
+
+        [DataMember]
+        public bool IsVendorVerified { get; set; }
+
+        [DataMember]
+        public DateTime TimeSpentOnApp { get; set; }
+
+        [DataMember]
+        public DateTime ActiveTimePerDay { get; set; }
+
+        [DataMember]
+        public int DataConsumption { get; set; }
+
+        [DataMember]
+        public int CallsToCustomerCare { get; set; }
     }
 }

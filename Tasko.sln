@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko.Common", "Tasko.Commo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko.Model", "Tasko.Model\Tasko.Model.csproj", "{1C980A3C-571A-4770-A366-D8E69413E9FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko.Vendor.Repository", "Tasko.Repository\Tasko.Vendor.Repository.csproj", "{F034F338-7B0C-4683-8547-EFA5090DECD5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko.Repository", "Tasko.Repository\Tasko.Repository.csproj", "{F034F338-7B0C-4683-8547-EFA5090DECD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,26 +4,18 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace Tasko
+namespace Tasko.Model
 {
     [DataContract]
-    public class User
+    public class VendorService
     {
-
-
         [DataMember]
-        public string UserName { get; set; }
-
-        [DataMember]
-        public string PassWord { get; set; }
+        public string Id { get; set; }
 
         [DataMember]
         public string Name { get; set; }
 
         [DataMember]
-        public string Id { get; set; }
-
-        [DataMember]
-        public string MobileNumber { get; set; }
+        public bool IsActive { get; set; }
     }
 }

@@ -7,7 +7,7 @@
     <ProjectGuid>{55C2CA09-B1A5-4EE2-B984-D25CEC39FC67}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tasko.Vendor.BL</RootNamespace>
+    <RootNamespace>Tasko.Repository.BL</RootNamespace>
     <AssemblyName>Tasko.BL</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

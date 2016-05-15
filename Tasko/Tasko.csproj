@@ -74,7 +74,6 @@
     <Compile Include="IAuthenticationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Response.cs" />
-    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -95,6 +94,10 @@
     <ProjectReference Include="..\Tasko.Model\Tasko.Model.csproj">
       <Project>{1c980a3c-571a-4770-a366-d8e69413e9fc}</Project>
       <Name>Tasko.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tasko.Repository\Tasko.Repository.csproj">
+      <Project>{f034f338-7b0c-4683-8547-efa5090decd5}</Project>
+      <Name>Tasko.Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\Vendor.BL\Tasko.BL.csproj">
       <Project>{55c2ca09-b1a5-4ee2-b984-d25cec39fc67}</Project>
