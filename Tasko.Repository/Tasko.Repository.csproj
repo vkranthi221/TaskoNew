@@ -7,8 +7,8 @@
     <ProjectGuid>{F034F338-7B0C-4683-8547-EFA5090DECD5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tasko.Repository.Repository</RootNamespace>
-    <AssemblyName>Tasko.Vendor.Repository</AssemblyName>
+    <RootNamespace>Tasko.Repository</RootNamespace>
+    <AssemblyName>Tasko.Repository</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
