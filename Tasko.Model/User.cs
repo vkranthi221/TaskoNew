@@ -23,5 +23,6 @@ namespace Tasko.Model
 
         [DataMember]
         public string MobileNumber { get; set; }
+
     }
 }

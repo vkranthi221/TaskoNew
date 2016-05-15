@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="59795c17-562c-4150-aa44-0c9687191359" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/Tasko/AuthenticationService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="AuthenticationService.disco" MetadataType="Disco" ID="60dedd46-d27c-4de9-afbf-6f17af348f0c" SourceId="1" SourceUrl="http://localhost/Tasko/AuthenticationService.svc?disco" />
+    <MetadataFile FileName="AuthenticationService.wsdl" MetadataType="Wsdl" ID="f90a003d-7c97-4df7-9f1d-d21c098c6d89" SourceId="1" SourceUrl="http://localhost/Tasko/AuthenticationService.svc?wsdl" />
+    <MetadataFile FileName="AuthenticationService.xsd" MetadataType="Schema" ID="59a1e50a-10b2-4e45-b213-c1365e2ea260" SourceId="1" SourceUrl="http://localhost/Tasko/AuthenticationService.svc?xsd=xsd1" />
+    <MetadataFile FileName="AuthenticationService1.xsd" MetadataType="Schema" ID="b3635b20-e9d4-4241-8a8d-2a2bc5662ed5" SourceId="1" SourceUrl="http://localhost/Tasko/AuthenticationService.svc?xsd=xsd0" />
+    <MetadataFile FileName="AuthenticationService2.xsd" MetadataType="Schema" ID="bfd657f7-126e-4fc1-9435-2aaf9c241301" SourceId="1" SourceUrl="http://localhost/Tasko/AuthenticationService.svc?xsd=xsd3" />
+    <MetadataFile FileName="AuthenticationService3.xsd" MetadataType="Schema" ID="ac708b26-e8c4-4dbe-860d-d80f17c0b3b6" SourceId="1" SourceUrl="http://localhost/Tasko/AuthenticationService.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

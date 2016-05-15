@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="AuthenticationService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost/Tasko/AuthenticationService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost/Tasko/AuthenticationService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost/Tasko/AuthenticationService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Tasko" />
+      <xsd:import schemaLocation="http://localhost/Tasko/AuthenticationService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Tasko.Model" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IAuthenticationService_GetToken_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetToken" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_GetToken_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTokenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_Login_InputMessage">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_Login_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_GetUserDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserDetails" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_GetUserDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_GetVendorDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetVendorDetails" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_GetVendorDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetVendorDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_GetOrderDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderDetails" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_GetOrderDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_GetVendorServices_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetVendorServices" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_GetVendorServices_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetVendorServicesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_GetVendorSubServices_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetVendorSubServices" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_GetVendorSubServices_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetVendorSubServicesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_UpdateOrderStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateOrderStatus" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_UpdateOrderStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateOrderStatusResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IAuthenticationService">
+    <wsdl:operation name="GetToken">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/GetToken" message="tns:IAuthenticationService_GetToken_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/GetTokenResponse" message="tns:IAuthenticationService_GetToken_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/Login" message="tns:IAuthenticationService_Login_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/LoginResponse" message="tns:IAuthenticationService_Login_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/GetUserDetails" message="tns:IAuthenticationService_GetUserDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/GetUserDetailsResponse" message="tns:IAuthenticationService_GetUserDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetVendorDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/GetVendorDetails" message="tns:IAuthenticationService_GetVendorDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/GetVendorDetailsResponse" message="tns:IAuthenticationService_GetVendorDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/GetOrderDetails" message="tns:IAuthenticationService_GetOrderDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/GetOrderDetailsResponse" message="tns:IAuthenticationService_GetOrderDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetVendorServices">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/GetVendorServices" message="tns:IAuthenticationService_GetVendorServices_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/GetVendorServicesResponse" message="tns:IAuthenticationService_GetVendorServices_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetVendorSubServices">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/GetVendorSubServices" message="tns:IAuthenticationService_GetVendorSubServices_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/GetVendorSubServicesResponse" message="tns:IAuthenticationService_GetVendorSubServices_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOrderStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/UpdateOrderStatus" message="tns:IAuthenticationService_UpdateOrderStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/UpdateOrderStatusResponse" message="tns:IAuthenticationService_UpdateOrderStatus_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="basicbinding_IAuthenticationService" type="tns:IAuthenticationService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetToken">
+      <soap:operation soapAction="http://tempuri.org/IAuthenticationService/GetToken" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/IAuthenticationService/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserDetails">
+      <soap:operation soapAction="http://tempuri.org/IAuthenticationService/GetUserDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVendorDetails">
+      <soap:operation soapAction="http://tempuri.org/IAuthenticationService/GetVendorDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderDetails">
+      <soap:operation soapAction="http://tempuri.org/IAuthenticationService/GetOrderDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVendorServices">
+      <soap:operation soapAction="http://tempuri.org/IAuthenticationService/GetVendorServices" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVendorSubServices">
+      <soap:operation soapAction="http://tempuri.org/IAuthenticationService/GetVendorSubServices" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOrderStatus">
+      <soap:operation soapAction="http://tempuri.org/IAuthenticationService/UpdateOrderStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AuthenticationService">
+    <wsdl:port name="basicbinding_IAuthenticationService" binding="tns:basicbinding_IAuthenticationService">
+      <soap:address location="http://localhost/Tasko/AuthenticationService.svc/basic" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

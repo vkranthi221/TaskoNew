@@ -15,6 +15,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko.Repository", "Tasko.R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskoTestClient", "TaskoTestClient\TaskoTestClient.csproj", "{602EA81E-F885-4AA1-B623-AC3E07F93972}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{D6C660C0-679A-4BFE-A1E9-13921591E90F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C78127EA-72CA-4D36-AEF5-EB6B6F7DB13B} = {C78127EA-72CA-4D36-AEF5-EB6B6F7DB13B}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +50,10 @@ Global
 		{602EA81E-F885-4AA1-B623-AC3E07F93972}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{602EA81E-F885-4AA1-B623-AC3E07F93972}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{602EA81E-F885-4AA1-B623-AC3E07F93972}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6C660C0-679A-4BFE-A1E9-13921591E90F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6C660C0-679A-4BFE-A1E9-13921591E90F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6C660C0-679A-4BFE-A1E9-13921591E90F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6C660C0-679A-4BFE-A1E9-13921591E90F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
