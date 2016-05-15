@@ -30,14 +30,6 @@ namespace Tasko
         Response GetUserDetails(string id);
         
         [OperationContract]
-        [WebInvoke(Method="POST", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped)]
-        VendorList GetVendors();
-
-        [OperationContract]
-        [WebInvoke(Method="POST", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped )]
-        Vendor GetVendor(int id);
-
-        [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetVendorDetails(string vendorId);

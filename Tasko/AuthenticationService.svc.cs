@@ -90,28 +90,6 @@ namespace Tasko
             return r;
         }
 
-        public VendorList GetVendors()
-        {
-            Vendor v1 = new Model.Vendor();
-            v1.Name = "Vendor1";
-            v1.Id = "1";
-
-            Vendor v2 = new Model.Vendor();
-            v2.Name = "Vendor2";
-            v1.Id = "2";
-
-            VendorList vendorList = new VendorList();
-            vendorList.Add(v1);
-            vendorList.Add(v2);
-
-            return vendorList;
-        }
-
-        public Vendor GetVendor(int id)
-        {
-            return new Vendor { Id = "2", Name = "V2" };
-        }
-
         public Response GetVendorDetails(string vendorId)
         {
             Response r = new Response();
