@@ -9,6 +9,7 @@ namespace Tasko
     [DataContract]
     public class User
     {
+
         [DataMember]
         public string UserName { get; set; }
 
