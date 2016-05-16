@@ -268,5 +268,36 @@ namespace Tasko
 
             return r;
         }
+
+        /// <summary>
+        /// Updates the vendor base rate.
+        /// </summary>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <param name="baseRate">The base rate.</param>
+        /// <returns>
+        /// Response Object
+        /// </returns>
+        public Response UpdateVendorBaseRate(string vendorId, double baseRate)
+        {
+            Response r = new Response();
+            try
+            {
+                VendorData.UpdateVendorBaseRate(vendorId, baseRate);
+
+                r.Error = false;
+                r.Message = "success";
+                r.Status = 200;
+            }
+            catch
+            {
+                r.Error = true;
+                r.Message = "Error on updating Vendor Base Rate";
+                r.Status = 400;
+            }
+
+            return r;
+        }
     }
+
+
 }

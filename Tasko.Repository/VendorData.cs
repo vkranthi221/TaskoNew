@@ -93,7 +93,7 @@ namespace Tasko.Repository
             {
                 List<SqlParameter> objParameters = new List<SqlParameter>();
 
-                objParameters.Add(SqlHelper.CreateParameter("@pVendorServiceId", DbType.String, vendorService.Id));
+                objParameters.Add(SqlHelper.CreateParameter("@pVendorServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorService.Id)));
                 objParameters.Add(SqlHelper.CreateParameter("@pActivateService", DbType.Boolean, vendorService.IsActive));
                 SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendorServices", objParameters.ToArray());
             }
@@ -165,6 +165,20 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pOrderId", DbType.String, orderId));
             objParameters.Add(SqlHelper.CreateParameter("@pOrderStatus", DbType.Int16, orderStatus));
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateOrderStatus", objParameters.ToArray());
+        }
+
+        /// <summary>
+        /// Updates the vendor base rate.
+        /// </summary>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <param name="baseRate">The base rate.</param>
+        public static void UpdateVendorBaseRate(string vendorId, double baseRate)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pBaseRate", DbType.Decimal, baseRate));
+            SqlHelper.ExecuteNonQuery("dbo.usp_UpdateBaseRate", objParameters.ToArray());
         }
     }
 }

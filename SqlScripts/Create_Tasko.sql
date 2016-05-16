@@ -406,3 +406,18 @@ ELSE
        WHERE VENDOR_SERVICE_ID = @pVendorServiceId 
   END
 END
+
+GO
+CREATE PROCEDURE [dbo].[usp_UpdateBaseRate]
+(
+	@pVendorId Binary(16),
+	@pBaseRate decimal
+)
+AS
+BEGIN
+
+SET NOCOUNT ON;
+  UPDATE [dbo].[VENDOR] SET BASE_RATE = @pBaseRate WHERE VENDOR_ID = @pVendorId
+END
+
+GO

@@ -105,5 +105,16 @@ namespace Tasko
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response UpdateVendorServices(List<VendorService> vendorServices);
+
+        /// <summary>
+        /// Updates the vendor base rate.
+        /// </summary>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <param name="baseRate">The base rate.</param>
+        /// <returns>Response Object</returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response UpdateVendorBaseRate(string vendorId, double baseRate);
     }
 }
