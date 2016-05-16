@@ -13,45 +13,97 @@ namespace Tasko
     [ServiceContract]
     public interface IAuthenticationService
     {
+        /// <summary>
+        /// Gets the token.
+        /// </summary>
+        /// <returns>Response Object</returns>
         [OperationContract]
         [WebInvoke(Method="POST",ResponseFormat=WebMessageFormat.Json,
             BodyStyle=WebMessageBodyStyle.Bare,
             UriTemplate="auth")]
         Response GetToken();
 
+        /// <summary>
+        /// Logins the specified username.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="mobilenumber">The mobilenumber.</param>
+        /// <returns>Response Object</returns>
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response Login(string username, string password, string mobilenumber);
 
+        /// <summary>
+        /// Gets the user details.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Response Object</returns>
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetUserDetails(string id);
-        
+
+        /// <summary>
+        /// Gets the vendor details.
+        /// </summary>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <returns>Response Object</returns>
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetVendorDetails(string vendorId);
 
+        /// <summary>
+        /// Gets the order details.
+        /// </summary>
+        /// <param name="orderId">The order identifier.</param>
+        /// <returns>Response Object</returns>
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetOrderDetails(string orderId);
 
+        /// <summary>
+        /// Gets the vendor services.
+        /// </summary>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <returns>Response Object</returns>
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetVendorServices(string vendorId);
 
+        /// <summary>
+        /// Gets the vendor sub services.
+        /// </summary>
+        /// <param name="vendorServiceId">The vendor service identifier.</param>
+        /// <returns>Response Object</returns>
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetVendorSubServices(string vendorServiceId);
 
+        /// <summary>
+        /// Updates the order status.
+        /// </summary>
+        /// <param name="orderId">The order identifier.</param>
+        /// <param name="orderStatus">The order status.</param>
+        /// <returns>Response Object</returns>
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response UpdateOrderStatus(string orderId, short orderStatus);
+
+        /// <summary>
+        /// Updates the vendor services.
+        /// </summary>
+        /// <param name="vendorServices">The vendor services.</param>
+        /// <returns>Response Object</returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response UpdateVendorServices(List<VendorService> vendorServices);
     }
 }

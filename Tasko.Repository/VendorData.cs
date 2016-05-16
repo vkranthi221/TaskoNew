@@ -12,6 +12,11 @@ namespace Tasko.Repository
 {
     public static class VendorData
     {
+        /// <summary>
+        /// Gets the vendor.
+        /// </summary>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <returns>vendor details</returns>
         public static Vendor GetVendor(string vendorId)
         {
             Vendor objVendor = new Vendor();
@@ -40,6 +45,11 @@ namespace Tasko.Repository
             return objVendor;
         }
 
+        /// <summary>
+        /// Gets the order details.
+        /// </summary>
+        /// <param name="orderId">The order identifier.</param>
+        /// <returns>Order details</returns>
         public static Order GetOrderDetails(string orderId)
         {
             Order objOrder = new Order();
@@ -73,14 +83,27 @@ namespace Tasko.Repository
             return objOrder;
         }
 
-        //public static void EnableServices(string vendorServiceId)
-        //{
-        //    List<SqlParameter> objParameters = new List<SqlParameter>();
+        /// <summary>
+        /// Updates the vendor services.
+        /// </summary>
+        /// <param name="vendorServices">The vendor services.</param>
+        public static void UpdateVendorServices(List<VendorService> vendorServices)
+        {
+            foreach (VendorService vendorService in vendorServices)
+            {
+                List<SqlParameter> objParameters = new List<SqlParameter>();
 
-        //    objParameters.Add(SqlHelper.CreateParameter("@pOrderId", DbType.String, orderId));
-        //    SqlHelper.ExecuteNonQuery("dbo.usp_GetOrderDetails", objParameters.ToArray());
-        //}
+                objParameters.Add(SqlHelper.CreateParameter("@pVendorServiceId", DbType.String, vendorService.Id));
+                objParameters.Add(SqlHelper.CreateParameter("@pActivateService", DbType.Boolean, vendorService.IsActive));
+                SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendorServices", objParameters.ToArray());
+            }
+        }
 
+        /// <summary>
+        /// Gets the vendor services.
+        /// </summary>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <returns>list of vendor services</returns>
         public static List<VendorService> GetVendorServices(string vendorId)
         {
             List<VendorService> vendorServices = new List<VendorService>();
@@ -103,6 +126,11 @@ namespace Tasko.Repository
             return vendorServices;
         }
 
+        /// <summary>
+        /// Gets the vendor sub services.
+        /// </summary>
+        /// <param name="vendorServiceId">The vendor service identifier.</param>
+        /// <returns>list of vendor sub services</returns>
         public static List<VendorService> GetVendorSubServices(string vendorServiceId)
         {
             List<VendorService> vendorServices = new List<VendorService>();
@@ -125,6 +153,11 @@ namespace Tasko.Repository
             return vendorServices;
         }
 
+        /// <summary>
+        /// Updates the order status.
+        /// </summary>
+        /// <param name="orderId">The order identifier.</param>
+        /// <param name="orderStatus">The order status.</param>
         public static void UpdateOrderStatus(string orderId, short orderStatus)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();

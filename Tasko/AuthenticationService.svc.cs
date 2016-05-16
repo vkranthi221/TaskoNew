@@ -44,6 +44,13 @@ namespace Tasko
             return r;
         }
 
+        /// <summary>
+        /// Logins the specified username.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="mobilenumber">The mobilenumber.</param>
+        /// <returns>Response Object</returns>
         public Response Login(string username, string password, string mobilenumber)
         {
             Response r = new Response();
@@ -67,6 +74,11 @@ namespace Tasko
             return r;
         }
 
+        /// <summary>
+        /// Gets the user details.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Response Object</returns>
         public Response GetUserDetails(string id)
         {
             Response r = new Response();
@@ -90,6 +102,11 @@ namespace Tasko
             return r;
         }
 
+        /// <summary>
+        /// Gets the vendor details.
+        /// </summary>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <returns>Response Object</returns>
         public Response GetVendorDetails(string vendorId)
         {
             Response r = new Response();
@@ -113,7 +130,11 @@ namespace Tasko
             return r;
         }
 
-
+        /// <summary>
+        /// Gets the order details.
+        /// </summary>
+        /// <param name="orderId">The order identifier.</param>
+        /// <returns>Response Object</returns>
         public Response GetOrderDetails(string orderId)
         {
             Response r = new Response();
@@ -137,6 +158,11 @@ namespace Tasko
             return r;
         }
 
+        /// <summary>
+        /// Gets the vendor services.
+        /// </summary>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <returns>Response Object</returns>
         public Response GetVendorServices(string vendorId)
         {
             Response r = new Response();
@@ -160,6 +186,11 @@ namespace Tasko
             return r;
         }
 
+        /// <summary>
+        /// Gets the vendor sub services.
+        /// </summary>
+        /// <param name="vendorServiceId">The vendor service identifier.</param>
+        /// <returns>Response Object</returns>
         public Response GetVendorSubServices(string vendorServiceId)
         {
             Response r = new Response();
@@ -183,6 +214,12 @@ namespace Tasko
             return r;
         }
 
+        /// <summary>
+        /// Updates the order status.
+        /// </summary>
+        /// <param name="orderId">The order identifier.</param>
+        /// <param name="orderStatus">The order status.</param>
+        /// <returns>Response Object</returns>
         public Response UpdateOrderStatus(string orderId, short orderStatus)
         {
             Response r = new Response();
@@ -199,6 +236,33 @@ namespace Tasko
             {
                 r.Error = true;
                 r.Message = "Error on updating OrderStatus";
+                r.Status = 400;
+            }
+
+            return r;
+        }
+
+        /// <summary>
+        /// Updates the vendor services.
+        /// </summary>
+        /// <param name="vendorServices">The vendor services.</param>
+        /// <returns>Response Object</returns>
+        public Response UpdateVendorServices(List<VendorService> vendorServices)
+        {
+            Response r = new Response();
+
+            try
+            {
+                VendorData.UpdateVendorServices(vendorServices);
+
+                r.Error = false;
+                r.Message = "success";
+                r.Status = 200;
+            }
+            catch
+            {
+                r.Error = true;
+                r.Message = "Error on updating Vendor Services";
                 r.Status = 400;
             }
 

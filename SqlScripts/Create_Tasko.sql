@@ -334,3 +334,75 @@ BEGIN
 	END
 
 END
+
+GO
+
+CREATE FUNCTION [dbo].[CheckIsParentServiceId](
+@pVendorServiceId Binary(16)
+)
+RETURNS bit 
+AS 
+-- Returns the New Order ID
+BEGIN
+    DECLARE @SERVICE_ID Binary(16); 
+	DECLARE @ISPARENTSERVICE bit;   
+	SELECT @SERVICE_ID = SERVICE_ID FROM VENDOR_SERVICES WHERE VENDOR_SERVICE_ID = @pVendorServiceId
+	IF EXISTS(SELECT SERVICE_ID FROM dbo.[SERVICES] WHERE PARENT_SERVICE_ID = @SERVICE_ID)
+	    BEGIN
+		    -- The given vendor service id is a parent service.
+	      SET @ISPARENTSERVICE = 1;
+	    END
+	ELSE
+	    BEGIN
+		  -- The given vendor service id is a Sub service.
+	      SET @ISPARENTSERVICE = 0;
+	    END
+
+ RETURN @ISPARENTSERVICE;
+END;
+
+GO
+CREATE PROCEDURE [dbo].[usp_UpdateVendorServices]
+(
+	@pVendorServiceId Binary(16),
+	@pActivateService bit
+)
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+IF(@pActivateService = 0)
+  BEGIN
+        IF(dbo.CheckIsParentServiceId(@pVendorServiceId) = 1)
+			BEGIN
+			 -- This is Parent Id so when Parent service is disabled then disable all the respective sub services as well.
+			 -- First Disable Parent service
+			  UPDATE VENDOR_SERVICES SET [IS_VENDOR_SERVICE_ACTIVE] = @pActivateService
+              WHERE VENDOR_SERVICE_ID = @pVendorServiceId
+
+			  DECLARE @VENDOR_ID Binary(16);
+			  SELECT @VENDOR_ID = VENDOR_ID FROM VENDOR_SERVICES WHERE VENDOR_SERVICE_ID = @pVendorServiceId
+
+			  DECLARE @PARENT_SERVICE_ID Binary(16);
+			  SELECT @PARENT_SERVICE_ID = SERVICE_ID FROM VENDOR_SERVICES WHERE VENDOR_SERVICE_ID = @pVendorServiceId
+
+			  --Disable SubServices
+			  UPDATE VENDOR_SERVICES SET [IS_VENDOR_SERVICE_ACTIVE] = @pActivateService
+              WHERE VENDOR_SERVICE_ID IN( SELECT VS.VENDOR_SERVICE_ID  FROM VENDOR_SERVICES VS 
+              WHERE VS.SERVICE_ID IN(SELECT SERVICE_ID FROM SERVICES WHERE PARENT_SERVICE_ID = @PARENT_SERVICE_ID)
+			  AND VS.VENDOR_ID = @VENDOR_ID)
+			END
+		ELSE
+			BEGIN
+			  UPDATE VENDOR_SERVICES SET [IS_VENDOR_SERVICE_ACTIVE] = @pActivateService
+              WHERE VENDOR_SERVICE_ID = @pVendorServiceId 
+			END
+  END
+ELSE
+  BEGIN
+       -- Enable Vendor Parent & Sub services individually.
+       UPDATE VENDOR_SERVICES SET [IS_VENDOR_SERVICE_ACTIVE] = @pActivateService
+       WHERE VENDOR_SERVICE_ID = @pVendorServiceId 
+  END
+END
