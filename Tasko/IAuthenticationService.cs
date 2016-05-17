@@ -122,5 +122,25 @@ namespace Tasko
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response UpdateVendorBaseRate(string vendorId, double baseRate);
+
+        /// <summary>
+        /// Gets the Vendor Ratings
+        /// </summary>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <returns>Response Object</returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetVendorRatings(string vendorId);
+
+        /// <summary>
+        /// Gets the Vendor overall Ratings
+        /// </summary>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <returns>Response Object</returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetVendorOverallRatings(string vendorId);
     }
 }

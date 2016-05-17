@@ -340,6 +340,50 @@ namespace Tasko
 
             return r;            
         }
+        public Response GetVendorRatings(string vendorId)
+        {
+            Response r = new Response();
+
+            List<VendorRating> objVendorRatings = VendorData.GetVendorRatings(vendorId);
+
+            if (objVendorRatings != null)
+            {
+                r.Error = false;
+                r.Message = "success";
+                r.Status = 200;
+                r.Data = objVendorRatings;
+            }
+            else
+            {
+                r.Error = true;
+                r.Message = "No ratings for vendor";
+                r.Status = 400;
+            }
+
+            return r;
+        }
+        public Response GetVendorOverallRatings(string vendorId)
+        {
+            Response r = new Response();
+
+            VendorOverallRating objVendorRatings = VendorData.GetVendorOverallRatings(vendorId);
+
+            if (objVendorRatings != null)
+            {
+                r.Error = false;
+                r.Message = "success";
+                r.Status = 200;
+                r.Data = objVendorRatings;
+            }
+            else
+            {
+                r.Error = true;
+                r.Message = "No ratings for vendor";
+                r.Status = 400;
+            }
+
+            return r;
+        }
     }
 
 

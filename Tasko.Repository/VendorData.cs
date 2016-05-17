@@ -213,5 +213,73 @@ namespace Tasko.Repository
 
             SqlHelper.ExecuteNonQuery("dbo.usp_Logout", objParameters.ToArray());
         }
+
+        public static List<VendorRating> GetVendorRatings(string vendorId)
+        {
+            List<VendorRating> vendorRatings = new List<VendorRating>();
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.String, vendorId));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorRating", objParameters.ToArray());
+            while (reader.Read())
+            {
+                VendorRating rating = new VendorRating();
+                ////objOrder.OrderId = reader["ORDER_ID"].ToString();
+
+                ////objOrder.CustomerId = BinaryConverter.ConvertByteToString((byte[])reader["CUSTOMER_ID"]);
+                ////objOrder.CustomerName = reader["CUSTOMER_NAME"].ToString();
+
+                ////objOrder.VendorServiceId = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_SERVICE_ID"]);
+                ////objOrder.VendorId = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
+                ////objOrder.VendorName = reader["VENDOR_NAME"].ToString();
+
+                ////objOrder.ServiceId = BinaryConverter.ConvertByteToString((byte[])reader["SERVICE_ID"]);
+                ////objOrder.ServiceName = reader["SERVICE_NAME"].ToString();
+
+                ////objOrder.OrderStatusId = Convert.ToInt16(reader["ORDER_STATUS_ID"]);
+                ////objOrder.OrderStatus = reader["ORDERSTATUS_NAME"].ToString();
+
+                ////objOrder.RequestedDate = Convert.ToDateTime(reader["REQUESTED_DATE"]);
+                ////objOrder.Location = reader["ORDER_LOCATION"].ToString();
+                vendorRatings.Add(rating);
+            }
+
+            reader.Close();
+
+            return vendorRatings;
+        }
+        public static VendorOverallRating GetVendorOverallRatings(string vendorId)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.String, vendorId));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorRating", objParameters.ToArray());
+            VendorOverallRating rating = new VendorOverallRating();
+
+            if (reader.Read())
+            {
+                ////objOrder.OrderId = reader["ORDER_ID"].ToString();
+
+                ////objOrder.CustomerId = BinaryConverter.ConvertByteToString((byte[])reader["CUSTOMER_ID"]);
+                ////objOrder.CustomerName = reader["CUSTOMER_NAME"].ToString();
+
+                ////objOrder.VendorServiceId = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_SERVICE_ID"]);
+                ////objOrder.VendorId = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
+                ////objOrder.VendorName = reader["VENDOR_NAME"].ToString();
+
+                ////objOrder.ServiceId = BinaryConverter.ConvertByteToString((byte[])reader["SERVICE_ID"]);
+                ////objOrder.ServiceName = reader["SERVICE_NAME"].ToString();
+
+                ////objOrder.OrderStatusId = Convert.ToInt16(reader["ORDER_STATUS_ID"]);
+                ////objOrder.OrderStatus = reader["ORDERSTATUS_NAME"].ToString();
+
+                ////objOrder.RequestedDate = Convert.ToDateTime(reader["REQUESTED_DATE"]);
+                ////objOrder.Location = reader["ORDER_LOCATION"].ToString();
+            }
+
+            reader.Close();
+
+            return rating;
+        }
     }
 }

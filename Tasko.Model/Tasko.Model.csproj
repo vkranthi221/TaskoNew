@@ -46,6 +46,8 @@
     <Compile Include="Vendor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VendorList.cs" />
+    <Compile Include="VendorOverallRating.cs" />
+    <Compile Include="VendorRating.cs" />
     <Compile Include="VendorService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
