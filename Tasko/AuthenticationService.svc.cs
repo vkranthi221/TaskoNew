@@ -54,15 +54,31 @@ namespace Tasko
         public Response Login(string username, string password, string mobilenumber)
         {
             Response r = new Response();
-            IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
-            WebHeaderCollection headers = request.Headers;
-            string token = headers["X-APIToken"];
-            if (token == TokenId&& (user.UserName==username || user.MobileNumber == mobilenumber) && user.PassWord==password)
+            //IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
+            //WebHeaderCollection headers = request.Headers;
+            //string token = headers["X-APIToken"];
+
+            string authCode =  VendorData.Login(username, password, mobilenumber, 1); // 1 is vendor
+            //if (token == TokenId&& (user.UserName==username || user.MobileNumber == mobilenumber) && user.PassWord==password)
+            //{
+            //    r.Error = false;
+            //    r.Message = "Login Successful";
+            //    r.Status = 200;
+            //    r.Data = user.Id;
+            //}
+            //else
+            //{
+            //    r.Error = true;
+            //    r.Message = "Invalid Credentials";
+            //    r.Status = 400;
+            //}
+
+            if (!string.IsNullOrEmpty(authCode))
             {
                 r.Error = false;
                 r.Message = "Login Successful";
                 r.Status = 200;
-                r.Data = user.Id;
+                r.Data = authCode;
             }
             else
             {
@@ -296,6 +312,33 @@ namespace Tasko
             }
 
             return r;
+        }
+
+        /// <summary>
+        /// Logs out the user
+        /// </summary>
+        /// <param name="userId">user id</param>
+        /// <param name="authCode"></param>
+        /// <returns>Response</returns>
+        public Response Logout(string userId, string authCode)
+        {
+            Response r = new Response();
+            try
+            {
+                VendorData.Logout(userId, authCode);
+
+                r.Error = false;
+                r.Message = "success";
+                r.Status = 200;
+            }
+            catch
+            {
+                r.Error = true;
+                r.Message = "Error on logout";
+                r.Status = 400;
+            }
+
+            return r;            
         }
     }
 

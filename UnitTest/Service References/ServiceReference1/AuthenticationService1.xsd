@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost/Tasko/AuthenticationService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Tasko" />
+  <xs:import schemaLocation="http://localhost/Tasko/AuthenticationService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Tasko.Model" />
   <xs:element name="GetToken">
     <xs:complexType>
       <xs:sequence />
@@ -29,6 +30,21 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="Logout">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="authCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LogoutResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Tasko" minOccurs="0" name="LogoutResult" nillable="true" type="q3:Response" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetUserDetails">
     <xs:complexType>
       <xs:sequence>
@@ -39,7 +55,7 @@
   <xs:element name="GetUserDetailsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Tasko" minOccurs="0" name="GetUserDetailsResult" nillable="true" type="q3:Response" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Tasko" minOccurs="0" name="GetUserDetailsResult" nillable="true" type="q4:Response" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -53,7 +69,7 @@
   <xs:element name="GetVendorDetailsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Tasko" minOccurs="0" name="GetVendorDetailsResult" nillable="true" type="q4:Response" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Tasko" minOccurs="0" name="GetVendorDetailsResult" nillable="true" type="q5:Response" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -67,7 +83,7 @@
   <xs:element name="GetOrderDetailsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Tasko" minOccurs="0" name="GetOrderDetailsResult" nillable="true" type="q5:Response" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Tasko" minOccurs="0" name="GetOrderDetailsResult" nillable="true" type="q6:Response" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -81,7 +97,7 @@
   <xs:element name="GetVendorServicesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Tasko" minOccurs="0" name="GetVendorServicesResult" nillable="true" type="q6:Response" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Tasko" minOccurs="0" name="GetVendorServicesResult" nillable="true" type="q7:Response" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -95,7 +111,7 @@
   <xs:element name="GetVendorSubServicesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Tasko" minOccurs="0" name="GetVendorSubServicesResult" nillable="true" type="q7:Response" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Tasko" minOccurs="0" name="GetVendorSubServicesResult" nillable="true" type="q8:Response" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -110,7 +126,36 @@
   <xs:element name="UpdateOrderStatusResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Tasko" minOccurs="0" name="UpdateOrderStatusResult" nillable="true" type="q8:Response" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Tasko" minOccurs="0" name="UpdateOrderStatusResult" nillable="true" type="q9:Response" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateVendorServices">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Tasko.Model" minOccurs="0" name="vendorServices" nillable="true" type="q10:ArrayOfVendorService" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateVendorServicesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Tasko" minOccurs="0" name="UpdateVendorServicesResult" nillable="true" type="q11:Response" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateVendorBaseRate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="vendorId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="baseRate" type="xs:double" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateVendorBaseRateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Tasko" minOccurs="0" name="UpdateVendorBaseRateResult" nillable="true" type="q12:Response" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

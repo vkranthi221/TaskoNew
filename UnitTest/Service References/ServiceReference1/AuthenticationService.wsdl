@@ -20,6 +20,12 @@
   <wsdl:message name="IAuthenticationService_Login_OutputMessage">
     <wsdl:part name="parameters" element="tns:LoginResponse" />
   </wsdl:message>
+  <wsdl:message name="IAuthenticationService_Logout_InputMessage">
+    <wsdl:part name="parameters" element="tns:Logout" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_Logout_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LogoutResponse" />
+  </wsdl:message>
   <wsdl:message name="IAuthenticationService_GetUserDetails_InputMessage">
     <wsdl:part name="parameters" element="tns:GetUserDetails" />
   </wsdl:message>
@@ -56,6 +62,18 @@
   <wsdl:message name="IAuthenticationService_UpdateOrderStatus_OutputMessage">
     <wsdl:part name="parameters" element="tns:UpdateOrderStatusResponse" />
   </wsdl:message>
+  <wsdl:message name="IAuthenticationService_UpdateVendorServices_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateVendorServices" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_UpdateVendorServices_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateVendorServicesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_UpdateVendorBaseRate_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateVendorBaseRate" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_UpdateVendorBaseRate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateVendorBaseRateResponse" />
+  </wsdl:message>
   <wsdl:portType name="IAuthenticationService">
     <wsdl:operation name="GetToken">
       <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/GetToken" message="tns:IAuthenticationService_GetToken_InputMessage" />
@@ -64,6 +82,10 @@
     <wsdl:operation name="Login">
       <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/Login" message="tns:IAuthenticationService_Login_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/LoginResponse" message="tns:IAuthenticationService_Login_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/Logout" message="tns:IAuthenticationService_Logout_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/LogoutResponse" message="tns:IAuthenticationService_Logout_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetUserDetails">
       <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/GetUserDetails" message="tns:IAuthenticationService_GetUserDetails_InputMessage" />
@@ -89,6 +111,14 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/UpdateOrderStatus" message="tns:IAuthenticationService_UpdateOrderStatus_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/UpdateOrderStatusResponse" message="tns:IAuthenticationService_UpdateOrderStatus_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="UpdateVendorServices">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/UpdateVendorServices" message="tns:IAuthenticationService_UpdateVendorServices_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/UpdateVendorServicesResponse" message="tns:IAuthenticationService_UpdateVendorServices_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateVendorBaseRate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/UpdateVendorBaseRate" message="tns:IAuthenticationService_UpdateVendorBaseRate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/UpdateVendorBaseRateResponse" message="tns:IAuthenticationService_UpdateVendorBaseRate_OutputMessage" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="basicbinding_IAuthenticationService" type="tns:IAuthenticationService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -103,6 +133,15 @@
     </wsdl:operation>
     <wsdl:operation name="Login">
       <soap:operation soapAction="http://tempuri.org/IAuthenticationService/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap:operation soapAction="http://tempuri.org/IAuthenticationService/Logout" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -157,6 +196,24 @@
     </wsdl:operation>
     <wsdl:operation name="UpdateOrderStatus">
       <soap:operation soapAction="http://tempuri.org/IAuthenticationService/UpdateOrderStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateVendorServices">
+      <soap:operation soapAction="http://tempuri.org/IAuthenticationService/UpdateVendorServices" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateVendorBaseRate">
+      <soap:operation soapAction="http://tempuri.org/IAuthenticationService/UpdateVendorBaseRate" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

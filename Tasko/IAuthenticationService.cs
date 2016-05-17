@@ -35,6 +35,12 @@ namespace Tasko
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response Login(string username, string password, string mobilenumber);
 
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response Logout(string userId, string authCode);
+
         /// <summary>
         /// Gets the user details.
         /// </summary>

@@ -45,6 +45,29 @@ namespace Tasko.Repository
             return objVendor;
         }
 
+        public static string Login(string userName, string passowrd, string mobileNumber, Int16 userType)
+        {
+            Vendor objVendor = new Vendor();
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            string authCode = string.Empty;
+            objParameters.Add(SqlHelper.CreateParameter("@pUserId", DbType.String, userName));
+            objParameters.Add(SqlHelper.CreateParameter("@pPassword", DbType.String, passowrd));
+            objParameters.Add(SqlHelper.CreateParameter("@pMobileNumber", DbType.String, passowrd));
+
+            objParameters.Add(SqlHelper.CreateParameter("@pUserType", DbType.Int16, userType)); // 1 for vendor
+
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_Login", objParameters.ToArray());
+            if (reader.Read())
+            {
+                authCode = BinaryConverter.ConvertByteToString((byte[])reader["AUTH_CODE"]);
+               
+            }
+
+            reader.Close();
+
+            return authCode;
+        }
+
         /// <summary>
         /// Gets the order details.
         /// </summary>
@@ -179,6 +202,16 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
             objParameters.Add(SqlHelper.CreateParameter("@pBaseRate", DbType.Decimal, baseRate));
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateBaseRate", objParameters.ToArray());
+        }
+
+        public static void Logout(string userId, string authCode)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            objParameters.Add(SqlHelper.CreateParameter("@pUserId", DbType.Binary, BinaryConverter.ConvertStringToByte(userId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pAuthCode", DbType.Binary, BinaryConverter.ConvertStringToByte(userId)));
+
+            SqlHelper.ExecuteNonQuery("dbo.usp_Logout", objParameters.ToArray());
         }
     }
 }
