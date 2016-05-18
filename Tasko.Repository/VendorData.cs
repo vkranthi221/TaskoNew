@@ -302,10 +302,9 @@ namespace Tasko.Repository
             while (reader.Read())
             {
                 Order order = new Order();
-                ////rating.ServiceQuality = Convert.ToDecimal(reader["QUALITY"]);
-                ////rating.Punctuality = Convert.ToDecimal(reader["PUNCTUALITY"]);
-                ////rating.Courtesy = Convert.ToDecimal(reader["COURTESY"]);
-                ////rating.Price = Convert.ToDecimal(reader["PRICE"]);
+                order.OrderId = reader["ORDER_ID"].ToString();
+                order.RequestedDate = Convert.ToDateTime(reader["REQUESTED_DATE"]);
+                order.ServiceName = reader["NAME"].ToString();
                 orders.Add(order);
             }
 
