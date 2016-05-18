@@ -142,5 +142,16 @@ namespace Tasko
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetVendorOverallRatings(string vendorId);
+
+         /// <summary>
+        /// Gets the Vendor orders
+        /// </summary>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <param name="orderStatusId">The order status id.</param>
+        /// <returns>Response Object</returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetVendorOrders(string vendorId, int orderStatusId);
     }
 }

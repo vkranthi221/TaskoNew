@@ -400,6 +400,37 @@ namespace Tasko
 
             return r;
         }
+
+        /// <summary>
+        /// Gets the Vendor orders
+        /// </summary>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <param name="orderStatusId">The order status id.</param>
+        /// <returns>
+        /// Response Object
+        /// </returns>
+        public Response GetVendorOrders(string vendorId, int orderStatusId)
+        {
+            Response r = new Response();
+
+            List<Order> objOrders = VendorData.GetVendorOrders(vendorId, orderStatusId);
+
+            if (objOrders != null)
+            {
+                r.Error = false;
+                r.Message = "success";
+                r.Status = 200;
+                r.Data = objOrders;
+            }
+            else
+            {
+                r.Error = true;
+                r.Message = "No ratings for vendor";
+                r.Status = 400;
+            }
+
+            return r;
+        }
     }
 
 
