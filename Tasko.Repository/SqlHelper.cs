@@ -11,6 +11,12 @@ namespace Tasko.Repository
 {
     public static class SqlHelper
     {
+        /// <summary>
+        /// Gets the data table.
+        /// </summary>
+        /// <param name="storedProcedureName">Name of the stored procedure.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>Data Table</returns>
         public static DataTable GetDataTable(string storedProcedureName, object[] parameters)
         {
             DataSet ds = GetDataSet(storedProcedureName, parameters);
@@ -20,11 +26,22 @@ namespace Tasko.Repository
                 return null;
         }
 
+        /// <summary>
+        /// Gets the data table.
+        /// </summary>
+        /// <param name="storedProcedureName">Name of the stored procedure.</param>
+        /// <returns>Data Table</returns>
         public static DataTable GetDataTable(string storedProcedureName)
         {
             return GetDataTable(storedProcedureName, null);
         }
 
+        /// <summary>
+        /// Gets the data set.
+        /// </summary>
+        /// <param name="storedProcedureName">Name of the stored procedure.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>Data Set</returns>
         public static DataSet GetDataSet(string storedProcedureName, object[] parameters)
         {
             try
@@ -48,11 +65,22 @@ namespace Tasko.Repository
             //return null;
         }
 
+        /// <summary>
+        /// Gets the data set.
+        /// </summary>
+        /// <param name="storedProcedureName">Name of the stored procedure.</param>
+        /// <returns>Data Set</returns>
         public static DataSet GetDataSet(string storedProcedureName)
         {
             return GetDataSet(storedProcedureName, null);
         }
 
+        /// <summary>
+        /// Gets the data reader.
+        /// </summary>
+        /// <param name="storedProcedureName">Name of the stored procedure.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns>data Reader</returns>
         public static IDataReader GetDataReader(string storedProcedureName, object[] parameters)
         {
             try
@@ -61,7 +89,7 @@ namespace Tasko.Repository
                 DbCommand command = db.GetStoredProcCommand(storedProcedureName);
                 if (parameters != null && parameters.Length > 0)
                     command.Parameters.AddRange(parameters);
-                return db.ExecuteReader(command); 
+                return db.ExecuteReader(command);
             }
             catch (Exception ex)
             {
@@ -72,13 +100,22 @@ namespace Tasko.Repository
             //return null;
         }
 
-        
-
+        /// <summary>
+        /// Gets the data reader.
+        /// </summary>
+        /// <param name="storedProcedureName">Name of the stored procedure.</param>
+        /// <returns>data Reader</returns>
         public static IDataReader GetDataReader(string storedProcedureName)
         {
             return GetDataReader(storedProcedureName, null);
         }
 
+        /// <summary>
+        /// Executes the non query.
+        /// </summary>
+        /// <param name="storedProcedureName">Name of the stored procedure.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="returnVal">The return value.</param>
         public static void ExecuteNonQuery(string storedProcedureName, object[] parameters, out int returnVal)
         {
             returnVal = 0;
@@ -104,6 +141,11 @@ namespace Tasko.Repository
             }
         }
 
+        /// <summary>
+        /// Executes the non query.
+        /// </summary>
+        /// <param name="storedProcedureName">Name of the stored procedure.</param>
+        /// <param name="parameters">The parameters.</param>
         public static void ExecuteNonQuery(string storedProcedureName, object[] parameters)
         {
             try
@@ -125,11 +167,22 @@ namespace Tasko.Repository
             }
         }
 
+        /// <summary>
+        /// Executes the non query.
+        /// </summary>
+        /// <param name="storedProcedureName">Name of the stored procedure.</param>
         public static void ExecuteNonQuery(string storedProcedureName)
         {
             ExecuteNonQuery(storedProcedureName, null);
         }
 
+        /// <summary>
+        /// Executes the scalar.
+        /// </summary>
+        /// <param name="storedProcedureName">Name of the stored procedure.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <param name="returnValue">The return value.</param>
+        /// <returns></returns>
         public static object ExecuteScalar(string storedProcedureName, object[] parameters, out int returnValue)
         {
             object result = null;
@@ -159,6 +212,12 @@ namespace Tasko.Repository
             return result;
         }
 
+        /// <summary>
+        /// Executes the scalar.
+        /// </summary>
+        /// <param name="storedProcedureName">Name of the stored procedure.</param>
+        /// <param name="parameters">The parameters.</param>
+        /// <returns></returns>
         public static object ExecuteScalar(string storedProcedureName, object[] parameters)
         {
             object returnValue = null;
@@ -184,11 +243,23 @@ namespace Tasko.Repository
             return returnValue;
         }
 
+        /// <summary>
+        /// Executes the scalar.
+        /// </summary>
+        /// <param name="storedProcedureName">Name of the stored procedure.</param>
+        /// <returns></returns>
         public static object ExecuteScalar(string storedProcedureName)
         {
             return ExecuteScalar(storedProcedureName, null);
         }
 
+        /// <summary>
+        /// Creates the parameter.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>parameter</returns>
         public static SqlParameter CreateParameter(string name, DbType type, object value)
         {
             SqlParameter param = new SqlParameter(name, type);

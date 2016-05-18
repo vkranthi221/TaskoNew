@@ -45,6 +45,14 @@ namespace Tasko.Repository
             return objVendor;
         }
 
+        /// <summary>
+        /// Logins the specified user name.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="passowrd">The passowrd.</param>
+        /// <param name="mobileNumber">The mobile number.</param>
+        /// <param name="userType">Type of the user.</param>
+        /// <returns></returns>
         public static string Login(string userName, string passowrd, string mobileNumber, Int16 userType)
         {
             Vendor objVendor = new Vendor();
@@ -60,7 +68,7 @@ namespace Tasko.Repository
             if (reader.Read())
             {
                 authCode = BinaryConverter.ConvertByteToString((byte[])reader["AUTH_CODE"]);
-               
+
             }
 
             reader.Close();
@@ -204,6 +212,11 @@ namespace Tasko.Repository
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateBaseRate", objParameters.ToArray());
         }
 
+        /// <summary>
+        /// Logouts the specified user identifier.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="authCode">The authentication code.</param>
         public static void Logout(string userId, string authCode)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
@@ -214,6 +227,11 @@ namespace Tasko.Repository
             SqlHelper.ExecuteNonQuery("dbo.usp_Logout", objParameters.ToArray());
         }
 
+        /// <summary>
+        /// Gets the vendor ratings.
+        /// </summary>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <returns>Vendor Rating</returns>
         public static List<VendorRating> GetVendorRatings(string vendorId)
         {
             List<VendorRating> vendorRatings = new List<VendorRating>();
@@ -224,23 +242,14 @@ namespace Tasko.Repository
             while (reader.Read())
             {
                 VendorRating rating = new VendorRating();
-                ////objOrder.OrderId = reader["ORDER_ID"].ToString();
-
-                ////objOrder.CustomerId = BinaryConverter.ConvertByteToString((byte[])reader["CUSTOMER_ID"]);
-                ////objOrder.CustomerName = reader["CUSTOMER_NAME"].ToString();
-
-                ////objOrder.VendorServiceId = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_SERVICE_ID"]);
-                ////objOrder.VendorId = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
-                ////objOrder.VendorName = reader["VENDOR_NAME"].ToString();
-
-                ////objOrder.ServiceId = BinaryConverter.ConvertByteToString((byte[])reader["SERVICE_ID"]);
-                ////objOrder.ServiceName = reader["SERVICE_NAME"].ToString();
-
-                ////objOrder.OrderStatusId = Convert.ToInt16(reader["ORDER_STATUS_ID"]);
-                ////objOrder.OrderStatus = reader["ORDERSTATUS_NAME"].ToString();
-
-                ////objOrder.RequestedDate = Convert.ToDateTime(reader["REQUESTED_DATE"]);
-                ////objOrder.Location = reader["ORDER_LOCATION"].ToString();
+                rating.Id = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_RATING_ID"]);
+                rating.ServiceQuality = Convert.ToDecimal(reader["SERVICE_QUALITY"]);
+                rating.Punctuality = Convert.ToDecimal(reader["PUNCTUALITY"]);
+                rating.Courtesy = Convert.ToDecimal(reader["COURTESY"]);
+                rating.Price = Convert.ToDecimal(reader["PRICE"]);
+                rating.ReviewDate = Convert.ToDateTime(reader["REVIEW_DATE"]);
+                rating.Comments = reader["COMMENTS"].ToString();
+                rating.CustomerName = reader["NAME"].ToString();
                 vendorRatings.Add(rating);
             }
 
@@ -248,6 +257,12 @@ namespace Tasko.Repository
 
             return vendorRatings;
         }
+
+        /// <summary>
+        /// Gets the vendor overall ratings.
+        /// </summary>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <returns>Overall Vendor Rating</returns>
         public static VendorOverallRating GetVendorOverallRatings(string vendorId)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
@@ -258,28 +273,45 @@ namespace Tasko.Repository
 
             if (reader.Read())
             {
-                ////objOrder.OrderId = reader["ORDER_ID"].ToString();
-
-                ////objOrder.CustomerId = BinaryConverter.ConvertByteToString((byte[])reader["CUSTOMER_ID"]);
-                ////objOrder.CustomerName = reader["CUSTOMER_NAME"].ToString();
-
-                ////objOrder.VendorServiceId = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_SERVICE_ID"]);
-                ////objOrder.VendorId = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
-                ////objOrder.VendorName = reader["VENDOR_NAME"].ToString();
-
-                ////objOrder.ServiceId = BinaryConverter.ConvertByteToString((byte[])reader["SERVICE_ID"]);
-                ////objOrder.ServiceName = reader["SERVICE_NAME"].ToString();
-
-                ////objOrder.OrderStatusId = Convert.ToInt16(reader["ORDER_STATUS_ID"]);
-                ////objOrder.OrderStatus = reader["ORDERSTATUS_NAME"].ToString();
-
-                ////objOrder.RequestedDate = Convert.ToDateTime(reader["REQUESTED_DATE"]);
-                ////objOrder.Location = reader["ORDER_LOCATION"].ToString();
+                rating.ServiceQuality = Convert.ToDecimal(reader["QUALITY"]);
+                rating.Punctuality = Convert.ToDecimal(reader["PUNCTUALITY"]);
+                rating.Courtesy = Convert.ToDecimal(reader["COURTESY"]);
+                rating.Price = Convert.ToDecimal(reader["PRICE"]);
             }
 
             reader.Close();
 
             return rating;
+        }
+
+        /// <summary>
+        /// Gets the vendor orders.
+        /// </summary>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <param name="orderStatusId">The order status identifier.</param>
+        /// <returns>Vendor Orders</returns>
+        public static List<Order> GetVendorOrders(string vendorId, int orderStatusId)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.String, vendorId));
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.String, vendorId));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorOrders", objParameters.ToArray());
+            List<Order> orders = new List<Order>();
+
+            while (reader.Read())
+            {
+                Order order = new Order();
+                ////rating.ServiceQuality = Convert.ToDecimal(reader["QUALITY"]);
+                ////rating.Punctuality = Convert.ToDecimal(reader["PUNCTUALITY"]);
+                ////rating.Courtesy = Convert.ToDecimal(reader["COURTESY"]);
+                ////rating.Price = Convert.ToDecimal(reader["PRICE"]);
+                orders.Add(order);
+            }
+
+            reader.Close();
+
+            return orders;
         }
     }
 }

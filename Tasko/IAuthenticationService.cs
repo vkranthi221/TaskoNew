@@ -18,9 +18,9 @@ namespace Tasko
         /// </summary>
         /// <returns>Response Object</returns>
         [OperationContract]
-        [WebInvoke(Method="POST",ResponseFormat=WebMessageFormat.Json,
-            BodyStyle=WebMessageBodyStyle.Bare,
-            UriTemplate="auth")]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate = "auth")]
         Response GetToken();
 
         /// <summary>

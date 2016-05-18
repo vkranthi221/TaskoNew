@@ -14,39 +14,111 @@ namespace Tasko.Model
     [DataContract]
     public class Vendor
     {
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
         [DataMember]
         public string Id { get; set; }
 
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        /// <value>
+        /// The name.
+        /// </value>
         [DataMember]
         public string Name { get; set; }
 
+        /// <summary>
+        /// Gets or sets the mobile number.
+        /// </summary>
+        /// <value>
+        /// The mobile number.
+        /// </value>
         [DataMember]
         public string MobileNumber { get; set; }
 
+        /// <summary>
+        /// Gets or sets the base rate.
+        /// </summary>
+        /// <value>
+        /// The base rate.
+        /// </value>
         [DataMember]
         public double BaseRate { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether [is vendor live].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [is vendor live]; otherwise, <c>false</c>.
+        /// </value>
         [DataMember]
         public bool IsVendorLive { get; set; }
 
+        /// <summary>
+        /// Gets or sets the address.
+        /// </summary>
+        /// <value>
+        /// The address.
+        /// </value>
         [DataMember]
         public string Address { get; set; }
 
+        /// <summary>
+        /// Gets or sets the no of employees.
+        /// </summary>
+        /// <value>
+        /// The no of employees.
+        /// </value>
         [DataMember]
         public int NoOfEmployees { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether [is vendor verified].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [is vendor verified]; otherwise, <c>false</c>.
+        /// </value>
         [DataMember]
         public bool IsVendorVerified { get; set; }
 
+        /// <summary>
+        /// Gets or sets the time spent on application.
+        /// </summary>
+        /// <value>
+        /// The time spent on application.
+        /// </value>
         [DataMember]
         public DateTime TimeSpentOnApp { get; set; }
 
+        /// <summary>
+        /// Gets or sets the active time per day.
+        /// </summary>
+        /// <value>
+        /// The active time per day.
+        /// </value>
         [DataMember]
         public DateTime ActiveTimePerDay { get; set; }
 
+        /// <summary>
+        /// Gets or sets the data consumption.
+        /// </summary>
+        /// <value>
+        /// The data consumption.
+        /// </value>
         [DataMember]
         public int DataConsumption { get; set; }
 
+        /// <summary>
+        /// Gets or sets the calls to customer care.
+        /// </summary>
+        /// <value>
+        /// The calls to customer care.
+        /// </value>
         [DataMember]
         public int CallsToCustomerCare { get; set; }
     }

@@ -58,7 +58,7 @@ namespace Tasko
             //WebHeaderCollection headers = request.Headers;
             //string token = headers["X-APIToken"];
 
-            string authCode =  VendorData.Login(username, password, mobilenumber, 1); // 1 is vendor
+            string authCode = VendorData.Login(username, password, mobilenumber, 1); // 1 is vendor
             //if (token == TokenId&& (user.UserName==username || user.MobileNumber == mobilenumber) && user.PassWord==password)
             //{
             //    r.Error = false;
@@ -101,7 +101,7 @@ namespace Tasko
             IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
             WebHeaderCollection headers = request.Headers;
             string token = headers["X-APIToken"];
-            if (token == TokenId && user.Id == id )
+            if (token == TokenId && user.Id == id)
             {
                 r.Error = false;
                 r.Message = "success";
@@ -338,8 +338,16 @@ namespace Tasko
                 r.Status = 400;
             }
 
-            return r;            
+            return r;
         }
+
+        /// <summary>
+        /// Gets the Vendor Ratings
+        /// </summary>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <returns>
+        /// Response Object
+        /// </returns>
         public Response GetVendorRatings(string vendorId)
         {
             Response r = new Response();
@@ -362,6 +370,14 @@ namespace Tasko
 
             return r;
         }
+
+        /// <summary>
+        /// Gets the Vendor overall Ratings
+        /// </summary>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <returns>
+        /// Response Object
+        /// </returns>
         public Response GetVendorOverallRatings(string vendorId)
         {
             Response r = new Response();
