@@ -16,6 +16,8 @@ namespace TaskoTestClient
             string vendorId = "70F974CDC6E6664A898A8106C3D3D693";
             string venodorServiceId = "287EB41076025347AAE5EC48F79BCE15";
 
+            Console.WriteLine(VendorData.Login("chandra", "12345", "", 1));
+
             /// Get Order Details
             Order objOrder = VendorData.GetOrderDetails(orderId);
             if(objOrder!=null)

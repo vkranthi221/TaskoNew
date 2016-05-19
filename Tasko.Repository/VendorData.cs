@@ -23,7 +23,7 @@ namespace Tasko.Repository
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_InsertAuthCode");
             if (reader.Read())
             {
-                return BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
+                return BinaryConverter.ConvertByteToString((byte[])reader["Auth_Code"]);
             }
 
             return string.Empty;
@@ -33,7 +33,7 @@ namespace Tasko.Repository
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
             objParameters.Add(SqlHelper.CreateParameter("@pAuthCode", DbType.Binary, BinaryConverter.ConvertStringToByte(authCode)));
-            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_ValidateAuthCode");
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_ValidateAuthCode", objParameters.ToArray());
 
             if (reader.Read())
             {
@@ -48,7 +48,7 @@ namespace Tasko.Repository
             List<SqlParameter> objParameters = new List<SqlParameter>();
             objParameters.Add(SqlHelper.CreateParameter("@pTokenCode", DbType.Binary, BinaryConverter.ConvertStringToByte(tokenCode)));
             objParameters.Add(SqlHelper.CreateParameter("@pUserId", DbType.Binary, BinaryConverter.ConvertStringToByte(userId)));
-            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_ValidateTokenCode");
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_ValidateTokenCode", objParameters.ToArray());
 
             if (reader.Read())
             {
@@ -105,7 +105,7 @@ namespace Tasko.Repository
             string authCode = string.Empty;
             objParameters.Add(SqlHelper.CreateParameter("@pUserId", DbType.String, userName));
             objParameters.Add(SqlHelper.CreateParameter("@pPassword", DbType.String, passowrd));
-            objParameters.Add(SqlHelper.CreateParameter("@pMobileNumber", DbType.String, passowrd));
+            objParameters.Add(SqlHelper.CreateParameter("@pMobileNumber", DbType.String, mobileNumber));
 
             objParameters.Add(SqlHelper.CreateParameter("@pUserType", DbType.Int16, userType)); // 1 for vendor
 
