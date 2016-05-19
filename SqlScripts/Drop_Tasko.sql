@@ -37,3 +37,11 @@ GO
 DROP PROCEDURE [dbo].[usp_GetVendorServices]
 GO
 DROP PROCEDURE [dbo].[usp_GetVendorSubServices]
+GO
+DROP PROCEDURE [dbo].usp_GetVendorOrders
+GO
+DROP PROCEDURE [dbo].usp_GetVendorOverallRating
+GO
+DROP PROCEDURE [dbo].usp_GetVendorRatings
+GO
+DROP PROCEDURE [dbo].usp_UpdateOrderStatus
