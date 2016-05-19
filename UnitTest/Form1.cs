@@ -41,7 +41,7 @@ namespace UnitTest
             ChannelFactory<ServiceReference1.IAuthenticationService> myChannelFactory = new ChannelFactory<ServiceReference1.IAuthenticationService>(myBinding, myEndpoint);
 
             ServiceReference1.IAuthenticationService client1 = myChannelFactory.CreateChannel();
-            Response response = client1.Login("srikanth", "password", "");
+            Response response = client1.Login("srikanth", "password", "",1);
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -55,6 +55,21 @@ namespace UnitTest
             ServiceReference1.IAuthenticationService client1 = myChannelFactory.CreateChannel();
             Response response = client1.Logout("ACD1F25ED458234F81FA45ED171519D0", "1F96377579E30F4AB3FB49092B4DADF2");
             
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+            BasicHttpBinding myBinding = new BasicHttpBinding();
+
+            EndpointAddress myEndpoint = new EndpointAddress("http://localhost/TAsko/authenticationservice.svc/basic");
+
+            ChannelFactory<ServiceReference1.IAuthenticationService> myChannelFactory = new ChannelFactory<ServiceReference1.IAuthenticationService>(myBinding, myEndpoint);
+
+            ServiceReference1.IAuthenticationService client1 = myChannelFactory.CreateChannel();
+            
+            
+            Response response = client1.Logout("ACD1F25ED458234F81FA45ED171519D0", "1F96377579E30F4AB3FB49092B4DADF2");
         }
     }
 }

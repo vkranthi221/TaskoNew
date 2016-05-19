@@ -17,11 +17,11 @@ namespace UnitTest.ServiceReference1 {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Response", Namespace="http://schemas.datacontract.org/2004/07/Tasko")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(UnitTest.ServiceReference1.Order))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(UnitTest.ServiceReference1.VendorService[]))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(UnitTest.ServiceReference1.VendorService))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(UnitTest.ServiceReference1.User))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(UnitTest.ServiceReference1.Vendor))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(UnitTest.ServiceReference1.VendorService))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(UnitTest.ServiceReference1.VendorService[]))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(UnitTest.ServiceReference1.User))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(UnitTest.ServiceReference1.Order))]
     public partial class Response : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -97,413 +97,6 @@ namespace UnitTest.ServiceReference1 {
                 if ((this.StatusField.Equals(value) != true)) {
                     this.StatusField = value;
                     this.RaisePropertyChanged("Status");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Order", Namespace="http://schemas.datacontract.org/2004/07/Tasko.Model")]
-    [System.SerializableAttribute()]
-    public partial class Order : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CustomerIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CustomerNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string LocationField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string OrderIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string OrderStatusField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private short OrderStatusIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime RequestedDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ServiceIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ServiceNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string VendorIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string VendorNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string VendorServiceIdField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CustomerId {
-            get {
-                return this.CustomerIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CustomerIdField, value) != true)) {
-                    this.CustomerIdField = value;
-                    this.RaisePropertyChanged("CustomerId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CustomerName {
-            get {
-                return this.CustomerNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CustomerNameField, value) != true)) {
-                    this.CustomerNameField = value;
-                    this.RaisePropertyChanged("CustomerName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Location {
-            get {
-                return this.LocationField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.LocationField, value) != true)) {
-                    this.LocationField = value;
-                    this.RaisePropertyChanged("Location");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string OrderId {
-            get {
-                return this.OrderIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.OrderIdField, value) != true)) {
-                    this.OrderIdField = value;
-                    this.RaisePropertyChanged("OrderId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string OrderStatus {
-            get {
-                return this.OrderStatusField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.OrderStatusField, value) != true)) {
-                    this.OrderStatusField = value;
-                    this.RaisePropertyChanged("OrderStatus");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public short OrderStatusId {
-            get {
-                return this.OrderStatusIdField;
-            }
-            set {
-                if ((this.OrderStatusIdField.Equals(value) != true)) {
-                    this.OrderStatusIdField = value;
-                    this.RaisePropertyChanged("OrderStatusId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime RequestedDate {
-            get {
-                return this.RequestedDateField;
-            }
-            set {
-                if ((this.RequestedDateField.Equals(value) != true)) {
-                    this.RequestedDateField = value;
-                    this.RaisePropertyChanged("RequestedDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ServiceId {
-            get {
-                return this.ServiceIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ServiceIdField, value) != true)) {
-                    this.ServiceIdField = value;
-                    this.RaisePropertyChanged("ServiceId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ServiceName {
-            get {
-                return this.ServiceNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ServiceNameField, value) != true)) {
-                    this.ServiceNameField = value;
-                    this.RaisePropertyChanged("ServiceName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string VendorId {
-            get {
-                return this.VendorIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.VendorIdField, value) != true)) {
-                    this.VendorIdField = value;
-                    this.RaisePropertyChanged("VendorId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string VendorName {
-            get {
-                return this.VendorNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.VendorNameField, value) != true)) {
-                    this.VendorNameField = value;
-                    this.RaisePropertyChanged("VendorName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string VendorServiceId {
-            get {
-                return this.VendorServiceIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.VendorServiceIdField, value) != true)) {
-                    this.VendorServiceIdField = value;
-                    this.RaisePropertyChanged("VendorServiceId");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="VendorService", Namespace="http://schemas.datacontract.org/2004/07/Tasko.Model")]
-    [System.SerializableAttribute()]
-    public partial class VendorService : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsActiveField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NameField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IdField, value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsActive {
-            get {
-                return this.IsActiveField;
-            }
-            set {
-                if ((this.IsActiveField.Equals(value) != true)) {
-                    this.IsActiveField = value;
-                    this.RaisePropertyChanged("IsActive");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/Tasko.Model")]
-    [System.SerializableAttribute()]
-    public partial class User : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MobileNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PassWordField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string UserNameField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IdField, value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MobileNumber {
-            get {
-                return this.MobileNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MobileNumberField, value) != true)) {
-                    this.MobileNumberField = value;
-                    this.RaisePropertyChanged("MobileNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PassWord {
-            get {
-                return this.PassWordField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PassWordField, value) != true)) {
-                    this.PassWordField = value;
-                    this.RaisePropertyChanged("PassWord");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UserName {
-            get {
-                return this.UserNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
-                    this.UserNameField = value;
-                    this.RaisePropertyChanged("UserName");
                 }
             }
         }
@@ -739,21 +332,428 @@ namespace UnitTest.ServiceReference1 {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="VendorService", Namespace="http://schemas.datacontract.org/2004/07/Tasko.Model")]
+    [System.SerializableAttribute()]
+    public partial class VendorService : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsActiveField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsActive {
+            get {
+                return this.IsActiveField;
+            }
+            set {
+                if ((this.IsActiveField.Equals(value) != true)) {
+                    this.IsActiveField = value;
+                    this.RaisePropertyChanged("IsActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/Tasko.Model")]
+    [System.SerializableAttribute()]
+    public partial class User : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MobileNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PassWordField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MobileNumber {
+            get {
+                return this.MobileNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MobileNumberField, value) != true)) {
+                    this.MobileNumberField = value;
+                    this.RaisePropertyChanged("MobileNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PassWord {
+            get {
+                return this.PassWordField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PassWordField, value) != true)) {
+                    this.PassWordField = value;
+                    this.RaisePropertyChanged("PassWord");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserName {
+            get {
+                return this.UserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Order", Namespace="http://schemas.datacontract.org/2004/07/Tasko.Model")]
+    [System.SerializableAttribute()]
+    public partial class Order : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CustomerIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CustomerNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LocationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OrderIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OrderStatusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private short OrderStatusIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime RequestedDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ServiceIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ServiceNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VendorIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VendorNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VendorServiceIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CustomerId {
+            get {
+                return this.CustomerIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CustomerIdField, value) != true)) {
+                    this.CustomerIdField = value;
+                    this.RaisePropertyChanged("CustomerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CustomerName {
+            get {
+                return this.CustomerNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CustomerNameField, value) != true)) {
+                    this.CustomerNameField = value;
+                    this.RaisePropertyChanged("CustomerName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Location {
+            get {
+                return this.LocationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LocationField, value) != true)) {
+                    this.LocationField = value;
+                    this.RaisePropertyChanged("Location");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OrderId {
+            get {
+                return this.OrderIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OrderIdField, value) != true)) {
+                    this.OrderIdField = value;
+                    this.RaisePropertyChanged("OrderId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OrderStatus {
+            get {
+                return this.OrderStatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OrderStatusField, value) != true)) {
+                    this.OrderStatusField = value;
+                    this.RaisePropertyChanged("OrderStatus");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public short OrderStatusId {
+            get {
+                return this.OrderStatusIdField;
+            }
+            set {
+                if ((this.OrderStatusIdField.Equals(value) != true)) {
+                    this.OrderStatusIdField = value;
+                    this.RaisePropertyChanged("OrderStatusId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime RequestedDate {
+            get {
+                return this.RequestedDateField;
+            }
+            set {
+                if ((this.RequestedDateField.Equals(value) != true)) {
+                    this.RequestedDateField = value;
+                    this.RaisePropertyChanged("RequestedDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ServiceId {
+            get {
+                return this.ServiceIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ServiceIdField, value) != true)) {
+                    this.ServiceIdField = value;
+                    this.RaisePropertyChanged("ServiceId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ServiceName {
+            get {
+                return this.ServiceNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ServiceNameField, value) != true)) {
+                    this.ServiceNameField = value;
+                    this.RaisePropertyChanged("ServiceName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string VendorId {
+            get {
+                return this.VendorIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VendorIdField, value) != true)) {
+                    this.VendorIdField = value;
+                    this.RaisePropertyChanged("VendorId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string VendorName {
+            get {
+                return this.VendorNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VendorNameField, value) != true)) {
+                    this.VendorNameField = value;
+                    this.RaisePropertyChanged("VendorName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string VendorServiceId {
+            get {
+                return this.VendorServiceIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VendorServiceIdField, value) != true)) {
+                    this.VendorServiceIdField = value;
+                    this.RaisePropertyChanged("VendorServiceId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IAuthenticationService")]
     public interface IAuthenticationService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/GetToken", ReplyAction="http://tempuri.org/IAuthenticationService/GetTokenResponse")]
-        UnitTest.ServiceReference1.Response GetToken();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/GetAuthCode", ReplyAction="http://tempuri.org/IAuthenticationService/GetAuthCodeResponse")]
+        UnitTest.ServiceReference1.Response GetAuthCode();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/GetToken", ReplyAction="http://tempuri.org/IAuthenticationService/GetTokenResponse")]
-        System.Threading.Tasks.Task<UnitTest.ServiceReference1.Response> GetTokenAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/Login", ReplyAction="http://tempuri.org/IAuthenticationService/LoginResponse")]
-        UnitTest.ServiceReference1.Response Login(string username, string password, string mobilenumber);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/GetAuthCode", ReplyAction="http://tempuri.org/IAuthenticationService/GetAuthCodeResponse")]
+        System.Threading.Tasks.Task<UnitTest.ServiceReference1.Response> GetAuthCodeAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/Login", ReplyAction="http://tempuri.org/IAuthenticationService/LoginResponse")]
-        System.Threading.Tasks.Task<UnitTest.ServiceReference1.Response> LoginAsync(string username, string password, string mobilenumber);
+        UnitTest.ServiceReference1.Response Login(string username, string password, string mobilenumber, short userType);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/Login", ReplyAction="http://tempuri.org/IAuthenticationService/LoginResponse")]
+        System.Threading.Tasks.Task<UnitTest.ServiceReference1.Response> LoginAsync(string username, string password, string mobilenumber, short userType);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/Logout", ReplyAction="http://tempuri.org/IAuthenticationService/LogoutResponse")]
         UnitTest.ServiceReference1.Response Logout(string userId, string authCode);
@@ -808,6 +808,24 @@ namespace UnitTest.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/UpdateVendorBaseRate", ReplyAction="http://tempuri.org/IAuthenticationService/UpdateVendorBaseRateResponse")]
         System.Threading.Tasks.Task<UnitTest.ServiceReference1.Response> UpdateVendorBaseRateAsync(string vendorId, double baseRate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/GetVendorRatings", ReplyAction="http://tempuri.org/IAuthenticationService/GetVendorRatingsResponse")]
+        UnitTest.ServiceReference1.Response GetVendorRatings(string vendorId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/GetVendorRatings", ReplyAction="http://tempuri.org/IAuthenticationService/GetVendorRatingsResponse")]
+        System.Threading.Tasks.Task<UnitTest.ServiceReference1.Response> GetVendorRatingsAsync(string vendorId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/GetVendorOverallRatings", ReplyAction="http://tempuri.org/IAuthenticationService/GetVendorOverallRatingsResponse")]
+        UnitTest.ServiceReference1.Response GetVendorOverallRatings(string vendorId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/GetVendorOverallRatings", ReplyAction="http://tempuri.org/IAuthenticationService/GetVendorOverallRatingsResponse")]
+        System.Threading.Tasks.Task<UnitTest.ServiceReference1.Response> GetVendorOverallRatingsAsync(string vendorId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/GetVendorOrders", ReplyAction="http://tempuri.org/IAuthenticationService/GetVendorOrdersResponse")]
+        UnitTest.ServiceReference1.Response GetVendorOrders(string vendorId, int orderStatusId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/GetVendorOrders", ReplyAction="http://tempuri.org/IAuthenticationService/GetVendorOrdersResponse")]
+        System.Threading.Tasks.Task<UnitTest.ServiceReference1.Response> GetVendorOrdersAsync(string vendorId, int orderStatusId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -837,20 +855,20 @@ namespace UnitTest.ServiceReference1 {
                 base(binding, remoteAddress) {
         }
         
-        public UnitTest.ServiceReference1.Response GetToken() {
-            return base.Channel.GetToken();
+        public UnitTest.ServiceReference1.Response GetAuthCode() {
+            return base.Channel.GetAuthCode();
         }
         
-        public System.Threading.Tasks.Task<UnitTest.ServiceReference1.Response> GetTokenAsync() {
-            return base.Channel.GetTokenAsync();
+        public System.Threading.Tasks.Task<UnitTest.ServiceReference1.Response> GetAuthCodeAsync() {
+            return base.Channel.GetAuthCodeAsync();
         }
         
-        public UnitTest.ServiceReference1.Response Login(string username, string password, string mobilenumber) {
-            return base.Channel.Login(username, password, mobilenumber);
+        public UnitTest.ServiceReference1.Response Login(string username, string password, string mobilenumber, short userType) {
+            return base.Channel.Login(username, password, mobilenumber, userType);
         }
         
-        public System.Threading.Tasks.Task<UnitTest.ServiceReference1.Response> LoginAsync(string username, string password, string mobilenumber) {
-            return base.Channel.LoginAsync(username, password, mobilenumber);
+        public System.Threading.Tasks.Task<UnitTest.ServiceReference1.Response> LoginAsync(string username, string password, string mobilenumber, short userType) {
+            return base.Channel.LoginAsync(username, password, mobilenumber, userType);
         }
         
         public UnitTest.ServiceReference1.Response Logout(string userId, string authCode) {
@@ -923,6 +941,30 @@ namespace UnitTest.ServiceReference1 {
         
         public System.Threading.Tasks.Task<UnitTest.ServiceReference1.Response> UpdateVendorBaseRateAsync(string vendorId, double baseRate) {
             return base.Channel.UpdateVendorBaseRateAsync(vendorId, baseRate);
+        }
+        
+        public UnitTest.ServiceReference1.Response GetVendorRatings(string vendorId) {
+            return base.Channel.GetVendorRatings(vendorId);
+        }
+        
+        public System.Threading.Tasks.Task<UnitTest.ServiceReference1.Response> GetVendorRatingsAsync(string vendorId) {
+            return base.Channel.GetVendorRatingsAsync(vendorId);
+        }
+        
+        public UnitTest.ServiceReference1.Response GetVendorOverallRatings(string vendorId) {
+            return base.Channel.GetVendorOverallRatings(vendorId);
+        }
+        
+        public System.Threading.Tasks.Task<UnitTest.ServiceReference1.Response> GetVendorOverallRatingsAsync(string vendorId) {
+            return base.Channel.GetVendorOverallRatingsAsync(vendorId);
+        }
+        
+        public UnitTest.ServiceReference1.Response GetVendorOrders(string vendorId, int orderStatusId) {
+            return base.Channel.GetVendorOrders(vendorId, orderStatusId);
+        }
+        
+        public System.Threading.Tasks.Task<UnitTest.ServiceReference1.Response> GetVendorOrdersAsync(string vendorId, int orderStatusId) {
+            return base.Channel.GetVendorOrdersAsync(vendorId, orderStatusId);
         }
     }
 }

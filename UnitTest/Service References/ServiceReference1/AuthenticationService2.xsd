@@ -1,46 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Tasko.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Tasko.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:complexType name="Order">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="CustomerName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Location" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="OrderId" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="OrderStatus" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="OrderStatusId" type="xs:short" />
-      <xs:element minOccurs="0" name="RequestedDate" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="ServiceId" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ServiceName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="VendorId" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="VendorName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="VendorServiceId" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Order" nillable="true" type="tns:Order" />
-  <xs:complexType name="ArrayOfVendorService">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="VendorService" nillable="true" type="tns:VendorService" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfVendorService" nillable="true" type="tns:ArrayOfVendorService" />
-  <xs:complexType name="VendorService">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="IsActive" type="xs:boolean" />
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="VendorService" nillable="true" type="tns:VendorService" />
-  <xs:complexType name="User">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="MobileNumber" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PassWord" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="User" nillable="true" type="tns:User" />
   <xs:complexType name="Vendor">
     <xs:sequence>
       <xs:element minOccurs="0" name="ActiveTimePerDay" type="xs:dateTime" />
@@ -58,4 +17,45 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Vendor" nillable="true" type="tns:Vendor" />
+  <xs:complexType name="VendorService">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsActive" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="VendorService" nillable="true" type="tns:VendorService" />
+  <xs:complexType name="ArrayOfVendorService">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="VendorService" nillable="true" type="tns:VendorService" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfVendorService" nillable="true" type="tns:ArrayOfVendorService" />
+  <xs:complexType name="User">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MobileNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PassWord" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="User" nillable="true" type="tns:User" />
+  <xs:complexType name="Order">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Location" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderStatusId" type="xs:short" />
+      <xs:element minOccurs="0" name="RequestedDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ServiceId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ServiceName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VendorId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VendorName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VendorServiceId" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Order" nillable="true" type="tns:Order" />
 </xs:schema>

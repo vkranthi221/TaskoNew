@@ -13,6 +13,51 @@ namespace Tasko.Repository
     public static class VendorData
     {
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static string InsertAuthCode()
+        {
+            Vendor objVendor = new Vendor();
+            
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_InsertAuthCode");
+            if (reader.Read())
+            {
+                return BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
+            }
+
+            return string.Empty;
+        }
+
+        public static bool ValidateAuthCode(string authCode)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pAuthCode", DbType.Binary, BinaryConverter.ConvertStringToByte(authCode)));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_ValidateAuthCode");
+
+            if (reader.Read())
+            {
+                return (bool)reader["IsValid"];
+            }
+            return false;
+        
+        }
+
+        public static bool ValidateTokenCode(string tokenCode, string userId)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pTokenCode", DbType.Binary, BinaryConverter.ConvertStringToByte(tokenCode)));
+            objParameters.Add(SqlHelper.CreateParameter("@pUserId", DbType.Binary, BinaryConverter.ConvertStringToByte(userId)));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_ValidateTokenCode");
+
+            if (reader.Read())
+            {
+                return (bool)reader["IsValid"];
+            }
+            return false;
+
+        }
+        /// <summary>
         /// Gets the vendor.
         /// </summary>
         /// <param name="vendorId">The vendor identifier.</param>

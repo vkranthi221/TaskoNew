@@ -17,11 +17,21 @@ namespace Tasko
         /// Gets the token.
         /// </summary>
         /// <returns>Response Object</returns>
+        //[OperationContract]
+        //[WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+        //    BodyStyle = WebMessageBodyStyle.Bare,
+        //    UriTemplate = "auth")]
+        //Response GetToken();
+
+        /// <summary>
+        /// Gets the token.
+        /// </summary>
+        /// <returns>Response Object</returns>
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "auth")]
-        Response GetToken();
+        Response GetAuthCode();
 
         /// <summary>
         /// Logins the specified username.
@@ -33,7 +43,7 @@ namespace Tasko
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response Login(string username, string password, string mobilenumber);
+        Response Login(string username, string password, string mobilenumber, Int16 userType);
 
 
         [OperationContract]

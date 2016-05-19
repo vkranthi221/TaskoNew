@@ -8,11 +8,11 @@
       <xsd:import schemaLocation="http://localhost/Tasko/AuthenticationService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Tasko.Model" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IAuthenticationService_GetToken_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetToken" />
+  <wsdl:message name="IAuthenticationService_GetAuthCode_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAuthCode" />
   </wsdl:message>
-  <wsdl:message name="IAuthenticationService_GetToken_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetTokenResponse" />
+  <wsdl:message name="IAuthenticationService_GetAuthCode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAuthCodeResponse" />
   </wsdl:message>
   <wsdl:message name="IAuthenticationService_Login_InputMessage">
     <wsdl:part name="parameters" element="tns:Login" />
@@ -74,10 +74,28 @@
   <wsdl:message name="IAuthenticationService_UpdateVendorBaseRate_OutputMessage">
     <wsdl:part name="parameters" element="tns:UpdateVendorBaseRateResponse" />
   </wsdl:message>
+  <wsdl:message name="IAuthenticationService_GetVendorRatings_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetVendorRatings" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_GetVendorRatings_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetVendorRatingsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_GetVendorOverallRatings_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetVendorOverallRatings" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_GetVendorOverallRatings_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetVendorOverallRatingsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_GetVendorOrders_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetVendorOrders" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_GetVendorOrders_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetVendorOrdersResponse" />
+  </wsdl:message>
   <wsdl:portType name="IAuthenticationService">
-    <wsdl:operation name="GetToken">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/GetToken" message="tns:IAuthenticationService_GetToken_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/GetTokenResponse" message="tns:IAuthenticationService_GetToken_OutputMessage" />
+    <wsdl:operation name="GetAuthCode">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/GetAuthCode" message="tns:IAuthenticationService_GetAuthCode_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/GetAuthCodeResponse" message="tns:IAuthenticationService_GetAuthCode_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="Login">
       <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/Login" message="tns:IAuthenticationService_Login_InputMessage" />
@@ -119,11 +137,23 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/UpdateVendorBaseRate" message="tns:IAuthenticationService_UpdateVendorBaseRate_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/UpdateVendorBaseRateResponse" message="tns:IAuthenticationService_UpdateVendorBaseRate_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetVendorRatings">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/GetVendorRatings" message="tns:IAuthenticationService_GetVendorRatings_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/GetVendorRatingsResponse" message="tns:IAuthenticationService_GetVendorRatings_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetVendorOverallRatings">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/GetVendorOverallRatings" message="tns:IAuthenticationService_GetVendorOverallRatings_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/GetVendorOverallRatingsResponse" message="tns:IAuthenticationService_GetVendorOverallRatings_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetVendorOrders">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/GetVendorOrders" message="tns:IAuthenticationService_GetVendorOrders_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/GetVendorOrdersResponse" message="tns:IAuthenticationService_GetVendorOrders_OutputMessage" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="basicbinding_IAuthenticationService" type="tns:IAuthenticationService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetToken">
-      <soap:operation soapAction="http://tempuri.org/IAuthenticationService/GetToken" style="document" />
+    <wsdl:operation name="GetAuthCode">
+      <soap:operation soapAction="http://tempuri.org/IAuthenticationService/GetAuthCode" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -214,6 +244,33 @@
     </wsdl:operation>
     <wsdl:operation name="UpdateVendorBaseRate">
       <soap:operation soapAction="http://tempuri.org/IAuthenticationService/UpdateVendorBaseRate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVendorRatings">
+      <soap:operation soapAction="http://tempuri.org/IAuthenticationService/GetVendorRatings" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVendorOverallRatings">
+      <soap:operation soapAction="http://tempuri.org/IAuthenticationService/GetVendorOverallRatings" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVendorOrders">
+      <soap:operation soapAction="http://tempuri.org/IAuthenticationService/GetVendorOrders" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

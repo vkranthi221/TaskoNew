@@ -17,22 +17,48 @@ namespace Tasko
     // NOTE: In order to launch WCF Test Client for testing this service, please select AuthenticationService.svc or AuthenticationService.svc.cs at the Solution Explorer and start debugging.
     public class AuthenticationService : IAuthenticationService
     {
-        private static string AppId = "E90D7ECB-2935-419D-B04B-E3436FC6537A";
+        private static string AppId = "E90D7ECB2935419DB04BE3436FC6537A";
         private static string TokenId = "";
         private static User user = new User() { UserName = "krishnag", PassWord = "admin123", Name = "Krishna", Id = "1000", MobileNumber = "9738349780" };
-        public Response GetToken()
+        //public Response GetToken()
+        //{
+        //    Response r = new Response();
+        //    IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
+        //    WebHeaderCollection headers = request.Headers;
+        //    string appId = headers["X-APIKey"];
+        //    if (appId == AppId)
+        //    {
+        //        TokenId = Guid.NewGuid().ToString();
+        //        r.Error = false;
+        //        r.Message = "Authentication Successful";
+        //        r.Status = 200;
+        //        r.Data = TokenId;
+        //    }
+        //    else
+        //    {
+        //        r.Error = true;
+        //        r.Message = "Invalid Api Id";
+        //        r.Status = 400;
+        //    }
+
+        //    return r;
+        //}
+
+        public Response GetAuthCode()
         {
             Response r = new Response();
             IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
             WebHeaderCollection headers = request.Headers;
+            string authCode = string.Empty;
             string appId = headers["X-APIKey"];
             if (appId == AppId)
             {
-                TokenId = Guid.NewGuid().ToString();
+                //authCode = Guid.NewGuid().ToString();
+                authCode  = VendorData.InsertAuthCode();
                 r.Error = false;
                 r.Message = "Authentication Successful";
                 r.Status = 200;
-                r.Data = TokenId;
+                r.Data = authCode;
             }
             else
             {
@@ -51,14 +77,34 @@ namespace Tasko
         /// <param name="password">The password.</param>
         /// <param name="mobilenumber">The mobilenumber.</param>
         /// <returns>Response Object</returns>
-        public Response Login(string username, string password, string mobilenumber)
+        public Response Login(string username, string password, string mobilenumber, Int16 userType)
         {
+            
             Response r = new Response();
+            IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
+            WebHeaderCollection headers = request.Headers;
+            string token = string.Empty;
+            //string authCode = string.Empty;
+            string authCode = headers["Auth_Code"];
             //IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
             //WebHeaderCollection headers = request.Headers;
             //string token = headers["X-APIToken"];
+            if (!string.IsNullOrEmpty(authCode))
+            {
+                if (VendorData.ValidateAuthCode(authCode) == true)
+                    token = VendorData.Login(username, password, mobilenumber, userType); // 1 is vendor
+                if (string.IsNullOrEmpty(token))
+                {
+                    r.Message = "Invalid Credentials";
+                }
+            }
+            else
+            {
+                r.Message = "Invalid AuthCode";
+            }
 
-            string authCode = VendorData.Login(username, password, mobilenumber, 1); // 1 is vendor
+
+            //string Token = VendorData.Login(username, password, mobilenumber, userType); // 1 is vendor
             //if (token == TokenId&& (user.UserName==username || user.MobileNumber == mobilenumber) && user.PassWord==password)
             //{
             //    r.Error = false;
@@ -73,7 +119,7 @@ namespace Tasko
             //    r.Status = 400;
             //}
 
-            if (!string.IsNullOrEmpty(authCode))
+            if (!string.IsNullOrEmpty(token))
             {
                 r.Error = false;
                 r.Message = "Login Successful";
@@ -83,7 +129,6 @@ namespace Tasko
             else
             {
                 r.Error = true;
-                r.Message = "Invalid Credentials";
                 r.Status = 400;
             }
 
@@ -126,8 +171,21 @@ namespace Tasko
         public Response GetVendorDetails(string vendorId)
         {
             Response r = new Response();
-
-            Vendor objVendor = VendorData.GetVendor(vendorId);
+            r.Message = "Vendor not found";
+            IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
+            WebHeaderCollection headers = request.Headers;
+            string tokenCode = headers["Token_Code"];
+            string userId = headers["User_Id"];
+            Vendor objVendor = null;
+            if (VendorData.ValidateTokenCode(tokenCode, userId))
+            {
+                objVendor = VendorData.GetVendor(vendorId);
+            }
+            else 
+            {
+                r.Message = "Invalid AuthCode";
+            }
+            //Vendor objVendor = VendorData.GetVendor(vendorId);
 
             if (objVendor != null)
             {
@@ -139,7 +197,7 @@ namespace Tasko
             else
             {
                 r.Error = true;
-                r.Message = "Vendor not found";
+                //r.Message = "Vendor not found";
                 r.Status = 400;
             }
 
@@ -154,8 +212,22 @@ namespace Tasko
         public Response GetOrderDetails(string orderId)
         {
             Response r = new Response();
+            r.Message = "Order not found";
+            IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
+            WebHeaderCollection headers = request.Headers;
+            string tokenCode = headers["Token_Code"];
+            string userId = headers["User_Id"];
+            Order objOrder = null;
+            if (VendorData.ValidateTokenCode(tokenCode, userId))
+            {
+                objOrder = VendorData.GetOrderDetails(orderId);
+            }
+            else 
+            {
+                r.Message = "Invalid token code";
+            }
 
-            Order objOrder = VendorData.GetOrderDetails(orderId);
+            //Order objOrder = VendorData.GetOrderDetails(orderId);
 
             if (objOrder != null)
             {
@@ -167,7 +239,6 @@ namespace Tasko
             else
             {
                 r.Error = true;
-                r.Message = "Order not found";
                 r.Status = 400;
             }
 
@@ -182,8 +253,20 @@ namespace Tasko
         public Response GetVendorServices(string vendorId)
         {
             Response r = new Response();
-
-            List<VendorService> vendorServices = VendorData.GetVendorServices(vendorId);
+            r.Message = "No services available";
+            IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
+            WebHeaderCollection headers = request.Headers;
+            string tokenCode = headers["Token_Code"];
+            string userId = headers["User_Id"];
+            List<VendorService> vendorServices = null;
+            if (VendorData.ValidateTokenCode(tokenCode, userId))
+            {
+                vendorServices = VendorData.GetVendorServices(vendorId);
+            }
+            else
+            {
+                r.Message = "Invalid token code";
+            }
 
             if (vendorServices != null)
             {
@@ -210,8 +293,21 @@ namespace Tasko
         public Response GetVendorSubServices(string vendorServiceId)
         {
             Response r = new Response();
-
-            List<VendorService> vendorSubServices = VendorData.GetVendorSubServices(vendorServiceId);
+            r.Message = "No services available";
+            IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
+            WebHeaderCollection headers = request.Headers;
+            string tokenCode = headers["Token_Code"];
+            string userId = headers["User_Id"];
+            List<VendorService> vendorSubServices = null;
+            if(VendorData.ValidateTokenCode(tokenCode, userId))
+            {
+                 vendorSubServices = VendorData.GetVendorSubServices(vendorServiceId);
+            }
+            else
+            {
+                r.Message = "Invalid token code";
+            }
+            //List<VendorService> vendorSubServices = VendorData.GetVendorSubServices(vendorServiceId);
 
             if (vendorSubServices != null)
             {
@@ -223,7 +319,7 @@ namespace Tasko
             else
             {
                 r.Error = true;
-                r.Message = "No services available";
+                //r.Message = "No services available";
                 r.Status = 400;
             }
 
@@ -239,10 +335,22 @@ namespace Tasko
         public Response UpdateOrderStatus(string orderId, short orderStatus)
         {
             Response r = new Response();
+            r.Message = "Error on updating OrderStatus";
+            IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
+            WebHeaderCollection headers = request.Headers;
+            string tokenCode = headers["Token_Code"];
+            string userId = headers["User_Id"];
 
             try
             {
-                VendorData.UpdateOrderStatus(orderId, orderStatus);
+                if (VendorData.ValidateTokenCode(tokenCode, userId))
+                {
+                    VendorData.UpdateOrderStatus(orderId, orderStatus);
+                }
+                else
+                {
+                    r.Message = "Invalid token code";
+                }
 
                 r.Error = false;
                 r.Message = "success";
@@ -251,7 +359,7 @@ namespace Tasko
             catch
             {
                 r.Error = true;
-                r.Message = "Error on updating OrderStatus";
+                //r.Message = "Error on updating OrderStatus";
                 r.Status = 400;
             }
 
