@@ -603,26 +603,27 @@ end
 End
 GO
 
-CREATE PROCEDURE [dbo].[usp_ValidateTokenCode]
+CREATE PROCEDURE [dbo].[usp_ValidateAuthCode]
 (
-@pTokenCode binary(16),
-@pUserId binary(16)
+@pAuthCode binary(16)
 )
 AS
 BEGIN
 
 SET NOCOUNT ON;
 declare @count int
-select @count = count(1) from LOGGEDON_USER where USER_ID = @pUserId and AUTH_CODE = @pTokenCode
-
+declare @isvalid bit
+select @count = count(1) from Auth_Code where code = @pAuthCode
 if(@count >0)
 BEGIN
-select 'true' as IsValid
+delete from Auth_Code where code = @pAuthCode
+set @isvalid = 1
 END
 Else
 begin 
-	select 'false' as IsValid
+	set @isvalid =0
 end
 
 End
+
 GO
