@@ -425,7 +425,7 @@ namespace Tasko
             else
             {
                 r.Error = true;
-                r.Message = "No ratings for vendor";
+                r.Message = "No orders for vendor";
                 r.Status = 400;
             }
 
