@@ -38,5 +38,14 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public bool IsActive { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ImageURL.
+        /// </summary>
+        /// <value>
+        /// The ImageURL.
+        /// </value>
+        [DataMember]
+        public string ImageURL { get; set; }
     }
 }

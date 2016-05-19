@@ -514,14 +514,16 @@ namespace Tasko
         /// </summary>
         /// <param name="vendorId">The vendor identifier.</param>
         /// <param name="orderStatusId">The order status id.</param>
+        /// <param name="pageNumber">The page number.</param>
+        /// <param name="recordsPerPage">records per page.</param>
         /// <returns>
         /// Response Object
         /// </returns>
-        public Response GetVendorOrders(string vendorId, int orderStatusId)
+        public Response GetVendorOrders(string vendorId, int orderStatusId, int pageNumber, int recordsPerPage)
         {
             Response r = new Response();
 
-            List<Order> objOrders = VendorData.GetVendorOrders(vendorId, orderStatusId);
+            List<Order> objOrders = VendorData.GetVendorOrders(vendorId, orderStatusId, pageNumber, recordsPerPage);
 
             if (objOrders != null)
             {

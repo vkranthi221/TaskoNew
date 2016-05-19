@@ -195,6 +195,7 @@ namespace Tasko.Repository
                     service.Id = BinaryConverter.ConvertByteToString((byte[])row["VENDOR_SERVICE_ID"]);
                     service.Name = row["SERVICE_NAME"].ToString();
                     service.IsActive = Convert.ToBoolean(row["IS_VENDOR_SERVICE_ACTIVE"]);
+                    service.ImageURL = row["IMAGE_URL"].ToString();
                     vendorServices.Add(service);
                 }
             }
@@ -222,6 +223,7 @@ namespace Tasko.Repository
                     service.Id = BinaryConverter.ConvertByteToString((byte[])row["VENDOR_SERVICE_ID"]);
                     service.Name = row["SERVICE_NAME"].ToString();
                     service.IsActive = Convert.ToBoolean(row["IS_VENDOR_SERVICE_ACTIVE"]);
+                    service.ImageURL = row["IMAGE_URL"].ToString();
                     vendorServices.Add(service);
                 }
             }
@@ -322,6 +324,7 @@ namespace Tasko.Repository
                 rating.Punctuality = Convert.ToDecimal(reader["PUNCTUALITY"]);
                 rating.Courtesy = Convert.ToDecimal(reader["COURTESY"]);
                 rating.Price = Convert.ToDecimal(reader["PRICE"]);
+                rating.OverAllRating = Convert.ToDecimal(reader["TOTAL"]);
             }
 
             reader.Close();
@@ -334,13 +337,17 @@ namespace Tasko.Repository
         /// </summary>
         /// <param name="vendorId">The vendor identifier.</param>
         /// <param name="orderStatusId">The order status identifier.</param>
+        /// <param name="pageNumber">The page number.</param>
+        /// <param name="recordsPerPage">Records per page.</param>
         /// <returns>Vendor Orders</returns>
-        public static List<Order> GetVendorOrders(string vendorId, int orderStatusId)
+        public static List<Order> GetVendorOrders(string vendorId, int orderStatusId, int pageNumber, int recordsPerPage)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.String, vendorId));
-            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.String, vendorId));
+            objParameters.Add(SqlHelper.CreateParameter("@pORDERSTATUSID", DbType.Int32, orderStatusId));
+            objParameters.Add(SqlHelper.CreateParameter("@pRECORDSPERPAGE", DbType.Int32, recordsPerPage));
+            objParameters.Add(SqlHelper.CreateParameter("@pPAGENO", DbType.Int32, pageNumber));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorOrders", objParameters.ToArray());
             List<Order> orders = new List<Order>();
 
@@ -349,7 +356,8 @@ namespace Tasko.Repository
                 Order order = new Order();
                 order.OrderId = reader["ORDER_ID"].ToString();
                 order.RequestedDate = Convert.ToDateTime(reader["REQUESTED_DATE"]);
-                order.ServiceName = reader["NAME"].ToString();
+                order.ServiceName = reader["SERVICENAME"].ToString();
+                order.OrderStatus = reader["ORDERSTATUSNAME"].ToString();
                 orders.Add(order);
             }
 
