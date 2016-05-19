@@ -20,6 +20,19 @@ GO
 ALTER TABLE [dbo].[SERVICES] CHECK CONSTRAINT [PARENT_SERVICE_ID_FK]
 GO
 
+CREATE TABLE [dbo].[LOGGEDON_USER](
+	[USER_ID] [binary](16) NOT NULL,
+	[AUTH_CODE] [binary](16) NOT NULL
+) ON [PRIMARY]
+
+GO
+
+CREATE TABLE [dbo].[Auth_Code](
+	[code] [binary](16) NULL
+) ON [PRIMARY]
+
+GO
+
 CREATE TABLE [dbo].[ORDER_STATUS](
 	[ORDER_STATUS_ID] int NOT NULL,
 	[NAME] VARCHAR(MAX) NOT NULL,
@@ -44,6 +57,7 @@ CREATE TABLE [dbo].[VENDOR](
 	[VENDOR_ID] Binary (16) NOT NULL ,
 	[NAME] VARCHAR(MAX) NOT NULL,
 	[MOBILE_NUMBER] [varchar](50) NOT NULL,
+	[PASSWORD] VARCHAR(MAX) NOT NULL,
 	[ADDRESS] VARCHAR(MAX) NOT NULL,
 	[PHOTO] [image] NULL,
 	[EMPLOYEE_COUNT] int NOT NULL,
@@ -495,4 +509,120 @@ round(sum(VR.SERVICE_QUALITY + VR.PUNCTUALITY + VR.COURTESY + VR.PRICE)/4,0) AS 
   Group by VR.VENDOR_RATING_ID, VR.SERVICE_QUALITY, VR.PUNCTUALITY, VR.COURTESY,VR.PRICE, VR.REVIEW_DATE, VR.COMMENTS, CUST.NAME
 END
 
+GO
+
+CREATE PROCEDURE [dbo].[usp_LOGIN]
+(
+	@pUserId Varchar(50),
+	@pPassword nvarchar(10),
+	@pMobileNumber varchar(50),
+	@pUserType smallint
+
+)
+AS
+BEGIN
+
+SET NOCOUNT ON;
+declare @AuthCode binary(16)
+
+declare @UserID binary(16)
+set @authCode = NEWID()
+ if (@pUserType = 1)
+ BEGIN
+ IF @pUserId IS NOT NULL AND LEN(@pUserId) > 0 --username is passed
+	BEGIN
+		select @UserID= VENDOR_ID from vendor where NAME = @pUserId and PASSWORD = @pPassword
+	END
+ ELSE IF @pMobileNumber IS NOT NULL AND LEN(@pPassword) >0 
+	BEGIN
+		select @UserID= VENDOR_ID from vendor where MOBILE_NUMBER = @pMobileNumber and PASSWORD = @pPassword
+	END
+End 
+
+if(@UserID >0)
+BEGIN
+	insert into loggedon_user values(@UserID, @AuthCode)
+END
+SELECT @AuthCode as AUTH_CODE
+END
+
+
+GO
+
+CREATE PROCEDURE [dbo].[usp_Logout]
+(
+	@pUserId binary(16),
+	@pAuthCode binary(16)
+)
+AS
+BEGIN
+
+
+SET NOCOUNT ON;
+
+delete from Loggedon_user where user_id = @pUserId and AUTH_code = @pAuthCode
+END
+
+GO
+
+CREATE PROCEDURE [dbo].[usp_InsertAuthCode]
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+declare @authcode binary(16)
+set @authcode = newid()
+Insert into auth_code values(@authcode) 
+select @authcode as Auth_Code
+END
+
+
+GO
+
+Create PROCEDURE [dbo].[usp_ValidateAuthCode]
+(
+@pAuthCode binary(16)
+)
+AS
+BEGIN
+
+SET NOCOUNT ON;
+declare @count int
+select @count = count(1) from Auth_Code where code = @pAuthCode
+if(@count >0)
+BEGIN
+delete from Auth_Code where code = @pAuthCode
+select 'true' as IsValid
+END
+Else
+begin 
+	select 'false' as IsValid
+end
+
+End
+GO
+
+CREATE PROCEDURE [dbo].[usp_ValidateTokenCode]
+(
+@pTokenCode binary(16),
+@pUserId binary(16)
+)
+AS
+BEGIN
+
+SET NOCOUNT ON;
+declare @count int
+select @count = count(1) from LOGGEDON_USER where USER_ID = @pUserId and AUTH_CODE = @pTokenCode
+
+if(@count >0)
+BEGIN
+select 'true' as IsValid
+END
+Else
+begin 
+	select 'false' as IsValid
+end
+
+End
 GO

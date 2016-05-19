@@ -49,17 +49,7 @@ namespace Tasko
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response Logout(string userId, string authCode);
-
-        /// <summary>
-        /// Gets the user details.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns>Response Object</returns>
-        [OperationContract]
-        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response GetUserDetails(string id);
+        Response Logout();
 
         /// <summary>
         /// Gets the vendor details.
