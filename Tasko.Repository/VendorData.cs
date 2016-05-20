@@ -13,9 +13,9 @@ namespace Tasko.Repository
     public static class VendorData
     {
         /// <summary>
-        /// 
+        /// Inserts the authentication code.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Auth Code</returns>
         public static string InsertAuthCode()
         {
             Vendor objVendor = new Vendor();
@@ -29,6 +29,11 @@ namespace Tasko.Repository
             return string.Empty;
         }
 
+        /// <summary>
+        /// Validates the authentication code.
+        /// </summary>
+        /// <param name="authCode">The authentication code.</param>
+        /// <returns>true/false</returns>
         public static bool ValidateAuthCode(string authCode)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
@@ -43,6 +48,12 @@ namespace Tasko.Repository
         
         }
 
+        /// <summary>
+        /// Validates the token code.
+        /// </summary>
+        /// <param name="tokenCode">The token code.</param>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>tue/false</returns>
         public static bool ValidateTokenCode(string tokenCode, string userId)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
@@ -97,7 +108,7 @@ namespace Tasko.Repository
         /// <param name="passowrd">The passowrd.</param>
         /// <param name="mobileNumber">The mobile number.</param>
         /// <param name="userType">Type of the user.</param>
-        /// <returns></returns>
+        /// <returns>auth code</returns>
         public static string Login(string userName, string passowrd, string mobileNumber, Int16 userType)
         {
             Vendor objVendor = new Vendor();

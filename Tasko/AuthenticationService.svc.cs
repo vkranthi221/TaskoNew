@@ -17,33 +17,12 @@ namespace Tasko
     // NOTE: In order to launch WCF Test Client for testing this service, please select AuthenticationService.svc or AuthenticationService.svc.cs at the Solution Explorer and start debugging.
     public class AuthenticationService : IAuthenticationService
     {
-        private static string AppId = "E90D7ECB2935419DB04BE3436FC6537A";
-        private static string TokenId = "";
-        private static User user = new User() { UserName = "krishnag", PassWord = "admin123", Name = "Krishna", Id = "1000", MobileNumber = "9738349780" };
-        //public Response GetToken()
-        //{
-        //    Response r = new Response();
-        //    IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
-        //    WebHeaderCollection headers = request.Headers;
-        //    string appId = headers["X-APIKey"];
-        //    if (appId == AppId)
-        //    {
-        //        TokenId = Guid.NewGuid().ToString();
-        //        r.Error = false;
-        //        r.Message = "Authentication Successful";
-        //        r.Status = 200;
-        //        r.Data = TokenId;
-        //    }
-        //    else
-        //    {
-        //        r.Error = true;
-        //        r.Message = "Invalid Api Id";
-        //        r.Status = 400;
-        //    }
-
-        //    return r;
-        //}
-
+        /// <summary>
+        /// Gets the uthCode.
+        /// </summary>
+        /// <returns>
+        /// Response Object
+        /// </returns>
         public Response GetAuthCode()
         {
             Response r = new Response();
@@ -229,7 +208,6 @@ namespace Tasko
             {
                 r.Message = "Invalid token code";
             }
-            //List<VendorService> vendorSubServices = VendorData.GetVendorSubServices(vendorServiceId);
 
             if (vendorSubServices != null)
             {
@@ -516,6 +494,11 @@ namespace Tasko
 
             return r;
         }
+
+        /// <summary>
+        /// Validates the token.
+        /// </summary>
+        /// <returns>bool value</returns>
         private static bool ValidateToken()
         {
             IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
@@ -525,7 +508,6 @@ namespace Tasko
             bool isTokenValid = VendorData.ValidateTokenCode(tokenCode, userId);
             return isTokenValid;
         }
-
     }
 
 
