@@ -13,7 +13,7 @@ namespace Tasko
     [KnownType(typeof(Vendor))]
     [KnownType(typeof(VendorOverallRating))]
     [KnownType(typeof(VendorRating))]
-
+    [KnownType(typeof(List<VendorRating>))]
     [KnownType(typeof(VendorService))]
     [KnownType(typeof(List<VendorService>))]
     public class Response
