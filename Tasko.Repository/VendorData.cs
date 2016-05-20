@@ -284,7 +284,7 @@ namespace Tasko.Repository
             List<VendorRating> vendorRatings = new List<VendorRating>();
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
-            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.String, vendorId));
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorRating", objParameters.ToArray());
             while (reader.Read())
             {
@@ -314,7 +314,7 @@ namespace Tasko.Repository
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
-            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.String, vendorId));
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorRating", objParameters.ToArray());
             VendorOverallRating rating = new VendorOverallRating();
 
@@ -344,7 +344,7 @@ namespace Tasko.Repository
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
-            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.String, vendorId));
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
             objParameters.Add(SqlHelper.CreateParameter("@pORDERSTATUSID", DbType.Int32, orderStatusId));
             objParameters.Add(SqlHelper.CreateParameter("@pRECORDSPERPAGE", DbType.Int32, recordsPerPage));
             objParameters.Add(SqlHelper.CreateParameter("@pPAGENO", DbType.Int32, pageNumber));
