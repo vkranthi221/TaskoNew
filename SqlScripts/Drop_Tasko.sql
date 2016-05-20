@@ -54,7 +54,7 @@ DROP PROCEDURE [dbo].usp_UpdateOrderStatus
 GO
 DROP TABLE [dbo].[LOGGEDON_USER]
 GO
-DROP PROCEDURE [dbo].[Auth_Code]
+DROP TABLE [dbo].[Auth_Code]
 GO
 DROP PROCEDURE [dbo].[usp_LOGIN]
 GO
