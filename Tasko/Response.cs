@@ -8,9 +8,12 @@ using Tasko.Model;
 namespace Tasko
 {
     [DataContract]
-    [KnownType(typeof(User))]
     [KnownType(typeof(Order))]
+    [KnownType(typeof(User))]
     [KnownType(typeof(Vendor))]
+    [KnownType(typeof(VendorOverallRating))]
+    [KnownType(typeof(VendorRating))]
+
     [KnownType(typeof(VendorService))]
     [KnownType(typeof(List<VendorService>))]
     public class Response
