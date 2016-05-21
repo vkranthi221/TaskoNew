@@ -16,6 +16,7 @@ namespace Tasko
     [KnownType(typeof(List<VendorRating>))]
     [KnownType(typeof(VendorService))]
     [KnownType(typeof(List<VendorService>))]
+    [KnownType(typeof(List<Order>))]
     public class Response
     {
         [DataMember]
