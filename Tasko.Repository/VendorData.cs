@@ -296,7 +296,7 @@ namespace Tasko.Repository
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
-            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorRating", objParameters.ToArray());
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorRatings", objParameters.ToArray());
             while (reader.Read())
             {
                 VendorRating rating = new VendorRating();
@@ -326,7 +326,7 @@ namespace Tasko.Repository
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
-            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorRating", objParameters.ToArray());
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorOverallRating", objParameters.ToArray());
             VendorOverallRating rating = new VendorOverallRating();
 
             if (reader.Read())

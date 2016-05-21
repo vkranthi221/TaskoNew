@@ -539,13 +539,12 @@ set @authCode = NEWID()
 	END
 End 
 
-if(@UserID >0)
+if(@UserID is not null)
 BEGIN
 	insert into loggedon_user values(@UserID, @AuthCode)
 END
 SELECT @AuthCode as AUTH_CODE
 END
-
 
 GO
 

@@ -92,7 +92,7 @@ namespace Tasko.Model
         /// <value>
         /// The time spent on application.
         /// </value>
-        [DataMember]
+        //[DataMember]
         public DateTime TimeSpentOnApp { get; set; }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Tasko.Model
         /// <value>
         /// The active time per day.
         /// </value>
-        [DataMember]
+        //[DataMember]
         public DateTime ActiveTimePerDay { get; set; }
 
         /// <summary>
