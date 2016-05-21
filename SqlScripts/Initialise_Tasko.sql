@@ -6,12 +6,21 @@ GO
     
 -------- Services TestData --------------
 INSERT INTO [dbo].[Services] values(NEWID(),'Electrician',null,null)
-INSERT INTO [dbo].[Services] values(NEWID(),'Plumber',null,null)
-INSERT INTO [dbo].[Services] values(NEWID(),'Carpenter',null,null)
---- Sub services of Electrician Service
-INSERT INTO [dbo].[Services] values(NEWID(),'AC',(SELECT SERVICE_ID FROM [dbo].[Services] WHERE NAME ='Electrician'),null)
-INSERT INTO [dbo].[Services] values(NEWID(),'FAN and Cooler',(SELECT SERVICE_ID FROM [dbo].[Services] WHERE NAME ='Electrician'),null)
-INSERT INTO [dbo].[Services] values(NEWID(),'Tube Lights',(SELECT SERVICE_ID FROM [dbo].[Services] WHERE NAME ='Electrician'),null)
+INSERT INTO [dbo].[Services] values(NEWID(),'Microwave Service',null,null)
+INSERT INTO [dbo].[Services] values(NEWID(),'Refrigerator Service',null,null)
+INSERT INTO [dbo].[Services] values(NEWID(),'Pest Control',null,null)
+INSERT INTO [dbo].[Services] values(NEWID(),'Carpentry',null,null)
+INSERT INTO [dbo].[Services] values(NEWID(),'Water Purifier Installtion',null,null)
+INSERT INTO [dbo].[Services] values(NEWID(),'House Cleaning',null,null)
+INSERT INTO [dbo].[Services] values(NEWID(),'AC Installation',null,null)
+INSERT INTO [dbo].[Services] values(NEWID(),'Fully Automatic Washing Machine Service',null,null)
+INSERT INTO [dbo].[Services] values(NEWID(),'AC Service',null,null)
+INSERT INTO [dbo].[Services] values(NEWID(),'Semi-Automatic Washing Machine Service',null,null)
+INSERT INTO [dbo].[Services] values(NEWID(),'Bike Service',null,null)
+INSERT INTO [dbo].[Services] values(NEWID(),'Mixer Grinder Repair',null,null)
+INSERT INTO [dbo].[Services] values(NEWID(),'Electrician',null,null)
+INSERT INTO [dbo].[Services] values(NEWID(),'Water Purifier Service',null,null)
+
 SELECT * FROM [dbo].[Services]
   
 ------------ ID Proof TestData -----------
