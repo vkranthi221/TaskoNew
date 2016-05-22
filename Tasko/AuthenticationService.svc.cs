@@ -10,6 +10,7 @@ using Tasko.Common;
 using Tasko.Model;
 using Tasko.BL;
 using Tasko.Repository;
+using System.ServiceModel.Channels;
 
 namespace Tasko
 {
@@ -26,14 +27,24 @@ namespace Tasko
         public Response GetAuthCode()
         {
             Response r = new Response();
-            IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
-            string authCode = string.Empty;
-            authCode = VendorData.InsertAuthCode();
-            r.Error = false;
-            r.Message = "Authentication Successful";
-            r.Status = 200;
-            r.Data = authCode;
+            try
+            {
+                IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
+                string authCode = string.Empty;
+                authCode = VendorData.InsertAuthCode();
+                r.Error = false;
+                r.Message = "Authentication Successful";
+                r.Status = 200;
+                r.Data = authCode;
 
+            }
+            catch (Exception ex)
+            {
+                r.Message = "Authentication failed";
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+
+            }
             return r;
         }
 
@@ -48,35 +59,45 @@ namespace Tasko
         {
             
             Response r = new Response();
-            IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
-            WebHeaderCollection headers = request.Headers;
-            string token = string.Empty;
-            string authCode = headers["Auth_Code"];
-            if (!string.IsNullOrEmpty(authCode))
+            try
             {
-                if (VendorData.ValidateAuthCode(authCode))
-                    token = VendorData.Login(username, password, mobilenumber, userType); // 1 is vendor
-                if (string.IsNullOrEmpty(token))
+                IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
+                WebHeaderCollection headers = request.Headers;
+                string token = string.Empty;
+                string authCode = headers["Auth_Code"];
+                if (!string.IsNullOrEmpty(authCode))
                 {
-                    r.Message = "Invalid Credentials";
+                    if (VendorData.ValidateAuthCode(authCode))
+                        token = VendorData.Login(username, password, mobilenumber, userType); // 1 is vendor
+                    if (string.IsNullOrEmpty(token))
+                    {
+                        r.Message = "Invalid Credentials";
+                    }
                 }
-            }
-            else
-            {
-                r.Message = "Invalid AuthCode";
-            }
+                else
+                {
+                    r.Message = "Invalid AuthCode";
+                }
 
-            if (!string.IsNullOrEmpty(token))
-            {
-                r.Error = false;
-                r.Message = "Login Successful";
-                r.Status = 200;
-                r.Data = token;
+                if (!string.IsNullOrEmpty(token))
+                {
+                    r.Error = false;
+                    r.Message = "Login Successful";
+                    r.Status = 200;
+                    r.Data = token;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                }
+
             }
-            else
+            catch (Exception ex)
             {
                 r.Error = true;
-                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+
             }
 
             return r;
@@ -90,29 +111,38 @@ namespace Tasko
         public Response GetVendorDetails(string vendorId)
         {
             Response r = new Response();
-            bool isTokenValid = ValidateToken();
-            Vendor objVendor = null;
-            if (isTokenValid)
+            try
             {
-                objVendor = VendorData.GetVendor(vendorId);
-            }
-            else 
-            {
-                r.Message = "Invalid AuthCode";
-            }
+                bool isTokenValid = ValidateToken();
+                Vendor objVendor = null;
+                if (isTokenValid)
+                {
+                    objVendor = VendorData.GetVendor(vendorId);
+                }
+                else
+                {
+                    r.Message = "Invalid AuthCode";
+                }
 
-            if (objVendor != null)
-            {
-                r.Error = false;
-                r.Message = "success";
-                r.Status = 200;
-                r.Data = objVendor;
+                if (objVendor != null)
+                {
+                    r.Error = false;
+                    r.Message = "success";
+                    r.Status = 200;
+                    r.Data = objVendor;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Message = "Vendor not found";
+                    r.Status = 400;
+                }
+
             }
-            else
+            catch (Exception ex)
             {
                 r.Error = true;
-                r.Message = "Vendor not found";
-                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
             }
 
             return r;
@@ -126,29 +156,37 @@ namespace Tasko
         public Response GetOrderDetails(string orderId)
         {
             Response r = new Response();
-            bool isTokenValid = ValidateToken();
-            Order objOrder = null;
-            if (isTokenValid)
+            try
             {
-                objOrder = VendorData.GetOrderDetails(orderId);
-            }
-            else 
-            {
-                r.Message = "Invalid token code";
-            }
+                bool isTokenValid = ValidateToken();
+                Order objOrder = null;
+                if (isTokenValid)
+                {
+                    objOrder = VendorData.GetOrderDetails(orderId);
+                }
+                else
+                {
+                    r.Message = "Invalid token code";
+                }
 
-            if (objOrder != null)
-            {
-                r.Error = false;
-                r.Message = "success";
-                r.Status = 200;
-                r.Data = objOrder;
+                if (objOrder != null)
+                {
+                    r.Error = false;
+                    r.Message = "success";
+                    r.Status = 200;
+                    r.Data = objOrder;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Message = "Order not found";
+                    r.Status = 400;
+                }
             }
-            else
+            catch (Exception ex)
             {
                 r.Error = true;
-                r.Message = "Order not found";
-                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
             }
 
             return r;
@@ -162,29 +200,37 @@ namespace Tasko
         public Response GetVendorServices(string vendorId)
         {
             Response r = new Response();
-            bool isTokenValid = ValidateToken();
-            List<VendorService> vendorServices = null;
-            if (isTokenValid)
+            try
             {
-                vendorServices = VendorData.GetVendorServices(vendorId);
-            }
-            else
-            {
-                r.Message = "Invalid token code";
-            }
+                bool isTokenValid = ValidateToken();
+                List<VendorService> vendorServices = null;
+                if (isTokenValid)
+                {
+                    vendorServices = VendorData.GetVendorServices(vendorId);
+                }
+                else
+                {
+                    r.Message = "Invalid token code";
+                }
 
-            if (vendorServices != null)
-            {
-                r.Error = false;
-                r.Message = "success";
-                r.Status = 200;
-                r.Data = vendorServices;
+                if (vendorServices != null)
+                {
+                    r.Error = false;
+                    r.Message = "success";
+                    r.Status = 200;
+                    r.Data = vendorServices;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Message = "No services available";
+                    r.Status = 400;
+                }
             }
-            else
+            catch (Exception ex)
             {
                 r.Error = true;
-                r.Message = "No services available";
-                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
             }
 
             return r;
@@ -198,30 +244,39 @@ namespace Tasko
         public Response GetVendorSubServices(string vendorServiceId)
         {
             Response r = new Response();
-            bool isTokenValid = ValidateToken();
-            List<VendorService> vendorSubServices = null;
-            if(isTokenValid)
+            try
             {
-                 vendorSubServices = VendorData.GetVendorSubServices(vendorServiceId);
-            }
-            else
-            {
-                r.Message = "Invalid token code";
-            }
+                bool isTokenValid = ValidateToken();
+                List<VendorService> vendorSubServices = null;
+                if (isTokenValid)
+                {
+                    vendorSubServices = VendorData.GetVendorSubServices(vendorServiceId);
+                }
+                else
+                {
+                    r.Message = "Invalid token code";
+                }
 
-            if (vendorSubServices != null)
-            {
-                r.Error = false;
-                r.Message = "success";
-                r.Status = 200;
-                r.Data = vendorSubServices;
+                if (vendorSubServices != null)
+                {
+                    r.Error = false;
+                    r.Message = "success";
+                    r.Status = 200;
+                    r.Data = vendorSubServices;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Message = "No sub services available";
+                    r.Status = 400;
+                }
             }
-            else
+            catch (Exception ex)
             {
                 r.Error = true;
-                r.Message = "No sub services available";
-                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
             }
+
 
             return r;
         }
@@ -235,28 +290,36 @@ namespace Tasko
         public Response UpdateOrderStatus(string orderId, short orderStatus)
         {
             Response r = new Response();
-            bool isTokenValid = ValidateToken();
             try
             {
-                if (isTokenValid)
+                bool isTokenValid = ValidateToken();
+                try
                 {
-                    VendorData.UpdateOrderStatus(orderId, orderStatus);
-                    r.Error = false;
-                    r.Message = "success";
-                    r.Status = 200;
+                    if (isTokenValid)
+                    {
+                        VendorData.UpdateOrderStatus(orderId, orderStatus);
+                        r.Error = false;
+                        r.Message = "success";
+                        r.Status = 200;
+                    }
+                    else
+                    {
+                        r.Message = "Invalid token code";
+                        r.Error = true;
+                        r.Status = 400;
+                    }
                 }
-                else
+                catch
                 {
-                    r.Message = "Invalid token code";
                     r.Error = true;
+                    r.Message = "Error on updating OrderStatus";
                     r.Status = 400;
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 r.Error = true;
-                r.Message = "Error on updating OrderStatus";
-                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
             }
 
             return r;
@@ -288,13 +351,14 @@ namespace Tasko
                     r.Status = 400;
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 r.Error = true;
                 r.Message = "Error on updating Vendor Services";
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
                 r.Status = 400;
             }
-
+        
             return r;
         }
 
@@ -327,12 +391,14 @@ namespace Tasko
                      r.Status = 400;
                  }
             }
-            catch
+            catch(Exception ex)
             {
                 r.Error = true;
                 r.Message = "Error on updating Vendor Base Rate";
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
                 r.Status = 400;
             }
+
 
             return r;
         }
@@ -366,11 +432,12 @@ namespace Tasko
                     r.Status = 400;
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 r.Error = true;
                 r.Message = "Error on logout";
                 r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
             }
 
             return r;
@@ -386,31 +453,38 @@ namespace Tasko
         public Response GetVendorRatings(string vendorId)
         {
             Response r = new Response();
-            bool isTokenValid = ValidateToken();
-            if (isTokenValid)
+            try
             {
-                List<VendorRating> objVendorRatings = VendorData.GetVendorRatings(vendorId);
-                if (objVendorRatings != null)
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
                 {
-                    r.Error = false;
-                    r.Message = "success";
-                    r.Status = 200;
-                    r.Data = objVendorRatings;
+                    List<VendorRating> objVendorRatings = VendorData.GetVendorRatings(vendorId);
+                    if (objVendorRatings != null)
+                    {
+                        r.Error = false;
+                        r.Message = "success";
+                        r.Status = 200;
+                        r.Data = objVendorRatings;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Message = "No ratings for vendor";
+                        r.Status = 400;
+                    }
                 }
                 else
                 {
+                    r.Message = "Invalid token code";
                     r.Error = true;
-                    r.Message = "No ratings for vendor";
                     r.Status = 400;
                 }
             }
-            else
+            catch (Exception ex)
             {
-                r.Message = "Invalid token code";
                 r.Error = true;
-                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
             }
-
             return r;
         }
 
@@ -424,32 +498,39 @@ namespace Tasko
         public Response GetVendorOverallRatings(string vendorId)
         {
             Response r = new Response();
-            bool isTokenValid = ValidateToken();
-            if (isTokenValid)
+            try
             {
-                VendorOverallRating objVendorRatings = VendorData.GetVendorOverallRatings(vendorId);
-
-                if (objVendorRatings != null)
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
                 {
-                    r.Error = false;
-                    r.Message = "success";
-                    r.Status = 200;
-                    r.Data = objVendorRatings;
+                    VendorOverallRating objVendorRatings = VendorData.GetVendorOverallRatings(vendorId);
+
+                    if (objVendorRatings != null)
+                    {
+                        r.Error = false;
+                        r.Message = "success";
+                        r.Status = 200;
+                        r.Data = objVendorRatings;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Message = "No ratings for vendor";
+                        r.Status = 400;
+                    }
                 }
                 else
                 {
+                    r.Message = "Invalid token code";
                     r.Error = true;
-                    r.Message = "No ratings for vendor";
                     r.Status = 400;
                 }
             }
-            else
+            catch (Exception ex)
             {
-                r.Message = "Invalid token code";
                 r.Error = true;
-                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
             }
-
             return r;
         }
 
@@ -466,32 +547,39 @@ namespace Tasko
         public Response GetVendorOrders(string vendorId, int orderStatusId, int pageNumber, int recordsPerPage)
         {
             Response r = new Response();
-            bool isTokenValid = ValidateToken();
-            if (isTokenValid)
+            try
             {
-                List<Order> objOrders = VendorData.GetVendorOrders(vendorId, orderStatusId, pageNumber, recordsPerPage);
-
-                if (objOrders != null)
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
                 {
-                    r.Error = false;
-                    r.Message = "success";
-                    r.Status = 200;
-                    r.Data = objOrders;
+                    List<Order> objOrders = VendorData.GetVendorOrders(vendorId, orderStatusId, pageNumber, recordsPerPage);
+
+                    if (objOrders != null)
+                    {
+                        r.Error = false;
+                        r.Message = "success";
+                        r.Status = 200;
+                        r.Data = objOrders;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Message = "No orders for vendor";
+                        r.Status = 400;
+                    }
                 }
                 else
                 {
+                    r.Message = "Invalid token code";
                     r.Error = true;
-                    r.Message = "No orders for vendor";
                     r.Status = 400;
                 }
             }
-            else
+            catch(Exception ex)
             {
-                r.Message = "Invalid token code";
                 r.Error = true;
-                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
             }
-
             return r;
         }
 

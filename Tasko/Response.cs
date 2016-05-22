@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.ServiceModel.Web;
 using System.Web;
 using Tasko.Model;
 
@@ -17,6 +19,8 @@ namespace Tasko
     [KnownType(typeof(VendorService))]
     [KnownType(typeof(List<VendorService>))]
     [KnownType(typeof(List<Order>))]
+    [KnownType(typeof(FaultException))]
+    [KnownType(typeof(ErrorDetails))]
     public class Response
     {
         [DataMember]

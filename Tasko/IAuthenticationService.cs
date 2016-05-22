@@ -28,6 +28,7 @@ namespace Tasko
         /// </summary>
         /// <returns>Response Object</returns>
         [OperationContract]
+        [FaultContract(typeof(ErrorDetails))]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "auth")]
