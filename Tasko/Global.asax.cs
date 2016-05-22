@@ -14,7 +14,7 @@ namespace Tasko
 
         protected void Application_Start(object sender, EventArgs e)
         {
-            RouteTable.Routes.Add(new ServiceRoute("v1", new WebServiceHostFactory(), typeof(AuthenticationService)));
+            RouteTable.Routes.Add(new ServiceRoute("v1", new WebServiceHostFactory(), typeof(VendorService)));
         }
 
         protected void Session_Start(object sender, EventArgs e)

@@ -11,7 +11,7 @@ namespace Tasko
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IAuthenticationService" in both code and config file together.
     [ServiceContract]
-    public interface IAuthenticationService
+    public interface IVendorService
     {
         /// <summary>
         /// Gets the token.
@@ -111,7 +111,7 @@ namespace Tasko
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response UpdateVendorServices(List<VendorService> vendorServices);
+        Response UpdateVendorServices(List<Tasko.Model.VendorService> vendorServices);
 
         /// <summary>
         /// Updates the vendor base rate.

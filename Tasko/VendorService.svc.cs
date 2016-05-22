@@ -16,7 +16,7 @@ namespace Tasko
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "AuthenticationService" in code, svc and config file together.
     // NOTE: In order to launch WCF Test Client for testing this service, please select AuthenticationService.svc or AuthenticationService.svc.cs at the Solution Explorer and start debugging.
-    public class AuthenticationService : IAuthenticationService
+    public class VendorService : IVendorService
     {
         /// <summary>
         /// Gets the uthCode.
@@ -203,7 +203,7 @@ namespace Tasko
             try
             {
                 bool isTokenValid = ValidateToken();
-                List<VendorService> vendorServices = null;
+                List<Tasko.Model.VendorService> vendorServices = null;
                 if (isTokenValid)
                 {
                     vendorServices = VendorData.GetVendorServices(vendorId);
@@ -247,7 +247,7 @@ namespace Tasko
             try
             {
                 bool isTokenValid = ValidateToken();
-                List<VendorService> vendorSubServices = null;
+                List<Tasko.Model.VendorService> vendorSubServices = null;
                 if (isTokenValid)
                 {
                     vendorSubServices = VendorData.GetVendorSubServices(vendorServiceId);
@@ -330,7 +330,7 @@ namespace Tasko
         /// </summary>
         /// <param name="vendorServices">The vendor services.</param>
         /// <returns>Response Object</returns>
-        public Response UpdateVendorServices(List<VendorService> vendorServices)
+        public Response UpdateVendorServices(List<Tasko.Model.VendorService> vendorServices)
         {
             Response r = new Response();
             try
