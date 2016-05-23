@@ -108,8 +108,10 @@ namespace Tasko.Repository
         /// <param name="passowrd">The passowrd.</param>
         /// <param name="mobileNumber">The mobile number.</param>
         /// <param name="userType">Type of the user.</param>
-        /// <returns>auth code</returns>
-        public static string Login(string userName, string passowrd, string mobileNumber, Int16 userType)
+        /// <returns>
+        /// Login Info
+        /// </returns>
+        public static LoginInfo Login(string userName, string passowrd, string mobileNumber, Int16 userType)
         {
              LoginInfo logininfo = null;
             List<SqlParameter> objParameters = new List<SqlParameter>();
