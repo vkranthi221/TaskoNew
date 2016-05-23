@@ -116,5 +116,23 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets the source address.
+        /// </summary>
+        /// <value>
+        /// The source address.
+        /// </value>
+        [DataMember]
+        public AddressInfo SourceAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets the destination address.
+        /// </summary>
+        /// <value>
+        /// The destination address.
+        /// </value>
+        [DataMember]
+        public AddressInfo DestinationAddress { get; set; }
     }
 }

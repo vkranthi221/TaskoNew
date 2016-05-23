@@ -66,3 +66,4 @@ DROP PROCEDURE [dbo].[usp_ValidateAuthCode]
 GO
 DROP PROCEDURE [dbo].[usp_ValidateTokenCode]
 GO
+DROP TABLE [dbo].[ADDRESS]

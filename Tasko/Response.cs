@@ -19,6 +19,8 @@ namespace Tasko
     [KnownType(typeof(VendorService))]
     [KnownType(typeof(List<VendorService>))]
     [KnownType(typeof(List<Order>))]
+    [KnownType(typeof(List<AddressInfo >))]
+    [KnownType(typeof(List<LoginInfo>))]
     [KnownType(typeof(FaultException))]
     [KnownType(typeof(ErrorDetails))]
     public class Response

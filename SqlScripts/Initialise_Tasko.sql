@@ -18,7 +18,6 @@ INSERT INTO [dbo].[Services] values(NEWID(),'AC Service',null,null)
 INSERT INTO [dbo].[Services] values(NEWID(),'Semi-Automatic Washing Machine Service',null,null)
 INSERT INTO [dbo].[Services] values(NEWID(),'Bike Service',null,null)
 INSERT INTO [dbo].[Services] values(NEWID(),'Mixer Grinder Repair',null,null)
-INSERT INTO [dbo].[Services] values(NEWID(),'Electrician',null,null)
 INSERT INTO [dbo].[Services] values(NEWID(),'Water Purifier Service',null,null)
 
 SELECT * FROM [dbo].[Services]
