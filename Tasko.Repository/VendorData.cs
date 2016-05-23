@@ -111,9 +111,8 @@ namespace Tasko.Repository
         /// <returns>auth code</returns>
         public static string Login(string userName, string passowrd, string mobileNumber, Int16 userType)
         {
-            Vendor objVendor = new Vendor();
+             LoginInfo logininfo = null;
             List<SqlParameter> objParameters = new List<SqlParameter>();
-            string authCode = string.Empty;
             objParameters.Add(SqlHelper.CreateParameter("@pUserId", DbType.String, userName));
             objParameters.Add(SqlHelper.CreateParameter("@pPassword", DbType.String, passowrd));
             objParameters.Add(SqlHelper.CreateParameter("@pMobileNumber", DbType.String, mobileNumber));
@@ -123,13 +122,14 @@ namespace Tasko.Repository
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_Login", objParameters.ToArray());
             if (reader.Read())
             {
-                authCode = BinaryConverter.ConvertByteToString((byte[])reader["AUTH_CODE"]);
-
+                logininfo = new LoginInfo();
+                logininfo.TokenId = BinaryConverter.ConvertByteToString((byte[])reader["AUTH_CODE"]);
+                logininfo.UserId = BinaryConverter.ConvertByteToString((byte[])reader["USERID"]);
             }
 
             reader.Close();
 
-            return authCode;
+            return logininfo;
         }
 
         /// <summary>
