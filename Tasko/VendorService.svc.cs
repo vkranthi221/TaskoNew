@@ -48,7 +48,7 @@ namespace Tasko
             return r;
         }
 
-        /// <summary>
+         /// <summary>
         /// Logins the specified username.
         /// </summary>
         /// <param name="username">The username.</param>
@@ -57,19 +57,18 @@ namespace Tasko
         /// <returns>Response Object</returns>
         public Response Login(string username, string password, string mobilenumber, Int16 userType)
         {
-            
+
             Response r = new Response();
             try
             {
                 IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
                 WebHeaderCollection headers = request.Headers;
-                string token = string.Empty;
+                LoginInfo loginInfo = null;
                 string authCode = headers["Auth_Code"];
-                if (!string.IsNullOrEmpty(authCode))
+                if (!string.IsNullOrEmpty(authCode) && VendorData.ValidateAuthCode(authCode))
                 {
-                    if (VendorData.ValidateAuthCode(authCode))
-                        token = VendorData.Login(username, password, mobilenumber, userType); // 1 is vendor
-                    if (string.IsNullOrEmpty(token))
+                    loginInfo = VendorData.Login(username, password, mobilenumber, userType); // 1 is vendor
+                    if (loginInfo == null)
                     {
                         r.Message = "Invalid Credentials";
                     }
@@ -79,12 +78,12 @@ namespace Tasko
                     r.Message = "Invalid AuthCode";
                 }
 
-                if (!string.IsNullOrEmpty(token))
+                if (loginInfo != null)
                 {
                     r.Error = false;
                     r.Message = "Login Successful";
                     r.Status = 200;
-                    r.Data = token;
+                    r.Data = loginInfo;
                 }
                 else
                 {
