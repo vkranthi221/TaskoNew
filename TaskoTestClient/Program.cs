@@ -15,13 +15,21 @@ namespace TaskoTestClient
             string orderId = "TASKO1000";
             string vendorId = "70F974CDC6E6664A898A8106C3D3D693";
             string venodorServiceId = "287EB41076025347AAE5EC48F79BCE15";
-            //Console.WriteLine(VendorData.GetVendorServices("42EAE0A85586BA48B6D81CEB61A98324"));
+            
             //Console.WriteLine(VendorData.ValidateTokenCode("4B050B867497BD45B39827166EFBD176", "74AEA79F14C3BD49A528A2FC8D440D20"));
             //Console.WriteLine(VendorData.ValidateAuthCode("E77B16758EDBEB4995B678DB1143AD6C"));
             //Console.WriteLine(VendorData.Login("srikanth","12345","",1));
-            VendorData.GetVendorServices("42EAE0A85586BA48B6D81CEB61A98324");
+
+            //VendorData.GetVendorServices("42EAE0A85586BA48B6D81CEB61A98324");
+
+            CustomerData.GetRecentOrder("7A01099FDD26A04AAB76789E2E1DB435");
+
+            CustomerData.GetServices();
+
+            CustomerData.GetServiceVendors("ECBDFEAEBDBE7B429AC7E74C488B52C2");
+
             /// Get Order Details
-            Order objOrder = VendorData.GetOrderDetails(orderId);
+            Order objOrder = CustomerData.GetOrderDetails(orderId);
             if(objOrder!=null)
             {
                 Console.WriteLine("***********Get Order Details***********");

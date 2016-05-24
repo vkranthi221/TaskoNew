@@ -146,51 +146,7 @@ namespace Tasko
 
             return r;
         }
-
-        /// <summary>
-        /// Gets the order details.
-        /// </summary>
-        /// <param name="orderId">The order identifier.</param>
-        /// <returns>Response Object</returns>
-        public Response GetOrderDetails(string orderId)
-        {
-            Response r = new Response();
-            try
-            {
-                bool isTokenValid = ValidateToken();
-                Order objOrder = null;
-                if (isTokenValid)
-                {
-                    objOrder = VendorData.GetOrderDetails(orderId);
-                }
-                else
-                {
-                    r.Message = "Invalid token code";
-                }
-
-                if (objOrder != null)
-                {
-                    r.Error = false;
-                    r.Message = "success";
-                    r.Status = 200;
-                    r.Data = objOrder;
-                }
-                else
-                {
-                    r.Error = true;
-                    r.Message = "Order not found";
-                    r.Status = 400;
-                }
-            }
-            catch (Exception ex)
-            {
-                r.Error = true;
-                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
-            }
-
-            return r;
-        }
-
+        
         /// <summary>
         /// Gets the vendor services.
         /// </summary>

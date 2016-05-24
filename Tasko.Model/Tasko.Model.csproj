@@ -44,6 +44,12 @@
     <Compile Include="Address.cs" />
     <Compile Include="LoginInfo.cs" />
     <Compile Include="Order.cs" />
+    <Compile Include="Service.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServiceVendor.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="User.cs" />
     <Compile Include="Vendor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

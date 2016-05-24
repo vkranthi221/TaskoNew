@@ -17,16 +17,6 @@ namespace Tasko
         /// Gets the token.
         /// </summary>
         /// <returns>Response Object</returns>
-        //[OperationContract]
-        //[WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
-        //    BodyStyle = WebMessageBodyStyle.Bare,
-        //    UriTemplate = "auth")]
-        //Response GetToken();
-
-        /// <summary>
-        /// Gets the token.
-        /// </summary>
-        /// <returns>Response Object</returns>
         [OperationContract]
         [FaultContract(typeof(ErrorDetails))]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
@@ -61,16 +51,6 @@ namespace Tasko
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetVendorDetails(string vendorId);
-
-        /// <summary>
-        /// Gets the order details.
-        /// </summary>
-        /// <param name="orderId">The order identifier.</param>
-        /// <returns>Response Object</returns>
-        [OperationContract]
-        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response GetOrderDetails(string orderId);
 
         /// <summary>
         /// Gets the vendor services.

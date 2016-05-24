@@ -23,6 +23,8 @@ namespace Tasko
     [KnownType(typeof(List<LoginInfo>))]
     [KnownType(typeof(FaultException))]
     [KnownType(typeof(ErrorDetails))]
+    [KnownType(typeof(List<Service>))]
+    [KnownType(typeof(List<ServiceVendor>))]    
     public class Response
     {
         [DataMember]
