@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -164,6 +164,52 @@ namespace Tasko
                 {
                     r.Error = true;
                     r.Message = "Vendors are not found for the selected service";
+                    r.Status = 400;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        /// <summary>
+        /// Confirms the order.
+        /// </summary>
+        /// <param name="order">The order.</param>
+        /// <returns>
+        /// Response Object
+        /// </returns>
+        public Response ConfirmOrder(Order order)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                string OrderId = string.Empty;
+                if (isTokenValid)
+                {
+                    OrderId = CustomerData.ConfirmOrder(order);
+                }
+                else
+                {
+                    r.Message = "Invalid token code";
+                }
+
+                if (!string.IsNullOrEmpty(OrderId))
+                {
+                    r.Error = false;
+                    r.Message = "success";
+                    r.Status = 200;
+                    r.Data = "OrderId: " + OrderId;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Message = "Order not Confirmed";
                     r.Status = 400;
                 }
             }
