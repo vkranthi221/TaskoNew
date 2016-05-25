@@ -179,7 +179,7 @@ namespace Tasko.Repository
         /// Confirms the order.
         /// </summary>
         /// <param name="order">The order.</param>
-        /// <returns></returns>
+        /// <returns>order id</returns>
         public static string ConfirmOrder(Order order)
         {
             string orderId = string.Empty;
@@ -190,14 +190,12 @@ namespace Tasko.Repository
             //// add the destination address and get the destination addressId
             string destinationAddressId = AddAddress(order.DestinationAddress);
 
-            Order objOrder = new Order();
             List<SqlParameter> objParameters = new List<SqlParameter>();
-
             objParameters.Add(SqlHelper.CreateParameter("@pVendorServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(order.VendorServiceId)));
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(order.CustomerId)));
             objParameters.Add(SqlHelper.CreateParameter("@pSourceAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(sourceAddressId)));
             objParameters.Add(SqlHelper.CreateParameter("@pDestinationAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(destinationAddressId)));
-            DataSet dataSet = SqlHelper.GetDataSet("dbo.usp_ConfirmOrder", objParameters.ToArray());
+            orderId = (string)SqlHelper.ExecuteScalar("dbo.usp_ConfirmOrder", objParameters.ToArray());
 
             return orderId;
         }

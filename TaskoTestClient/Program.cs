@@ -22,7 +22,9 @@ namespace TaskoTestClient
 
             //VendorData.GetVendorServices("42EAE0A85586BA48B6D81CEB61A98324");
 
-            CustomerData.GetRecentOrder("7A01099FDD26A04AAB76789E2E1DB435");
+           Order recentOrder = CustomerData.GetRecentOrder("7A01099FDD26A04AAB76789E2E1DB435");
+            
+           CustomerData.ConfirmOrder(recentOrder);
 
             CustomerData.GetServices();
 
