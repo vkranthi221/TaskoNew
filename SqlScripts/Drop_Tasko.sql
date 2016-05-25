@@ -67,3 +67,15 @@ GO
 DROP PROCEDURE [dbo].[usp_ValidateTokenCode]
 GO
 DROP TABLE [dbo].[ADDRESS]
+GO
+DROP PROCEDURE [dbo].[usp_GetServices]
+GO
+DROP PROCEDURE [dbo].[usp_GetRecentOrder]
+GO
+DROP PROCEDURE [dbo].[usp_GetServiceVendors]
+GO
+DROP PROCEDURE [dbo].[usp_AddAddress]
+GO
+DROP PROCEDURE [dbo].[usp_ConfirmOrder]
+GO
+
