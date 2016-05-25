@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using Tasko.Model;
 
 namespace Tasko
 {
@@ -45,9 +46,18 @@ namespace Tasko
         /// Gets the service vendors.
         /// </summary>
         /// <param name="serviceId">The service identifier.</param>
-        /// <returns></returns>
+        /// <returns>Response Object</returns>
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetServiceVendors(string serviceId);
+        
+        /// <summary>
+        /// Confirms the order.
+        /// </summary>
+        /// <param name="order">The order.</param>
+        /// <returns>Response Object</returns>
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response ConfirmOrder(Order order);
     }
 }
