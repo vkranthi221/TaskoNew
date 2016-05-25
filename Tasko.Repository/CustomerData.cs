@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -176,6 +176,33 @@ namespace Tasko.Repository
         }
 
         /// <summary>
+        /// Confirms the order.
+        /// </summary>
+        /// <param name="order">The order.</param>
+        /// <returns></returns>
+        public static string ConfirmOrder(Order order)
+        {
+            string orderId = string.Empty;
+
+            //// add the source address and get the Source addressId
+            string sourceAddressId = AddAddress(order.SourceAddress);
+
+            //// add the destination address and get the destination addressId
+            string destinationAddressId = AddAddress(order.DestinationAddress);
+
+            Order objOrder = new Order();
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(order.VendorServiceId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(order.CustomerId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pSourceAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(sourceAddressId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pDestinationAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(destinationAddressId)));
+            DataSet dataSet = SqlHelper.GetDataSet("dbo.usp_ConfirmOrder", objParameters.ToArray());
+
+            return orderId;
+        }
+
+        /// <summary>
         /// Gets the address.
         /// </summary>
         /// <param name="addressTable">The address table.</param>
@@ -198,6 +225,30 @@ namespace Tasko.Repository
             }
 
             return addressInfo;
+        }
+
+        /// <summary>
+        /// Adds the address.
+        /// </summary>
+        /// <param name="addressInfo">The address.</param>
+        /// <returns>Address Id</returns>
+        private static string AddAddress(AddressInfo addressInfo)
+        {
+            string AddressId = string.Empty;
+
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pCountry", DbType.String, addressInfo.Country));
+            objParameters.Add(SqlHelper.CreateParameter("@pState", DbType.String, addressInfo.State));
+            objParameters.Add(SqlHelper.CreateParameter("@pLatitude", DbType.String, addressInfo.Lattitude));
+            objParameters.Add(SqlHelper.CreateParameter("@pLongitude", DbType.String, addressInfo.Longitude));
+            objParameters.Add(SqlHelper.CreateParameter("@pLocality", DbType.String, addressInfo.Locality));
+            objParameters.Add(SqlHelper.CreateParameter("@pCity", DbType.String, addressInfo.City));
+            objParameters.Add(SqlHelper.CreateParameter("@pAddress", DbType.String, addressInfo.Address));
+            objParameters.Add(SqlHelper.CreateParameter("@Pincode", DbType.String, addressInfo.Pincode));
+            byte[] Address_Id = (byte[])SqlHelper.ExecuteScalar("dbo.usp_AddAddress", objParameters.ToArray());
+
+            AddressId = BinaryConverter.ConvertByteToString(Address_Id);
+            return AddressId;
         }
     }
 }
