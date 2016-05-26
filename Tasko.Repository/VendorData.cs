@@ -315,7 +315,7 @@ namespace Tasko.Repository
         /// <param name="pageNumber">The page number.</param>
         /// <param name="recordsPerPage">Records per page.</param>
         /// <returns>Vendor Orders</returns>
-        public static List<Order> GetVendorOrders(string vendorId, int orderStatusId, int pageNumber, int recordsPerPage)
+        public static List<OrderSummary> GetVendorOrders(string vendorId, int orderStatusId, int pageNumber, int recordsPerPage)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
@@ -324,11 +324,11 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pRECORDSPERPAGE", DbType.Int32, recordsPerPage));
             objParameters.Add(SqlHelper.CreateParameter("@pPAGENO", DbType.Int32, pageNumber));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorOrders", objParameters.ToArray());
-            List<Order> orders = new List<Order>();
+            List<OrderSummary> orders = new List<OrderSummary>();
 
             while (reader.Read())
             {
-                Order order = new Order();
+                OrderSummary order = new OrderSummary();
                 order.OrderId = reader["ORDER_ID"].ToString();
                 order.RequestedDate = Convert.ToDateTime(reader["REQUESTED_DATE"]);
                 order.ServiceName = reader["SERVICENAME"].ToString();

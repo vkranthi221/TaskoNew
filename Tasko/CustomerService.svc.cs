@@ -223,6 +223,90 @@ namespace Tasko
         }
 
         /// <summary>
+        /// Updates the customer.
+        /// </summary>
+        /// <param name="customer">The customer.</param>
+        /// <returns>
+        /// Response Object
+        /// </returns>
+        public Response UpdateCustomer(Customer customer)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    CustomerData.UpdateCustomer(customer);
+
+                    r.Error = false;
+                    r.Message = "success";
+                    r.Status = 200;
+                }
+                else
+                {
+                    r.Message = "Invalid token code";
+                }             
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        /// <summary>
+        /// Gets the customer orders.
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <param name="orderStatus">The order status.</param>
+        /// <param name="pageNumber">The page number.</param>
+        /// <param name="recordsPerPage">The records per page.</param>
+        /// <returns>
+        /// Response Object
+        /// </returns>
+        public Response GetCustomerOrders(string customerId, int orderStatus, int pageNumber, int recordsPerPage)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+               List<OrderSummary> orderSummary = null;
+                if (isTokenValid)
+                {
+                    orderSummary = CustomerData.GetCustomerOrders(customerId, orderStatus, pageNumber, recordsPerPage);
+                }
+                else
+                {
+                    r.Message = "Invalid token code";
+                }
+
+                if (orderSummary != null && orderSummary.Count > 0)
+                {
+                    r.Error = false;
+                    r.Message = "success";
+                    r.Status = 200;
+                    r.Data = orderSummary;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Message = "Orders not found";
+                    r.Status = 400;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        /// <summary>
         /// Validates the token.
         /// </summary>
         /// <returns>bool value</returns>

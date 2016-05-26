@@ -42,8 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Address.cs" />
+    <Compile Include="Customer.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="LoginInfo.cs" />
     <Compile Include="Order.cs" />
+    <Compile Include="OrderSummary.cs" />
     <Compile Include="Service.cs">
       <SubType>Code</SubType>
     </Compile>

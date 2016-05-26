@@ -25,6 +25,9 @@ namespace Tasko
     [KnownType(typeof(ErrorDetails))]
     [KnownType(typeof(List<Service>))]
     [KnownType(typeof(List<ServiceVendor>))]    
+    [KnownType(typeof(Customer))]
+    [KnownType(typeof(OrderSummary))]
+    [KnownType(typeof(List<OrderSummary>))]     
     public class Response
     {
         [DataMember]

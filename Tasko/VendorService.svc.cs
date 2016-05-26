@@ -507,9 +507,9 @@ namespace Tasko
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                    List<Order> objOrders = VendorData.GetVendorOrders(vendorId, orderStatusId, pageNumber, recordsPerPage);
+                    List<OrderSummary> objOrders = VendorData.GetVendorOrders(vendorId, orderStatusId, pageNumber, recordsPerPage);
 
-                    if (objOrders != null)
+                    if (objOrders != null && objOrders.Count > 0)
                     {
                         r.Error = false;
                         r.Message = "success";

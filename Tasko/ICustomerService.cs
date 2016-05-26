@@ -59,5 +59,26 @@ namespace Tasko
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response ConfirmOrder(Order order);
+
+        /// <summary>
+        /// Updates the customer.
+        /// </summary>
+        /// <param name="customer">The customer.</param>
+        /// <returns>Response Object</returns>
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+           BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response UpdateCustomer(Customer customer);
+
+        /// <summary>
+        /// Gets the customer orders.
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <param name="orderStatus">The order status.</param>
+        /// <param name="pageNumber">The page number.</param>
+        /// <param name="recordsPerPage">The records per page.</param>
+        /// <returns>Response Object</returns>
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+           BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetCustomerOrders(string customerId, int orderStatus, int pageNumber, int recordsPerPage);
     }
 }

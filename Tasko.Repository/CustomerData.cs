@@ -201,6 +201,58 @@ namespace Tasko.Repository
         }
 
         /// <summary>
+        /// Updates the customer.
+        /// </summary>
+        /// <param name="customer">The customer.</param>
+        public static void UpdateCustomer(Customer customer)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customer.Id)));
+            objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.String, customer.Name));
+            objParameters.Add(SqlHelper.CreateParameter("@pEmailAddress", DbType.String, customer.EmailAddress));
+            objParameters.Add(SqlHelper.CreateParameter("@pMobileNumber", DbType.String, customer.MobileNumber));
+            SqlHelper.ExecuteNonQuery("dbo.usp_UpdateCustomer", objParameters.ToArray());
+        }
+
+        /// <summary>
+        /// Gets the customer orders.
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <param name="orderStatus">The order status.</param>
+        /// <param name="pageNumber">The page number.</param>
+        /// <param name="recordsPerPage">The records per page.</param>
+        /// <returns>
+        /// List of Customer Orders
+        /// </returns>
+        public static List<OrderSummary> GetCustomerOrders(string customerId, int orderStatus, int pageNumber, int recordsPerPage)
+        {
+            List<OrderSummary> customerOrders = null;
+
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pOrderstatusId", DbType.Int16, orderStatus));
+            objParameters.Add(SqlHelper.CreateParameter("@pPageNo", DbType.Int16, pageNumber));
+            objParameters.Add(SqlHelper.CreateParameter("@pRecordsPerPage", DbType.Int16, recordsPerPage));
+            DataTable datatable = SqlHelper.GetDataTable("dbo.usp_GetCustomerOrders", objParameters.ToArray());
+            if (datatable != null && datatable.Rows.Count > 0)
+            {
+                customerOrders = new List<OrderSummary>();
+                foreach (DataRow row in datatable.Rows)
+                {
+                    OrderSummary orderSummary = new OrderSummary();
+                    orderSummary.OrderId = row["ORDER_ID"].ToString();
+                    orderSummary.OrderStatus = row["ORDERSTATUS_NAME"].ToString();
+                    orderSummary.ServiceId = BinaryConverter.ConvertByteToString((byte[])row["SERVICE_ID"]);
+                    orderSummary.ServiceName = row["SERVICE_NAME"].ToString();
+                    orderSummary.RequestedDate = Convert.ToDateTime(row["REQUESTED_DATE"]);
+                    customerOrders.Add(orderSummary);
+                }
+            }
+
+            return customerOrders;
+        }
+
+        /// <summary>
         /// Gets the address.
         /// </summary>
         /// <param name="addressTable">The address table.</param>
