@@ -55,10 +55,16 @@ namespace Tasko.Repository
                 }
 
                 //// Get the source Address
-                objOrder.SourceAddress = GetAddress(dataSet.Tables[1]);
+                if (dataSet.Tables[1] != null && dataSet.Tables[1].Rows.Count > 0)
+                {
+                    objOrder.SourceAddress = PopulateAddress(dataSet.Tables[1].Rows[0]);
+                }
 
                 //// Get the Destination Address
-                objOrder.DestinationAddress = GetAddress(dataSet.Tables[2]);
+                if (dataSet.Tables[2] != null && dataSet.Tables[2].Rows.Count > 0)
+                {
+                    objOrder.DestinationAddress = PopulateAddress(dataSet.Tables[2].Rows[0]);
+                }
             }
 
             return objOrder;
@@ -104,10 +110,16 @@ namespace Tasko.Repository
                 }
 
                 //// Get the source Address
-                objOrder.SourceAddress = GetAddress(dataSet.Tables[1]);
+                if (dataSet.Tables[1] != null && dataSet.Tables[1].Rows.Count > 0)
+                {
+                    objOrder.SourceAddress = PopulateAddress(dataSet.Tables[1].Rows[0]);
+                }
 
                 //// Get the Destination Address
-                objOrder.DestinationAddress = GetAddress(dataSet.Tables[2]);
+                if (dataSet.Tables[2] != null && dataSet.Tables[2].Rows.Count > 0)
+                {
+                    objOrder.DestinationAddress = PopulateAddress(dataSet.Tables[2].Rows[0]);
+                }
             }
 
             return objOrder;
@@ -253,26 +265,97 @@ namespace Tasko.Repository
         }
 
         /// <summary>
+        /// Adds the customer address.
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <param name="addressInfo">The address information.</param>
+        public static void AddCustomerAddress(string customerId, AddressInfo addressInfo)
+        {
+            string addressId = AddAddress(addressInfo);
+
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(addressId)));
+            SqlHelper.ExecuteNonQuery("dbo.usp_AddCustomerAddress", objParameters.ToArray());
+        }
+
+        /// <summary>
+        /// Updates the customer address.
+        /// </summary>       
+        /// <param name="addressInfo">The address information.</param>
+        public static void UpdateCustomerAddress(AddressInfo addressInfo)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(addressInfo.AddressId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pCountry", DbType.String, addressInfo.Country));
+            objParameters.Add(SqlHelper.CreateParameter("@pState", DbType.String, addressInfo.State));
+            objParameters.Add(SqlHelper.CreateParameter("@pLatitude", DbType.String, addressInfo.Lattitude));
+            objParameters.Add(SqlHelper.CreateParameter("@pLongitude", DbType.String, addressInfo.Longitude));
+            objParameters.Add(SqlHelper.CreateParameter("@pLocality", DbType.String, addressInfo.Locality));
+            objParameters.Add(SqlHelper.CreateParameter("@pCity", DbType.String, addressInfo.City));
+            objParameters.Add(SqlHelper.CreateParameter("@pAddress", DbType.String, addressInfo.Address));
+            objParameters.Add(SqlHelper.CreateParameter("@Pincode", DbType.String, addressInfo.Pincode));
+
+            SqlHelper.ExecuteNonQuery("dbo.usp_UpdateCustomerAddress", objParameters.ToArray());
+        }
+
+        /// <summary>
+        /// Deletes the customer address.
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <param name="addressId">The address identifier.</param>
+        public static void DeleteCustomerAddress(string customerId, string addressId)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(addressId)));
+            SqlHelper.ExecuteNonQuery("dbo.usp_DeleteCustomerAddress", objParameters.ToArray());
+        }
+
+        /// <summary>
+        /// Gets the customer addresses.
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <returns>list of Addresses for the customer</returns>
+        public static List<AddressInfo> GetCustomerAddresses(string customerId)
+        {
+            List<AddressInfo> customerAddresses = null;
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
+
+            DataTable datatable = SqlHelper.GetDataTable("dbo.usp_GetCustomerAddresses", objParameters.ToArray());
+            if (datatable != null && datatable.Rows.Count > 0)
+            {
+                customerAddresses = new List<AddressInfo>();
+                foreach (DataRow row in datatable.Rows)
+                {
+                    AddressInfo addressInfo = PopulateAddress(row);
+                    customerAddresses.Add(addressInfo);
+                }
+            }
+
+            return customerAddresses;
+        }
+
+        /// <summary>
         /// Gets the address.
         /// </summary>
-        /// <param name="addressTable">The address table.</param>
-        /// <returns>Address Info</returns>
-        private static AddressInfo GetAddress(DataTable addressTable)
+        /// <param name="dataRow">The data row.</param>
+        /// <returns>
+        /// Address Info
+        /// </returns>
+        private static AddressInfo PopulateAddress(DataRow dataRow)
         {
-            AddressInfo addressInfo = null;
-            if (addressTable != null && addressTable.Rows.Count > 0)
-            {
-                addressInfo = new AddressInfo();
-                addressInfo.AddressId = BinaryConverter.ConvertByteToString((byte[])addressTable.Rows[0]["Address_ID"]);
-                addressInfo.Country = addressTable.Rows[0]["COUNTRY"].ToString();
-                addressInfo.State = addressTable.Rows[0]["STATE"].ToString();
-                addressInfo.City = addressTable.Rows[0]["CITY"].ToString();
-                addressInfo.Locality = addressTable.Rows[0]["LOCALITY"].ToString();
-                addressInfo.Address = addressTable.Rows[0]["ADDRESS"].ToString();
-                addressInfo.Pincode = addressTable.Rows[0]["PINCODE"].ToString();
-                addressInfo.Lattitude = addressTable.Rows[0]["LATITIUDE"].ToString();
-                addressInfo.Longitude = addressTable.Rows[0]["LONGITUDE"].ToString();
-            }
+            AddressInfo addressInfo = new AddressInfo();
+            addressInfo.AddressId = BinaryConverter.ConvertByteToString((byte[])dataRow["Address_ID"]);
+            addressInfo.Country = dataRow["COUNTRY"].ToString();
+            addressInfo.State = dataRow["STATE"].ToString();
+            addressInfo.City = dataRow["CITY"].ToString();
+            addressInfo.Locality = dataRow["LOCALITY"].ToString();
+            addressInfo.Address = dataRow["ADDRESS"].ToString();
+            addressInfo.Pincode = dataRow["PINCODE"].ToString();
+            addressInfo.Lattitude = dataRow["LATITIUDE"].ToString();
+            addressInfo.Longitude = dataRow["LONGITUDE"].ToString();
 
             return addressInfo;
         }
