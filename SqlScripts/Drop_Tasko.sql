@@ -78,4 +78,17 @@ DROP PROCEDURE [dbo].[usp_AddAddress]
 GO
 DROP PROCEDURE [dbo].[usp_ConfirmOrder]
 GO
-
+DROP PROCEDURE [dbo].[usp_UpdateCustomer]
+GO
+DROP PROCEDURE [dbo].[usp_GetCustomerOrders]
+GO
+DROP TABLE [dbo].[CUSTOMER_ADDRESS]
+GO
+DROP PROCEDURE [dbo].[usp_AddCustomerAddress]
+GO
+DROP PROCEDURE [dbo].[usp_UpdateCustomerAddress]
+GO
+DROP PROCEDURE [dbo].[usp_DeleteCustomerAddress]
+GO
+DROP PROCEDURE [dbo].[usp_GetCustomerAddresses]
+GO

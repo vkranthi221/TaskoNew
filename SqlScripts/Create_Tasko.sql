@@ -902,25 +902,6 @@ END
 
 GO
 
-CREATE PROCEDURE [dbo].[usp_UpdateCustomer]
-(
-  @pCustomerId binary(16),
-  @pName nvarchar(max),
-  @pEmailAddress nvarchar(max),
-  @pMobileNumber nvarchar(max)
-)
-
-AS
-BEGIN
-
-SET NOCOUNT ON;
-
-  UPDATE [dbo].[CUSTOMER] SET NAME = @pName, EMAIL_ADDRESS = @pEmailAddress, MOBILE_NUMBER = @pMobileNumber
-  WHERE CUSTOMER_ID = @pCustomerId 
-
-END
-GO
-
 CREATE PROCEDURE [dbo].[usp_GetCustomerOrders]
 (
       @pCustomerId binary(16),
