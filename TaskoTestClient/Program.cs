@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,12 +19,18 @@ namespace TaskoTestClient
             //Console.WriteLine(VendorData.ValidateTokenCode("4B050B867497BD45B39827166EFBD176", "74AEA79F14C3BD49A528A2FC8D440D20"));
             //Console.WriteLine(VendorData.ValidateAuthCode("E77B16758EDBEB4995B678DB1143AD6C"));
             //Console.WriteLine(VendorData.Login("srikanth","12345","",1));
+            
+            Order recentOrder = CustomerData.GetRecentOrder("84402D36621CAB4482B1DDB3C208155A");
 
-            //VendorData.GetVendorServices("42EAE0A85586BA48B6D81CEB61A98324");
+            CustomerData.AddCustomerAddress("84402D36621CAB4482B1DDB3C208155A", recentOrder.SourceAddress);
+
+            CustomerData.UpdateCustomerAddress(recentOrder.SourceAddress);
+
+            CustomerData.DeleteCustomerAddress("84402D36621CAB4482B1DDB3C208155A", "71C9213018D3BB42BC10FB151F474A7D");
+
+            CustomerData.GetCustomerAddresses("84402D36621CAB4482B1DDB3C208155A");
 
             CustomerData.GetCustomerOrders("7A01099FDD26A04AAB76789E2E1DB435", 1, 1, 10);
-
-            Order recentOrder = CustomerData.GetRecentOrder("7A01099FDD26A04AAB76789E2E1DB435");
 
             CustomerData.ConfirmOrder(recentOrder);
 
