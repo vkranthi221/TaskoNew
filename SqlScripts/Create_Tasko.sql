@@ -264,6 +264,13 @@ GO
 ALTER TABLE [dbo].[CUSTOMER_RATING] CHECK CONSTRAINT [CUSTOMER_RATING_ORDER_FK]
 GO
 
+CREATE TABLE [dbo].[CUSTOMER_ADDRESS](
+	[ID] [binary](16) NOT NULL,
+	[CUSTOMER_ID] [binary](16) NOT NULL,
+	[ADDRESS_ID] [binary](16) NOT NULL,
+ CONSTRAINT [PK_CUSTOMER_ADDRESS] PRIMARY KEY CLUSTERED([ID] ASC))
+
+GO
 /*********** Functions **************************/
 CREATE FUNCTION dbo.GenerateOrderID()
 RETURNS VARCHAR(MAX) 
@@ -761,6 +768,113 @@ SET NOCOUNT ON;
 END
 
 GO
+
+CREATE PROCEDURE [dbo].[usp_ConfirmOrder]
+(
+  @pVendorServiceId binary(16),
+  @pCustomerId binary(16),
+  @pSourceAddressId binary(16),
+  @pDestinationAddressId binary(16)
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+  DECLARE @OrderId Varchar(50)
+  SET  @OrderId = dbo.GenerateOrderID()
+
+  INSERT INTO [dbo].[ORDER] VALUES(@OrderId,@pVendorServiceId,@pCustomerId,GetDate(),1,'',@pSourceAddressId,@pDestinationAddressId)
+
+  SELECT @OrderId as ORDER_ID
+END
+
+GO
+CREATE PROCEDURE [dbo].[usp_AddCustomerAddress]
+(
+  @pCustomerId binary(16), 
+  @pAddressId binary(16)
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+  INSERT INTO [dbo].CUSTOMER_ADDRESS VALUES(newid(),@pCustomerId,@pAddressId)
+END
+
+GO
+
+CREATE PROCEDURE [dbo].[usp_UpdateCustomerAddress]
+(
+  @pAddressId binary(16),  
+  @pCountry nvarchar(max),
+  @pState nvarchar(max),
+  @pLatitude nvarchar(max),
+  @pLongitude nvarchar(max),
+  @pLocality nvarchar(max),
+  @pCity nvarchar(max),
+  @pAddress nvarchar(max),
+  @Pincode nvarchar(max)
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+  DECLARE @AddressId binary(16)
+  SET  @AddressId = newId()
+
+  UPDATE [dbo].[ADDRESS] SET COUNTRY = @pCountry, STATE= @pState, LATITIUDE = @pLatitude, 
+                         LONGITUDE = @pLongitude,LOCALITY = @pLocality,CITY = @pCity,
+                         [ADDRESS]=@pAddress,PINCODE = @Pincode
+  WHERE Address_ID = @pAddressId
+
+  SELECT @AddressId as ADDRESS_ID
+END
+
+
+GO
+
+CREATE PROCEDURE [dbo].[usp_DeleteCustomerAddress]
+(
+  @pCustomerId binary(16),
+  @pAddressId binary(16)
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+ 
+ DELETE dbo.CUSTOMER_ADDRESS WHERE CUSTOMER_ID = @pCustomerId AND ADDRESS_ID = @pAddressId
+ 
+ DELETE dbo.[ADDRESS] WHERE ADDRESS_ID = @pAddressId
+END
+
+GO
+
+CREATE PROCEDURE [dbo].[usp_GetCustomerAddresses]
+(
+  @pCustomerId binary(16)
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+ SELECT Addr.Address_ID,COUNTRY,STATE,LATITIUDE ,LONGITUDE ,LOCALITY,CITY,ADDRESS,PINCODE
+ FROM dbo.[ADDRESS] Addr
+ INNER JOIN dbo.CUSTOMER_ADDRESS CA ON CA.[ADDRESS_ID] = Addr.[Address_ID]
+ WHERE CA.CUSTOMER_ID = @pCustomerId 
+END
+
+GO
+
 CREATE PROCEDURE [dbo].[usp_AddAddress]
 (
   @pCountry nvarchar(max),
@@ -788,12 +902,12 @@ END
 
 GO
 
-CREATE PROCEDURE [dbo].[usp_ConfirmOrder]
+CREATE PROCEDURE [dbo].[usp_UpdateCustomer]
 (
-  @pVendorServiceId binary(16),
   @pCustomerId binary(16),
-  @pSourceAddressId binary(16),
-  @pDestinationAddressId binary(16)
+  @pName nvarchar(max),
+  @pEmailAddress nvarchar(max),
+  @pMobileNumber nvarchar(max)
 )
 
 AS
@@ -801,14 +915,10 @@ BEGIN
 
 SET NOCOUNT ON;
 
-  DECLARE @OrderId Varchar(50)
-  SET  @OrderId = dbo.GenerateOrderID()
+  UPDATE [dbo].[CUSTOMER] SET NAME = @pName, EMAIL_ADDRESS = @pEmailAddress, MOBILE_NUMBER = @pMobileNumber
+  WHERE CUSTOMER_ID = @pCustomerId 
 
-  INSERT INTO [dbo].[ORDER] VALUES(@OrderId,@pVendorServiceId,@pCustomerId,GetDate(),1,'',@pSourceAddressId,@pDestinationAddressId)
-
-  SELECT @OrderId as ORDER_ID
 END
-
 GO
 
 CREATE PROCEDURE [dbo].[usp_GetCustomerOrders]
