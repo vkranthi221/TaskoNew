@@ -307,6 +307,162 @@ namespace Tasko
         }
 
         /// <summary>
+        /// Adds the customer address.
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <param name="addressInfo">The address information.</param>
+        /// <returns>
+        /// Response Object
+        /// </returns>
+        public Response AddCustomerAddress(string customerId, AddressInfo addressInfo)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();               
+                if (isTokenValid)
+                {
+                    CustomerData.AddCustomerAddress(customerId, addressInfo);
+                    r.Error = false;
+                    r.Message = "success";
+                    r.Status = 200;
+                }
+                else
+                {
+                    r.Message = "Invalid token code";
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        /// <summary>
+        /// Updates the customer address.
+        /// </summary>
+        /// <param name="addressInfo">The address information.</param>
+        /// <returns>
+        /// Response Object
+        /// </returns>
+        public Response UpdateCustomerAddress(AddressInfo addressInfo)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    CustomerData.UpdateCustomerAddress(addressInfo);
+                    r.Error = false;
+                    r.Message = "success";
+                    r.Status = 200;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = "Invalid token code";
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        /// <summary>
+        /// Deletes the customer address.
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <param name="addressId">The address identifier.</param>
+        /// <returns>
+        /// Response Object
+        /// </returns>
+        public Response DeleteCustomerAddress(string customerId, string addressId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    CustomerData.DeleteCustomerAddress(customerId, addressId);
+                    r.Message = "success";
+                }
+                else
+                {
+                    r.Message = "Invalid token code";
+                }
+
+                r.Error = false;
+                r.Status = 200;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        /// <summary>
+        /// Gets the customer addresses.
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <returns>
+        /// Response Object
+        /// </returns>
+        public Response GetCustomerAddresses(string customerId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                List<AddressInfo> customerAddresses = null;
+                if (isTokenValid)
+                {
+                    customerAddresses = CustomerData.GetCustomerAddresses(customerId);
+                }
+                else
+                {
+                    r.Message = "Invalid token code";
+                }
+
+                if (customerAddresses != null && customerAddresses.Count > 0)
+                {
+                    r.Message = "success";
+                    r.Data = customerAddresses;
+                }
+                else
+                {
+                    r.Message = "Customer Addresses not found";
+                }
+
+                r.Error = false;
+                r.Status = 200;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        /// <summary>
         /// Validates the token.
         /// </summary>
         /// <returns>bool value</returns>
