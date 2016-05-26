@@ -50,7 +50,7 @@ namespace Tasko
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetServiceVendors(string serviceId);
-        
+
         /// <summary>
         /// Confirms the order.
         /// </summary>
@@ -80,5 +80,43 @@ namespace Tasko
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetCustomerOrders(string customerId, int orderStatus, int pageNumber, int recordsPerPage);
+
+        /// <summary>
+        /// Adds the customer address.
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <param name="addressInfo">The address information.</param>
+        /// <returns>Response Object</returns>
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+          BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response AddCustomerAddress(string customerId, AddressInfo addressInfo);
+
+        /// <summary>
+        /// Updates the customer address.
+        /// </summary>
+        /// <param name="addressInfo">The address information.</param>
+        /// <returns>Response Object</returns>
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response UpdateCustomerAddress(AddressInfo addressInfo);       
+
+        /// <summary>
+        /// Deletes the customer address.
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <param name="addressId">The address identifier.</param>
+        /// <returns>Response Object</returns>
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+         BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response DeleteCustomerAddress(string customerId, string addressId);
+
+        /// <summary>
+        /// Gets the customer addresses.
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <returns>Response Object</returns>
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+         BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetCustomerAddresses(string customerId);
     }
 }
