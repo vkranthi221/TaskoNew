@@ -356,6 +356,25 @@ namespace Tasko.Repository
         }
 
         /// <summary>
+        /// Sets the vendor as favorite vendor for customer
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <param name="vendorId">The vendor identifier.</param>
+        public static void SetFavoriteVendor(string customerId, string vendorId)
+        {
+
+        }
+
+        /// <summary>
+        /// Gets the favorite vendors for customer
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        public static void GetFavoriteVendors(string customerId)
+        {
+
+        }
+
+        /// <summary>
         /// Gets the address.
         /// </summary>
         /// <param name="dataRow">The data row.</param>

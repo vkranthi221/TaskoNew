@@ -98,7 +98,7 @@ namespace Tasko
         /// <returns>Response Object</returns>
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response UpdateCustomerAddress(AddressInfo addressInfo);       
+        Response UpdateCustomerAddress(AddressInfo addressInfo);
 
         /// <summary>
         /// Deletes the customer address.
@@ -129,5 +129,27 @@ namespace Tasko
         BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response AddVendorRating(string orderId, VendorRating vendorRating);
 
+        /// <summary>
+        /// Sets the vendor as favorite vendor for customer
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <returns>
+        /// Response Object
+        /// </returns>
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response SetFavoriteVendor(string customerId, string vendorId);
+
+        /// <summary>
+        /// Gets the favorite vendors for customer
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <returns>
+        /// Response Object
+        /// </returns>
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetFavoriteVendors(string customerId);
     }
 }

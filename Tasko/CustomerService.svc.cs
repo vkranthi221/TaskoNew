@@ -462,35 +462,104 @@ namespace Tasko
             return r;
         }
 
-
         /// <summary>
         /// Adds the vendor rating.
         /// </summary>
         /// <param name="orderId">The order identifier.</param>
         /// <param name="vendorRating">The vendor rating.</param>
         /// <returns>Response Object</returns>
-        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
-        BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         public Response AddVendorRating(string orderId, VendorRating vendorRating)
         {
             Response r = new Response();
             try
             {
                 bool isTokenValid = ValidateToken();
-                Order objOrder = null;
                 if (isTokenValid)
                 {
                     CustomerData.AddVendorRating(orderId, vendorRating);
-                  r.Error = false;
-                  r.Message = "success";
-                  r.Status = 200;
+                    r.Error = false;
+                    r.Message = "success";
+                    r.Status = 200;
                 }
                 else
                 {
                     r.Message = "Invalid token code";
                     r.Error = true;
                     r.Status = 400;
-                }                
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        /// <summary>
+        /// Sets the vendor as favorite vendor for customer
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <returns>
+        /// Response Object
+        /// </returns>
+        public Response SetFavoriteVendor(string customerId, string vendorId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    CustomerData.SetFavoriteVendor(customerId, vendorId);
+                    r.Message = "Success";
+                }
+                else
+                {
+                    r.Message = "Invalid token code";
+                }
+
+                r.Error = false;
+                r.Status = 200;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        /// <summary>
+        /// Gets the favorite vendors for customer
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <returns>
+        /// Response Object
+        /// </returns>
+        public Response GetFavoriteVendors(string customerId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    CustomerData.GetFavoriteVendors(customerId);
+                    r.Message = "Success";
+                }
+                else
+                {
+                    r.Message = "Invalid token code";
+                }
+
+                r.Error = false;
+                r.Status = 200;
             }
             catch (Exception ex)
             {
