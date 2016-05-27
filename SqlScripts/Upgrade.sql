@@ -260,3 +260,25 @@ SET NOCOUNT ON;
  INNER JOIN dbo.CUSTOMER_ADDRESS CA ON CA.[ADDRESS_ID] = Addr.[Address_ID]
  WHERE CA.CUSTOMER_ID = @pCustomerId 
 END
+
+GO
+CREATE PROCEDURE [dbo].[usp_AddVendorRating]
+(
+  @pOrderId varchar(50),
+  @pServiceQuality decimal(18,2),
+  @pPunctuality decimal(18,2),
+  @pCourtesy decimal(18,2),
+  @pPrice decimal(18,2),
+  @pComments nvarchar(max)
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+  INSERT INTO [dbo].[VENDOR_RATING] VALUES(NewId(),@pServiceQuality,@pPunctuality,@pCourtesy,@pPrice,Getdate(),@pComments,@pOrderId)
+
+END
+
+GO

@@ -338,6 +338,24 @@ namespace Tasko.Repository
         }
 
         /// <summary>
+        /// Adds the vendor rating.
+        /// </summary>
+        /// <param name="orderId">The order identifier.</param>
+        /// <param name="vendorRating">The vendor rating.</param>
+        public static void AddVendorRating(string orderId, VendorRating vendorRating)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pOrderId", DbType.String, orderId));
+            objParameters.Add(SqlHelper.CreateParameter("@pServiceQuality", DbType.Decimal, vendorRating.ServiceQuality));
+            objParameters.Add(SqlHelper.CreateParameter("@pPunctuality", DbType.Decimal, vendorRating.Punctuality));
+            objParameters.Add(SqlHelper.CreateParameter("@pCourtesy", DbType.Decimal, vendorRating.Courtesy));
+            objParameters.Add(SqlHelper.CreateParameter("@pPrice", DbType.Decimal, vendorRating.Price));
+            objParameters.Add(SqlHelper.CreateParameter("@pComments", DbType.String, vendorRating.Comments));
+
+            SqlHelper.ExecuteNonQuery("dbo.usp_AddVendorRating", objParameters.ToArray());
+        }
+
+        /// <summary>
         /// Gets the address.
         /// </summary>
         /// <param name="dataRow">The data row.</param>

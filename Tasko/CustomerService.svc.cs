@@ -462,6 +462,46 @@ namespace Tasko
             return r;
         }
 
+
+        /// <summary>
+        /// Adds the vendor rating.
+        /// </summary>
+        /// <param name="orderId">The order identifier.</param>
+        /// <param name="vendorRating">The vendor rating.</param>
+        /// <returns>Response Object</returns>
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        public Response AddVendorRating(string orderId, VendorRating vendorRating)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                Order objOrder = null;
+                if (isTokenValid)
+                {
+                    CustomerData.AddVendorRating(orderId, vendorRating);
+                  r.Error = false;
+                  r.Message = "success";
+                  r.Status = 200;
+                }
+                else
+                {
+                    r.Message = "Invalid token code";
+                    r.Error = true;
+                    r.Status = 400;
+                }                
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
         /// <summary>
         /// Validates the token.
         /// </summary>

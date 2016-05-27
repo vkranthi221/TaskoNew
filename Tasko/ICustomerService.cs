@@ -118,5 +118,16 @@ namespace Tasko
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
          BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetCustomerAddresses(string customerId);
+
+        /// <summary>
+        /// Adds the vendor rating.
+        /// </summary>
+        /// <param name="orderId">The order identifier.</param>
+        /// <param name="vendorRating">The vendor rating.</param>
+        /// <returns>Response Object</returns>
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response AddVendorRating(string orderId, VendorRating vendorRating);
+
     }
 }
