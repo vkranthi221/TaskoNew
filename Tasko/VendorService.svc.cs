@@ -11,6 +11,7 @@ using Tasko.Model;
 using Tasko.BL;
 using Tasko.Repository;
 using System.ServiceModel.Channels;
+using System.Configuration;
 
 namespace Tasko
 {
@@ -30,13 +31,22 @@ namespace Tasko
             try
             {
                 IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
-                string authCode = string.Empty;
-                authCode = VendorData.InsertAuthCode();
-                r.Error = false;
-                r.Message = "Authentication Successful";
-                r.Status = 200;
-                r.Data = authCode;
-
+                WebHeaderCollection headers = request.Headers;
+                string appId = headers["X-APIKey"];
+                if (appId == ConfigurationManager.AppSettings["VendorAppId"])
+                {
+                    string authCode = string.Empty;
+                    authCode = VendorData.InsertAuthCode();
+                    r.Error = false;
+                    r.Message = "Authentication Successful";
+                    r.Status = 200;
+                    r.Data = authCode;
+                }
+                else
+                {
+                    r.Message = "Authentication failed";
+                    r.Error = true;
+                }
             }
             catch (Exception ex)
             {
