@@ -5,7 +5,7 @@ GO
 ----------------------------------------------------------------------------------------------------------
 
 GO
-CREATE TABLE [dbo].[SERVICES](
+CREATE TABLE [dbo].[SERVICES]( 
 	[SERVICE_ID] Binary (16) NOT NULL ,
 	[NAME] VARCHAR(MAX) NOT NULL,
 	[PARENT_SERVICE_ID] Binary (16) NULL ,
@@ -161,19 +161,6 @@ CREATE TABLE [dbo].[CUSTOMER](
  
 GO
 
-USE [Tasko]
-GO
-
-/****** Object:  Table [dbo].[ORDER]    Script Date: 05/23/2016 15:20:16 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-SET ANSI_PADDING ON
-GO
-
 CREATE TABLE [dbo].[ORDER](
 	[ORDER_ID] [varchar](50) NOT NULL,
 	[VENDOR_SERVICE_ID] [binary](16) NOT NULL,
@@ -183,11 +170,7 @@ CREATE TABLE [dbo].[ORDER](
 	[ORDER_LOCATION] [varchar](max) NULL,
 	[SOURCE_ADDRESS_ID] [binary](16) NOT NULL,
 	[DESTINATION_ADDRESS_ID] [binary](16) NOT NULL,
- CONSTRAINT [ORDER_PK] PRIMARY KEY CLUSTERED 
-(
-	[ORDER_ID] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
+ CONSTRAINT [ORDER_PK] PRIMARY KEY CLUSTERED ([ORDER_ID] ASC))
 
 GO
 
