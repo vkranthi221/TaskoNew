@@ -344,5 +344,19 @@ namespace Tasko.Repository
 
             return orders;
         }
+
+        /// <summary>
+        /// Changes the password.
+        /// </summary>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <param name="password">The password.</param>
+        public static void ChangePassword(string vendorId, string password)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pPassword", DbType.String, password));
+            SqlHelper.ExecuteNonQuery("dbo.usp_ChangePassword", objParameters.ToArray());
+        }
     }
 }

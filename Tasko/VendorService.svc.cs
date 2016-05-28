@@ -552,6 +552,44 @@ namespace Tasko
         }
 
         /// <summary>
+        /// Changes the password.
+        /// </summary>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>
+        /// Response Object
+        /// </returns>
+        public Response ChangePassword(string vendorId, string password)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    VendorData.ChangePassword(vendorId, password);
+                    r.Error = false;
+                    r.Message = "success";
+                    r.Status = 200;
+                }
+                else
+                {
+                    r.Message = "Invalid token code";
+                    r.Error = true;
+                    r.Status = 400;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        /// <summary>
         /// Validates the token.
         /// </summary>
         /// <returns>bool value</returns>
