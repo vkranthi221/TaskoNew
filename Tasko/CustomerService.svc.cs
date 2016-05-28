@@ -151,7 +151,12 @@ namespace Tasko
             Response r = new Response();
             try
             {
-                List<ServiceVendor> services = CustomerData.GetServiceVendors(serviceId);
+                bool isTokenValid = ValidateToken();
+                List<ServiceVendor> services = null;
+                if (isTokenValid)
+                {
+                    services = CustomerData.GetServiceVendors(serviceId);
+                }
 
                 if (services != null)
                 {

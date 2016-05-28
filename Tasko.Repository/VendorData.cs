@@ -68,6 +68,7 @@ namespace Tasko.Repository
             return false;
 
         }
+
         /// <summary>
         /// Gets the vendor.
         /// </summary>
