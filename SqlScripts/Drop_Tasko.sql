@@ -93,3 +93,5 @@ GO
 DROP PROCEDURE [dbo].[usp_GetCustomerAddresses]
 GO
 DROP PROCEDURE [dbo].[usp_AddVendorRating]
+GO
+DROP PROCEDURE [dbo].[usp_ChangePassword]

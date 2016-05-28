@@ -954,3 +954,19 @@ SET NOCOUNT ON;
 END
 
 GO
+CREATE PROCEDURE [dbo].[usp_ChangePassword]
+(
+	@pVendorId binary(16),
+	@pPassword nvarchar(max)
+)
+AS
+BEGIN
+
+DECLARE @err_message nvarchar(255)
+SET NOCOUNT ON;
+
+   UPDATE [dbo].[VENDOR]  SET PASSWORD = @pPassword WHERE VENDOR_ID = @pVendorId
+
+END
+
+GO
