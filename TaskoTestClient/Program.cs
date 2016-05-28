@@ -19,6 +19,8 @@ namespace TaskoTestClient
             //Console.WriteLine(VendorData.ValidateTokenCode("4B050B867497BD45B39827166EFBD176", "74AEA79F14C3BD49A528A2FC8D440D20"));
             //Console.WriteLine(VendorData.ValidateAuthCode("E77B16758EDBEB4995B678DB1143AD6C"));
             //Console.WriteLine(VendorData.Login("srikanth","12345","",1));
+
+            VendorData.UpdateOrderStatus("TASKO1000", 2, "not satisfied");
             VendorRating rating = new VendorRating();
             rating.ServiceQuality=1;
             rating.Punctuality =2;

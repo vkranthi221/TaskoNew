@@ -92,3 +92,4 @@ DROP PROCEDURE [dbo].[usp_DeleteCustomerAddress]
 GO
 DROP PROCEDURE [dbo].[usp_GetCustomerAddresses]
 GO
+DROP PROCEDURE [dbo].[usp_AddVendorRating]

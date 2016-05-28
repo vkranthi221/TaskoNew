@@ -211,12 +211,14 @@ namespace Tasko.Repository
         /// </summary>
         /// <param name="orderId">The order identifier.</param>
         /// <param name="orderStatus">The order status.</param>
-        public static void UpdateOrderStatus(string orderId, short orderStatus)
+        /// <param name="Comments">The comments.</param>
+        public static void UpdateOrderStatus(string orderId, short orderStatus,string Comments)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
             objParameters.Add(SqlHelper.CreateParameter("@pOrderId", DbType.String, orderId));
             objParameters.Add(SqlHelper.CreateParameter("@pOrderStatus", DbType.Int16, orderStatus));
+            objParameters.Add(SqlHelper.CreateParameter("@pComments", DbType.Int16, Comments));
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateOrderStatus", objParameters.ToArray());
         }
 
@@ -333,6 +335,7 @@ namespace Tasko.Repository
                 order.RequestedDate = Convert.ToDateTime(reader["REQUESTED_DATE"]);
                 order.ServiceName = reader["SERVICENAME"].ToString();
                 order.OrderStatus = reader["ORDERSTATUSNAME"].ToString();
+                order.Comments = reader["COMMENTS"].ToString();
                 orders.Add(order);
             }
 

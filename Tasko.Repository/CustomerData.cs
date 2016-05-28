@@ -52,6 +52,7 @@ namespace Tasko.Repository
 
                     objOrder.RequestedDate = Convert.ToDateTime(ObjOrderInfo.Rows[0]["REQUESTED_DATE"]);
                     objOrder.Location = ObjOrderInfo.Rows[0]["ORDER_LOCATION"].ToString();
+                    objOrder.Comments = ObjOrderInfo.Rows[0]["COMMENTS"].ToString();
                 }
 
                 //// Get the source Address
@@ -107,6 +108,7 @@ namespace Tasko.Repository
 
                     objOrder.RequestedDate = Convert.ToDateTime(ObjOrderInfo.Rows[0]["REQUESTED_DATE"]);
                     objOrder.Location = ObjOrderInfo.Rows[0]["ORDER_LOCATION"].ToString();
+                    objOrder.Comments = ObjOrderInfo.Rows[0]["COMMENTS"].ToString();
                 }
 
                 //// Get the source Address
@@ -257,6 +259,7 @@ namespace Tasko.Repository
                     orderSummary.ServiceId = BinaryConverter.ConvertByteToString((byte[])row["SERVICE_ID"]);
                     orderSummary.ServiceName = row["SERVICE_NAME"].ToString();
                     orderSummary.RequestedDate = Convert.ToDateTime(row["REQUESTED_DATE"]);
+                    orderSummary.Comments = row["COMMENTS"].ToString();
                     customerOrders.Add(orderSummary);
                 }
             }

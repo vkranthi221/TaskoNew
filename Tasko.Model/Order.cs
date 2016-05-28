@@ -134,5 +134,14 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public AddressInfo DestinationAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets the comments.
+        /// </summary>
+        /// <value>
+        /// The comments.
+        /// </value>
+        [DataMember]
+        public string Comments{get;set;}
     }
 }

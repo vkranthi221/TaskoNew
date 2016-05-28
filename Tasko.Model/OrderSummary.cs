@@ -57,5 +57,14 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public DateTime RequestedDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the comments.
+        /// </summary>
+        /// <value>
+        /// The comments.
+        /// </value>
+        [DataMember]
+        public string Comments { get; set; }
     }
 }

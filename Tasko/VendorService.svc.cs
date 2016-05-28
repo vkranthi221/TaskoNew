@@ -251,8 +251,11 @@ namespace Tasko
         /// </summary>
         /// <param name="orderId">The order identifier.</param>
         /// <param name="orderStatus">The order status.</param>
-        /// <returns>Response Object</returns>
-        public Response UpdateOrderStatus(string orderId, short orderStatus)
+        /// <param name="Comments"></param>
+        /// <returns>
+        /// Response Object
+        /// </returns>
+        public Response UpdateOrderStatus(string orderId, short orderStatus, string Comments)
         {
             Response r = new Response();
             try
@@ -262,7 +265,7 @@ namespace Tasko
                 {
                     if (isTokenValid)
                     {
-                        VendorData.UpdateOrderStatus(orderId, orderStatus);
+                        VendorData.UpdateOrderStatus(orderId, orderStatus, Comments);
                         r.Error = false;
                         r.Message = "success";
                         r.Status = 200;

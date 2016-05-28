@@ -77,11 +77,14 @@ namespace Tasko
         /// </summary>
         /// <param name="orderId">The order identifier.</param>
         /// <param name="orderStatus">The order status.</param>
-        /// <returns>Response Object</returns>
+        /// <param name="Comments">The comments.</param>
+        /// <returns>
+        /// Response Object
+        /// </returns>
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response UpdateOrderStatus(string orderId, short orderStatus);
+        Response UpdateOrderStatus(string orderId, short orderStatus, string Comments);
 
         /// <summary>
         /// Updates the vendor services.
