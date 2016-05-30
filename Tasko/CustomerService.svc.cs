@@ -143,10 +143,11 @@ namespace Tasko
         /// Gets the service vendors.
         /// </summary>
         /// <param name="serviceId">The service identifier.</param>
+        /// <param name="customerId">The customer identifier.</param>
         /// <returns>
         /// Response Object
         /// </returns>
-        public Response GetServiceVendors(string serviceId)
+        public Response GetServiceVendors(string serviceId, string customerId)
         {
             Response r = new Response();
             try
@@ -155,7 +156,7 @@ namespace Tasko
                 List<ServiceVendor> services = null;
                 if (isTokenValid)
                 {
-                    services = CustomerData.GetServiceVendors(serviceId);
+                    services = CustomerData.GetServiceVendors(serviceId, customerId);
                 }
 
                 if (services != null)

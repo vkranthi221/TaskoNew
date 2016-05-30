@@ -45,6 +45,7 @@
     <Compile Include="Customer.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FavoriteVendor.cs" />
     <Compile Include="LoginInfo.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderSummary.cs" />

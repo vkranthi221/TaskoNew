@@ -164,12 +164,13 @@ namespace Tasko.Repository
         /// <returns>
         /// Response Object
         /// </returns>
-        public static List<ServiceVendor> GetServiceVendors(string serviceId)
+        public static List<ServiceVendor> GetServiceVendors(string serviceId, string customerId)
         {
             List<ServiceVendor> serviceVendors = null;
 
             List<SqlParameter> objParameters = new List<SqlParameter>();
             objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(serviceId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
             DataTable datatable = SqlHelper.GetDataTable("dbo.usp_GetServiceVendors", objParameters.ToArray());
             if (datatable != null && datatable.Rows.Count > 0)
             {
@@ -182,6 +183,11 @@ namespace Tasko.Repository
                     serviceVendor.VendorId = BinaryConverter.ConvertByteToString((byte[])row["VENDOR_ID"]);
                     serviceVendor.VendorName = row["VENDOR_NAME"].ToString();
                     serviceVendor.VendorServiceId = BinaryConverter.ConvertByteToString((byte[])row["VENDOR_SERVICE_ID"]);
+                    serviceVendor.BaseRate = Convert.ToDouble(row["BASE_RATE"]);
+                    if (row["FAVORITE_ID"] != null)
+                    {
+                        serviceVendor.IsFavoriteVendor = true;
+                    }
                     serviceVendors.Add(serviceVendor);
                 }
             }
@@ -365,16 +371,38 @@ namespace Tasko.Repository
         /// <param name="vendorId">The vendor identifier.</param>
         public static void SetFavoriteVendor(string customerId, string vendorId)
         {
-
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
+            SqlHelper.ExecuteNonQuery("dbo.usp_SetFavoriteVendor", objParameters.ToArray());
         }
 
         /// <summary>
         /// Gets the favorite vendors for customer
         /// </summary>
         /// <param name="customerId">The customer identifier.</param>
-        public static void GetFavoriteVendors(string customerId)
+        /// /// <returns>list of favorite vendors for the customer</returns>
+        public static List<FavoriteVendor> GetFavoriteVendors(string customerId)
         {
+            List<FavoriteVendor> favoriteVendors = null;
 
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
+            DataTable datatable = SqlHelper.GetDataTable("dbo.usp_GetFavoriteVendors", objParameters.ToArray());
+            if (datatable != null && datatable.Rows.Count > 0)
+            {
+                favoriteVendors = new List<FavoriteVendor>();
+                foreach (DataRow row in datatable.Rows)
+                {
+                    FavoriteVendor favoriteVendor = new FavoriteVendor();
+                    favoriteVendor.VendorId = BinaryConverter.ConvertByteToString((byte[])row["VENDOR_ID"]);
+                    favoriteVendor.VendorName = row["VENDOR_NAME"].ToString();
+                    favoriteVendor.TotalRatings = Convert.ToInt32(row["TOTAL_RATINGS"]);
+                    favoriteVendors.Add(favoriteVendor);
+                }
+            }
+
+            return favoriteVendors;
         }
 
         /// <summary>

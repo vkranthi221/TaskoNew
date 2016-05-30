@@ -46,10 +46,11 @@ namespace Tasko
         /// Gets the service vendors.
         /// </summary>
         /// <param name="serviceId">The service identifier.</param>
+        /// <param name="customerId">The customer identifier.</param>
         /// <returns>Response Object</returns>
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response GetServiceVendors(string serviceId);
+        Response GetServiceVendors(string serviceId, string customerId);
 
         /// <summary>
         /// Confirms the order.

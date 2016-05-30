@@ -56,5 +56,23 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public string VendorServiceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the base rate.
+        /// </summary>
+        /// <value>
+        /// The base rate.
+        /// </value>
+        [DataMember]
+        public double BaseRate { get; set; }
+
+        /// <summary>
+        /// Gets or sets Is Favorite Vendor.
+        /// </summary>
+        /// <value>
+        /// The Is Favorite Vendor.
+        /// </value>
+        [DataMember]
+        public bool IsFavoriteVendor { get; set; }
     }
 }
