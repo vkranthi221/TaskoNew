@@ -20,7 +20,7 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public string ServiceId { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the name of the service.
         /// </summary>
@@ -74,5 +74,23 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public bool IsFavoriteVendor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the over all rating.
+        /// </summary>
+        /// <value>
+        /// The over all rating.
+        /// </value>
+        [DataMember]
+        public decimal OverAllRating { get; set; }
+
+        /// <summary>
+        /// Gets or sets the total reviews.
+        /// </summary>
+        /// <value>
+        /// The total reviews.
+        /// </value>
+        [DataMember]
+        public int TotalReviews { get; set; }
     }
 }

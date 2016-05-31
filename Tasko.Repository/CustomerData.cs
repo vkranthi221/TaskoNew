@@ -188,6 +188,9 @@ namespace Tasko.Repository
                     {
                         serviceVendor.IsFavoriteVendor = true;
                     }
+
+                    serviceVendor.OverAllRating = Convert.ToDecimal(row["OVERALL_RATINGS"]);
+                    serviceVendor.TotalReviews = Convert.ToInt32(row["TOTAL_REVIEWS"]);
                     serviceVendors.Add(serviceVendor);
                 }
             }
@@ -355,6 +358,8 @@ namespace Tasko.Repository
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
             objParameters.Add(SqlHelper.CreateParameter("@pOrderId", DbType.String, orderId));
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorRating.CustomerId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorRating.VendorId)));
             objParameters.Add(SqlHelper.CreateParameter("@pServiceQuality", DbType.Decimal, vendorRating.ServiceQuality));
             objParameters.Add(SqlHelper.CreateParameter("@pPunctuality", DbType.Decimal, vendorRating.Punctuality));
             objParameters.Add(SqlHelper.CreateParameter("@pCourtesy", DbType.Decimal, vendorRating.Courtesy));
