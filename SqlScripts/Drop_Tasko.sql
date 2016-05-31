@@ -20,6 +20,8 @@ DROP TABLE [dbo].[ORDER]
 Go
 DROP TABLE [dbo].[ORDER_STATUS]
 Go
+DROP TABLE [dbo].[CUSTOMER_FAVORITE_VENDOR]
+GO
 DROP TABLE [dbo].[CUSTOMER]
 Go
 DROP TABLE [dbo].[VENDOR_SERVICES]
@@ -95,3 +97,7 @@ GO
 DROP PROCEDURE [dbo].[usp_AddVendorRating]
 GO
 DROP PROCEDURE [dbo].[usp_ChangePassword]
+GO
+DROP PROCEDURE [dbo].[usp_SetFavoriteVendor]
+GO
+DROP PROCEDURE [dbo].[usp_GetFavoriteVendors]
