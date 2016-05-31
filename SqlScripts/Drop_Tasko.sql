@@ -101,3 +101,5 @@ GO
 DROP PROCEDURE [dbo].[usp_SetFavoriteVendor]
 GO
 DROP PROCEDURE [dbo].[usp_GetFavoriteVendors]
+GO
+DROP FUNCTION [dbo].[GetVendorTotalRating]
