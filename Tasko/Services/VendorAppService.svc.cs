@@ -162,7 +162,7 @@ namespace Tasko.Services
             try
             {
                 bool isTokenValid = ValidateToken();
-                List<Tasko.Model.VendorService> vendorServices = null;
+                List<VendorService> vendorServices = null;
                 if (isTokenValid)
                 {
                     vendorServices = VendorData.GetVendorServices(vendorId);
@@ -206,7 +206,7 @@ namespace Tasko.Services
             try
             {
                 bool isTokenValid = ValidateToken();
-                List<Tasko.Model.VendorService> vendorSubServices = null;
+                List<VendorService> vendorSubServices = null;
                 if (isTokenValid)
                 {
                     vendorSubServices = VendorData.GetVendorSubServices(vendorServiceId);
@@ -292,7 +292,7 @@ namespace Tasko.Services
         /// </summary>
         /// <param name="vendorServices">The vendor services.</param>
         /// <returns>Response Object</returns>
-        public Response UpdateVendorServices(List<Tasko.Model.VendorService> vendorServices)
+        public Response UpdateVendorServices(List<VendorService> vendorServices)
         {
             Response r = new Response();
             try

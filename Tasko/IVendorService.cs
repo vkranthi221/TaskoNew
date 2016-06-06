@@ -94,7 +94,7 @@ namespace Tasko
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response UpdateVendorServices(List<Tasko.Model.VendorService> vendorServices);
+        Response UpdateVendorServices(List<VendorService> vendorServices);
 
         /// <summary>
         /// Updates the vendor base rate.

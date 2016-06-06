@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
+using Tasko.Model;
 
 namespace Tasko.Interfaces
 {
@@ -90,7 +91,7 @@ namespace Tasko.Interfaces
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response UpdateVendorServices(List<Tasko.Model.VendorService> vendorServices);
+        Response UpdateVendorServices(List<VendorService> vendorServices);
 
         /// <summary>
         /// Updates the vendor base rate.
