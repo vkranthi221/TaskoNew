@@ -65,8 +65,8 @@ namespace Tasko.Repository
             {
                 return (bool)reader["IsValid"];
             }
-            return false;
 
+            return false;
         }
 
         /// <summary>
