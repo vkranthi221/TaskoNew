@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
+using Tasko.Services;
 
 namespace Tasko
 {
@@ -14,7 +15,7 @@ namespace Tasko
 
         protected void Application_Start(object sender, EventArgs e)
         {
-            RouteTable.Routes.Add(new ServiceRoute("v1", new WebServiceHostFactory(), typeof(VendorService)));
+            RouteTable.Routes.Add(new ServiceRoute("v1", new WebServiceHostFactory(), typeof(VendorAppService)));
             RouteTable.Routes.Add(new ServiceRoute("c1", new WebServiceHostFactory(), typeof(CustomerService)));
         }
 
