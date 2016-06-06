@@ -403,6 +403,7 @@ namespace Tasko.Repository
                     favoriteVendor.VendorId = BinaryConverter.ConvertByteToString((byte[])row["VENDOR_ID"]);
                     favoriteVendor.VendorName = row["VENDOR_NAME"].ToString();
                     favoriteVendor.TotalRatings = Convert.ToInt32(row["TOTAL_RATINGS"]);
+                    favoriteVendor.OverallRating = Convert.ToInt32(row["OVERALL_RATINGS"]);
                     favoriteVendors.Add(favoriteVendor);
                 }
             }
