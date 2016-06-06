@@ -1,23 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.ServiceModel.Web;
-using System.Text;
-using Tasko.Common;
-using Tasko.Model;
-using Tasko.BL;
-using Tasko.Repository;
-using System.ServiceModel.Channels;
 using System.Configuration;
+using System.Net;
+using System.ServiceModel.Web;
+using Tasko.Interfaces;
+using Tasko.Model;
+using Tasko.Repository;
 
-namespace Tasko
+namespace Tasko.Services
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "AuthenticationService" in code, svc and config file together.
     // NOTE: In order to launch WCF Test Client for testing this service, please select AuthenticationService.svc or AuthenticationService.svc.cs at the Solution Explorer and start debugging.
-    public class VendorService : IVendorService
+    public class VendorAppService : IVendorAppService
     {
         /// <summary>
         /// Gets the uthCode.
@@ -168,7 +162,7 @@ namespace Tasko
             try
             {
                 bool isTokenValid = ValidateToken();
-                List<Tasko.Model.VendorService> vendorServices = null;
+                List<VendorService> vendorServices = null;
                 if (isTokenValid)
                 {
                     vendorServices = VendorData.GetVendorServices(vendorId);
@@ -212,7 +206,7 @@ namespace Tasko
             try
             {
                 bool isTokenValid = ValidateToken();
-                List<Tasko.Model.VendorService> vendorSubServices = null;
+                List<VendorService> vendorSubServices = null;
                 if (isTokenValid)
                 {
                     vendorSubServices = VendorData.GetVendorSubServices(vendorServiceId);
@@ -298,7 +292,7 @@ namespace Tasko
         /// </summary>
         /// <param name="vendorServices">The vendor services.</param>
         /// <returns>Response Object</returns>
-        public Response UpdateVendorServices(List<Tasko.Model.VendorService> vendorServices)
+        public Response UpdateVendorServices(List<VendorService> vendorServices)
         {
             Response r = new Response();
             try

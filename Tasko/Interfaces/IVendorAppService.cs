@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
-using System.Text;
 using Tasko.Model;
 
-namespace Tasko
+namespace Tasko.Interfaces
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IAuthenticationService" in both code and config file together.
     [ServiceContract]
-    public interface IVendorService
+    public interface IVendorAppService
     {
         /// <summary>
         /// Gets the token.
@@ -150,9 +147,5 @@ namespace Tasko
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response ChangePassword(string vendorId, string password);
-
-        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
-          BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response UpdateVendor(Vendor customer);
     }
 }

@@ -171,7 +171,11 @@ namespace Tasko.Repository
                     service.Id = BinaryConverter.ConvertByteToString((byte[])row["VENDOR_SERVICE_ID"]);
                     service.Name = row["SERVICE_NAME"].ToString();
                     service.IsActive = Convert.ToBoolean(row["IS_VENDOR_SERVICE_ACTIVE"]);
-                    service.ImageURL = row["IMAGE_URL"].ToString();
+                    if (row["IMAGE_URL"] != null)
+                    {
+                        service.ImageURL = row["IMAGE_URL"].ToString();
+                    }
+
                     vendorServices.Add(service);
                 }
             }
@@ -199,7 +203,11 @@ namespace Tasko.Repository
                     service.Id = BinaryConverter.ConvertByteToString((byte[])row["VENDOR_SERVICE_ID"]);
                     service.Name = row["SERVICE_NAME"].ToString();
                     service.IsActive = Convert.ToBoolean(row["IS_VENDOR_SERVICE_ACTIVE"]);
-                    service.ImageURL = row["IMAGE_URL"].ToString();
+                    if (row["IMAGE_URL"] != null)
+                    {
+                        service.ImageURL = row["IMAGE_URL"].ToString();
+                    }
+
                     vendorServices.Add(service);
                 }
             }
