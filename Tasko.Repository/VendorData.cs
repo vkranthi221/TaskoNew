@@ -366,5 +366,93 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pPassword", DbType.String, password));
             SqlHelper.ExecuteNonQuery("dbo.usp_ChangePassword", objParameters.ToArray());
         }
+
+        /// <summary>
+        /// Updates vendor details
+        /// </summary>
+        /// <param name="vendor">vendor details</param>
+        public static void UpdateVendor(Vendor vendor)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendor.Id)));
+            if(vendor.Name != string.Empty)
+            {
+            objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.String, vendor.Name));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.String, DBNull.Value));
+            }
+
+            // Mobile Number
+            if(vendor.MobileNumber != string.Empty)
+            {
+            objParameters.Add(SqlHelper.CreateParameter("@pMobileNumber", DbType.String, vendor.MobileNumber));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pNpMobileNumberame", DbType.String, DBNull.Value));
+            }
+
+            //BaxeRate
+             if(vendor.BaseRate != 0)
+            {
+            objParameters.Add(SqlHelper.CreateParameter("@pBaseRate", DbType.Double, vendor.BaseRate));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pBaseRate", DbType.Double, DBNull.Value));
+            }
+
+            // IsVendorLive
+            objParameters.Add(SqlHelper.CreateParameter("@pIsVendorLive", DbType.Boolean, vendor.IsVendorLive));
+
+            // Address
+            if(vendor.Address != string.Empty)
+            {
+            objParameters.Add(SqlHelper.CreateParameter("@pAddress", DbType.String, vendor.Address));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pAddress", DbType.String, DBNull.Value));
+            }
+
+            //NoOfEmployees
+             if(vendor.NoOfEmployees != 0)
+            {
+            objParameters.Add(SqlHelper.CreateParameter("@pNoOfEmployees", DbType.Int16, vendor.NoOfEmployees));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pNoOfEmployees", DbType.Int16, DBNull.Value));
+            }
+
+            //IsVendorVerified
+            objParameters.Add(SqlHelper.CreateParameter("@pIsVendorVerified", DbType.Boolean, vendor.IsVendorVerified));
+
+            //Timespentonapp and Activetimeperday are now stored as datetime column in db. this need to be changed to integer this needs to be discussed
+
+            //DataConsumption
+            if(vendor.DataConsumption != 0)
+            {
+            objParameters.Add(SqlHelper.CreateParameter("@pDataConsumption", DbType.Int16, vendor.DataConsumption));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pDataConsumption", DbType.Int16, DBNull.Value));
+            }
+
+            //CallsToCustomerCare
+            if(vendor.DataConsumption != 0)
+            {
+            objParameters.Add(SqlHelper.CreateParameter("@pCallsToCustomerCare", DbType.Int16, vendor.CallsToCustomerCare));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pCallsToCustomerCare", DbType.Int16, DBNull.Value));
+            }
+
+            SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendor", objParameters.ToArray());
+        }
     }
 }

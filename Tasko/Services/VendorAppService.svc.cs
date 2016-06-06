@@ -582,6 +582,39 @@ namespace Tasko.Services
 
             return r;
         }
+        /// <summary>
+        /// Updates Vendor details
+        /// </summary>
+        /// <param name="vendor"></param>
+        /// <returns>Response</returns>
+        public Response UpdateVendor(Vendor vendor)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    VendorData.UpdateVendor(vendor);
+
+                    r.Error = false;
+                    r.Message = "success";
+                    r.Status = 200;
+                }
+                else
+                {
+                    r.Message = "Invalid token code";
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
 
         /// <summary>
         /// Validates the token.

@@ -150,5 +150,9 @@ namespace Tasko
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response ChangePassword(string vendorId, string password);
+
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+          BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response UpdateVendor(Vendor customer);
     }
 }
