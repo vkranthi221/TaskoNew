@@ -9,6 +9,9 @@ using Tasko.Model;
 
 namespace Tasko
 {
+    /// <summary>
+    /// Response class
+    /// </summary>
     [DataContract]
     [KnownType(typeof(Order))]
     [KnownType(typeof(User))]
@@ -30,15 +33,39 @@ namespace Tasko
     [KnownType(typeof(List<OrderSummary>))]     
     public class Response
     {
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="Response"/> is error.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if error; otherwise, <c>false</c>.
+        /// </value>
         [DataMember]
         public bool Error { get; set; }
 
+        /// <summary>
+        /// Gets or sets the message.
+        /// </summary>
+        /// <value>
+        /// The message.
+        /// </value>
         [DataMember]
         public string Message { get; set; }
 
+        /// <summary>
+        /// Gets or sets the status.
+        /// </summary>
+        /// <value>
+        /// The status.
+        /// </value>
         [DataMember]
         public int Status { get; set; }
 
+        /// <summary>
+        /// Gets or sets the data.
+        /// </summary>
+        /// <value>
+        /// The data.
+        /// </value>
         [DataMember]
         public object Data { get; set; }
     }

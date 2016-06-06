@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="Tasko.CustomerService" CodeBehind="CustomerService.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="Tasko.Services.CustomerService" CodeBehind="CustomerService.svc.cs" %>
