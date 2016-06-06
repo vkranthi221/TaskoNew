@@ -296,6 +296,26 @@ GO
 SET ANSI_PADDING OFF
 GO
 
+
+/****** Object:  Table [dbo].[OTP_DETAILS]    Script Date: 07-06-2016 02:08:54 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[OTP_DETAILS](
+	[PHONE_NUMBER] [nchar](10) NOT NULL,
+	[EMAIL_ID] [nvarchar](50) NULL,
+	[OTP] [nchar](10) NOT NULL,
+ CONSTRAINT [PK_OTP_DETAILS] PRIMARY KEY CLUSTERED 
+(
+	[PHONE_NUMBER] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
 ALTER TABLE [dbo].[CUSTOMER_FAVORITE_VENDOR]  WITH CHECK ADD  CONSTRAINT [FK_Customer_Favorite_Vendor_CUSTOMER] FOREIGN KEY([CUSTOMER_ID])
 REFERENCES [dbo].[CUSTOMER] ([CUSTOMER_ID])
 GO
@@ -1085,5 +1105,154 @@ END
 
 
 GO
+
+
+
+/****** Object:  StoredProcedure [dbo].[usp_InsertOTPDetails]    Script Date: 07-06-2016 02:09:33 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[usp_InsertOTPDetails]
+@pOtp varchar(20),
+@pPhoneNumber varchar(20),
+@pEmailId varchar(100)
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+
+	DECLARE @count smallint
+
+	SELECT @count = count(1) FROM OTP_DETAILS WHERE PHONE_NUMBER = @pPhoneNumber
+
+	IF(@count >0)
+	BEGIN
+
+	--update 
+		UPDATE OTP_DETAILS SET OTP=@pOtp where PHONE_NUMBER = @pPhoneNumber
+	END
+	ELSE
+	BEGIN
+
+		INSERT INTO OTP_DETAILS (PHONE_NUMBER, EMAIL_ID, OTP) VALUES (@pPhoneNumber,@pEmailId, @pOtp)	
+	END
+
+END
+
+
+
+
+GO
+
+/****** Object:  StoredProcedure [dbo].[usp_ValidateOTP]    Script Date: 07-06-2016 02:10:04 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[usp_ValidateOTP]
+(
+@pPhoneNumber varchar(20),
+@pOTP varchar(10)
+)
+AS
+BEGIN
+
+SET NOCOUNT ON;
+declare @count int
+declare @isvalid bit
+select @count = count(1) from OTP_DETAILS where PHONE_NUMBER = @pPhoneNumber and OTP = @pOTP
+
+if(@count >0)
+BEGIN
+set @isvalid = 1
+DELETE FROM OTP_DETAILS where PHONE_NUMBER = @pPhoneNumber and OTP = @pOTP
+END
+Else
+begin 
+	set @isvalid =0
+end
+
+select @isvalid as IsValid
+End
+
+GO
+
+
+/****** Object:  StoredProcedure [dbo].[usp_AddCustomer]    Script Date: 07-06-2016 02:11:01 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[usp_AddCustomer]
+(
+  @pName nvarchar(max),
+  @pEmailId nvarchar(max),
+  @pPhoneNumber nvarchar(max)
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+DECLARE @customerId Binary(16)
+SET @customerId = NEWID()
+
+INSERT INTO CUSTOMER (CUSTOMER_ID, NAME, EMAIL_ADDRESS, MOBILE_NUMBER) VALUES (@customerId, @pName, @pEmailId, @pPhoneNumber)
+   
+
+END
+
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[usp_CustomerLoginValidateOTP]    Script Date: 07-06-2016 02:11:36 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[usp_CustomerLoginValidateOTP]
+(
+@pPhoneNumber varchar(20),
+@pOTP varchar(10)
+)
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+	declare @count int
+	declare @isvalid bit
+	declare @customerId binary(16)
+
+	select @count = count(1) from OTP_DETAILS where PHONE_NUMBER = @pPhoneNumber and OTP = @pOTP
+
+	if(@count >0)
+	BEGIN
+		set @isvalid = 1
+		select @customerId =  CUSTOMER_ID from CUSTOMER where MOBILE_NUMBER = @pPhoneNumber
+		DELETE FROM OTP_DETAILS where PHONE_NUMBER = @pPhoneNumber and OTP = @pOTP
+	END
+	Else
+	BEGIN 
+		set @isvalid =0
+	END
+
+	SELECT @isvalid as IsValid , @customerId as CustomerID
+End
+
+GO
+
+
+
 
 

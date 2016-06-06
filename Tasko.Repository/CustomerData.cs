@@ -457,5 +457,64 @@ namespace Tasko.Repository
             AddressId = BinaryConverter.ConvertByteToString(Address_Id);
             return AddressId;
         }
+
+        /// <summary>
+        /// inserts otp details to DB
+        /// </summary>
+        /// <param name="otp">OTP</param>
+        /// <param name="phoneNumber">Phone Number</param>
+        /// <param name="emailId">email id</param>
+        public static void InsertOTPDetails(string otp, string phoneNumber, string emailId)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pOtp", DbType.String, otp));
+            objParameters.Add(SqlHelper.CreateParameter("@pPhoneNumber", DbType.String, phoneNumber));
+            objParameters.Add(SqlHelper.CreateParameter("@pEmailId", DbType.String, emailId));
+
+            SqlHelper.ExecuteNonQuery("dbo.usp_InsertOTPDetils", objParameters.ToArray());
+
+        }
+
+        public static bool ValidateOTP(string phoneNumber, string OTP)
+        {
+
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pPhoneNumber", DbType.String, phoneNumber));
+            objParameters.Add(SqlHelper.CreateParameter("@pOTP", DbType.String, OTP));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_ValidateOTP", objParameters.ToArray());
+
+            if (reader.Read())
+            {
+                return (bool)reader["IsValid"];
+            }
+            return false;
+        }
+
+        public static void AddCustomer(string name, string emailId, string phoneNumber)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.String, name));
+            objParameters.Add(SqlHelper.CreateParameter("@pEmailId", DbType.String, emailId));
+            objParameters.Add(SqlHelper.CreateParameter("@pPhoneNumber", DbType.String, phoneNumber));
+            
+            SqlHelper.ExecuteNonQuery("dbo.usp_AddCustomer", objParameters.ToArray());
+        }
+
+
+        public static string LoginValidateOTP(string phoneNumber, string OTP, ref bool IsValid)
+        {
+
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pPhoneNumber", DbType.String, phoneNumber));
+            objParameters.Add(SqlHelper.CreateParameter("@pOTP", DbType.String, OTP));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_CustomerLoginValidateOTP", objParameters.ToArray());
+
+            if (reader.Read())
+            {
+                IsValid = (bool)reader["IsValid"];
+                return BinaryConverter.ConvertByteToString((byte[])reader["CustomerID"]);
+            }
+            return string.Empty;
+        }
     }
 }

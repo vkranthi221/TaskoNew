@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
@@ -578,6 +579,179 @@ namespace Tasko.Services
             return r;
         }
 
+        public Response GenerateOTP(string emailId, string phoneNumber)
+        {
+            Response r = new Response();
+            try
+            {
+                r.Message = "Error Generating OTP";
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    string otp = InternalGetOTP(phoneNumber);
+                    if (!string.IsNullOrEmpty(otp))
+                    {
+                        CustomerData.InsertOTPDetails(otp, phoneNumber, emailId);
+                    }
+                    
+                    r.Message = "Success";
+                }
+                else
+                {
+                    r.Message = "Invalid token code";
+                }
+
+                r.Error = false;
+                r.Status = 200;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        public Response ValidateOTP(string phoneNumber, string OTP)
+        {
+            Response r = new Response();
+            try
+            {
+                r.Message = "Error validating OTP";
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    CustomerData.ValidateOTP(phoneNumber, OTP);
+                    r.Message = "Success";
+                }
+                else
+                {
+                    r.Message = "Invalid token code";
+                }
+
+                r.Error = false;
+                r.Status = 200;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        public Response SignUp(string Name, string emailId, string phoneNumber)
+        {
+            // Add Customer
+            Response r = new Response();
+            try
+            {
+                r.Message = "Error Adding Customer Details";
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    CustomerData.AddCustomer(Name, emailId, phoneNumber);
+                    r.Message = "Success";
+                }
+                else
+                {
+                    r.Message = "Invalid token code";
+                }
+
+                r.Error = false;
+                r.Status = 200;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        public Response LoginValidateOTP(string phoneNumber, string OTP)
+        {
+            // return customr id after login
+            Response r = new Response();
+            bool isValid = false;
+            try
+            {
+                r.Message = "Error In Logon. Invalid Phone Number Or OTP";
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    string customerId = CustomerData.LoginValidateOTP(phoneNumber, OTP, ref isValid);
+                    r.Data = customerId;
+                    if (isValid)
+                    {
+                        r.Message = "Success";
+                    }
+                    else
+                    {
+                        r.Message = "Invalid Phone Number Or OTP";
+                    }
+                }
+                else
+                {
+                    r.Message = "Invalid token code";
+                }
+
+                r.Error = false;
+                r.Status = 200;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        private string InternalGetOTP(string phoneNumber)
+        {
+            string otp = InternalGenerateOTP(phoneNumber);
+        string sURL = "http://www.metamorphsystems.com/index.php/api/bulk-sms?username=" + "taskoapp" + "&password=" + "Apple123" +
+                        "&from=" + "TTASKO" + "&to=" + phoneNumber+ "&message=" + otp + "&sms_type=" + 2;
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(sURL);
+        request.MaximumAutomaticRedirections = 4;
+        request.Method = "POST";
+        request.AllowWriteStreamBuffering = true;
+        CredentialCache.DefaultNetworkCredentials.UserName = "taskoapp";
+        CredentialCache.DefaultNetworkCredentials.Password = "Apple123";
+        CredentialCache.DefaultNetworkCredentials.Domain = "http://www.metamorphsystems.com";
+        request.Credentials = CredentialCache.DefaultNetworkCredentials;
+        try
+        {
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            Stream receiveStream = response.GetResponseStream();
+            StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
+            string sResponse = readStream.ReadToEnd();
+            response.Close();
+            readStream.Close();
+            return sResponse;
+        }
+        catch
+        {
+            return string.Empty;
+        }            //string sResponse = GetOTP(sURL);
+         
+            //Response.Write(sResponse);
+        }
+
+        private string InternalGenerateOTP(string phoneNumber)
+        {
+            // To do generate 6 digit OTP using algorithm
+            return "123456";
+        }
+
         /// <summary>
         /// Validates the token.
         /// </summary>
@@ -591,5 +765,7 @@ namespace Tasko.Services
             bool isTokenValid = VendorData.ValidateTokenCode(tokenCode, userId);
             return isTokenValid;
         }
+
+      
     }
 }

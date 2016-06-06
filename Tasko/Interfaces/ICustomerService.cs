@@ -147,5 +147,21 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetFavoriteVendors(string customerId);
+
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GenerateOTP(string emailId, string phoneNumber);
+
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response ValidateOTP(string phoneNumber, string OTP);
+
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response SignUp(string Name, string emailId, string phoneNumber);
+
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response LoginValidateOTP(string phoneNumber, string OTP);
     }
 }
