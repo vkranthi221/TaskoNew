@@ -39,6 +39,14 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public int TotalRatings { get; set; }
-
+        
+        /// <summary>
+        /// Gets or sets the overall rating.
+        /// </summary>
+        /// <value>
+        /// The overall rating.
+        /// </value>
+        [DataMember]
+        public int OverallRating { get; set; }
     }
 }
