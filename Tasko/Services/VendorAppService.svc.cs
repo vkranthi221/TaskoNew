@@ -124,7 +124,7 @@ namespace Tasko.Services
                 }
                 else
                 {
-                    r.Message = "Invalid AuthCode";
+                    r.Message = "Invalid  token code";
                 }
 
                 if (objVendor != null)
@@ -137,7 +137,7 @@ namespace Tasko.Services
                 else
                 {
                     r.Error = true;
-                    r.Message = "Vendor not found";
+                    r.Message = string.IsNullOrEmpty(r.Message) ? "Vendor not found" : r.Message;
                     r.Status = 400;
                 }
 
@@ -226,7 +226,7 @@ namespace Tasko.Services
                 else
                 {
                     r.Error = true;
-                    r.Message = "No sub services available";
+                    r.Message = string.IsNullOrEmpty(r.Message) ? "No sub services available" : r.Message;
                     r.Status = 400;
                 }
             }
@@ -274,7 +274,7 @@ namespace Tasko.Services
                 catch
                 {
                     r.Error = true;
-                    r.Message = "Error on updating OrderStatus";
+                    r.Message = string.IsNullOrEmpty(r.Message) ? "Error on updating OrderStatus" : r.Message;
                     r.Status = 400;
                 }
             }
