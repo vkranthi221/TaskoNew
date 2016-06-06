@@ -52,7 +52,7 @@ namespace Tasko.Services
             return r;
         }
 
-         /// <summary>
+        /// <summary>
         /// Logins the specified username.
         /// </summary>
         /// <param name="username">The username.</param>
@@ -150,7 +150,7 @@ namespace Tasko.Services
 
             return r;
         }
-        
+
         /// <summary>
         /// Gets the vendor services.
         /// </summary>
@@ -182,7 +182,7 @@ namespace Tasko.Services
                 else
                 {
                     r.Error = true;
-                    r.Message = "No services available";
+                    r.Message = string.IsNullOrEmpty(r.Message) ? "No services available" : r.Message;
                     r.Status = 400;
                 }
             }
@@ -313,14 +313,14 @@ namespace Tasko.Services
                     r.Status = 400;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 r.Error = true;
                 r.Message = "Error on updating Vendor Services";
                 r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
                 r.Status = 400;
             }
-        
+
             return r;
         }
 
@@ -337,23 +337,23 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                 bool isTokenValid = ValidateToken();
-                 if (isTokenValid)
-                 {
-                     VendorData.UpdateVendorBaseRate(vendorId, baseRate);
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    VendorData.UpdateVendorBaseRate(vendorId, baseRate);
 
-                     r.Error = false;
-                     r.Message = "success";
-                     r.Status = 200;
-                 }
-                 else
-                 {
-                     r.Message = "Invalid token code";
-                     r.Error = true;
-                     r.Status = 400;
-                 }
+                    r.Error = false;
+                    r.Message = "success";
+                    r.Status = 200;
+                }
+                else
+                {
+                    r.Message = "Invalid token code";
+                    r.Error = true;
+                    r.Status = 400;
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 r.Error = true;
                 r.Message = "Error on updating Vendor Base Rate";
@@ -394,7 +394,7 @@ namespace Tasko.Services
                     r.Status = 400;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 r.Error = true;
                 r.Message = "Error on logout";
@@ -537,7 +537,7 @@ namespace Tasko.Services
                     r.Status = 400;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 r.Error = true;
                 r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
@@ -593,10 +593,13 @@ namespace Tasko.Services
             WebHeaderCollection headers = request.Headers;
             string tokenCode = headers["Token_Code"];
             string userId = headers["User_Id"];
-            bool isTokenValid = VendorData.ValidateTokenCode(tokenCode, userId);
-            return isTokenValid;
+            if (!string.IsNullOrEmpty(tokenCode) && !string.IsNullOrEmpty(userId))
+            {
+                bool isTokenValid = VendorData.ValidateTokenCode(tokenCode, userId);
+                return isTokenValid;
+            }
+
+            return false;
         }
     }
-
-
 }
