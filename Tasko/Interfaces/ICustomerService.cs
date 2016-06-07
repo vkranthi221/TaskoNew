@@ -148,20 +148,56 @@ namespace Tasko.Interfaces
         BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetFavoriteVendors(string customerId);
 
+        /// <summary>
+        /// Generates the otp.
+        /// </summary>
+        /// <param name="emailId">The email identifier.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <returns>Response Object</returns>
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GenerateOTP(string emailId, string phoneNumber);
 
+        /// <summary>
+        /// Validates the otp.
+        /// </summary>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="OTP">The otp.</param>
+        /// <returns>Response Object</returns>
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response ValidateOTP(string phoneNumber, string OTP);
 
+        /// <summary>
+        /// Signs up.
+        /// </summary>
+        /// <param name="Name">The name.</param>
+        /// <param name="emailId">The email identifier.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <returns>Response Object</returns>
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response SignUp(string Name, string emailId, string phoneNumber);
 
+        /// <summary>
+        /// Logins the specified phone number.
+        /// </summary>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="OTP">The otp.</param>
+        /// <returns>Response Object</returns>
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response LoginValidateOTP(string phoneNumber, string OTP);
+        Response Login(string phoneNumber, string OTP);
+
+        /// <summary>
+        /// Gets the token.
+        /// </summary>
+        /// <returns>Response Object</returns>
+        [OperationContract]
+        [FaultContract(typeof(ErrorDetails))]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate = "auth")]
+        Response GetAuthCode();
     }
 }
