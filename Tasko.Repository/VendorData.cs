@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -33,11 +33,15 @@ namespace Tasko.Repository
         /// Validates the authentication code.
         /// </summary>
         /// <param name="authCode">The authentication code.</param>
-        /// <returns>true/false</returns>
-        public static bool ValidateAuthCode(string authCode)
+        /// <param name="isDeleteRequired">if set to <c>true</c> [is delete required].</param>
+        /// <returns>
+        /// true/false
+        /// </returns>
+        public static bool ValidateAuthCode(string authCode, bool isDeleteRequired)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
             objParameters.Add(SqlHelper.CreateParameter("@pAuthCode", DbType.Binary, BinaryConverter.ConvertStringToByte(authCode)));
+            objParameters.Add(SqlHelper.CreateParameter("@pIsDeleteRequired", DbType.Boolean, authCode));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_ValidateAuthCode", objParameters.ToArray());
 
             if (reader.Read())
