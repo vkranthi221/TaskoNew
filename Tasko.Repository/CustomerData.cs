@@ -471,10 +471,16 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pPhoneNumber", DbType.String, phoneNumber));
             objParameters.Add(SqlHelper.CreateParameter("@pEmailId", DbType.String, emailId));
 
-            SqlHelper.ExecuteNonQuery("dbo.usp_InsertOTPDetils", objParameters.ToArray());
+            SqlHelper.ExecuteNonQuery("dbo.usp_InsertOTPDetails", objParameters.ToArray());
 
         }
 
+        /// <summary>
+        /// Validates the otp.
+        /// </summary>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="OTP">The otp.</param>
+        /// <returns>Is OTP Valid</returns>
         public static bool ValidateOTP(string phoneNumber, string OTP)
         {
 
@@ -490,20 +496,44 @@ namespace Tasko.Repository
             return false;
         }
 
-        public static void AddCustomer(string name, string emailId, string phoneNumber)
+        /// <summary>
+        /// Adds the customer.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="emailId">The email identifier.</param>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <returns>Login Info</returns>
+        public static LoginInfo AddCustomer(string name, string emailId, string phoneNumber)
         {
+            LoginInfo logininfo = null;
             List<SqlParameter> objParameters = new List<SqlParameter>();
             objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.String, name));
             objParameters.Add(SqlHelper.CreateParameter("@pEmailId", DbType.String, emailId));
             objParameters.Add(SqlHelper.CreateParameter("@pPhoneNumber", DbType.String, phoneNumber));
-            
-            SqlHelper.ExecuteNonQuery("dbo.usp_AddCustomer", objParameters.ToArray());
+
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_AddCustomer", objParameters.ToArray());
+
+            if (reader.Read())
+            {
+                logininfo = new LoginInfo();
+                logininfo.TokenId = BinaryConverter.ConvertByteToString((byte[])reader["AUTH_CODE"]);
+                logininfo.UserId = BinaryConverter.ConvertByteToString((byte[])reader["USERID"]);
+                return logininfo;
+            }
+
+            return logininfo;
         }
 
-
-        public static string LoginValidateOTP(string phoneNumber, string OTP, ref bool IsValid)
+        /// <summary>
+        /// Logins the validate otp.
+        /// </summary>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <param name="OTP">The otp.</param>
+        /// <param name="IsValid">if set to <c>true</c> [is valid].</param>
+        /// <returns>Login Info</returns>
+        public static LoginInfo LoginValidateOTP(string phoneNumber, string OTP, ref bool IsValid)
         {
-
+            LoginInfo logininfo = null;
             List<SqlParameter> objParameters = new List<SqlParameter>();
             objParameters.Add(SqlHelper.CreateParameter("@pPhoneNumber", DbType.String, phoneNumber));
             objParameters.Add(SqlHelper.CreateParameter("@pOTP", DbType.String, OTP));
@@ -512,9 +542,13 @@ namespace Tasko.Repository
             if (reader.Read())
             {
                 IsValid = (bool)reader["IsValid"];
-                return BinaryConverter.ConvertByteToString((byte[])reader["CustomerID"]);
+                logininfo = new LoginInfo();
+                logininfo.TokenId = BinaryConverter.ConvertByteToString((byte[])reader["AUTH_CODE"]);
+                logininfo.UserId = BinaryConverter.ConvertByteToString((byte[])reader["USERID"]);
+                return logininfo;
             }
-            return string.Empty;
+
+            return logininfo;
         }
     }
 }
