@@ -296,22 +296,14 @@ GO
 SET ANSI_PADDING OFF
 GO
 
-
-/****** Object:  Table [dbo].[OTP_DETAILS]    Script Date: 07-06-2016 02:08:54 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 CREATE TABLE [dbo].[OTP_DETAILS](
-	[PHONE_NUMBER] [nchar](10) NOT NULL,
+	[PHONE_NUMBER] [nvarchar](50) NOT NULL,
 	[EMAIL_ID] [nvarchar](50) NULL,
-	[OTP] [nchar](10) NOT NULL,
+	[OTP] [nvarchar](50) NOT NULL,
  CONSTRAINT [PK_OTP_DETAILS] PRIMARY KEY CLUSTERED 
 (
 	[PHONE_NUMBER] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
@@ -676,12 +668,11 @@ Insert into auth_code values(@authcode)
 select @authcode as Auth_Code
 END
 
-
 GO
 CREATE PROCEDURE [dbo].[usp_ValidateAuthCode]
 (
-@pAuthCode binary(16)
-
+@pAuthCode binary(16),
+@pIsDeleteRequired bit
 )
 AS
 BEGIN
@@ -692,7 +683,10 @@ declare @isvalid bit
 select @count = count(1) from Auth_Code where code = @pAuthCode
 if(@count >0)
 BEGIN
+if(@pIsDeleteRequired = 1)
+BEGIN
 delete from Auth_Code where code = @pAuthCode
+END
 set @isvalid = 1
 END
 Else
@@ -704,6 +698,7 @@ select @isvalid as IsValid
 End
 
 GO
+
 CREATE PROCEDURE [dbo].[usp_ValidateTokenCode]
 (
 @pTokenCode binary(16),
@@ -1190,8 +1185,6 @@ GO
 
 SET QUOTED_IDENTIFIER ON
 GO
-
-
 CREATE PROCEDURE [dbo].[usp_AddCustomer]
 (
   @pName nvarchar(max),
@@ -1204,21 +1197,17 @@ BEGIN
 
 SET NOCOUNT ON;
 DECLARE @customerId Binary(16)
+DECLARE @authCode Binary(16)
 SET @customerId = NEWID()
+set @authCode = NEWID()
 
 INSERT INTO CUSTOMER (CUSTOMER_ID, NAME, EMAIL_ADDRESS, MOBILE_NUMBER) VALUES (@customerId, @pName, @pEmailId, @pPhoneNumber)
+   INSERT INTO LOGGEDON_USER VALUES(@customerId, @authCode)
    
+   SELECT @customerId as USERID, @authCode as AUTH_CODE
 
 END
 
-
-
-GO
-/****** Object:  StoredProcedure [dbo].[usp_CustomerLoginValidateOTP]    Script Date: 07-06-2016 02:11:36 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROCEDURE [dbo].[usp_CustomerLoginValidateOTP]
@@ -1233,7 +1222,8 @@ BEGIN
 	declare @count int
 	declare @isvalid bit
 	declare @customerId binary(16)
-
+	declare @authCode binary(16)
+	set @authCode = NEWID()
 	select @count = count(1) from OTP_DETAILS where PHONE_NUMBER = @pPhoneNumber and OTP = @pOTP
 
 	if(@count >0)
@@ -1241,16 +1231,18 @@ BEGIN
 		set @isvalid = 1
 		select @customerId =  CUSTOMER_ID from CUSTOMER where MOBILE_NUMBER = @pPhoneNumber
 		DELETE FROM OTP_DETAILS where PHONE_NUMBER = @pPhoneNumber and OTP = @pOTP
+		insert into loggedon_user values(@customerId, @authCode)
 	END
 	Else
 	BEGIN 
 		set @isvalid =0
 	END
 
-	SELECT @isvalid as IsValid , @customerId as CustomerID
+	SELECT @isvalid as IsValid , @customerId as USERID, @authCode as AUTH_CODE
 End
 
 GO
+
 
 
 
