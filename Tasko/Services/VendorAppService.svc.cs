@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Net;
@@ -27,7 +27,7 @@ namespace Tasko.Services
                 IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
                 WebHeaderCollection headers = request.Headers;
                 string appId = headers["X-APIKey"];
-                if (appId == ConfigurationManager.AppSettings["VendorAppId"])
+                if (appId == ConfigurationManager.AppSettings["AppId"])
                 {
                     string authCode = string.Empty;
                     authCode = VendorData.InsertAuthCode();
@@ -69,7 +69,7 @@ namespace Tasko.Services
                 WebHeaderCollection headers = request.Headers;
                 LoginInfo loginInfo = null;
                 string authCode = headers["Auth_Code"];
-                if (!string.IsNullOrEmpty(authCode) && VendorData.ValidateAuthCode(authCode))
+                if (!string.IsNullOrEmpty(authCode) && VendorData.ValidateAuthCode(authCode, true))
                 {
                     loginInfo = VendorData.Login(username, password, mobilenumber, userType); // 1 is vendor
                     if (loginInfo == null)
@@ -582,6 +582,7 @@ namespace Tasko.Services
 
             return r;
         }
+
         /// <summary>
         /// Updates Vendor details
         /// </summary>
@@ -614,7 +615,6 @@ namespace Tasko.Services
 
             return r;
         }
-
 
         /// <summary>
         /// Validates the token.
