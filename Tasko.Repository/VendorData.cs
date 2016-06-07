@@ -41,7 +41,7 @@ namespace Tasko.Repository
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
             objParameters.Add(SqlHelper.CreateParameter("@pAuthCode", DbType.Binary, BinaryConverter.ConvertStringToByte(authCode)));
-            objParameters.Add(SqlHelper.CreateParameter("@pIsDeleteRequired", DbType.Boolean, authCode));
+            objParameters.Add(SqlHelper.CreateParameter("@pIsDeleteRequired", DbType.Boolean, isDeleteRequired));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_ValidateAuthCode", objParameters.ToArray());
 
             if (reader.Read())
