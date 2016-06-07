@@ -231,7 +231,7 @@ namespace Tasko.Repository
 
             objParameters.Add(SqlHelper.CreateParameter("@pOrderId", DbType.String, orderId));
             objParameters.Add(SqlHelper.CreateParameter("@pOrderStatus", DbType.Int16, orderStatus));
-            objParameters.Add(SqlHelper.CreateParameter("@pComments", DbType.Int16, Comments));
+            objParameters.Add(SqlHelper.CreateParameter("@pComments", DbType.String, Comments));
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateOrderStatus", objParameters.ToArray());
         }
 
