@@ -328,17 +328,26 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
-                if (isTokenValid)
+                if (addressInfo != null && !string.IsNullOrEmpty(customerId))
                 {
-                    CustomerData.AddCustomerAddress(customerId, addressInfo);
-                    r.Error = false;
-                    r.Message = "success";
-                    r.Status = 200;
+                    bool isTokenValid = ValidateToken();
+                    if (isTokenValid)
+                    {
+                        CustomerData.AddCustomerAddress(customerId, addressInfo);
+                        r.Error = false;
+                        r.Message = "success";
+                        r.Status = 200;
+                    }
+                    else
+                    {
+                        r.Message = "Invalid token code";
+                    }
                 }
                 else
                 {
-                    r.Message = "Invalid token code";
+                    r.Error = true;
+                    r.Message = "Invalid data";
+                    r.Status = 400;
                 }
             }
             catch (Exception ex)
@@ -553,14 +562,16 @@ namespace Tasko.Services
         /// </returns>
         public Response GetFavoriteVendors(string customerId)
         {
+            List<FavoriteVendor> favoriteVendors = new List<FavoriteVendor>();
             Response r = new Response();
             try
             {
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                    CustomerData.GetFavoriteVendors(customerId);
+                    favoriteVendors = CustomerData.GetFavoriteVendors(customerId);
                     r.Message = "Success";
+                    r.Data = favoriteVendors;
                 }
                 else
                 {
@@ -651,7 +662,7 @@ namespace Tasko.Services
                 }
                 else
                 {
-                    r.Message = "Invalid token code";
+                    r.Message = "Invalid Authcode";
                 }
 
                 r.Error = false;
@@ -674,7 +685,7 @@ namespace Tasko.Services
         /// <param name="emailId">The email identifier.</param>
         /// <param name="phoneNumber">The phone number.</param>
         /// <returns>Response Object</returns>
-        public Response SignUp(string Name, string emailId, string phoneNumber)
+        public Response SignUp(string name, string emailId, string phoneNumber)
         {
             // Add Customer
             Response r = new Response();
@@ -686,13 +697,13 @@ namespace Tasko.Services
                 string authCode = headers["Auth_Code"];
                 if (!string.IsNullOrEmpty(authCode) && VendorData.ValidateAuthCode(authCode, true))
                 {
-                    LoginInfo loginInfo = CustomerData.AddCustomer(Name, emailId, phoneNumber);
+                    LoginInfo loginInfo = CustomerData.AddCustomer(name, emailId, phoneNumber);
                     r.Data = loginInfo;
                     r.Message = "Success";
                 }
                 else
                 {
-                    r.Message = "Invalid token code";
+                    r.Message = "Invalid Authcode";
                 }
 
                 r.Error = false;
@@ -805,7 +816,7 @@ namespace Tasko.Services
         {
             string otp = InternalGenerateOTP(phoneNumber);
             string sURL = "http://www.metamorphsystems.com/index.php/api/bulk-sms?username=" + "taskoapp" + "&password=" + "Apple123" +
-                            "&from=" + "TTASKO" + "&to=" + phoneNumber + "&message=" + otp + "&sms_type=" + 2;
+                            "&from=" + "TTASKO" + "&to=" + phoneNumber + "&message=" + "Your OTP is "+ otp + "&sms_type=" + 2;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(sURL);
             request.MaximumAutomaticRedirections = 4;
             request.Method = "POST";

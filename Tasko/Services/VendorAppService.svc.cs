@@ -254,6 +254,11 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
+                if (Comments == null)
+                {
+                    Comments = string.Empty;
+                }
+
                 bool isTokenValid = ValidateToken();
                 try
                 {

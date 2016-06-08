@@ -177,7 +177,7 @@ namespace Tasko.Interfaces
         /// <returns>Response Object</returns>
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response SignUp(string Name, string emailId, string phoneNumber);
+        Response SignUp(string name, string emailId, string phoneNumber);
 
         /// <summary>
         /// Logins the specified phone number.

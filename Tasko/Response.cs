@@ -22,6 +22,7 @@ namespace Tasko
     [KnownType(typeof(VendorService))]
     [KnownType(typeof(List<VendorService>))]
     [KnownType(typeof(List<Order>))]
+    [KnownType(typeof(AddressInfo))]
     [KnownType(typeof(List<AddressInfo >))]
     [KnownType(typeof(List<LoginInfo>))]
     [KnownType(typeof(FaultException))]
@@ -30,7 +31,9 @@ namespace Tasko
     [KnownType(typeof(List<ServiceVendor>))]    
     [KnownType(typeof(Customer))]
     [KnownType(typeof(OrderSummary))]
-    [KnownType(typeof(List<OrderSummary>))]     
+    [KnownType(typeof(List<OrderSummary>))]
+    [KnownType(typeof(FavoriteVendor))]
+    [KnownType(typeof(List<FavoriteVendor>))]  
     public class Response
     {
         /// <summary>
