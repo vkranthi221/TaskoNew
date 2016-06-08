@@ -5,20 +5,21 @@ GO
 ---------------------------------------------------------------------------------------------------------- 
     
 -------- Services TestData --------------
-INSERT INTO [dbo].[Services] values(NEWID(),'Electrician',null,null)
+INSERT INTO [dbo].[Services] values(NEWID(),'Electrician',null,'http://api.tasko.in/serviceimages/electrician.png')
 INSERT INTO [dbo].[Services] values(NEWID(),'Microwave Service',null,null)
 INSERT INTO [dbo].[Services] values(NEWID(),'Refrigerator Service',null,null)
 INSERT INTO [dbo].[Services] values(NEWID(),'Pest Control',null,null)
-INSERT INTO [dbo].[Services] values(NEWID(),'Carpentry',null,null)
+INSERT INTO [dbo].[Services] values(NEWID(),'Carpentry',null,'http://api.tasko.in/serviceimages/carpenter.png')
 INSERT INTO [dbo].[Services] values(NEWID(),'Water Purifier Installtion',null,null)
-INSERT INTO [dbo].[Services] values(NEWID(),'House Cleaning',null,null)
+INSERT INTO [dbo].[Services] values(NEWID(),'House Cleaning',null,'http://api.tasko.in/serviceimages/house_services.png')
 INSERT INTO [dbo].[Services] values(NEWID(),'AC Installation',null,null)
 INSERT INTO [dbo].[Services] values(NEWID(),'Fully Automatic Washing Machine Service',null,null)
-INSERT INTO [dbo].[Services] values(NEWID(),'AC Service',null,null)
+INSERT INTO [dbo].[Services] values(NEWID(),'AC Service',null,'http://api.tasko.in/serviceimages/ac_services.png')
 INSERT INTO [dbo].[Services] values(NEWID(),'Semi-Automatic Washing Machine Service',null,null)
 INSERT INTO [dbo].[Services] values(NEWID(),'Bike Service',null,null)
 INSERT INTO [dbo].[Services] values(NEWID(),'Mixer Grinder Repair',null,null)
 INSERT INTO [dbo].[Services] values(NEWID(),'Water Purifier Service',null,null)
+INSERT INTO [dbo].[Services] values(newid(), 'Plumber',null, 'http://api.tasko.in/serviceimages/plumber.png')
 
 SELECT * FROM [dbo].[Services]
   
