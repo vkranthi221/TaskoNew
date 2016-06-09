@@ -60,6 +60,11 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ServiceImages\ac_services.png" />
+    <Content Include="ServiceImages\carpenter.png" />
+    <Content Include="ServiceImages\electrician.png" />
+    <Content Include="ServiceImages\house_services.png" />
+    <Content Include="ServiceImages\Plumber.png" />
     <Content Include="Services\CustomerService.svc" />
     <Content Include="Global.asax" />
     <Content Include="Services\VendorAppService.svc" />
