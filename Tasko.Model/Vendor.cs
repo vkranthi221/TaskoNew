@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -93,7 +93,7 @@ namespace Tasko.Model
         /// The time spent on application.
         /// </value>
         //[DataMember]
-        public DateTime TimeSpentOnApp { get; set; }
+        public string TimeSpentOnApp { get; set; }
 
         /// <summary>
         /// Gets or sets the active time per day.
@@ -102,7 +102,7 @@ namespace Tasko.Model
         /// The active time per day.
         /// </value>
         //[DataMember]
-        public DateTime ActiveTimePerDay { get; set; }
+        public string ActiveTimePerDay { get; set; }
 
         /// <summary>
         /// Gets or sets the data consumption.
@@ -121,5 +121,14 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public int CallsToCustomerCare { get; set; }
+
+        /// <summary>
+        /// Gets or sets the email address.
+        /// </summary>
+        /// <value>
+        /// The email address.
+        /// </value>
+        [DataMember]
+        public string EmailAddress { get; set; }
     }
 }
