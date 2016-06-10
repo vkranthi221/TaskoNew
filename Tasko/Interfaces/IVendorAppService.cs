@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
@@ -142,11 +142,14 @@ namespace Tasko.Interfaces
         /// </summary>
         /// <param name="vendorId">The vendor identifier.</param>
         /// <param name="password">The password.</param>
-        /// <returns>Response Object</returns>
+        /// <param name="oldPassword">The old password.</param>
+        /// <returns>
+        /// Response Object
+        /// </returns>
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response ChangePassword(string vendorId, string password);
+        Response ChangePassword(string vendorId, string password, string oldPassword);
 
         /// <summary>
         /// Updates Vendor details
