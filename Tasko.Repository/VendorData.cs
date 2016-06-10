@@ -91,12 +91,11 @@ namespace Tasko.Repository
                 objVendor.Id = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
                 objVendor.Name = reader["NAME"].ToString();
                 objVendor.MobileNumber = reader["MOBILE_NUMBER"].ToString();
+                objVendor.EmailAddress = Convert.ToString(reader["EMAIL_ADDRESS"]);
                 objVendor.Address = reader["ADDRESS"].ToString();
                 objVendor.NoOfEmployees = Convert.ToInt32(reader["EMPLOYEE_COUNT"]);
                 objVendor.BaseRate = Convert.ToDouble(reader["BASE_RATE"]);
-                objVendor.IsVendorVerified = Convert.ToBoolean(reader["IS_VENDOR_VERIFIED"]);
-                ////objVendor.TimeSpentOnApp = Convert.ToDateTime(reader["TIME_SPENT_ON_APP"]);
-                ////objVendor.ActiveTimePerDay = Convert.ToDateTime(reader["ACTIVE_TIME_PER_DAY"]);
+                objVendor.IsVendorVerified = Convert.ToBoolean(reader["IS_VENDOR_VERIFIED"]);             
                 objVendor.DataConsumption = Convert.ToInt32(reader["DATA_CONSUMPTION"]);
                 objVendor.CallsToCustomerCare = Convert.ToInt32(reader["CALLS_TO_CUSTOMER_CARE"]);
             }
@@ -284,7 +283,7 @@ namespace Tasko.Repository
                 rating.Punctuality = Convert.ToDecimal(reader["PUNCTUALITY"]);
                 rating.Courtesy = Convert.ToDecimal(reader["COURTESY"]);
                 rating.Price = Convert.ToDecimal(reader["PRICE"]);
-                rating.ReviewDate = Convert.ToDateTime(reader["REVIEW_DATE"]);
+                rating.ReviewDate = Convert.ToDateTime(reader["REVIEW_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
                 rating.Comments = reader["COMMENTS"].ToString();
                 rating.CustomerName = reader["NAME"].ToString();
                 vendorRatings.Add(rating);
@@ -345,7 +344,7 @@ namespace Tasko.Repository
             {
                 OrderSummary order = new OrderSummary();
                 order.OrderId = reader["ORDER_ID"].ToString();
-                order.RequestedDate = Convert.ToDateTime(reader["REQUESTED_DATE"]);
+                order.RequestedDate = Convert.ToDateTime(reader["REQUESTED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss"); 
                 order.ServiceName = reader["SERVICENAME"].ToString();
                 order.OrderStatus = reader["ORDERSTATUSNAME"].ToString();
                 order.Comments = reader["COMMENTS"].ToString();
@@ -362,12 +361,14 @@ namespace Tasko.Repository
         /// </summary>
         /// <param name="vendorId">The vendor identifier.</param>
         /// <param name="password">The password.</param>
-        public static void ChangePassword(string vendorId, string password)
+        /// <param name="oldPassword">The old password.</param>
+        public static void ChangePassword(string vendorId, string password, string oldPassword)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
             objParameters.Add(SqlHelper.CreateParameter("@pPassword", DbType.String, password));
+            objParameters.Add(SqlHelper.CreateParameter("@pOldPassword", DbType.String, oldPassword));
             SqlHelper.ExecuteNonQuery("dbo.usp_ChangePassword", objParameters.ToArray());
         }
 
@@ -379,7 +380,7 @@ namespace Tasko.Repository
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendor.Id)));
-            if(vendor.Name != string.Empty)
+            if (!string.IsNullOrEmpty(vendor.Name))
             {
             objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.String, vendor.Name));
             }
@@ -389,7 +390,7 @@ namespace Tasko.Repository
             }
 
             // Mobile Number
-            if(vendor.MobileNumber != string.Empty)
+            if (!string.IsNullOrEmpty(vendor.MobileNumber))
             {
             objParameters.Add(SqlHelper.CreateParameter("@pMobileNumber", DbType.String, vendor.MobileNumber));
             }
@@ -398,21 +399,8 @@ namespace Tasko.Repository
                 objParameters.Add(SqlHelper.CreateParameter("@pNpMobileNumberame", DbType.String, DBNull.Value));
             }
 
-            //BaxeRate
-             if(vendor.BaseRate != 0)
-            {
-            objParameters.Add(SqlHelper.CreateParameter("@pBaseRate", DbType.Double, vendor.BaseRate));
-            }
-            else
-            {
-                objParameters.Add(SqlHelper.CreateParameter("@pBaseRate", DbType.Double, DBNull.Value));
-            }
-
-            // IsVendorLive
-            objParameters.Add(SqlHelper.CreateParameter("@pIsVendorLive", DbType.Boolean, vendor.IsVendorLive));
-
             // Address
-            if(vendor.Address != string.Empty)
+            if (!string.IsNullOrEmpty(vendor.Address)) 
             {
             objParameters.Add(SqlHelper.CreateParameter("@pAddress", DbType.String, vendor.Address));
             }
@@ -421,39 +409,14 @@ namespace Tasko.Repository
                 objParameters.Add(SqlHelper.CreateParameter("@pAddress", DbType.String, DBNull.Value));
             }
 
-            //NoOfEmployees
-             if(vendor.NoOfEmployees != 0)
+            // EmailAddress
+            if (!string.IsNullOrEmpty(vendor.EmailAddress))
             {
-            objParameters.Add(SqlHelper.CreateParameter("@pNoOfEmployees", DbType.Int16, vendor.NoOfEmployees));
+                objParameters.Add(SqlHelper.CreateParameter("@pEmailAddress", DbType.String, vendor.EmailAddress));
             }
             else
             {
-                objParameters.Add(SqlHelper.CreateParameter("@pNoOfEmployees", DbType.Int16, DBNull.Value));
-            }
-
-            //IsVendorVerified
-            objParameters.Add(SqlHelper.CreateParameter("@pIsVendorVerified", DbType.Boolean, vendor.IsVendorVerified));
-
-            //Timespentonapp and Activetimeperday are now stored as datetime column in db. this need to be changed to integer this needs to be discussed
-
-            //DataConsumption
-            if(vendor.DataConsumption != 0)
-            {
-            objParameters.Add(SqlHelper.CreateParameter("@pDataConsumption", DbType.Int16, vendor.DataConsumption));
-            }
-            else
-            {
-                objParameters.Add(SqlHelper.CreateParameter("@pDataConsumption", DbType.Int16, DBNull.Value));
-            }
-
-            //CallsToCustomerCare
-            if(vendor.DataConsumption != 0)
-            {
-            objParameters.Add(SqlHelper.CreateParameter("@pCallsToCustomerCare", DbType.Int16, vendor.CallsToCustomerCare));
-            }
-            else
-            {
-                objParameters.Add(SqlHelper.CreateParameter("@pCallsToCustomerCare", DbType.Int16, DBNull.Value));
+                objParameters.Add(SqlHelper.CreateParameter("@pEmailAddress", DbType.String, DBNull.Value));
             }
 
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendor", objParameters.ToArray());
