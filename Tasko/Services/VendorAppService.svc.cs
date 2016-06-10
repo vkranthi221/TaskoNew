@@ -555,10 +555,11 @@ namespace Tasko.Services
         /// </summary>
         /// <param name="vendorId">The vendor identifier.</param>
         /// <param name="password">The password.</param>
+        /// <param name="oldPassword">The old password.</param>
         /// <returns>
         /// Response Object
         /// </returns>
-        public Response ChangePassword(string vendorId, string password)
+        public Response ChangePassword(string vendorId, string password, string oldPassword)
         {
             Response r = new Response();
             try
@@ -566,7 +567,7 @@ namespace Tasko.Services
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                    VendorData.ChangePassword(vendorId, password);
+                    VendorData.ChangePassword(vendorId, password, oldPassword);
                     r.Error = false;
                     r.Message = "success";
                     r.Status = 200;
