@@ -1,296 +1,119 @@
-﻿---------------------------------------------------------------------------------------------------------- 
+---------------------------------------------------------------------------------------------------------- 
 --------------------------- All Copy Rights are reserved to Tasko.in-------------------------------------- 
 USE [Tasko] 
 GO 
 ---------------------------------------------------------------------------------------------------------- 
 
-ALTER TABLE [dbo].[ORDER] ADD COMMENTS VARCHAR(max) NULL
+ALTER TABLE [dbo].[VENDOR] ADD EMAIL_ADDRESS VARCHAR(max) NULL
 GO
 
-CREATE PROCEDURE [dbo].[usp_GetServices]
+ALTER PROCEDURE [dbo].[usp_UpdateVendor]
+(
+	@pVendorId binary(16),
+	@pName nvarchar(max),
+	@pMobileNumber nvarchar(max),  
+	@pAddress nvarchar(max),  
+	@pEmailAddress nvarchar(max)
+)
 
 AS
 BEGIN
 
 SET NOCOUNT ON;
 
-SELECT [SERVICE_ID]
+UPDATE [dbo].VENDOR SET NAME = COALESCE(@pName,NAME),
+						MOBILE_NUMBER = COALESCE(@pMobileNumber,MOBILE_NUMBER),					    
+						ADDRESS = COALESCE(@pAddress, ADDRESS),
+						EMAIL_ADDRESS = COALESCE(@pEmailAddress, EMAIL_ADDRESS)
+WHERE VENDOR_ID = @pVendorId
+
+END
+GO
+ALTER PROCEDURE [dbo].[usp_GetVendorDetails]
+(
+	@pVendorId Binary(16)
+)
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+SELECT [VENDOR_ID]
       ,[NAME]
-      ,[PARENT_SERVICE_ID]
-      ,[IMAGE_URL]
-  FROM [dbo].[SERVICES]
-  WHERE [PARENT_SERVICE_ID] IS NULL
-END
+      ,[MOBILE_NUMBER]
+      ,[EMAIL_ADDRESS]
+      ,[ADDRESS]
+      ,[PHOTO]
+      ,[EMPLOYEE_COUNT]
+      ,[BASE_RATE]
+      ,[IS_VENDOR_VERIFIED]
+      ,[IS_VENDOR_LIVE]
+      ,[TIME_SPENT_ON_APP]
+      ,[ACTIVE_TIME_PER_DAY]
+      ,[DATA_CONSUMPTION]
+      ,[CALLS_TO_CUSTOMER_CARE]
+FROM [dbo].[VENDOR] (NOLOCK)
+WHERE VENDOR_ID = @pVendorId 
 
+END
 GO
-CREATE PROCEDURE [dbo].[usp_GetRecentOrder]
+ALTER PROCEDURE [dbo].[usp_GetVendorOrders]
 (
-	@pCustomerId binary(16)
+      @pVENDORID BINARY(16),
+      @pORDERSTATUSID INT,
+	  @pPAGENO INT,
+	  @pRECORDSPERPAGE INT
 )
 AS
 BEGIN
 
 SET NOCOUNT ON;
 
-SELECT TOP 1 ORD.ORDER_ID, Cust.CUSTOMER_ID, CUST.NAME AS CUSTOMER_NAME, VS.VENDOR_SERVICE_ID, VEN.VENDOR_ID ,VEN.NAME AS VENDOR_NAME, 
-  SVCS.SERVICE_ID AS SERVICE_ID,SVCS.NAME AS SERVICE_NAME , OS.ORDER_STATUS_ID, OS.NAME AS ORDERSTATUS_NAME,
-  ORD.REQUESTED_DATE ,ORD.ORDER_LOCATION, ORD.SOURCE_ADDRESS_ID, ORD.DESTINATION_ADDRESS_ID, ORD.COMMENTS
-  FROM dbo.[ORDER] ORD
-  INNER JOIN CUSTOMER CUST ON ORD.CUSTOMER_ID = CUST.CUSTOMER_ID
-  INNER JOIN VENDOR_SERVICES VS ON ORD.VENDOR_SERVICE_ID = VS.VENDOR_SERVICE_ID
-  INNER JOIN VENDOR VEN ON VS.VENDOR_ID= VEN.VENDOR_ID
-  INNER JOIN dbo.[SERVICES] SVCS ON VS.SERVICE_ID = SVCS.SERVICE_ID 
-  INNER JOIN ORDER_STATUS OS ON ORD.ORDER_STATUS_ID = OS.ORDER_STATUS_ID   
-WHERE ORD.CUSTOMER_ID = @pCustomerId ORDER BY ORD.REQUESTED_DATE DESC
-
----- Source Address
- SELECT TOP 1 Address_ID,COUNTRY,STATE,LATITIUDE ,LONGITUDE ,LOCALITY,CITY,ADDRESS,PINCODE
- FROM dbo.[ADDRESS] Addr
- INNER JOIN dbo.[ORDER] ORD ON ORD.[SOURCE_ADDRESS_ID] = Addr.[Address_ID]
- WHERE ORD.CUSTOMER_ID = @pCustomerId ORDER BY ORD.REQUESTED_DATE DESC
-
- ---- Destination Address
- SELECT TOP 1 Address_ID,COUNTRY,STATE,LATITIUDE ,LONGITUDE ,LOCALITY,CITY,ADDRESS,PINCODE
- FROM dbo.[ADDRESS] Addr
- INNER JOIN dbo.[ORDER] ORD ON ORD.[DESTINATION_ADDRESS_ID] = Addr.[Address_ID]
- WHERE ORD.CUSTOMER_ID = @pCustomerId ORDER BY ORD.REQUESTED_DATE DESC
-END
-
-GO
-
-CREATE PROCEDURE [dbo].[usp_GetServiceVendors]
-(
-  @pServiceId binary(16),
-  @pCustomerId binary(16)
-)
-
-AS
-BEGIN
-
-SET NOCOUNT ON;
-	SELECT SVC.SERVICE_ID ,SVC.NAME AS SERVICE_NAME, V.VENDOR_ID, V.NAME AS VENDOR_NAME,VENDOR_SERVICE_ID, V.BASE_RATE, CV.FAVORITE_ID
-	FROM [dbo].[SERVICES] SVC
-	INNER JOIN [dbo].[VENDOR_SERVICES] VS ON VS.SERVICE_ID = SVC.SERVICE_ID
-	INNER JOIN [dbo].[VENDOR] V ON V.VENDOR_ID = VS.VENDOR_ID
-	LEFT OUTER JOIN [dbo].[CUSTOMER_FAVORITE_VENDOR] CV ON CV.CUSTOMER_ID = @pCustomerId AND CV.VENDOR_ID = V.VENDOR_ID
-	WHERE SVC.SERVICE_ID = @pServiceId AND VS.IS_VENDOR_SERVICE_ACTIVE = 1
-END
-
-
-GO
-
-CREATE PROCEDURE [dbo].[usp_AddAddress]
-(
-  @pCountry nvarchar(max),
-  @pState nvarchar(max),
-  @pLatitude nvarchar(max),
-  @pLongitude nvarchar(max),
-  @pLocality nvarchar(max),
-  @pCity nvarchar(max),
-  @pAddress nvarchar(max),
-  @Pincode nvarchar(max)
-)
-
-AS
-BEGIN
-
-SET NOCOUNT ON;
-
-  DECLARE @AddressId binary(16)
-  SET  @AddressId = newId()
-
-  INSERT INTO [dbo].[ADDRESS] VALUES(@AddressId,@pCountry,@pState,@pLatitude,@pLongitude,@pLocality,@pCity,@pAddress,@Pincode)
-
-  SELECT @AddressId as ADDRESS_ID
-END
-
-GO
-
-CREATE PROCEDURE [dbo].[usp_ConfirmOrder]
-(
-  @pVendorServiceId binary(16),
-  @pCustomerId binary(16),
-  @pSourceAddressId binary(16),
-  @pDestinationAddressId binary(16)
-)
-
-AS
-BEGIN
-
-SET NOCOUNT ON;
-
-  DECLARE @OrderId Varchar(50)
-  SET  @OrderId = dbo.GenerateOrderID()
-
-  INSERT INTO [dbo].[ORDER] VALUES(@OrderId,@pVendorServiceId,@pCustomerId,GetDate(),1,'',@pSourceAddressId,@pDestinationAddressId)
-
-  SELECT @OrderId as ORDER_ID
-END
-
-GO
-CREATE PROCEDURE [dbo].[usp_GetCustomerOrders]
-(
-      @pCustomerId binary(16),
-	  @pOrderstatusId int,
-	  @pPageNo int,
-	  @pRecordsPerPage int
-)
-AS
-BEGIN
-
-SET NOCOUNT ON;
-
-DECLARE @VSQL NVARCHAR(MAX)
+DECLARE 
+            @VSQL NVARCHAR(MAX)
             
-SET @VSQL= 'SELECT ORD.ORDER_ID, OS.NAME AS ORDERSTATUS_NAME, SVCS.SERVICE_ID , SVCS.NAME AS SERVICE_NAME, ORD.REQUESTED_DATE
+SET @VSQL= 'SELECT ORD.ORDER_ID, ORD.REQUESTED_DATE, SVCS.NAME AS SERVICENAME, OS.NAME AS ORDERSTATUSNAME, ORD.COMMENTS
   FROM dbo.[ORDER] ORD
   INNER JOIN VENDOR_SERVICES VS ON ORD.VENDOR_SERVICE_ID = VS.VENDOR_SERVICE_ID
   INNER JOIN dbo.[SERVICES] SVCS ON VS.SERVICE_ID = SVCS.SERVICE_ID 
   INNER JOIN ORDER_STATUS OS ON ORD.ORDER_STATUS_ID = OS.ORDER_STATUS_ID  
-WHERE ORD.CUSTOMER_ID = @vCustomerId '
+WHERE VS.VENDOR_ID = @vVENDORID '
 
-IF(@pOrderstatusId<>0)
-      SET @VSQL = @VSQL + ' AND ORD.ORDER_STATUS_ID = @vOrderstatusId '
+IF(@PORDERSTATUSID<>0)
+      SET @VSQL = @VSQL + ' AND ORD.ORDER_STATUS_ID = @vORDERSTATUSID '
 
-	  SET @VSQL = @VSQL +' ORDER BY ORD.ORDER_ID OFFSET (@vPAGENO-1)*@vrecordsperpage ROWS FETCH NEXT @vRECORDSPERPAGE ROWS ONLY'
+	  SET @VSQL = @VSQL +' ORDER BY ORD.ORDER_ID DESC OFFSET (@vPAGENO-1)*@vRECORDSPERPAGE ROWS FETCH NEXT @vRECORDSPERPAGE ROWS ONLY'
       
-EXEC SP_EXECUTESQL @VSQL,N'@vCustomerId binary(16),@vOrderstatusId int, @vPAGENO INT, @vRECORDSPERPAGE INT', @pCustomerId, @pOrderstatusId, @pPageNo, @pRecordsPerPage
+EXEC SP_EXECUTESQL @VSQL,N'@vVENDORID BINARY(16),@vORDERSTATUSID INT, @vPAGENO INT, @vRECORDSPERPAGE INT', @pVENDORID, @pORDERSTATUSID, @pPAGENO, @pRECORDSPERPAGE
 
 END
+
 GO
 
-CREATE PROCEDURE [dbo].[usp_UpdateCustomer]
+ALTER PROCEDURE [dbo].[usp_GetVendorRatings]
 (
-  @pCustomerId binary(16),
-  @pName nvarchar(max),
-  @pEmailAddress nvarchar(max),
-  @pMobileNumber nvarchar(max)
+	@pVendorId Binary(16)
 )
-
 AS
 BEGIN
 
 SET NOCOUNT ON;
 
-  UPDATE [dbo].[CUSTOMER] SET NAME = @pName, EMAIL_ADDRESS = @pEmailAddress, MOBILE_NUMBER = @pMobileNumber
-  WHERE CUSTOMER_ID = @pCustomerId 
-
+SELECT TOP 25 VR.VENDOR_RATING_ID, VR.SERVICE_QUALITY, VR.PUNCTUALITY, VR.COURTESY, VR.PRICE, VR.REVIEW_DATE, VR.COMMENTS, CUST.NAME,
+  ROUND(SUM(VR.SERVICE_QUALITY + VR.PUNCTUALITY + VR.COURTESY + VR.PRICE)/4,0) AS TOTAL
+  FROM VENDOR_RATING VR
+  INNER JOIN CUSTOMER CUST ON VR.CUSTOMER_ID = CUST.CUSTOMER_ID
+  WHERE VR.VENDOR_ID= @pVendorId 
+  GROUP BY VR.VENDOR_RATING_ID, VR.SERVICE_QUALITY, VR.PUNCTUALITY, VR.COURTESY,VR.PRICE, VR.REVIEW_DATE, VR.COMMENTS, CUST.NAME
+  ORDER BY REVIEW_DATE DESC
 END
 
 GO
-CREATE TABLE [dbo].[CUSTOMER_ADDRESS](
-	[ID] [binary](16) NOT NULL,
-	[CUSTOMER_ID] [binary](16) NOT NULL,
-	[ADDRESS_ID] [binary](16) NOT NULL,
- CONSTRAINT [PK_CUSTOMER_ADDRESS] PRIMARY KEY CLUSTERED([ID] ASC)) 
-GO
-
-CREATE PROCEDURE [dbo].[usp_AddCustomerAddress]
-(
-  @pCustomerId binary(16), 
-  @pAddressId binary(16)
-)
-
-AS
-BEGIN
-
-SET NOCOUNT ON;
-
-  INSERT INTO [dbo].CUSTOMER_ADDRESS VALUES(newid(),@pCustomerId,@pAddressId)
-END
-
-GO
-CREATE PROCEDURE [dbo].[usp_UpdateCustomerAddress]
-(
-  @pAddressId binary(16),  
-  @pCountry nvarchar(max),
-  @pState nvarchar(max),
-  @pLatitude nvarchar(max),
-  @pLongitude nvarchar(max),
-  @pLocality nvarchar(max),
-  @pCity nvarchar(max),
-  @pAddress nvarchar(max),
-  @Pincode nvarchar(max)
-)
-
-AS
-BEGIN
-
-SET NOCOUNT ON;
-
-  DECLARE @AddressId binary(16)
-  SET  @AddressId = newId()
-
-  UPDATE [dbo].[ADDRESS] SET COUNTRY = @pCountry, STATE= @pState, LATITIUDE = @pLatitude, 
-                         LONGITUDE = @pLongitude,LOCALITY = @pLocality,CITY = @pCity,
-                         [ADDRESS]=@pAddress,PINCODE = @Pincode
-  WHERE Address_ID = @pAddressId
-
-  SELECT @AddressId as ADDRESS_ID
-END
-
-GO
-
-CREATE PROCEDURE [dbo].[usp_DeleteCustomerAddress]
-(
-  @pCustomerId binary(16),
-  @pAddressId binary(16)
-)
-
-AS
-BEGIN
-
-SET NOCOUNT ON;
- 
- DELETE dbo.CUSTOMER_ADDRESS WHERE CUSTOMER_ID = @pCustomerId AND ADDRESS_ID = @pAddressId
- 
- DELETE dbo.[ADDRESS] WHERE ADDRESS_ID = @pAddressId
-END
-
-GO
-
-CREATE PROCEDURE [dbo].[usp_GetCustomerAddresses]
-(
-  @pCustomerId binary(16)
-)
-
-AS
-BEGIN
-
-SET NOCOUNT ON;
-
- SELECT Addr.Address_ID,COUNTRY,STATE,LATITIUDE ,LONGITUDE ,LOCALITY,CITY,ADDRESS,PINCODE
- FROM dbo.[ADDRESS] Addr
- INNER JOIN dbo.CUSTOMER_ADDRESS CA ON CA.[ADDRESS_ID] = Addr.[Address_ID]
- WHERE CA.CUSTOMER_ID = @pCustomerId 
-END
-
-GO
-CREATE PROCEDURE [dbo].[usp_AddVendorRating]
-(
-  @pOrderId varchar(50),
-  @pServiceQuality decimal(18,2),
-  @pPunctuality decimal(18,2),
-  @pCourtesy decimal(18,2),
-  @pPrice decimal(18,2),
-  @pComments nvarchar(max)
-)
-
-AS
-BEGIN
-
-SET NOCOUNT ON;
-
-  INSERT INTO [dbo].[VENDOR_RATING] VALUES(NewId(),@pServiceQuality,@pPunctuality,@pCourtesy,@pPrice,Getdate(),@pComments,@pOrderId)
-
-END
-
-GO
-
-CREATE PROCEDURE [dbo].[usp_ChangePassword]
+ALTER PROCEDURE [dbo].[usp_ChangePassword]
 (
 	@pVendorId binary(16),
-	@pPassword nvarchar(max)
+	@pPassword nvarchar(max),
+	@pOldPassword nvarchar(max)
 )
 AS
 BEGIN
@@ -301,70 +124,3 @@ SET NOCOUNT ON;
    UPDATE [dbo].[VENDOR]  SET PASSWORD = @pPassword WHERE VENDOR_ID = @pVendorId
 
 END
-GO
-
-CREATE TABLE [dbo].[CUSTOMER_FAVORITE_VENDOR](
-	[FAVORITE_ID] [binary](16) NOT NULL,
-	[VENDOR_ID] [binary](16) NOT NULL,
-	[CUSTOMER_ID] [binary](16) NOT NULL,
- CONSTRAINT [PK_Customer_Favorite_Vendor] PRIMARY KEY CLUSTERED 
-(
-	[FAVORITE_ID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-
-SET ANSI_PADDING OFF
-GO
-
-ALTER TABLE [dbo].[CUSTOMER_FAVORITE_VENDOR]  WITH CHECK ADD  CONSTRAINT [FK_Customer_Favorite_Vendor_CUSTOMER] FOREIGN KEY([CUSTOMER_ID])
-REFERENCES [dbo].[CUSTOMER] ([CUSTOMER_ID])
-GO
-
-ALTER TABLE [dbo].[CUSTOMER_FAVORITE_VENDOR] CHECK CONSTRAINT [FK_Customer_Favorite_Vendor_CUSTOMER]
-GO
-
-ALTER TABLE [dbo].[CUSTOMER_FAVORITE_VENDOR]  WITH CHECK ADD  CONSTRAINT [FK_Customer_Favorite_Vendor_VENDOR] FOREIGN KEY([VENDOR_ID])
-REFERENCES [dbo].[VENDOR] ([VENDOR_ID])
-GO
-
-ALTER TABLE [dbo].[CUSTOMER_FAVORITE_VENDOR] CHECK CONSTRAINT [FK_Customer_Favorite_Vendor_VENDOR]
-GO
-
-CREATE PROCEDURE [dbo].[usp_SetFavoriteVendor]
-(
-  @pCustomerId binary(16), 
-  @pVendorId binary(16)
-)
-
-AS
-BEGIN
-
-SET NOCOUNT ON;
-
-  INSERT INTO [dbo].CUSTOMER_FAVORITE_VENDOR VALUES(newid(), @pVendorId, @pCustomerId)
-END
-
-GO
-CREATE PROCEDURE [dbo].[usp_GetFavoriteVendors]
-(
-  @pCustomerId binary(16)
-)
-
-AS
-BEGIN
-
-SET NOCOUNT ON;
-
-SELECT V.VENDOR_ID, V.NAME AS VENDOR_NAME,
-(SELECT COUNT(*) FROM VENDOR_RATING VR WHERE VR.VENDOR_ID = V.VENDOR_ID)AS TOTAL_RATINGS,
-dbo.[GetVendorTotalRating](V.VENDOR_ID) AS OVERALL_RATINGS
-
-	FROM [dbo].[CUSTOMER_FAVORITE_VENDOR] CFV
-	INNER JOIN [dbo].[VENDOR] V ON V.VENDOR_ID = CFV.VENDOR_ID
-	WHERE CFV.CUSTOMER_ID = @pCustomerId
-END
-
-GO
-
