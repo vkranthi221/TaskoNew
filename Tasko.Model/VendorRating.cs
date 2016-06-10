@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -83,7 +83,7 @@ namespace Tasko.Model
         /// The review date.
         /// </value>
         [DataMember]
-        public DateTime ReviewDate { get; set; }
+        public string ReviewDate { get; set; }
 
         /// <summary>
         /// Gets or sets the comments.
