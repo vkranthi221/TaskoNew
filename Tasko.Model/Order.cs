@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -106,7 +106,7 @@ namespace Tasko.Model
         /// The requested date.
         /// </value>
         [DataMember]
-        public DateTime RequestedDate { get; set; }
+        public string RequestedDate { get; set; }
 
         /// <summary>
         /// Gets or sets the location.
