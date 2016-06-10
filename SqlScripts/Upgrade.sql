@@ -118,9 +118,18 @@ ALTER PROCEDURE [dbo].[usp_ChangePassword]
 AS
 BEGIN
 
-DECLARE @err_message nvarchar(255)
+DECLARE @IsOldPasswordCorrect bit
 SET NOCOUNT ON;
 
-   UPDATE [dbo].[VENDOR]  SET PASSWORD = @pPassword WHERE VENDOR_ID = @pVendorId
-
+IF EXISTS (SELECT VENDOR_ID from [dbo].[VENDOR] WHERE VENDOR_ID = @pVendorId AND PASSWORD = @pOldPassword)
+  BEGIN
+     UPDATE [dbo].[VENDOR]  SET PASSWORD = @pPassword WHERE VENDOR_ID = @pVendorId
+	 SET @IsOldPasswordCorrect =1
+  END
+ELSE
+BEGIN
+  SET @IsOldPasswordCorrect = 0
+  END
+   
+ SELECT @IsOldPasswordCorrect 
 END

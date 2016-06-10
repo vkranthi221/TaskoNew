@@ -72,6 +72,7 @@ CREATE TABLE [dbo].[VENDOR](
 	[NAME] VARCHAR(MAX) NOT NULL,
 	[MOBILE_NUMBER] [varchar](50) NOT NULL,
 	[PASSWORD] VARCHAR(MAX) NOT NULL,
+	[EMAIL_ADDRESS] VARCHAR(max) NULL,
 	[ADDRESS] VARCHAR(MAX) NOT NULL,
 	[PHOTO] [image] NULL,
 	[EMPLOYEE_COUNT] int NOT NULL,
@@ -356,6 +357,7 @@ SET NOCOUNT ON;
 SELECT [VENDOR_ID]
       ,[NAME]
       ,[MOBILE_NUMBER]
+      ,[EMAIL_ADDRESS]
       ,[ADDRESS]
       ,[PHOTO]
       ,[EMPLOYEE_COUNT]
@@ -370,7 +372,6 @@ FROM [dbo].[VENDOR] (NOLOCK)
 WHERE VENDOR_ID = @pVendorId 
 
 END
-
 GO
 CREATE PROCEDURE [dbo].[usp_GetOrderDetails]
 (
@@ -575,7 +576,7 @@ WHERE VS.VENDOR_ID = @vVENDORID '
 IF(@PORDERSTATUSID<>0)
       SET @VSQL = @VSQL + ' AND ORD.ORDER_STATUS_ID = @vORDERSTATUSID '
 
-	  SET @VSQL = @VSQL +' ORDER BY ORD.ORDER_ID OFFSET (@vPAGENO-1)*@vRECORDSPERPAGE ROWS FETCH NEXT @vRECORDSPERPAGE ROWS ONLY'
+	  SET @VSQL = @VSQL +' ORDER BY ORD.ORDER_ID DESC OFFSET (@vPAGENO-1)*@vRECORDSPERPAGE ROWS FETCH NEXT @vRECORDSPERPAGE ROWS ONLY'
       
 EXEC SP_EXECUTESQL @VSQL,N'@vVENDORID BINARY(16),@vORDERSTATUSID INT, @vPAGENO INT, @vRECORDSPERPAGE INT', @pVENDORID, @pORDERSTATUSID, @pPAGENO, @pRECORDSPERPAGE
 
@@ -608,12 +609,13 @@ BEGIN
 
 SET NOCOUNT ON;
 
-SELECT VR.VENDOR_RATING_ID, VR.SERVICE_QUALITY, VR.PUNCTUALITY, VR.COURTESY, VR.PRICE, VR.REVIEW_DATE, VR.COMMENTS, CUST.NAME,
-round(sum(VR.SERVICE_QUALITY + VR.PUNCTUALITY + VR.COURTESY + VR.PRICE)/4,0) AS TOTAL
+SELECT TOP 25 VR.VENDOR_RATING_ID, VR.SERVICE_QUALITY, VR.PUNCTUALITY, VR.COURTESY, VR.PRICE, VR.REVIEW_DATE, VR.COMMENTS, CUST.NAME,
+  ROUND(SUM(VR.SERVICE_QUALITY + VR.PUNCTUALITY + VR.COURTESY + VR.PRICE)/4,0) AS TOTAL
   FROM VENDOR_RATING VR
   INNER JOIN CUSTOMER CUST ON VR.CUSTOMER_ID = CUST.CUSTOMER_ID
-  WHERE VR.VENDOR_ID= @pVendorId
-  Group by VR.VENDOR_RATING_ID, VR.SERVICE_QUALITY, VR.PUNCTUALITY, VR.COURTESY,VR.PRICE, VR.REVIEW_DATE, VR.COMMENTS, CUST.NAME
+  WHERE VR.VENDOR_ID= @pVendorId 
+  GROUP BY VR.VENDOR_RATING_ID, VR.SERVICE_QUALITY, VR.PUNCTUALITY, VR.COURTESY,VR.PRICE, VR.REVIEW_DATE, VR.COMMENTS, CUST.NAME
+  ORDER BY REVIEW_DATE DESC
 END
 
 GO
@@ -1021,18 +1023,27 @@ GO
 CREATE PROCEDURE [dbo].[usp_ChangePassword]
 (
 	@pVendorId binary(16),
-	@pPassword nvarchar(max)
+	@pPassword nvarchar(max),
+	@pOldPassword nvarchar(max)
 )
 AS
 BEGIN
 
-DECLARE @err_message nvarchar(255)
+DECLARE @IsOldPasswordCorrect bit
 SET NOCOUNT ON;
 
-   UPDATE [dbo].[VENDOR]  SET PASSWORD = @pPassword WHERE VENDOR_ID = @pVendorId
-
+IF EXISTS (SELECT VENDOR_ID from [dbo].[VENDOR] WHERE VENDOR_ID = @pVendorId AND PASSWORD = @pOldPassword)
+  BEGIN
+     UPDATE [dbo].[VENDOR]  SET PASSWORD = @pPassword WHERE VENDOR_ID = @pVendorId
+	 SET @IsOldPasswordCorrect =1
+  END
+ELSE
+BEGIN
+  SET @IsOldPasswordCorrect = 0
+  END
+   
+ SELECT @IsOldPasswordCorrect 
 END
-
 GO
 
 CREATE PROCEDURE [dbo].[usp_SetFavoriteVendor]
@@ -1084,41 +1095,27 @@ GO
 
 CREATE PROCEDURE [dbo].[usp_UpdateVendor]
 (
-  @pVendorId binary(16),
-  @pName nvarchar(max),
-  @pMobileNumber nvarchar(max),
-  @pBaseRate float,
-  @pIsVendorLive bit,
-  @pAddress nvarchar(max),
-  @pNoOfEmployees int,
-  @pIsVendorVerified bit,
-  @pDataConsumption int,
-  @pCallsToCustomerCare int
- )
+	@pVendorId binary(16),
+	@pName nvarchar(max),
+	@pMobileNumber nvarchar(max),  
+	@pAddress nvarchar(max),  
+	@pEmailAddress nvarchar(max)
+)
 
 AS
 BEGIN
 
 SET NOCOUNT ON;
 
-update [dbo].VENDOR set NAME = COALESCE(@pName,NAME),
-						MOBILE_NUMBER = COALESCE(@pMobileNumber,MOBILE_NUMBER),
-						 BASE_RATE = COALESCE(@pBaseRate, BASE_RATE),
-						  IS_VENDOR_LIVE = @pIsVendorLive,
-						   ADDRESS = COALESCE(@pAddress, ADDRESS),
-						    EMPLOYEE_COUNT = COALESCE(@pNoOfEmployees, EMPLOYEE_COUNT),
-							 IS_VENDOR_VERIFIED = @pIsVendorVerified,
-							  DATA_CONSUMPTION = Coalesce(@pDataConsumption, DATA_CONSUMPTION),
-							  CALLS_TO_CUSTOMER_CARE = coalesce( @pCallsToCustomerCare, CALLS_TO_CUSTOMER_CARE)
-	where VENDOR_ID = @pVendorId
-
-
+UPDATE [dbo].VENDOR SET NAME = COALESCE(@pName,NAME),
+						MOBILE_NUMBER = COALESCE(@pMobileNumber,MOBILE_NUMBER),					    
+						ADDRESS = COALESCE(@pAddress, ADDRESS),
+						EMAIL_ADDRESS = COALESCE(@pEmailAddress, EMAIL_ADDRESS)
+WHERE VENDOR_ID = @pVendorId
 
 END
 
-
 GO
-
 
 
 /****** Object:  StoredProcedure [dbo].[usp_InsertOTPDetails]    Script Date: 07-06-2016 02:09:33 ******/

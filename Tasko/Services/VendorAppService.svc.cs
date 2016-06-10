@@ -567,10 +567,20 @@ namespace Tasko.Services
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                    VendorData.ChangePassword(vendorId, password, oldPassword);
-                    r.Error = false;
-                    r.Message = "success";
-                    r.Status = 200;
+                    bool isOldPasswordValid = VendorData.ChangePassword(vendorId, password, oldPassword);
+
+                    if (isOldPasswordValid)
+                    {
+                        r.Error = false;
+                        r.Message = "success";
+                        r.Status = 200;
+                    }
+                    else
+                    {
+                        r.Message = "Invalid Old PassWord";
+                        r.Error = true;
+                        r.Status = 400;
+                    }
                 }
                 else
                 {

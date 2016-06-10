@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -362,14 +362,18 @@ namespace Tasko.Repository
         /// <param name="vendorId">The vendor identifier.</param>
         /// <param name="password">The password.</param>
         /// <param name="oldPassword">The old password.</param>
-        public static void ChangePassword(string vendorId, string password, string oldPassword)
+        /// <returns>is old password is correct or not</returns>
+        public static bool ChangePassword(string vendorId, string password, string oldPassword)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
+            bool isValidOldPassword = false;
 
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
             objParameters.Add(SqlHelper.CreateParameter("@pPassword", DbType.String, password));
             objParameters.Add(SqlHelper.CreateParameter("@pOldPassword", DbType.String, oldPassword));
-            SqlHelper.ExecuteNonQuery("dbo.usp_ChangePassword", objParameters.ToArray());
+            isValidOldPassword = (bool)SqlHelper.ExecuteScalar("dbo.usp_ChangePassword", objParameters.ToArray());
+
+            return isValidOldPassword;
         }
 
         /// <summary>
