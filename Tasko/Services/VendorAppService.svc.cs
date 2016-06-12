@@ -32,19 +32,19 @@ namespace Tasko.Services
                     string authCode = string.Empty;
                     authCode = VendorData.InsertAuthCode();
                     r.Error = false;
-                    r.Message = "Authentication Successful";
+                    r.Message = CommonMessages.AUTHENTICATION_SUCCESSFULL;
                     r.Status = 200;
                     r.Data = authCode;
                 }
                 else
                 {
-                    r.Message = "Authentication failed";
+                    r.Message = CommonMessages.AUTHENTICATION_FAILED;
                     r.Error = true;
                 }
             }
             catch (Exception ex)
             {
-                r.Message = "Authentication failed";
+                r.Message = CommonMessages.AUTHENTICATION_FAILED;
                 r.Error = true;
                 r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
 
@@ -74,18 +74,18 @@ namespace Tasko.Services
                     loginInfo = VendorData.Login(username, password, mobilenumber, userType); // 1 is vendor
                     if (loginInfo == null)
                     {
-                        r.Message = "Invalid Credentials";
+                        r.Message = CommonMessages.INVALID_CREDENTIALS;
                     }
                 }
                 else
                 {
-                    r.Message = "Invalid AuthCode";
+                    r.Message = CommonMessages.INVALID_AUTHCODE;
                 }
 
                 if (loginInfo != null)
                 {
                     r.Error = false;
-                    r.Message = "Login Successful";
+                    r.Message = CommonMessages.LOGIN_SUCCESSFULL;
                     r.Status = 200;
                     r.Data = loginInfo;
                 }
@@ -124,20 +124,20 @@ namespace Tasko.Services
                 }
                 else
                 {
-                    r.Message = "Invalid  token code";
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
 
                 if (objVendor != null)
                 {
                     r.Error = false;
-                    r.Message = "success";
+                    r.Message = CommonMessages.SUCCESS;
                     r.Status = 200;
                     r.Data = objVendor;
                 }
                 else
                 {
                     r.Error = true;
-                    r.Message = string.IsNullOrEmpty(r.Message) ? "Vendor not found" : r.Message;
+                    r.Message = string.IsNullOrEmpty(r.Message) ? CommonMessages.VENDOR_NOT_FOUND : r.Message;
                     r.Status = 400;
                 }
 
@@ -169,20 +169,20 @@ namespace Tasko.Services
                 }
                 else
                 {
-                    r.Message = "Invalid token code";
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
 
                 if (vendorServices != null)
                 {
                     r.Error = false;
-                    r.Message = "success";
+                    r.Message = CommonMessages.SUCCESS;
                     r.Status = 200;
                     r.Data = vendorServices;
                 }
                 else
                 {
                     r.Error = true;
-                    r.Message = string.IsNullOrEmpty(r.Message) ? "No services available" : r.Message;
+                    r.Message = string.IsNullOrEmpty(r.Message) ? CommonMessages.NO_SERVICES_AVAILABLE : r.Message;
                     r.Status = 400;
                 }
             }
@@ -213,20 +213,20 @@ namespace Tasko.Services
                 }
                 else
                 {
-                    r.Message = "Invalid token code";
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
 
                 if (vendorSubServices != null)
                 {
                     r.Error = false;
-                    r.Message = "success";
+                    r.Message = CommonMessages.SUCCESS;
                     r.Status = 200;
                     r.Data = vendorSubServices;
                 }
                 else
                 {
                     r.Error = true;
-                    r.Message = string.IsNullOrEmpty(r.Message) ? "No sub services available" : r.Message;
+                    r.Message = string.IsNullOrEmpty(r.Message) ? CommonMessages.NO_SUB_SERVICES_AVAILABLE : r.Message;
                     r.Status = 400;
                 }
             }
@@ -266,12 +266,12 @@ namespace Tasko.Services
                     {
                         VendorData.UpdateOrderStatus(orderId, orderStatus, Comments);
                         r.Error = false;
-                        r.Message = "success";
+                        r.Message = CommonMessages.SUCCESS;
                         r.Status = 200;
                     }
                     else
                     {
-                        r.Message = "Invalid token code";
+                        r.Message = CommonMessages.INVALID_TOKEN_CODE;
                         r.Error = true;
                         r.Status = 400;
                     }
@@ -279,7 +279,7 @@ namespace Tasko.Services
                 catch
                 {
                     r.Error = true;
-                    r.Message = string.IsNullOrEmpty(r.Message) ? "Error on updating OrderStatus" : r.Message;
+                    r.Message = string.IsNullOrEmpty(r.Message) ? CommonMessages.ERROR_UPDATING_ORDER_STATUS : r.Message;
                     r.Status = 400;
                 }
             }
@@ -308,12 +308,12 @@ namespace Tasko.Services
                     VendorData.UpdateVendorServices(vendorServices);
 
                     r.Error = false;
-                    r.Message = "success";
+                    r.Message = CommonMessages.SUCCESS;
                     r.Status = 200;
                 }
                 else
                 {
-                    r.Message = "Invalid token code";
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
                     r.Error = true;
                     r.Status = 400;
                 }
@@ -321,7 +321,7 @@ namespace Tasko.Services
             catch (Exception ex)
             {
                 r.Error = true;
-                r.Message = "Error on updating Vendor Services";
+                r.Message = CommonMessages.ERROR_UPDATING_VENDOR_SERVICES;
                 r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
                 r.Status = 400;
             }
@@ -348,12 +348,12 @@ namespace Tasko.Services
                     VendorData.UpdateVendorBaseRate(vendorId, baseRate);
 
                     r.Error = false;
-                    r.Message = "success";
+                    r.Message = CommonMessages.SUCCESS;
                     r.Status = 200;
                 }
                 else
                 {
-                    r.Message = "Invalid token code";
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
                     r.Error = true;
                     r.Status = 400;
                 }
@@ -361,7 +361,7 @@ namespace Tasko.Services
             catch (Exception ex)
             {
                 r.Error = true;
-                r.Message = "Error on updating Vendor Base Rate";
+                r.Message = CommonMessages.ERROR_UPDATING_VENDOR_BASE_RATE;
                 r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
                 r.Status = 400;
             }
@@ -389,12 +389,12 @@ namespace Tasko.Services
                     VendorData.Logout(userId, tokenCode);
 
                     r.Error = false;
-                    r.Message = "success";
+                    r.Message = CommonMessages.SUCCESS;
                     r.Status = 200;
                 }
                 else
                 {
-                    r.Message = "Invalid token code";
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
                     r.Error = true;
                     r.Status = 400;
                 }
@@ -402,7 +402,7 @@ namespace Tasko.Services
             catch (Exception ex)
             {
                 r.Error = true;
-                r.Message = "Error on logout";
+                r.Message = CommonMessages.ERROR_LOGGING_OUT;
                 r.Status = 400;
                 r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
             }
@@ -429,20 +429,20 @@ namespace Tasko.Services
                     if (objVendorRatings != null)
                     {
                         r.Error = false;
-                        r.Message = "success";
+                        r.Message = CommonMessages.SUCCESS;
                         r.Status = 200;
                         r.Data = objVendorRatings;
                     }
                     else
                     {
                         r.Error = true;
-                        r.Message = "No ratings for vendor";
+                        r.Message = CommonMessages.NO_RATINGS_FOR_VENDOR;
                         r.Status = 400;
                     }
                 }
                 else
                 {
-                    r.Message = "Invalid token code";
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
                     r.Error = true;
                     r.Status = 400;
                 }
@@ -475,20 +475,20 @@ namespace Tasko.Services
                     if (objVendorRatings != null)
                     {
                         r.Error = false;
-                        r.Message = "success";
+                        r.Message = CommonMessages.SUCCESS;
                         r.Status = 200;
                         r.Data = objVendorRatings;
                     }
                     else
                     {
                         r.Error = true;
-                        r.Message = "No ratings for vendor";
+                        r.Message = CommonMessages.NO_RATINGS_FOR_VENDOR;
                         r.Status = 400;
                     }
                 }
                 else
                 {
-                    r.Message = "Invalid token code";
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
                     r.Error = true;
                     r.Status = 400;
                 }
@@ -524,20 +524,20 @@ namespace Tasko.Services
                     if (objOrders != null && objOrders.Count > 0)
                     {
                         r.Error = false;
-                        r.Message = "success";
+                        r.Message = CommonMessages.SUCCESS;
                         r.Status = 200;
                         r.Data = objOrders;
                     }
                     else
                     {
                         r.Error = true;
-                        r.Message = "No orders for vendor";
+                        r.Message = CommonMessages.NO_ORDERS_FOR_VENDOR;
                         r.Status = 400;
                     }
                 }
                 else
                 {
-                    r.Message = "Invalid token code";
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
                     r.Error = true;
                     r.Status = 400;
                 }
@@ -572,19 +572,19 @@ namespace Tasko.Services
                     if (isOldPasswordValid)
                     {
                         r.Error = false;
-                        r.Message = "success";
+                        r.Message = CommonMessages.SUCCESS;
                         r.Status = 200;
                     }
                     else
                     {
-                        r.Message = "Invalid Old PassWord";
+                        r.Message = CommonMessages.INVALID_OLD_PASSWORD;
                         r.Error = true;
                         r.Status = 400;
                     }
                 }
                 else
                 {
-                    r.Message = "Invalid token code";
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
                     r.Error = true;
                     r.Status = 400;
                 }
@@ -615,12 +615,12 @@ namespace Tasko.Services
                     VendorData.UpdateVendor(vendor);
 
                     r.Error = false;
-                    r.Message = "success";
+                    r.Message = CommonMessages.SUCCESS;
                     r.Status = 200;
                 }
                 else
                 {
-                    r.Message = "Invalid token code";
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
             catch (Exception ex)

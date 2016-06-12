@@ -71,6 +71,11 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonMessages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CommonMessages.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\CustomerService.svc.cs">
       <DependentUpon>CustomerService.svc</DependentUpon>
       <SubType>Code</SubType>
@@ -117,6 +122,12 @@
       <Project>{55c2ca09-b1a5-4ee2-b984-d25cec39fc67}</Project>
       <Name>Tasko.BL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CommonMessages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CommonMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
