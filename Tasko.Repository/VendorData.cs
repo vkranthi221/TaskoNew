@@ -89,13 +89,14 @@ namespace Tasko.Repository
             if (reader.Read())
             {
                 objVendor.Id = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
+                objVendor.UserName = reader["USER_NAME"].ToString();
                 objVendor.Name = reader["NAME"].ToString();
                 objVendor.MobileNumber = reader["MOBILE_NUMBER"].ToString();
                 objVendor.EmailAddress = Convert.ToString(reader["EMAIL_ADDRESS"]);
                 objVendor.Address = reader["ADDRESS"].ToString();
                 objVendor.NoOfEmployees = Convert.ToInt32(reader["EMPLOYEE_COUNT"]);
                 objVendor.BaseRate = Convert.ToDouble(reader["BASE_RATE"]);
-                objVendor.IsVendorVerified = Convert.ToBoolean(reader["IS_VENDOR_VERIFIED"]);             
+                objVendor.IsVendorVerified = Convert.ToBoolean(reader["IS_VENDOR_VERIFIED"]);
                 objVendor.DataConsumption = Convert.ToInt32(reader["DATA_CONSUMPTION"]);
                 objVendor.CallsToCustomerCare = Convert.ToInt32(reader["CALLS_TO_CUSTOMER_CARE"]);
             }
@@ -119,7 +120,7 @@ namespace Tasko.Repository
         {
             LoginInfo logininfo = null;
             List<SqlParameter> objParameters = new List<SqlParameter>();
-            objParameters.Add(SqlHelper.CreateParameter("@pUserId", DbType.String, userName));
+            objParameters.Add(SqlHelper.CreateParameter("@pUserName", DbType.String, userName));
             objParameters.Add(SqlHelper.CreateParameter("@pPassword", DbType.String, passowrd));
             objParameters.Add(SqlHelper.CreateParameter("@pMobileNumber", DbType.String, mobileNumber));
 
@@ -137,7 +138,7 @@ namespace Tasko.Repository
 
             return logininfo;
         }
-        
+
         /// <summary>
         /// Updates the vendor services.
         /// </summary>
@@ -224,7 +225,7 @@ namespace Tasko.Repository
         /// <param name="orderId">The order identifier.</param>
         /// <param name="orderStatus">The order status.</param>
         /// <param name="Comments">The comments.</param>
-        public static void UpdateOrderStatus(string orderId, short orderStatus,string Comments)
+        public static void UpdateOrderStatus(string orderId, short orderStatus, string Comments)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
@@ -344,7 +345,7 @@ namespace Tasko.Repository
             {
                 OrderSummary order = new OrderSummary();
                 order.OrderId = reader["ORDER_ID"].ToString();
-                order.RequestedDate = Convert.ToDateTime(reader["REQUESTED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss"); 
+                order.RequestedDate = Convert.ToDateTime(reader["REQUESTED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
                 order.ServiceName = reader["SERVICENAME"].ToString();
                 order.OrderStatus = reader["ORDERSTATUSNAME"].ToString();
                 order.Comments = reader["COMMENTS"].ToString();
@@ -386,7 +387,7 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendor.Id)));
             if (!string.IsNullOrEmpty(vendor.Name))
             {
-            objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.String, vendor.Name));
+                objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.String, vendor.Name));
             }
             else
             {
@@ -396,7 +397,7 @@ namespace Tasko.Repository
             // Mobile Number
             if (!string.IsNullOrEmpty(vendor.MobileNumber))
             {
-            objParameters.Add(SqlHelper.CreateParameter("@pMobileNumber", DbType.String, vendor.MobileNumber));
+                objParameters.Add(SqlHelper.CreateParameter("@pMobileNumber", DbType.String, vendor.MobileNumber));
             }
             else
             {
@@ -404,9 +405,9 @@ namespace Tasko.Repository
             }
 
             // Address
-            if (!string.IsNullOrEmpty(vendor.Address)) 
+            if (!string.IsNullOrEmpty(vendor.Address))
             {
-            objParameters.Add(SqlHelper.CreateParameter("@pAddress", DbType.String, vendor.Address));
+                objParameters.Add(SqlHelper.CreateParameter("@pAddress", DbType.String, vendor.Address));
             }
             else
             {

@@ -542,10 +542,13 @@ namespace Tasko.Repository
             if (reader.Read())
             {
                 IsValid = (bool)reader["IsValid"];
-                logininfo = new LoginInfo();
-                logininfo.TokenId = BinaryConverter.ConvertByteToString((byte[])reader["AUTH_CODE"]);
-                logininfo.UserId = BinaryConverter.ConvertByteToString((byte[])reader["USERID"]);
-                return logininfo;
+                if (IsValid)
+                {
+                    logininfo = new LoginInfo();
+                    logininfo.TokenId = BinaryConverter.ConvertByteToString((byte[])reader["AUTH_CODE"]);
+                    logininfo.UserId = BinaryConverter.ConvertByteToString((byte[])reader["USERID"]);
+                    return logininfo;
+                }
             }
 
             return logininfo;

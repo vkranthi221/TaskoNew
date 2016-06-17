@@ -16,8 +16,8 @@ GO
 --  Name and Number should be unique, 
 --  mobile number should not be varchar(max) change it to nVarchar(10)
   
-INSERT INTO [dbo].[Vendor] values(NEWID(),'chandra','9985466195','12345','KPHB,VivekanandaNagar',null,10,50.00,1,1,Getdate(),Getdate(),10.00,123)
-INSERT INTO [dbo].[Vendor] values(NEWID(),'Srikanth','1234567890','12345','KPHB,HMT Hills',null,10,100.00,1,1,Getdate(),Getdate(),10.00,123)
+INSERT INTO [dbo].[Vendor] values(NEWID(),'mchandu123','chandra','9985466195','12345','mchandu123@gmail.com','KPHB,VivekanandaNagar',null,10,50.00,1,1,Getdate(),Getdate(),10.00,123)
+INSERT INTO [dbo].[Vendor] values(NEWID(),'sree123','Srikanth','1234567890','12345','sree@gmail.com','KPHB,HMT Hills',null,10,100.00,1,1,Getdate(),Getdate(),10.00,123)
 SELECT * FROM [dbo].[Vendor]
 
 INSERT INTO [dbo].VENDOR_SERVICES values(newId(),(select Vendor_Id from [dbo].Vendor WHERE NAME='chandra'),(select Service_Id from [dbo].[SERVICES] WHERE NAME='Electrician'),1)

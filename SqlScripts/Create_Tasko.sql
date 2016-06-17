@@ -69,6 +69,7 @@ GO
 --For now I removed the VendorId column as i dont see any use case
 CREATE TABLE [dbo].[VENDOR](
 	[VENDOR_ID] Binary (16) NOT NULL ,
+	[USER_NAME] VARCHAR(MAX) NOT NULL,
 	[NAME] VARCHAR(MAX) NOT NULL,
 	[MOBILE_NUMBER] [varchar](50) NOT NULL,
 	[PASSWORD] VARCHAR(MAX) NOT NULL,
@@ -354,7 +355,8 @@ BEGIN
 
 SET NOCOUNT ON;
 
-SELECT [VENDOR_ID]
+SELECT [VENDOR_ID],
+       [USER_NAME],
       ,[NAME]
       ,[MOBILE_NUMBER]
       ,[EMAIL_ADDRESS]
@@ -622,7 +624,7 @@ GO
 
 CREATE PROCEDURE [dbo].[usp_LOGIN]
 (
-	@pUserId Varchar(50),
+	@pUserName Varchar(max),
 	@pPassword nvarchar(10),
 	@pMobileNumber varchar(50),
 	@pUserType smallint
@@ -638,9 +640,9 @@ declare @UserID binary(16)
 set @authCode = NEWID()
  if (@pUserType = 1)
  BEGIN
- IF @pUserId IS NOT NULL AND LEN(@pUserId) > 0 --username is passed
+ IF @pUserName IS NOT NULL AND LEN(@pUserName) > 0 --username is passed
 	BEGIN
-		select @UserID= VENDOR_ID from vendor where NAME = @pUserId and PASSWORD = @pPassword
+		select @UserID= VENDOR_ID from vendor where [USER_NAME] = @pUserName and PASSWORD = @pPassword
 	END
  ELSE IF @pMobileNumber IS NOT NULL AND LEN(@pPassword) >0 
 	BEGIN

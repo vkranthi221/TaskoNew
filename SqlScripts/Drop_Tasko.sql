@@ -40,6 +40,10 @@ DROP PROCEDURE [dbo].[usp_GetVendorSubServices]
 GO
 DROP PROCEDURE [dbo].[usp_UpdateVendorServices]
 GO
+DROP PROCEDURE [dbo].[usp_UpdateVendor]
+GO
+DROP PROCEDURE [dbo].[usp_InsertOTPDetails]
+GO
 DROP PROCEDURE [dbo].[usp_UpdateBaseRate]
 GO
 DROP FUNCTION [dbo].[CheckIsParentServiceId]
@@ -85,6 +89,16 @@ GO
 DROP PROCEDURE [dbo].[usp_GetCustomerOrders]
 GO
 DROP TABLE [dbo].[CUSTOMER_ADDRESS]
+GO
+DROP TABLE [dbo].[OTP_DETAILS]
+GO
+DROP PROCEDURE [dbo].[usp_ValidateOTP]
+GO
+DROP PROCEDURE [dbo].[usp_AddCustomer]
+GO
+DROP PROCEDURE [dbo].[usp_GetCustomerDetails]
+GO
+DROP PROCEDURE [dbo].[usp_CustomerLoginValidateOTP]
 GO
 DROP PROCEDURE [dbo].[usp_AddCustomerAddress]
 GO
