@@ -126,6 +126,9 @@
   <data name="CUSTOMER_ADDRESS_NOT_FOUND" xml:space="preserve">
     <value>Customer Addresses not found</value>
   </data>
+  <data name="CUSTOMER_NOT_FOUND" xml:space="preserve">
+    <value>Customer not found</value>
+  </data>
   <data name="ERROR_ADDING_CUSTOMER" xml:space="preserve">
     <value>Error Adding Customer Details</value>
   </data>

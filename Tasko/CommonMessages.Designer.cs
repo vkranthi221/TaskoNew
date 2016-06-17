@@ -88,6 +88,15 @@ namespace Tasko {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customer not found.
+        /// </summary>
+        internal static string CUSTOMER_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("CUSTOMER_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error Adding Customer Details.
         /// </summary>
         internal static string ERROR_ADDING_CUSTOMER {

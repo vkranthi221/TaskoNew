@@ -199,5 +199,17 @@ namespace Tasko.Interfaces
             BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "auth")]
         Response GetAuthCode();
+
+        /// <summary>
+        /// Gets the customer details.
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <returns>Response Object</returns>
+        [OperationContract]
+        [FaultContract(typeof(ErrorDetails))]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate = "auth")]
+        Response GetCustomerDetails(string customerId);
     }
 }

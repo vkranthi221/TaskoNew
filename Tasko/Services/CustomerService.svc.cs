@@ -806,6 +806,51 @@ namespace Tasko.Services
             return r;
         }
 
+        /// <summary>
+        /// Gets the customer details.
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <returns>Response Object</returns>
+        public Response GetCustomerDetails(string customerId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                Customer objCustomer = null;
+                if (isTokenValid)
+                {
+                    objCustomer = CustomerData.GetCustomer(customerId);
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+
+                if (objCustomer != null)
+                {
+                    r.Error = false;
+                    r.Message = CommonMessages.SUCCESS;
+                    r.Status = 200;
+                    r.Data = objCustomer;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Message = string.IsNullOrEmpty(r.Message) ? CommonMessages.CUSTOMER_NOT_FOUND : r.Message;
+                    r.Status = 400;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
         #region Private Methods
         /// <summary>
         /// Internals the get otp.

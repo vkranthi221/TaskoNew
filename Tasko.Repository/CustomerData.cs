@@ -550,5 +550,31 @@ namespace Tasko.Repository
 
             return logininfo;
         }
+
+        /// <summary>
+        /// Gets the Customer.
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <returns>Customer details</returns>
+        public static Customer GetCustomer(string customerId)
+        {
+            Customer objCustomer = new Customer();
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
+
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetCustomerDetails", objParameters.ToArray());
+            if (reader.Read())
+            {
+                objCustomer.Id = BinaryConverter.ConvertByteToString((byte[])reader["CUSTOMER_ID"]);
+                objCustomer.Name = reader["NAME"].ToString();
+                objCustomer.MobileNumber = reader["MOBILE_NUMBER"].ToString();
+                objCustomer.EmailAddress = Convert.ToString(reader["EMAIL_ADDRESS"]);
+            }
+
+            reader.Close();
+
+            return objCustomer;
+        }
     }
 }

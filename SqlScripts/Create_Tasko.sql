@@ -1258,6 +1258,29 @@ End
 
 GO
 
+CREATE PROCEDURE [dbo].usp_GetCustomerDetails
+(
+	@pCustomerId Binary(16)
+)
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+SELECT [CUSTOMER_ID]
+      ,[NAME]
+      ,[MOBILE_NUMBER]
+      ,[EMAIL_ADDRESS]
+FROM [dbo].[CUSTOMER] (NOLOCK)
+WHERE CUSTOMER_ID = @pCustomerId 
+
+END
+
+GO
+
+
+
+
 
 
 
