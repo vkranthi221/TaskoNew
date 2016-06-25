@@ -894,7 +894,7 @@ namespace Tasko.Services
         /// <returns>Returns OTP</returns>
         private string InternalGenerateOTP(string phoneNumber)
         {
-            string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            string chars = "0123456789";
             string otp = string.Empty;
             Random random = new Random();
 
