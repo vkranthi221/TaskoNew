@@ -37,6 +37,14 @@ namespace Tasko
     public class Response
     {
         /// <summary>
+        /// Constructor
+        /// </summary>
+        public Response()
+        {
+            this.Status = 400;
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether this <see cref="Response"/> is error.
         /// </summary>
         /// <value>
