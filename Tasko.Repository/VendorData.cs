@@ -80,7 +80,8 @@ namespace Tasko.Repository
         /// <returns>vendor details</returns>
         public static Vendor GetVendor(string vendorId)
         {
-            Vendor objVendor = new Vendor();
+            Vendor objVendor = null;
+            
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
@@ -88,6 +89,7 @@ namespace Tasko.Repository
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorDetails", objParameters.ToArray());
             if (reader.Read())
             {
+                objVendor = new Vendor();
                 objVendor.Id = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
                 objVendor.UserName = reader["USER_NAME"].ToString();
                 objVendor.Name = reader["NAME"].ToString();
