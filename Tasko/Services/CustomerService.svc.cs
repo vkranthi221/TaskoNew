@@ -28,7 +28,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = true;
                 Order objOrder = null;
                 if (isTokenValid)
                 {

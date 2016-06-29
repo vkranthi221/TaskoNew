@@ -116,7 +116,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = true;
                 Vendor objVendor = null;
                 if (isTokenValid)
                 {

@@ -22,19 +22,20 @@ namespace Tasko.Repository
         /// <returns>Order details</returns>
         public static Order GetOrderDetails(string orderId)
         {
-            Order objOrder = new Order();
+            Order objOrder = null;
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
             objParameters.Add(SqlHelper.CreateParameter("@pOrderId", DbType.String, orderId));
             DataSet dataSet = SqlHelper.GetDataSet("dbo.usp_GetOrderDetails", objParameters.ToArray());
 
             if (dataSet != null && dataSet.Tables.Count == 3)
-            {
+            {                
                 //// Order Table Info
                 DataTable ObjOrderInfo = dataSet.Tables[0];
 
                 if (ObjOrderInfo != null && ObjOrderInfo.Rows.Count > 0)
                 {
+                    objOrder = new Order();
                     objOrder.OrderId = ObjOrderInfo.Rows[0]["ORDER_ID"].ToString();
 
                     objOrder.CustomerId = BinaryConverter.ConvertByteToString((byte[])ObjOrderInfo.Rows[0]["CUSTOMER_ID"]);

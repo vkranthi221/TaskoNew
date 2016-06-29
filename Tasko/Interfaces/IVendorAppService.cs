@@ -39,11 +39,44 @@ namespace Tasko.Interfaces
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response Logout();
 
-        /// <summary>
-        /// Gets the vendor details.
-        /// </summary>
-        /// <param name="vendorId">The vendor identifier.</param>
-        /// <returns>Response Object</returns>
+        /**
+         * @api {post} v1/GetVendorDetails Get Vendor details
+         * @apiName GetVendorDetails
+         * @apiGroup Vendor
+         *
+         * @apiParam {String} vendorId Vendor Id.                
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": {
+            "__type": "Vendor:#Tasko.Model",
+            "Address": "KPHB,HMT Hills",
+            "BaseRate": 100,
+            "CallsToCustomerCare": 123,
+            "DataConsumption": 10,
+            "EmailAddress": "sree@gmail.com",
+            "Id": "05B3274A2E6EC94D8C0292293823C122",
+            "IsVendorLive": false,
+            "IsVendorVerified": true,
+            "MobileNumber": "9848022669",
+            "Name": "Steve",
+            "NoOfEmployees": 10,
+            "UserName": "sree123"
+          },
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError VendorIdNotFound The Vendor id is invalid or was not found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Vendor not found",
+          "Status": 400
+        }
+         */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
