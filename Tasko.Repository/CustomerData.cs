@@ -79,7 +79,7 @@ namespace Tasko.Repository
         /// <returns>Order Object</returns>
         public static Order GetRecentOrder(string customerId)
         {
-            Order objOrder = new Order();
+            Order objOrder = null;
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
@@ -92,6 +92,7 @@ namespace Tasko.Repository
 
                 if (ObjOrderInfo != null && ObjOrderInfo.Rows.Count > 0)
                 {
+                    objOrder = new Order();
                     objOrder.OrderId = ObjOrderInfo.Rows[0]["ORDER_ID"].ToString();
 
                     objOrder.CustomerId = BinaryConverter.ConvertByteToString((byte[])ObjOrderInfo.Rows[0]["CUSTOMER_ID"]);
