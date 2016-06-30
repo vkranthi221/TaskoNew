@@ -8,11 +8,70 @@ namespace Tasko.Interfaces
     [ServiceContract]
     public interface ICustomerService
     {
-        /// <summary>
-        /// Gets the order details.
-        /// </summary>
-        /// <param name="orderId">The order identifier.</param>
-        /// <returns>Response Object</returns>
+        /**
+         * @api {post} c1/GetOrderDetails Get Order details
+         * @apiName GetOrderDetails
+         * @apiGroup Customer
+         *
+         * @apiParam {String} orderId Order Id.
+         *
+         * @apiSuccess {String} firstname Firstname of the User.
+         * @apiSuccess {String} lastname  Lastname of the User.
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": {
+            "__type": "Order:#Tasko.Model",
+            "Comments": "",
+            "CustomerId": "692BD435A5173E42916438F889F5DA08",
+            "CustomerName": "Shivaji",
+            "DestinationAddress": {
+              "Address": "plot no 404, BaghyaNagar",
+              "AddressId": "8397A91B6E997F438A9D4D9D49D3E12A",
+              "City": "Hyderabad",
+              "Country": "India",
+              "Lattitude": "40",
+              "Locality": "HMT HILLS",
+              "Longitude": "600",
+              "Pincode": "500072",
+              "State": "Telangana"
+            },
+            "Location": "kphb",
+            "OrderId": "TASKO1000",
+            "OrderStatus": "Requested",
+            "OrderStatusId": 1,
+            "RequestedDate": "2016-06-29 22:49:47",
+            "ServiceId": "9661D3C7E345B747BBE62DEA76F00B82",
+            "ServiceName": "Electrician",
+            "SourceAddress": {
+              "Address": "plot no 101, vivekanandaNagar",
+              "AddressId": "36F6A0E2C85F7D46AF68C4EB73148B2A",
+              "City": "Hyderabad",
+              "Country": "India",
+              "Lattitude": "10",
+              "Locality": "kphb",
+              "Longitude": "200",
+              "Pincode": "500081",
+              "State": "Telangana"
+            },
+            "VendorId": "C3A4A364DA1DE542BA70FBAD2435D571",
+            "VendorName": "chandra",
+            "VendorServiceId": "CD2CA27D52CE5E4D8E897D53CC4379CB"
+          },
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError OrderIdNotFound The Order id was not found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Order not found",
+          "Status": 400
+        }
+         */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
