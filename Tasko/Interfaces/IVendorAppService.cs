@@ -192,103 +192,342 @@ namespace Tasko.Interfaces
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetVendorServices(string vendorId);
 
-        /// <summary>
-        /// Gets the vendor sub services.
-        /// </summary>
-        /// <param name="vendorServiceId">The vendor service identifier.</param>
-        /// <returns>Response Object</returns>
+        /**
+         * @api {post} v1/GetVendorSubServices Get Vendor sub services
+         * @apiName GetVendorSubServices
+         * @apiGroup Vendor
+         *
+         * @apiParam {String} vendorServiceId Vendor Service Id.                
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": [
+                    {
+                      "__type": "VendorService:#Tasko.Model",
+                      "Id": "82B4B5E0C2ACED43BC5233F1A715071B",
+                      "ImageURL": "",
+                      "IsActive": true,
+                      "Name": "test2"
+                    },
+                    {
+                      "__type": "VendorService:#Tasko.Model",
+                      "Id": "BFD1E3C77DE53D4E9026DB99FC71CA83",
+                      "ImageURL": "",
+                      "IsActive": true,
+                      "Name": "test"
+                    }
+                  ],
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError NO_SUB_SERVICES_AVAILABLE No sub services available.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "No sub services available",
+          "Status": 400
+        }
+         */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetVendorSubServices(string vendorServiceId);
 
-        /// <summary>
-        /// Updates the order status.
-        /// </summary>
-        /// <param name="orderId">The order identifier.</param>
-        /// <param name="orderStatus">The order status.</param>
-        /// <param name="Comments">The comments.</param>
-        /// <returns>
-        /// Response Object
-        /// </returns>
+        /**
+         * @api {post} v1/UpdateOrderStatus Update Order Status
+         * @apiName UpdateOrderStatus
+         * @apiGroup Vendor
+         *
+         * @apiParam {String} orderId Order Id.          
+         * 
+         * @apiParam {Short} orderStatus Order Status.            
+         * 
+         * @apiParam {String} Comments Comments.
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError ERROR_UPDATING_ORDER_STATUS Error while updating OrderStatus.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Error while updating OrderStatus",
+          "Status": 400
+        }
+         */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response UpdateOrderStatus(string orderId, short orderStatus, string Comments);
 
-        /// <summary>
-        /// Updates the vendor services.
-        /// </summary>
-        /// <param name="vendorServices">The vendor services.</param>
-        /// <returns>Response Object</returns>
+        /**
+         * @api {post} v1/UpdateVendorServices Update Vendor Services
+         * @apiName UpdateVendorServices
+         * @apiGroup Vendor
+         *
+         * @apiParam {List<VendorService>} vendorServices List of Vendor Services.          
+         * 
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError ERROR_UPDATING_VENDOR_SERVICES Error while updating Vendor Services.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Error while updating Vendor Services",
+          "Status": 400
+        }
+         */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response UpdateVendorServices(List<VendorService> vendorServices);
 
-        /// <summary>
-        /// Updates the vendor base rate.
-        /// </summary>
-        /// <param name="vendorId">The vendor identifier.</param>
-        /// <param name="baseRate">The base rate.</param>
-        /// <returns>Response Object</returns>
+        /**
+         * @api {post} v1/UpdateVendorBaseRate Update Vendor Base Rate
+         * @apiName UpdateVendorBaseRate
+         * @apiGroup Vendor
+         *
+         * @apiParam {string} vendorId Vendor Id.          
+         * 
+         * @apiParam {double} baseRate Base Rate.
+         * 
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError ERROR_UPDATING_VENDOR_BASE_RATE Error while updating Vendor Base Rate.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Error while updating Vendor Base Rate",
+          "Status": 400
+        }
+         */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response UpdateVendorBaseRate(string vendorId, double baseRate);
 
-        /// <summary>
-        /// Gets the Vendor Ratings
-        /// </summary>
-        /// <param name="vendorId">The vendor identifier.</param>
-        /// <returns>Response Object</returns>
+        /**
+         * @api {post} v1/GetVendorRatings Get Vendor Ratings
+         * @apiName GetVendorRatings
+         * @apiGroup Vendor
+         *
+         * @apiParam {string} vendorId Vendor Id.          
+         * 
+         {
+          "Data": [
+                    {
+                      "__type": "VendorRating:#Tasko.Model",
+                      "Comments": "Service is Good",
+                      "Courtesy": 3,
+                      "CustomerId": null,
+                      "CustomerName": "Shivaji123",
+                      "Id": "342CA9BFFA1F2E419FADB343C7DE3EE7",
+                      "OverAllRating": 0,
+                      "Price": 4,
+                      "Punctuality": 1,
+                      "ReviewDate": "2016-07-01 05:50:19",
+                      "ServiceQuality": 5,
+                      "VendorId": null
+                    },
+                    {
+                      "__type": "VendorRating:#Tasko.Model",
+                      "Comments": "Service is in time",
+                      "Courtesy": 3,
+                      "CustomerId": null,
+                      "CustomerName": "Shivaji123",
+                      "Id": "FD388BB73B94644889EA5C56A1163554",
+                      "OverAllRating": 0,
+                      "Price": 4,
+                      "Punctuality": 2,
+                      "ReviewDate": "2016-07-01 05:50:19",
+                      "ServiceQuality": 2,
+                      "VendorId": null
+                    }
+                  ],
+  
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError NO_RATINGS_FOR_VENDOR No ratings for vendor.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "No ratings for vendor",
+          "Status": 400
+        }
+         */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetVendorRatings(string vendorId);
 
-        /// <summary>
-        /// Gets the Vendor overall Ratings
-        /// </summary>
-        /// <param name="vendorId">The vendor identifier.</param>
-        /// <returns>Response Object</returns>
+        /**
+         * @api {post} v1/GetVendorOverallRatings Vendor Overall Ratings
+         * @apiName GetVendorOverallRatings
+         * @apiGroup Vendor
+         *
+         * @apiParam {string} vendorId Vendor Id.          
+         * 
+         {
+          "Data": {
+                    "__type": "VendorOverallRating:#Tasko.Model",
+                    "Courtesy": 3,
+                    "OverAllRating": 3,
+                    "Price": 3,
+                    "Punctuality": 2,
+                    "ServiceQuality": 3
+                  },
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError NO_RATINGS_FOR_VENDOR No ratings for vendor
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "No ratings for vendor",
+          "Status": 400
+        }
+         */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetVendorOverallRatings(string vendorId);
 
-         /// <summary>
-        /// Gets the Vendor orders
-        /// </summary>
-        /// <param name="vendorId">The vendor identifier.</param>
-        /// <param name="orderStatusId">The order status id.</param>
-        /// <param name="pageNumber">The page number.</param>
-        /// <param name="recordsPerPage">The records per page.</param>
-        /// <returns>Response Object</returns>
+        /**
+        * @api {post} v1/GetVendorOrders Vendor Orders
+        * @apiName GetVendorOrders
+        * @apiGroup Vendor
+        *
+        * @apiParam {string} vendorId Vendor Id.
+        *
+        * @apiParam {int} orderStatusId Order Status Id.
+        *
+        * @apiParam {int} pageNumber Page Number.
+        *
+        *  @apiParam {int} recordsPerPage Records Per Page.
+        * 
+        {
+         "Data": [
+                    {
+                      "__type": "OrderSummary:#Tasko.Model",
+                      "Comments": "",
+                      "OrderId": "TASKO1010",
+                      "OrderStatus": "Requested",
+                      "RequestedDate": "2016-07-01 05:50:19",
+                      "ServiceId": null,
+                      "ServiceName": "Microwave Service"
+                    },
+                    {
+                      "__type": "OrderSummary:#Tasko.Model",
+                      "Comments": "",
+                      "OrderId": "TASKO1009",
+                      "OrderStatus": "Requested",
+                      "RequestedDate": "2016-07-01 05:50:19",
+                      "ServiceId": null,
+                      "ServiceName": "Microwave Service"
+                    }
+                  ],
+         "Error": false,
+         "Message": "Success",
+         "Status": 200
+       }
+        * @apiError NO_ORDERS_FOR_VENDOR No orders for vendor
+        *
+        * @apiErrorExample Error-Response:
+        {
+         "Data": null,
+         "Error": true,
+         "Message": "No orders for vendor",
+         "Status": 400
+       }
+        */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetVendorOrders(string vendorId, int orderStatusId, int pageNumber, int recordsPerPage);
 
-        /// <summary>
-        /// Changes the password.
-        /// </summary>
-        /// <param name="vendorId">The vendor identifier.</param>
-        /// <param name="password">The password.</param>
-        /// <param name="oldPassword">The old password.</param>
-        /// <returns>
-        /// Response Object
-        /// </returns>
+        /**
+        * @api {post} v1/ChangePassword Change password
+        * @apiName ChangePassword
+        * @apiGroup Vendor
+        *
+        * @apiParam {string} vendorId Vendor Id.
+        *
+        * @apiParam {string} password Password.
+        *
+        * @apiParam {string} oldPassword Old Password.
+        *
+        {
+        "Data": null,
+         "Error": false,
+         "Message": "Success",
+         "Status": 200
+       }
+        * @apiError INVALID_OLD_PASSWORD Invalid old password
+        *
+        * @apiErrorExample Error-Response:
+        {
+         "Data": null,
+         "Error": true,
+         "Message": "Invalid old password",
+         "Status": 400
+       }
+        */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response ChangePassword(string vendorId, string password, string oldPassword);
 
-        /// <summary>
-        /// Updates Vendor details
-        /// </summary>
-        /// <param name="vendor"></param>
-        /// <returns>Response</returns>
+        /**
+        * @api {post} v1/UpdateVendor Update Vendor
+        * @apiName UpdateVendor
+        * @apiGroup Vendor
+        *
+        * @apiParam {Vendor} vendor Vendor.
+        *
+        {
+         "Data": null,
+         "Error": false,
+         "Message": "Success",
+         "Status": 200
+       }
+        * @apiError INVALID_TOKEN_CODE Invalid token code
+        *
+        * @apiErrorExample Error-Response:
+        {
+         "Data": null,
+         "Error": true,
+         "Message": "Invalid token code",
+         "Status": 400
+       }
+        */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
