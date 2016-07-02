@@ -4,5 +4,4 @@
   "description": "Customer and vendor modules",
   "title": "Tasko API",
   "url" : "http://api.tasko.in/", 
-  "header": {"title": "My own header title" },
-  "footer": {"title": "My own footer title"}}
+  "header": {"title": "Tasko API Documentation" }}

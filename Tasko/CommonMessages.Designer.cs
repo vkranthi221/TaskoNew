@@ -340,6 +340,15 @@ namespace Tasko {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This vendor is already present in your favorite list..
+        /// </summary>
+        internal static string VENDOR_PRESENT_IN_FAVORITE_LIST {
+            get {
+                return ResourceManager.GetString("VENDOR_PRESENT_IN_FAVORITE_LIST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vendors are not found for the selected service.
         /// </summary>
         internal static string VENDORS_NOT_FOUND {

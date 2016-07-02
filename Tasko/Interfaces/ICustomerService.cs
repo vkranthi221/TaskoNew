@@ -800,5 +800,51 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
           BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetCustomerDetails(string customerId);
+
+        /**
+         * @api {post} c1/DeleteFavoriteVendor Delete Favorite Vendor
+         * @apiName DeleteFavoriteVendor
+         * @apiGroup Customer
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *     
+         * @apiParam {string} customerId Customer Id.         
+         * @apiParam {string} vendorId Vendor Id.
+         *
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *    "customerId": "customer Id that you would like to remove association for the given vendor Id" 
+         *    "vendorId": "Vendor Id that you would like to remove from favorite list" 
+         *  }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError INVALID_DETAILS Invalid Details.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Invalid Details",
+          "Status": 400
+        }
+         */
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response DeleteFavoriteVendor(string customerId, string vendorId);
     }
 }

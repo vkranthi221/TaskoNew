@@ -550,16 +550,27 @@ namespace Tasko.Services
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                    CustomerData.SetFavoriteVendor(customerId, vendorId);
-                    r.Message = CommonMessages.SUCCESS;
+                    bool isFavouriteVendorAlreadySet = CustomerData.SetFavoriteVendor(customerId, vendorId);
+
+                    if (!isFavouriteVendorAlreadySet)
+                    {
+                        r.Error = false;
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Status = 200;
+                    }
+                    else
+                    {
+                        r.Message = CommonMessages.VENDOR_PRESENT_IN_FAVORITE_LIST;
+                        r.Error = true;
+                        r.Status = 400;
+                    }
                 }
                 else
                 {
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                    r.Error = true;
+                    r.Status = 400;
                 }
-
-                r.Error = false;
-                r.Status = 200;
             }
             catch (Exception ex)
             {
@@ -868,6 +879,50 @@ namespace Tasko.Services
             catch (Exception ex)
             {
                 r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        /// <summary>
+        /// Deletes the favorite vendor.
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <returns>Response Object</returns>
+        public Response DeleteFavoriteVendor(string customerId, string vendorId)
+        {
+            Response r = new Response();
+            try
+            {
+                if (!string.IsNullOrEmpty(customerId) && !string.IsNullOrEmpty(vendorId))
+                {
+                    bool isTokenValid = ValidateToken();
+                    if (isTokenValid)
+                    {
+                        CustomerData.DeleteFavoriteVendor(customerId, vendorId);
+                        r.Message = CommonMessages.SUCCESS;
+                    }
+                    else
+                    {
+                        r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                    }
+
+                    r.Error = false;
+                    r.Status = 200;
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_DETAILS;
+                    r.Error = true;
+                    r.Status = 400;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Status = 400;
                 r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
             }
 

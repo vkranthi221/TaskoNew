@@ -376,12 +376,18 @@ namespace Tasko.Repository
         /// </summary>
         /// <param name="customerId">The customer identifier.</param>
         /// <param name="vendorId">The vendor identifier.</param>
-        public static void SetFavoriteVendor(string customerId, string vendorId)
+        /// <returns>Is vendor already set or not</returns>
+        public static bool SetFavoriteVendor(string customerId, string vendorId)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
+            bool isValidOldPassword = false;
+
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
+            isValidOldPassword = (bool)SqlHelper.ExecuteScalar("dbo.usp_SetFavoriteVendor", objParameters.ToArray());
             SqlHelper.ExecuteNonQuery("dbo.usp_SetFavoriteVendor", objParameters.ToArray());
+
+            return isValidOldPassword;
         }
 
         /// <summary>
@@ -580,6 +586,19 @@ namespace Tasko.Repository
             reader.Close();
 
             return objCustomer;
+        }
+
+        /// <summary>
+        /// Deletes the favorite vendor.
+        /// </summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <param name="vendorId">The vendor identifier.</param>
+        public static void DeleteFavoriteVendor(string customerId, string vendorId)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
+            SqlHelper.ExecuteNonQuery("dbo.usp_DeleteFavoriteVendor", objParameters.ToArray());
         }
     }
 }
