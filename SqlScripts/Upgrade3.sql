@@ -38,6 +38,7 @@ SET NOCOUNT ON;
 	  INSERT INTO [dbo].CUSTOMER_FAVORITE_VENDOR VALUES(newid(), @pVendorId, @pCustomerId)
 	  SET @IsFavouriteVendorAlreadySet =0
 	END	
-END
 
+	SELECT @IsFavouriteVendorAlreadySet
+END
 GO
