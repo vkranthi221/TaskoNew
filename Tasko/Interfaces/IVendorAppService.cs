@@ -15,7 +15,14 @@ namespace Tasko.Interfaces
          * @apiName GetAuthCode
          * @apiGroup Vendor
          * 
-         * @apiParam\n
+         * @apiHeader {string} X-APIKey API Key
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "X-APIKey": "API Key" ,
+         *  }
+         * 
+         * @apiParam
          *
          * @apiSuccessExample Success-Response:
          {
@@ -46,13 +53,30 @@ namespace Tasko.Interfaces
          * @apiName Login
          * @apiGroup Vendor
          * 
+         * @apiHeader {string} Auth_Code Auth Code
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Auth_Code": "API Key",
+         *    "Content-Type": "application/json"
+         *  }
+         *  
          * @apiParam {String} username User name to login.  
          * 
          * @apiParam {String} password password of the user.  
          * 
          * @apiParam {String} mobilenumber mobile number of the user. 
          * 
-         * @apiParam {Int16} userType user type. 
+         * @apiParam {Int16} userType user type.
+         * 
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *    "username": "User name to login",
+         *    "password": "Password of the user",
+         *    "mobilenumber": "Mobile number of the user",
+         *    "userType": "User type",
+         *  }
          *
          * @apiSuccessExample Success-Response:
          {
@@ -86,7 +110,18 @@ namespace Tasko.Interfaces
          * @apiName Logout
          * @apiGroup Vendor
          * 
-         * @apiParam\n
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *  
+         * @apiParam
          *
          * @apiSuccessExample Success-Response:
          {
@@ -116,7 +151,23 @@ namespace Tasko.Interfaces
          * @apiName GetVendorDetails
          * @apiGroup Vendor
          *
-         * @apiParam {String} vendorId Vendor Id.                
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} Content-Type application/json
+         * @apiHeader {string} User_Id User Id
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "Content-Type": "application/json"
+         *    "User_Id": "Logged in User ID",
+         *  }
+         *  
+         * @apiParam {String} vendorId Vendor Id. 
+         * 
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *    "vendorId": "Vendor Id " 
+         *  }
          *
          * @apiSuccessExample Success-Response:
          {
@@ -159,7 +210,23 @@ namespace Tasko.Interfaces
          * @apiName GetVendorServices
          * @apiGroup Vendor
          *
-         * @apiParam {String} vendorId Vendor Id.                
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} Content-Type application/json
+         * @apiHeader {string} User_Id User Id
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "Content-Type": "application/json"
+         *    "User_Id": "Logged in User ID",
+         *  }
+         *  
+         * @apiParam {String} vendorId Vendor Id.     
+         * 
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *    "vendorId": "Vendor Id " 
+         *  }
          *
          * @apiSuccessExample Success-Response:
          {
@@ -195,8 +262,24 @@ namespace Tasko.Interfaces
          * @api {post} v1/GetVendorSubServices Get Vendor sub services
          * @apiName GetVendorSubServices
          * @apiGroup Vendor
-         *
-         * @apiParam {String} vendorServiceId Vendor Service Id.                
+         * 
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} Content-Type application/json
+         * @apiHeader {string} User_Id User Id
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "Content-Type": "application/json"
+         *    "User_Id": "Logged in User ID",
+         *  }
+         *  
+         * @apiParam {String} vendorServiceId Vendor Service Id.  
+         * 
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *    "vendorServiceId": "Vendor Service Id to get the sub services " 
+         *  }
          *
          * @apiSuccessExample Success-Response:
          {
@@ -240,11 +323,29 @@ namespace Tasko.Interfaces
          * @apiName UpdateOrderStatus
          * @apiGroup Vendor
          *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} Content-Type application/json
+         * @apiHeader {string} User_Id User Id
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "Content-Type": "application/json"
+         *    "User_Id": "Logged in User ID",
+         *  }
+         *  
          * @apiParam {String} orderId Order Id.          
          * 
          * @apiParam {Short} orderStatus Order Status.            
          * 
-         * @apiParam {String} Comments Comments.
+         * @apiParam {String} comments Comments.
+         * 
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *    "orderId": "Order Id to update the status",
+         *    "orderStatus": "Order status ",
+         *    "comments": "Comments",
+         *  }
          *
          * @apiSuccessExample Success-Response:
          {
@@ -273,7 +374,24 @@ namespace Tasko.Interfaces
          * @apiName UpdateVendorServices
          * @apiGroup Vendor
          *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} Content-Type application/json
+         * @apiHeader {string} User_Id User Id
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "Content-Type": "application/json"
+         *    "User_Id": "Logged in User ID",
+         *  }
+         * 
          * @apiParam {List} vendorServices List of Vendor Services.          
+         * 
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *    "vendorServices": "List of Vendor services to be updated"
+         *  }
+         * 
          * @apiSuccessExample Success-Response: 
          {
           "Data": null,
@@ -301,16 +419,34 @@ namespace Tasko.Interfaces
          * @apiName UpdateVendorBaseRate
          * @apiGroup Vendor
          *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} Content-Type application/json
+         * @apiHeader {string} User_Id User Id
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "Content-Type": "application/json"
+         *    "User_Id": "Logged in User ID",
+         *  }
+         *  
          * @apiParam {string} vendorId Vendor Id.          
          * 
          * @apiParam {double} baseRate Base Rate.
+         * 
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *    "vendorId": "Vendor Id",
+         *    "baseRate": "Base Rate"
+         *  }
+         *  
          * @apiSuccessExample Success-Response:
-         {
-          "Data": null,
-          "Error": false,
-          "Message": "Success",
-          "Status": 200
-        }
+             {
+              "Data": null,
+              "Error": false,
+              "Message": "Success",
+              "Status": 200
+             }
          * @apiError ERROR_UPDATING_VENDOR_BASE_RATE Error while updating Vendor Base Rate.
          *
          * @apiErrorExample Error-Response:
@@ -331,7 +467,24 @@ namespace Tasko.Interfaces
          * @apiName GetVendorRatings
          * @apiGroup Vendor
          *
-         * @apiParam {string} vendorId Vendor Id.          
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} Content-Type application/json
+         * @apiHeader {string} User_Id User Id
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "Content-Type": "application/json"
+         *    "User_Id": "Logged in User ID",
+         *  }
+         *  
+         * @apiParam {string} vendorId Vendor Id.
+         * 
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *    "vendorId": "Vendor Id"
+         *  }
+         * 
          * @apiSuccessExample Success-Response:
          {
           "Data": [
@@ -389,7 +542,23 @@ namespace Tasko.Interfaces
          * @apiName GetVendorOverallRatings
          * @apiGroup Vendor
          *
-         * @apiParam {string} vendorId Vendor Id.          
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} Content-Type application/json
+         * @apiHeader {string} User_Id User Id
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "Content-Type": "application/json"
+         *    "User_Id": "Logged in User ID",
+         *  }
+         *  
+         * @apiParam {string} vendorId Vendor Id.        
+         * 
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *    "vendorId": "Vendor Id"
+         *  }
          * 
          * @apiSuccessExample Success-Response:
          * {
@@ -425,13 +594,33 @@ namespace Tasko.Interfaces
         * @apiName GetVendorOrders
         * @apiGroup Vendor
         *
+        * @apiHeader {string} Token_Code Token Code
+        * @apiHeader {string} Content-Type application/json
+        * @apiHeader {string} User_Id User Id
+        * 
+        * @apiHeaderExample {json} Header-Example:
+        *  {
+        *    "Token_Code": "Unique Token code that is generated after login" ,
+        *    "Content-Type": "application/json"
+        *    "User_Id": "Logged in User ID",
+        *  }
+        *  
         * @apiParam {string} vendorId Vendor Id.
         *
         * @apiParam {int} orderStatusId Order Status Id.
         *
         * @apiParam {int} pageNumber Page Number.
         *
-        *  @apiParam {int} recordsPerPage Records Per Page.
+        * @apiParam {int} recordsPerPage Records Per Page.
+        *  
+        * @apiParamExample {json} Param-Example:
+        *  {
+        *    "vendorId": "Vendor Id",
+        *    "orderStatusId": "Status of the order",
+        *    "recordsPerPage": "Number of records to be displayed per page",
+        *    "recordsPerPage": "Number of records per page"
+        *  }
+        *  
         * @apiSuccessExample Success-Response:
         {
          "Data": [
@@ -478,11 +667,29 @@ namespace Tasko.Interfaces
         * @apiName ChangePassword
         * @apiGroup Vendor
         *
+        * @apiHeader {string} Token_Code Token Code
+        * @apiHeader {string} Content-Type application/json
+        * @apiHeader {string} User_Id User Id
+        * 
+        * @apiHeaderExample {json} Header-Example:
+        *  {
+        *    "Token_Code": "Unique Token code that is generated after login" ,
+        *    "Content-Type": "application/json"
+        *    "User_Id": "Logged in User ID",
+        *  }
+        *  
         * @apiParam {string} vendorId Vendor Id.
         *
         * @apiParam {string} password Password.
         *
         * @apiParam {string} oldPassword Old Password.
+        * 
+        * @apiParamExample {json} Param-Example:
+        *  {
+        *    "vendorId": "Vendor Id",
+        *    "password": "New Password",
+        *    "oldPassword": "Old Password"
+        *  }
         *
         * @apiSuccessExample Success-Response:
         {
@@ -511,7 +718,23 @@ namespace Tasko.Interfaces
         * @apiName UpdateVendor
         * @apiGroup Vendor
         *
+        * @apiHeader {string} Token_Code Token Code
+        * @apiHeader {string} Content-Type application/json
+        * @apiHeader {string} User_Id User Id
+        * 
+        * @apiHeaderExample {json} Header-Example:
+        *  {
+        *    "Token_Code": "Unique Token code that is generated after login" ,
+        *    "Content-Type": "application/json"
+        *    "User_Id": "Logged in User ID",
+        *  }
+        *  
         * @apiParam {Vendor} vendor Vendor.
+        * 
+        * @apiParamExample {json} Param-Example:
+        *  {
+        *    "vendor": "Vendor details to update" 
+        *  }
         *
         * @apiSuccessExample Success-Response:
         {
