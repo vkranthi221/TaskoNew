@@ -13,10 +13,23 @@ namespace Tasko.Interfaces
          * @apiName GetOrderDetails
          * @apiGroup Customer
          *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *     
          * @apiParam {String} orderId Order Id.
          *
-         * @apiSuccess {String} firstname Firstname of the User.
-         * @apiSuccess {String} lastname  Lastname of the User.
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *    "OrderId": "Order Id that you would like to get the details" 
+         *  }
          *
          * @apiSuccessExample Success-Response:
          {
@@ -62,7 +75,7 @@ namespace Tasko.Interfaces
           "Message": "Success",
           "Status": 200
         }
-         * @apiError OrderIdNotFound The Order id was not found.
+         * @apiError ORDER_NOT_FOUND The Order id was not found.
          *
          * @apiErrorExample Error-Response:
          {
@@ -595,7 +608,7 @@ namespace Tasko.Interfaces
         Response GetFavoriteVendors(string customerId);
 
         /**
-         * @api {post} v1/GenerateOTP Get Auth Code
+         * @api {post} v1/GenerateOTP Generate OTP
          * @apiName GenerateOTP
          * @apiGroup Customer
          * 
@@ -723,7 +736,7 @@ namespace Tasko.Interfaces
         Response Login(string phoneNumber, string OTP);
 
         /**
-         * @api {post} v1/GetAuthCode Get Auth Code
+         * @api {post} c1/GetAuthCode Get Auth Code
          * @apiName GetAuthCode
          * @apiGroup Customer
          * 

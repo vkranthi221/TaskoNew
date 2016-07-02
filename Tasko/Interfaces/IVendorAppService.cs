@@ -273,8 +273,8 @@ namespace Tasko.Interfaces
          * @apiName UpdateVendorServices
          * @apiGroup Vendor
          *
-         * @apiParam {List<VendorService>} vendorServices List of Vendor Services.          
-         * 
+         * @apiParam {List} vendorServices List of Vendor Services.          
+         * @apiSuccessExample Success-Response: 
          {
           "Data": null,
           "Error": false,
@@ -304,7 +304,7 @@ namespace Tasko.Interfaces
          * @apiParam {string} vendorId Vendor Id.          
          * 
          * @apiParam {double} baseRate Base Rate.
-         * 
+         * @apiSuccessExample Success-Response:
          {
           "Data": null,
           "Error": false,
@@ -332,7 +332,7 @@ namespace Tasko.Interfaces
          * @apiGroup Vendor
          *
          * @apiParam {string} vendorId Vendor Id.          
-         * 
+         * @apiSuccessExample Success-Response:
          {
           "Data": [
                     {
@@ -391,7 +391,8 @@ namespace Tasko.Interfaces
          *
          * @apiParam {string} vendorId Vendor Id.          
          * 
-         {
+         * @apiSuccessExample Success-Response:
+         * {
           "Data": {
                     "__type": "VendorOverallRating:#Tasko.Model",
                     "Courtesy": 3,
@@ -431,7 +432,7 @@ namespace Tasko.Interfaces
         * @apiParam {int} pageNumber Page Number.
         *
         *  @apiParam {int} recordsPerPage Records Per Page.
-        * 
+        * @apiSuccessExample Success-Response:
         {
          "Data": [
                     {
@@ -483,12 +484,13 @@ namespace Tasko.Interfaces
         *
         * @apiParam {string} oldPassword Old Password.
         *
+        * @apiSuccessExample Success-Response:
         {
-        "Data": null,
+         "Data": null,
          "Error": false,
          "Message": "Success",
          "Status": 200
-       }
+        }
         * @apiError INVALID_OLD_PASSWORD Invalid old password
         *
         * @apiErrorExample Error-Response:
@@ -511,6 +513,7 @@ namespace Tasko.Interfaces
         *
         * @apiParam {Vendor} vendor Vendor.
         *
+        * @apiSuccessExample Success-Response:
         {
          "Data": null,
          "Error": false,
