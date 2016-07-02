@@ -1282,6 +1282,40 @@ define({ "api": [
     "title": "Change password",
     "name": "ChangePassword",
     "group": "Vendor",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -1307,7 +1341,14 @@ define({ "api": [
             "description": "<p>Old Password.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"vendorId\": \"Vendor Id\",\n  \"password\": \"New Password\",\n  \"oldPassword\": \"Old Password\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -1347,17 +1388,25 @@ define({ "api": [
     "title": "Get Auth Code",
     "name": "GetAuthCode",
     "group": "Vendor",
-    "parameter": {
+    "header": {
       "fields": {
-        "Parameter": [
+        "Header": [
           {
-            "group": "Parameter",
+            "group": "Header",
+            "type": "string",
             "optional": false,
-            "field": "\\n",
-            "description": ""
+            "field": "X-APIKey",
+            "description": "<p>API Key</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"X-APIKey\": \"API Key\" ,\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -1397,6 +1446,40 @@ define({ "api": [
     "title": "Get Vendor details",
     "name": "GetVendorDetails",
     "group": "Vendor",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -1408,7 +1491,14 @@ define({ "api": [
             "description": "<p>Vendor Id.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"vendorId\": \"Vendor Id \" \n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -1448,6 +1538,40 @@ define({ "api": [
     "title": "Vendor Orders",
     "name": "GetVendorOrders",
     "group": "Vendor",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -1480,7 +1604,14 @@ define({ "api": [
             "description": "<p>Records Per Page.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"vendorId\": \"Vendor Id\",\n  \"orderStatusId\": \"Status of the order\",\n  \"recordsPerPage\": \"Number of records to be displayed per page\",\n  \"recordsPerPage\": \"Number of records per page\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -1520,6 +1651,40 @@ define({ "api": [
     "title": "Vendor Overall Ratings",
     "name": "GetVendorOverallRatings",
     "group": "Vendor",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -1531,7 +1696,14 @@ define({ "api": [
             "description": "<p>Vendor Id.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"vendorId\": \"Vendor Id\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -1571,6 +1743,40 @@ define({ "api": [
     "title": "Get Vendor Ratings",
     "name": "GetVendorRatings",
     "group": "Vendor",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -1582,7 +1788,14 @@ define({ "api": [
             "description": "<p>Vendor Id.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"vendorId\": \"Vendor Id\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -1622,6 +1835,40 @@ define({ "api": [
     "title": "Get Vendor services",
     "name": "GetVendorServices",
     "group": "Vendor",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -1633,7 +1880,14 @@ define({ "api": [
             "description": "<p>Vendor Id.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"vendorId\": \"Vendor Id \" \n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -1673,6 +1927,40 @@ define({ "api": [
     "title": "Get Vendor sub services",
     "name": "GetVendorSubServices",
     "group": "Vendor",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -1684,7 +1972,14 @@ define({ "api": [
             "description": "<p>Vendor Service Id.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"vendorServiceId\": \"Vendor Service Id to get the sub services \" \n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -1724,6 +2019,33 @@ define({ "api": [
     "title": "Vendor Login",
     "name": "Login",
     "group": "Vendor",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Auth_Code",
+            "description": "<p>Auth Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Auth_Code\": \"API Key\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -1756,7 +2078,14 @@ define({ "api": [
             "description": "<p>user type.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"username\": \"User name to login\",\n  \"password\": \"Password of the user\",\n  \"mobilenumber\": \"Mobile number of the user\",\n  \"userType\": \"User type\",\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -1774,7 +2103,7 @@ define({ "api": [
             "group": "Error 4xx",
             "optional": false,
             "field": "Authentication",
-            "description": "<p>failed.</p>"
+            "description": "<p>Authentication failed.</p>"
           }
         ]
       },
@@ -1796,17 +2125,39 @@ define({ "api": [
     "title": "Log out",
     "name": "Logout",
     "group": "Vendor",
-    "parameter": {
+    "header": {
       "fields": {
-        "Parameter": [
+        "Header": [
           {
-            "group": "Parameter",
+            "group": "Header",
+            "type": "string",
             "optional": false,
-            "field": "\\n",
-            "description": ""
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -1846,6 +2197,40 @@ define({ "api": [
     "title": "Update Order Status",
     "name": "UpdateOrderStatus",
     "group": "Vendor",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -1867,11 +2252,18 @@ define({ "api": [
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "Comments",
+            "field": "comments",
             "description": "<p>Comments.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"orderId\": \"Order Id to update the status\",\n  \"orderStatus\": \"Order status \",\n  \"comments\": \"Comments\",\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -1911,6 +2303,40 @@ define({ "api": [
     "title": "Update Vendor",
     "name": "UpdateVendor",
     "group": "Vendor",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -1922,7 +2348,14 @@ define({ "api": [
             "description": "<p>Vendor.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"vendor\": \"Vendor details to update\" \n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -1962,6 +2395,40 @@ define({ "api": [
     "title": "Update Vendor Base Rate",
     "name": "UpdateVendorBaseRate",
     "group": "Vendor",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -1980,13 +2447,20 @@ define({ "api": [
             "description": "<p>Base Rate.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"vendorId\": \"Vendor Id\",\n  \"baseRate\": \"Base Rate\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "content": "{\n \"Data\": null,\n \"Error\": false,\n \"Message\": \"Success\",\n \"Status\": 200\n}",
           "type": "json"
         }
       ]
@@ -2020,6 +2494,40 @@ define({ "api": [
     "title": "Update Vendor Services",
     "name": "UpdateVendorServices",
     "group": "Vendor",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -2031,7 +2539,14 @@ define({ "api": [
             "description": "<p>List of Vendor Services.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"vendorServices\": \"List of Vendor services to be updated\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [

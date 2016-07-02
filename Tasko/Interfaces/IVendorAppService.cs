@@ -22,7 +22,6 @@ namespace Tasko.Interfaces
          *    "X-APIKey": "API Key" ,
          *  }
          * 
-         * @apiParam
          *
          * @apiSuccessExample Success-Response:
          {
@@ -120,8 +119,7 @@ namespace Tasko.Interfaces
          *    "User_Id": "Logged in User ID",
          *    "Content-Type": "application/json"
          *  }
-         *  
-         * @apiParam
+         *        
          *
          * @apiSuccessExample Success-Response:
          {
