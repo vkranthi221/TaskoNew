@@ -65,6 +65,7 @@
     <Content Include="ServiceImages\electrician.png" />
     <Content Include="ServiceImages\house_services.png" />
     <Content Include="ServiceImages\Plumber.png" />
+    <Content Include="Services\AdminService.svc" />
     <Content Include="Services\CustomerService.svc" />
     <Content Include="Global.asax" />
     <Content Include="Services\VendorAppService.svc" />
@@ -75,6 +76,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CommonMessages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\AdminService.svc.cs">
+      <DependentUpon>AdminService.svc</DependentUpon>
     </Compile>
     <Compile Include="Services\CustomerService.svc.cs">
       <DependentUpon>CustomerService.svc</DependentUpon>
@@ -90,6 +94,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="Interfaces\IVendorAppService.cs" />
+    <Compile Include="Interfaces\IAdminService.cs" />
     <Compile Include="Services\VendorAppService.svc.cs">
       <DependentUpon>VendorAppService.svc</DependentUpon>
     </Compile>
