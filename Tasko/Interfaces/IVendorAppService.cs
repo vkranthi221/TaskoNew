@@ -20,7 +20,6 @@ namespace Tasko.Interfaces
          * @apiSuccessExample Success-Response:
          {
           "Data": "3E71AF3FF2196045BB3212623BFDEF91",
-         },
           "Error": false,
           "Message": "Authentication Successful",
           "Status": 200

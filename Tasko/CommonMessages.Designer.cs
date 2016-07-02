@@ -79,11 +79,29 @@ namespace Tasko {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customer Address Invalid.
+        /// </summary>
+        internal static string CUSTOMER_ADDRESS_INVALID {
+            get {
+                return ResourceManager.GetString("CUSTOMER_ADDRESS_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customer Addresses not found.
         /// </summary>
         internal static string CUSTOMER_ADDRESS_NOT_FOUND {
             get {
                 return ResourceManager.GetString("CUSTOMER_ADDRESS_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Id and address are mandatory.
+        /// </summary>
+        internal static string CUSTOMER_DETAILS_INVALID {
+            get {
+                return ResourceManager.GetString("CUSTOMER_DETAILS_INVALID", resourceCulture);
             }
         }
         
@@ -178,11 +196,11 @@ namespace Tasko {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid data.
+        ///   Looks up a localized string similar to Invalid Details.
         /// </summary>
-        internal static string INVALID_DATA {
+        internal static string INVALID_DETAILS {
             get {
-                return ResourceManager.GetString("INVALID_DATA", resourceCulture);
+                return ResourceManager.GetString("INVALID_DETAILS", resourceCulture);
             }
         }
         
@@ -201,6 +219,15 @@ namespace Tasko {
         internal static string INVALID_OTP {
             get {
                 return ResourceManager.GetString("INVALID_OTP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Phone Number Or OTP.
+        /// </summary>
+        internal static string INVALID_OTP_PHONENUMBER {
+            get {
+                return ResourceManager.GetString("INVALID_OTP_PHONENUMBER", resourceCulture);
             }
         }
         
