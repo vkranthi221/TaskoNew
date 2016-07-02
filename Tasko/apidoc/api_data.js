@@ -1,10 +1,602 @@
 define({ "api": [
   {
     "type": "post",
+    "url": "c1/AddCustomerAddress",
+    "title": "Add Customer Address",
+    "name": "AddCustomerAddress",
+    "group": "Customer",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "customerId",
+            "description": "<p>Customer Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "AddressInfo",
+            "optional": false,
+            "field": "addressInfo",
+            "description": "<p>Address Info.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "CUSTOMER_DETAILS_INVALID",
+            "description": "<p>Customer Id and address are mandatory.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Customer Id and address are mandatory\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
+    "url": "c1/AddVendorRating",
+    "title": "Add Vendor Rating",
+    "name": "AddVendorRating",
+    "group": "Customer",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "orderId",
+            "description": "<p>Order Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "VendorRating",
+            "optional": false,
+            "field": "vendorRating",
+            "description": "<p>Vendor Rating.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
+    "url": "c1/ConfirmOrder",
+    "title": "Confirm Order",
+    "name": "ConfirmOrder",
+    "group": "Customer",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Order",
+            "optional": false,
+            "field": "order",
+            "description": "<p>order.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": \"OrderId: TASKO1012\",\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ORDER_NOT_CONFIRMED",
+            "description": "<p>Order not Confirmed.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Order not Confirmed\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
+    "url": "c1/DeleteCustomerAddress",
+    "title": "Delete Customer Address",
+    "name": "DeleteCustomerAddress",
+    "group": "Customer",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "customerId",
+            "description": "<p>Customer Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "addressId",
+            "description": "<p>Address Id.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_DETAILS",
+            "description": "<p>Invalid Details.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid Details\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
+    "url": "v1/GenerateOTP",
+    "title": "Generate OTP",
+    "name": "GenerateOTP",
+    "group": "Customer",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "emailId",
+            "description": "<p>Email Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "phoneNumber",
+            "description": "<p>Phone number.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n \"Data\": null,\n \"Error\": false,\n \"Message\": \"Successs\",\n \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ERROR_GENERATING_OTP",
+            "description": "<p>Error Generating OTP.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Error Generating OTP\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
+    "url": "c1/GetAuthCode",
+    "title": "Get Auth Code",
+    "name": "GetAuthCode",
+    "group": "Customer",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "\\n",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": \"3E71AF3FF2196045BB3212623BFDEF91\",\n  \"Error\": false,\n  \"Message\": \"Authentication Successful\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Authentication",
+            "description": "<p>failed.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Authentication failed\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
+    "url": "c1/GetCustomerAddresses",
+    "title": "Get Customer Address",
+    "name": "GetCustomerAddresses",
+    "group": "Customer",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "customerId",
+            "description": "<p>Customer Id.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"AddressInfo:#Tasko.Model\",\n              \"Address\": \"plot no 101, vivekanandaNagar\",\n              \"AddressId\": \"B7DD393239CE854FA5596C67DBF12DD0\",\n              \"City\": \"Hyderabad\",\n              \"Country\": \"India\",\n              \"Lattitude\": \"10\",\n              \"Locality\": \"kphb\",\n              \"Longitude\": \"200\",\n              \"Pincode\": \"500081\",\n              \"State\": \"Telangana\"\n            },\n            {\n              \"__type\": \"AddressInfo:#Tasko.Model\",\n              \"Address\": \"plot no 101, vivekanandaNagar\",\n              \"AddressId\": \"4CDE7B6962CFEC4FB9722081E75DC21C\",\n              \"City\": \"Hyderabad\",\n              \"Country\": \"India\",\n              \"Lattitude\": \"10\",\n              \"Locality\": \"kphb\",\n              \"Longitude\": \"200\",\n              \"Pincode\": \"500081\",\n              \"State\": \"Telangana\"\n            },\n            {\n              \"__type\": \"AddressInfo:#Tasko.Model\",\n              \"Address\": \"plot no 101, vivekanandaNagar\",\n              \"AddressId\": \"BD0E478182ED4C4FB12CE7CD580C910A\",\n              \"City\": \"Hyderabad\",\n              \"Country\": \"India\",\n              \"Lattitude\": \"10\",\n              \"Locality\": \"kphb\",\n              \"Longitude\": \"200\",\n              \"Pincode\": \"500081\",\n              \"State\": \"Telangana\"\n            }\n          ],\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "CUSTOMER_ADDRESS_NOT_FOUND",
+            "description": "<p>Customer Addresses not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Customer Addresses not found\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
+    "url": "c1/GetCustomerDetails",
+    "title": "Get Customer Details",
+    "name": "GetCustomerDetails",
+    "group": "Customer",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "customerId",
+            "description": "<p>Customer Id.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": {\n            \"__type\": \"Customer:#Tasko.Model\",\n            \"EmailAddress\": \"srikanth.penmetsa@gmail.com\",\n            \"Id\": \"F501CE6E98E3A549B024E1565561EC62\",\n            \"MobileNumber\": \"9849345086\",\n            \"Name\": \"srikanth test\"\n          },\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "CUSTOMER_NOT_FOUND",
+            "description": "<p>Customer not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Customer not found\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
+    "url": "c1/GetCustomerOrders",
+    "title": "Get Customer Orders",
+    "name": "GetCustomerOrders",
+    "group": "Customer",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "customerId",
+            "description": "<p>Customer Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "orderStatus",
+            "description": "<p>Order Status.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "pageNumber",
+            "description": "<p>Page Number.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "recordsPerPage",
+            "description": "<p>Records Per Page.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"OrderSummary:#Tasko.Model\",\n              \"Comments\": \"\",\n              \"OrderId\": \"TASKO1011\",\n              \"OrderStatus\": \"Requested\",\n              \"RequestedDate\": \"2016-06-08 07:33:17\",\n              \"ServiceId\": \"0AEAC4261E569C498A05ABBEEC84EA55\",\n              \"ServiceName\": \"Microwave Service\"\n            },\n            {\n              \"__type\": \"OrderSummary:#Tasko.Model\",\n              \"Comments\": \"\",\n              \"OrderId\": \"TASKO1012\",\n              \"OrderStatus\": \"Requested\",\n              \"RequestedDate\": \"2016-07-01 18:17:44\",\n              \"ServiceId\": \"0AEAC4261E569C498A05ABBEEC84EA55\",\n              \"ServiceName\": \"Microwave Service\"\n            }\n          ],\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ORDERS_NOT_FOUND",
+            "description": "<p>Orders not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Orders not found\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
+    "url": "c1/GetFavoriteVendors",
+    "title": "Get Favorite Vendors",
+    "name": "GetFavoriteVendors",
+    "group": "Customer",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "customerId",
+            "description": "<p>Customer Id.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"FavoriteVendor:#Tasko.Model\",\n              \"OverallRating\": 3,\n              \"TotalRatings\": 11,\n              \"VendorId\": \"FC73EC7242E28142ACCAFDF4703F0EBF\",\n              \"VendorName\": \"srikanth\"\n            }\n          ],\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
     "url": "c1/GetOrderDetails",
     "title": "Get Order details",
     "name": "GetOrderDetails",
     "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -16,27 +608,16 @@ define({ "api": [
             "description": "<p>Order Id.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"OrderId\": \"Order Id that you would like to get the details\" \n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "firstname",
-            "description": "<p>Firstname of the User.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "lastname",
-            "description": "<p>Lastname of the User.</p>"
-          }
-        ]
-      },
       "examples": [
         {
           "title": "Success-Response:",
@@ -51,7 +632,7 @@ define({ "api": [
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "OrderIdNotFound",
+            "field": "ORDER_NOT_FOUND",
             "description": "<p>The Order id was not found.</p>"
           }
         ]
@@ -60,6 +641,506 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Order not found\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
+    "url": "c1/GetRecentOrder",
+    "title": "Get Recent Order",
+    "name": "GetRecentOrder",
+    "group": "Customer",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "customerId",
+            "description": "<p>Customer Id.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": {\n            \"__type\": \"Order:#Tasko.Model\",\n            \"Comments\": \"\",\n            \"CustomerId\": \"F501CE6E98E3A549B024E1565561EC62\",\n            \"CustomerName\": \"srikanth test\",\n            \"DestinationAddress\": {\n              \"Address\": \"plot no 404, BaghyaNagar\",\n              \"AddressId\": \"3E71FF52AF41AC448F11C6085D4BDC69\",\n              \"City\": \"Hyderabad\",\n              \"Country\": \"India\",\n              \"Lattitude\": \"40\",\n              \"Locality\": \"HMT HILLS\",\n              \"Longitude\": \"600\",\n              \"Pincode\": \"500072\",\n              \"State\": \"Telangana\"\n            },\n            \"Location\": \"\",\n            \"OrderId\": \"TASKO1011\",\n            \"OrderStatus\": \"Requested\",\n            \"OrderStatusId\": 1,\n            \"RequestedDate\": \"2016-06-08 07:33:17\",\n            \"ServiceId\": \"0AEAC4261E569C498A05ABBEEC84EA55\",\n            \"ServiceName\": \"Microwave Service\",\n            \"SourceAddress\": {\n              \"Address\": \"plot no 101, vivekanandaNagar\",\n              \"AddressId\": \"97B42A2664F905489E9B2E4524EDB0E2\",\n              \"City\": \"Hyderabad\",\n              \"Country\": \"India\",\n              \"Lattitude\": \"10\",\n              \"Locality\": \"kphb\",\n              \"Longitude\": \"200\",\n              \"Pincode\": \"500081\",\n              \"State\": \"Telangana\"\n            },\n            \"VendorId\": \"FC73EC7242E28142ACCAFDF4703F0EBF\",\n            \"VendorName\": \"srikanth\",\n            \"VendorServiceId\": \"CF9A27B3DA0D5E418B1A8E6CC79218AD\"\n          },\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ORDER_NOT_FOUND",
+            "description": "<p>The Order not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Order not found\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
+    "url": "c1/GetServiceVendors",
+    "title": "Get Service Vendors",
+    "name": "GetServiceVendors",
+    "group": "Customer",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "serviceId",
+            "description": "<p>Service Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "customerId",
+            "description": "<p>Customer Id.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"ServiceVendor:#Tasko.Model\",\n              \"BaseRate\": 82,\n              \"IsFavoriteVendor\": true,\n              \"OverAllRating\": 3,\n              \"ServiceId\": \"0AEAC4261E569C498A05ABBEEC84EA55\",\n              \"ServiceName\": \"Microwave Service\",\n              \"TotalReviews\": 10,\n              \"VendorId\": \"FC73EC7242E28142ACCAFDF4703F0EBF\",\n              \"VendorName\": \"srikanth\",\n              \"VendorServiceId\": \"CF9A27B3DA0D5E418B1A8E6CC79218AD\"\n            }\n          ],\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "VENDORS_NOT_FOUND",
+            "description": "<p>Vendors are not found for the selected service.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Vendors are not found for the selected service\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
+    "url": "c1/GetServices",
+    "title": "Get Services",
+    "name": "GetServices",
+    "group": "Customer",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "\\n.",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n \"Data\": [\n           {\n             \"__type\": \"Service:#Tasko.Model\",\n             \"Id\": \"0230AB8F8DB92548A58BC7F3FCD6C310\",\n             \"ImageURL\": \"\",\n             \"Name\": \"Refrigerator Service\",\n             \"ParentServiceId\": null\n           },\n           {\n             \"__type\": \"Service:#Tasko.Model\",\n             \"Id\": \"098DF6729F546143B0D9FC824227D384\",\n             \"ImageURL\": \"http://api.tasko.in/serviceimages/ac_services.png\",\n             \"Name\": \"AC Service\",\n             \"ParentServiceId\": null\n           },\n           {\n             \"__type\": \"Service:#Tasko.Model\",\n             \"Id\": \"0AEAC4261E569C498A05ABBEEC84EA55\",\n             \"ImageURL\": \"\",\n             \"Name\": \"Microwave Service\",\n             \"ParentServiceId\": null\n           }\n         ]\n \"Error\": false,\n \"Message\": \"Success\",\n \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "SERVICES_NOT_FOUND",
+            "description": "<p>Services not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Services not found\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
+    "url": "v1/Login",
+    "title": "Login",
+    "name": "Login",
+    "group": "Customer",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>name of customer.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "OTP",
+            "description": "<p>OTP.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n \"Data\": {\n           \"__type\": \"LoginInfo:#Tasko.Model\",\n           \"TokenId\": \"5E1A3D0D493A754D820AECB8AC40E790\",\n           \"UserId\": \"F501CE6E98E3A549B024E1565561EC62\"\n         },\n \"Error\": false,\n \"Message\": \"Successs\",\n \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_OTP_PHONENUMBER",
+            "description": "<p>Invalid Phone Number Or OTP.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid Phone Number Or OTP\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
+    "url": "c1/SetFavoriteVendor",
+    "title": "Set Favorite Vendor",
+    "name": "SetFavoriteVendor",
+    "group": "Customer",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "customerId",
+            "description": "<p>Customer Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "vendorId",
+            "description": "<p>Vendor Id.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
+    "url": "v1/SignUp",
+    "title": "SignUp",
+    "name": "SignUp",
+    "group": "Customer",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>name of customer.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "emailId",
+            "description": "<p>Email.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "phoneNumber",
+            "description": "<p>Phone number.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n \"Data\": {\n           \"__type\": \"LoginInfo:#Tasko.Model\",\n           \"TokenId\": \"5064D3286F70DB4D955D74BD81D58C1F\",\n           \"UserId\": \"401C251B97FC624CB35D94088F1378DA\"\n         },\n \"Error\": false,\n \"Message\": \"Successs\",\n \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_AUTHCODE",
+            "description": "<p>Invalid Authcode.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid Authcode\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
+    "url": "c1/UpdateCustomer",
+    "title": "Update Customer",
+    "name": "UpdateCustomer",
+    "group": "Customer",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Customer",
+            "optional": false,
+            "field": "Customer",
+            "description": "<p>Customer.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
+    "url": "c1/UpdateCustomerAddress",
+    "title": "Update Customer Address",
+    "name": "UpdateCustomerAddress",
+    "group": "Customer",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "AddressInfo",
+            "optional": false,
+            "field": "addressInfo",
+            "description": "<p>Address Info.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "CUSTOMER_ADDRESS_INVALID",
+            "description": "<p>Customer Address Invalid.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Customer Address Invalid\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
+    "url": "v1/ValidateOTP",
+    "title": "Validate OTP",
+    "name": "ValidateOTP",
+    "group": "Customer",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "phoneNumber",
+            "description": "<p>Phone number.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "OTP",
+            "description": "<p>OTP to login.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n \"Data\": null,\n \"Error\": false,\n \"Message\": \"Successs\",\n \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_OTP",
+            "description": "<p>Invalid OTP.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid OTP\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
@@ -95,6 +1176,121 @@ define({ "api": [
     "group": "D__Chandu_Projects_TaskoGitHub_Tasko_apidoc_main_js",
     "groupTitle": "D__Chandu_Projects_TaskoGitHub_Tasko_apidoc_main_js",
     "name": ""
+  },
+  {
+    "type": "post",
+    "url": "v1/ChangePassword",
+    "title": "Change password",
+    "name": "ChangePassword",
+    "group": "Vendor",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "vendorId",
+            "description": "<p>Vendor Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "password",
+            "description": "<p>Password.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "oldPassword",
+            "description": "<p>Old Password.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n \"Data\": null,\n \"Error\": false,\n \"Message\": \"Success\",\n \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_OLD_PASSWORD",
+            "description": "<p>Invalid old password</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid old password\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IVendorAppService.cs",
+    "groupTitle": "Vendor"
+  },
+  {
+    "type": "post",
+    "url": "v1/GetAuthCode",
+    "title": "Get Auth Code",
+    "name": "GetAuthCode",
+    "group": "Vendor",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "\\n",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": \"3E71AF3FF2196045BB3212623BFDEF91\",\n  \"Error\": false,\n  \"Message\": \"Authentication Successful\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Authentication",
+            "description": "<p>failed.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Authentication failed\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IVendorAppService.cs",
+    "groupTitle": "Vendor"
   },
   {
     "type": "post",
@@ -139,6 +1335,629 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Vendor not found\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IVendorAppService.cs",
+    "groupTitle": "Vendor"
+  },
+  {
+    "type": "post",
+    "url": "v1/GetVendorOrders",
+    "title": "Vendor Orders",
+    "name": "GetVendorOrders",
+    "group": "Vendor",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "vendorId",
+            "description": "<p>Vendor Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "orderStatusId",
+            "description": "<p>Order Status Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "pageNumber",
+            "description": "<p>Page Number.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "recordsPerPage",
+            "description": "<p>Records Per Page.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": [\n             {\n               \"__type\": \"OrderSummary:#Tasko.Model\",\n               \"Comments\": \"\",\n               \"OrderId\": \"TASKO1010\",\n               \"OrderStatus\": \"Requested\",\n               \"RequestedDate\": \"2016-07-01 05:50:19\",\n               \"ServiceId\": null,\n               \"ServiceName\": \"Microwave Service\"\n             },\n             {\n               \"__type\": \"OrderSummary:#Tasko.Model\",\n               \"Comments\": \"\",\n               \"OrderId\": \"TASKO1009\",\n               \"OrderStatus\": \"Requested\",\n               \"RequestedDate\": \"2016-07-01 05:50:19\",\n               \"ServiceId\": null,\n               \"ServiceName\": \"Microwave Service\"\n             }\n           ],\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NO_ORDERS_FOR_VENDOR",
+            "description": "<p>No orders for vendor</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"No orders for vendor\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IVendorAppService.cs",
+    "groupTitle": "Vendor"
+  },
+  {
+    "type": "post",
+    "url": "v1/GetVendorOverallRatings",
+    "title": "Vendor Overall Ratings",
+    "name": "GetVendorOverallRatings",
+    "group": "Vendor",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "vendorId",
+            "description": "<p>Vendor Id.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n          \"Data\": {\n                    \"__type\": \"VendorOverallRating:#Tasko.Model\",\n                    \"Courtesy\": 3,\n                    \"OverAllRating\": 3,\n                    \"Price\": 3,\n                    \"Punctuality\": 2,\n                    \"ServiceQuality\": 3\n                  },\n          \"Error\": false,\n          \"Message\": \"Success\",\n          \"Status\": 200\n        }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NO_RATINGS_FOR_VENDOR",
+            "description": "<p>No ratings for vendor</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"No ratings for vendor\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IVendorAppService.cs",
+    "groupTitle": "Vendor"
+  },
+  {
+    "type": "post",
+    "url": "v1/GetVendorRatings",
+    "title": "Get Vendor Ratings",
+    "name": "GetVendorRatings",
+    "group": "Vendor",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "vendorId",
+            "description": "<p>Vendor Id.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"VendorRating:#Tasko.Model\",\n              \"Comments\": \"Service is Good\",\n              \"Courtesy\": 3,\n              \"CustomerId\": null,\n              \"CustomerName\": \"Shivaji123\",\n              \"Id\": \"342CA9BFFA1F2E419FADB343C7DE3EE7\",\n              \"OverAllRating\": 0,\n              \"Price\": 4,\n              \"Punctuality\": 1,\n              \"ReviewDate\": \"2016-07-01 05:50:19\",\n              \"ServiceQuality\": 5,\n              \"VendorId\": null\n            },\n            {\n              \"__type\": \"VendorRating:#Tasko.Model\",\n              \"Comments\": \"Service is in time\",\n              \"Courtesy\": 3,\n              \"CustomerId\": null,\n              \"CustomerName\": \"Shivaji123\",\n              \"Id\": \"FD388BB73B94644889EA5C56A1163554\",\n              \"OverAllRating\": 0,\n              \"Price\": 4,\n              \"Punctuality\": 2,\n              \"ReviewDate\": \"2016-07-01 05:50:19\",\n              \"ServiceQuality\": 2,\n              \"VendorId\": null\n            }\n          ],\n\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NO_RATINGS_FOR_VENDOR",
+            "description": "<p>No ratings for vendor.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"No ratings for vendor\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IVendorAppService.cs",
+    "groupTitle": "Vendor"
+  },
+  {
+    "type": "post",
+    "url": "v1/GetVendorServices",
+    "title": "Get Vendor services",
+    "name": "GetVendorServices",
+    "group": "Vendor",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "vendorId",
+            "description": "<p>Vendor Id.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": [\n            {\n                \"__type\": \"VendorService:#Tasko.Model\",\n                 \"Id\": \"CF9A27B3DA0D5E418B1A8E6CC79218AD\",\n                 \"ImageURL\": \"\",\n                 \"IsActive\": true,\n                 \"Name\": \"Microwave Service\"\n            }\n         ]\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NO_SERVICES_AVAILABLE",
+            "description": "<p>No services available.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"No services available\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IVendorAppService.cs",
+    "groupTitle": "Vendor"
+  },
+  {
+    "type": "post",
+    "url": "v1/GetVendorSubServices",
+    "title": "Get Vendor sub services",
+    "name": "GetVendorSubServices",
+    "group": "Vendor",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "vendorServiceId",
+            "description": "<p>Vendor Service Id.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"VendorService:#Tasko.Model\",\n              \"Id\": \"82B4B5E0C2ACED43BC5233F1A715071B\",\n              \"ImageURL\": \"\",\n              \"IsActive\": true,\n              \"Name\": \"test2\"\n            },\n            {\n              \"__type\": \"VendorService:#Tasko.Model\",\n              \"Id\": \"BFD1E3C77DE53D4E9026DB99FC71CA83\",\n              \"ImageURL\": \"\",\n              \"IsActive\": true,\n              \"Name\": \"test\"\n            }\n          ],\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NO_SUB_SERVICES_AVAILABLE",
+            "description": "<p>No sub services available.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"No sub services available\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IVendorAppService.cs",
+    "groupTitle": "Vendor"
+  },
+  {
+    "type": "post",
+    "url": "v1/Login",
+    "title": "Vendor Login",
+    "name": "Login",
+    "group": "Vendor",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>User name to login.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>password of the user.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "mobilenumber",
+            "description": "<p>mobile number of the user.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Int16",
+            "optional": false,
+            "field": "userType",
+            "description": "<p>user type.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": {\n             \"__type\": \"LoginInfo:#Tasko.Model\",\n             \"TokenId\": \"6CEC15B7B6FC23439AC131F54551BB22\",\n             \"UserId\": \"FC73EC7242E28142ACCAFDF4703F0EBF\"\n          }\n },\n  \"Error\": false,\n  \"Message\": \"Login Successfull\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Authentication",
+            "description": "<p>failed.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Authentication failed\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IVendorAppService.cs",
+    "groupTitle": "Vendor"
+  },
+  {
+    "type": "post",
+    "url": "v1/Logout",
+    "title": "Log out",
+    "name": "Logout",
+    "group": "Vendor",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "\\n",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": \"null\",\n },\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Authentication",
+            "description": "<p>failed.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Error logging out\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IVendorAppService.cs",
+    "groupTitle": "Vendor"
+  },
+  {
+    "type": "post",
+    "url": "v1/UpdateOrderStatus",
+    "title": "Update Order Status",
+    "name": "UpdateOrderStatus",
+    "group": "Vendor",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "orderId",
+            "description": "<p>Order Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Short",
+            "optional": false,
+            "field": "orderStatus",
+            "description": "<p>Order Status.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "Comments",
+            "description": "<p>Comments.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ERROR_UPDATING_ORDER_STATUS",
+            "description": "<p>Error while updating OrderStatus.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Error while updating OrderStatus\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IVendorAppService.cs",
+    "groupTitle": "Vendor"
+  },
+  {
+    "type": "post",
+    "url": "v1/UpdateVendor",
+    "title": "Update Vendor",
+    "name": "UpdateVendor",
+    "group": "Vendor",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Vendor",
+            "optional": false,
+            "field": "vendor",
+            "description": "<p>Vendor.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IVendorAppService.cs",
+    "groupTitle": "Vendor"
+  },
+  {
+    "type": "post",
+    "url": "v1/UpdateVendorBaseRate",
+    "title": "Update Vendor Base Rate",
+    "name": "UpdateVendorBaseRate",
+    "group": "Vendor",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "vendorId",
+            "description": "<p>Vendor Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "double",
+            "optional": false,
+            "field": "baseRate",
+            "description": "<p>Base Rate.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ERROR_UPDATING_VENDOR_BASE_RATE",
+            "description": "<p>Error while updating Vendor Base Rate.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Error while updating Vendor Base Rate\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IVendorAppService.cs",
+    "groupTitle": "Vendor"
+  },
+  {
+    "type": "post",
+    "url": "v1/UpdateVendorServices",
+    "title": "Update Vendor Services",
+    "name": "UpdateVendorServices",
+    "group": "Vendor",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "List",
+            "optional": false,
+            "field": "vendorServices",
+            "description": "<p>List of Vendor Services.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response: ",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ERROR_UPDATING_VENDOR_SERVICES",
+            "description": "<p>Error while updating Vendor Services.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Error while updating Vendor Services\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]

@@ -346,7 +346,7 @@ namespace Tasko.Services
                 else
                 {
                     r.Error = true;
-                    r.Message = CommonMessages.INVALID_DATA;
+                    r.Message = CommonMessages.CUSTOMER_DETAILS_INVALID;
                     r.Status = 400;
                 }
             }
@@ -372,19 +372,28 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
-                if (isTokenValid)
+                if (addressInfo != null)
                 {
-                    CustomerData.UpdateCustomerAddress(addressInfo);
-                    r.Error = false;
-                    r.Message = CommonMessages.SUCCESS;
-                    r.Status = 200;
+                    bool isTokenValid = ValidateToken();
+                    if (isTokenValid)
+                    {
+                        CustomerData.UpdateCustomerAddress(addressInfo);
+                        r.Error = false;
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Status = 200;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Status = 400;
+                        r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                    }
                 }
                 else
                 {
                     r.Error = true;
+                    r.Message = CommonMessages.CUSTOMER_ADDRESS_INVALID;
                     r.Status = 400;
-                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
             catch (Exception ex)
@@ -410,19 +419,28 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
-                if (isTokenValid)
+                if (!string.IsNullOrEmpty(customerId) && !string.IsNullOrEmpty(addressId))
                 {
-                    CustomerData.DeleteCustomerAddress(customerId, addressId);
-                    r.Message = CommonMessages.SUCCESS;
+                    bool isTokenValid = ValidateToken();
+                    if (isTokenValid)
+                    {
+                        CustomerData.DeleteCustomerAddress(customerId, addressId);
+                        r.Message = CommonMessages.SUCCESS;
+                    }
+                    else
+                    {
+                        r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                    }
+
+                    r.Error = false;
+                    r.Status = 200;
                 }
                 else
                 {
-                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                    r.Message = CommonMessages.INVALID_DETAILS;
+                    r.Error = true;
+                    r.Status = 400;
                 }
-
-                r.Error = false;
-                r.Status = 200;
             }
             catch (Exception ex)
             {
@@ -612,17 +630,22 @@ namespace Tasko.Services
                     if (!string.IsNullOrEmpty(otp))
                     {
                         CustomerData.InsertOTPDetails(otp, phoneNumber, emailId);
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Error = false;
+                        r.Status = 200;
                     }
-
-                    r.Message = CommonMessages.SUCCESS;
+                    else
+                    {
+                        r.Error = true;
+                        r.Status = 400;
+                    }
                 }
                 else
                 {
                     r.Message = CommonMessages.INVALID_AUTHCODE;
+                    r.Error = true;
+                    r.Status = 400;
                 }
-
-                r.Error = false;
-                r.Status = 200;
             }
             catch (Exception ex)
             {
@@ -746,7 +769,7 @@ namespace Tasko.Services
                     }
                     else
                     {
-                        r.Message = "Invalid Phone Number Or OTP";
+                        r.Message = CommonMessages.INVALID_OTP_PHONENUMBER;
                     }
                 }
                 else

@@ -123,8 +123,14 @@
   <data name="AUTHENTICATION_SUCCESSFULL" xml:space="preserve">
     <value>Authentication Successful</value>
   </data>
+  <data name="CUSTOMER_ADDRESS_INVALID" xml:space="preserve">
+    <value>Customer Address Invalid</value>
+  </data>
   <data name="CUSTOMER_ADDRESS_NOT_FOUND" xml:space="preserve">
     <value>Customer Addresses not found</value>
+  </data>
+  <data name="CUSTOMER_DETAILS_INVALID" xml:space="preserve">
+    <value>Customer Id and address are mandatory</value>
   </data>
   <data name="CUSTOMER_NOT_FOUND" xml:space="preserve">
     <value>Customer not found</value>
@@ -156,14 +162,17 @@
   <data name="INVALID_CREDENTIALS" xml:space="preserve">
     <value>Invalid Credentials</value>
   </data>
-  <data name="INVALID_DATA" xml:space="preserve">
-    <value>Invalid data</value>
+  <data name="INVALID_DETAILS" xml:space="preserve">
+    <value>Invalid Details</value>
   </data>
   <data name="INVALID_OLD_PASSWORD" xml:space="preserve">
     <value>Invalid old password</value>
   </data>
   <data name="INVALID_OTP" xml:space="preserve">
     <value>Invalid OTP</value>
+  </data>
+  <data name="INVALID_OTP_PHONENUMBER" xml:space="preserve">
+    <value>Invalid Phone Number Or OTP</value>
   </data>
   <data name="INVALID_TOKEN_CODE" xml:space="preserve">
     <value>Invalid token code</value>
