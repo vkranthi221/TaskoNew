@@ -5,6 +5,40 @@
     "title": "Add Customer Address",
     "name": "AddCustomerAddress",
     "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -23,7 +57,14 @@
             "description": "<p>Address Info.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n \"customerId\": \"10E4394670195C4AA1E4B7130A514187 \",\n \"addressInfo\": \n   {\n    \"Address\": \"plot no 101, vivekanandaNagar\",\n    \"City\": \"Hyderabad\",\n    \"Country\": \"India\",\n    \"Lattitude\": \"10\",\n    \"Locality\": \"kphb\",\n    \"Longitude\": \"200\",\n    \"Pincode\": \"500081\",\n    \"State\": \"Telangana\"\n   }\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -63,6 +104,40 @@
     "title": "Add Vendor Rating",
     "name": "AddVendorRating",
     "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -81,7 +156,14 @@
             "description": "<p>Vendor Rating.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"orderId\":\"TASKO1012\",\n  \"vendorRating\":\n  {   \n    \"CustomerId\": \"10E4394670195C4AA1E4B7130A514187\",\n    \"VendorId\": \"B0269B0769CC8D48AEB92D2513EA14D6\",\n    \"ServiceQuality\": \"5\",\n    \"Punctuality\": \"5\",\n    \"Courtesy\": \"5\",\n    \"Price\": \"5\",\n    \"Comments\":\"Excellent\"\n  }\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -121,6 +203,40 @@
     "title": "Confirm Order",
     "name": "ConfirmOrder",
     "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -132,7 +248,14 @@
             "description": "<p>order.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": " {\n   \"order\": {\n   \"Comments\": \"\",\n   \"CustomerId\": \"10E4394670195C4AA1E4B7130A514187\",\n   \"CustomerName\": \"srikanth test\",\n   \"DestinationAddress\": {\n     \"Address\": \"plot no 404, BaghyaNagar\",\n     \"City\": \"Hyderabad\",\n     \"Country\": \"India\",\n     \"Lattitude\": \"40\",\n     \"Locality\": \"HMT HILLS\",\n     \"Longitude\": \"600\",\n     \"Pincode\": \"500072\",\n     \"State\": \"Telangana\"\n   },\n   \"Location\": \"kphb\",\n   \"OrderStatus\": \"Requested\",\n   \"OrderStatusId\": 1,\n   \"RequestedDate\": \"/Date(1465353306423+0530)/\",\n   \"ServiceId\": \"BF0860B092FA2447AE6AA8B3609FDCA9\",\n   \"ServiceName\": \"Microwave Service\",\n   \"SourceAddress\": {\n     \"Address\": \"plot no 101, vivekanandaNagar\",\n     \"City\": \"Hyderabad\",\n     \"Country\": \"India\",\n     \"Lattitude\": \"10\",\n     \"Locality\": \"kphb\",\n     \"Longitude\": \"200\",\n     \"Pincode\": \"500081\",\n     \"State\": \"Telangana\"\n   },\n   \"VendorId\": \"B0269B0769CC8D48AEB92D2513EA14D6\",\n   \"VendorName\": \"Srikanth\",\n   \"VendorServiceId\": \"C9C834D79EE3BC48BF8D5669B2560D24\"\n }\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -172,6 +295,40 @@
     "title": "Delete Customer Address",
     "name": "DeleteCustomerAddress",
     "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -190,7 +347,14 @@
             "description": "<p>Address Id.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n \"customerId\": \"10E4394670195C4AA1E4B7130A514187\",\n \"addressId\": \"346E84F8827D624FB39829A35A23209B\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -329,6 +493,33 @@
     "title": "Generate OTP",
     "name": "GenerateOTP",
     "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Auth_Code",
+            "description": "<p>Authentication Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Auth_Code\": \"Authentication code generated using Auth API\" ,\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -347,7 +538,14 @@
             "description": "<p>Phone number.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n \"emailId\": \"\",\n \"phoneNumber\": \"9849345086\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -387,6 +585,26 @@
     "title": "Get Auth Code",
     "name": "GetAuthCode",
     "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "X-APIKey",
+            "description": "<p>API key</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"X-APIKey\": \"API Key\" ,\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -437,6 +655,40 @@
     "title": "Get Customer Address",
     "name": "GetCustomerAddresses",
     "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -448,7 +700,14 @@
             "description": "<p>Customer Id.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n \"customerId\": \"10E4394670195C4AA1E4B7130A514187 \",\n\"addressInfo\": \n {\n    \"Address\": \"plot no 101, vivekanandaNagar\",\n    \"City\": \"Hyderabad\",\n    \"Country\": \"India\",\n    \"Lattitude\": \"10\",\n    \"Locality\": \"kphb\",\n    \"Longitude\": \"200\",\n    \"Pincode\": \"500081\",\n    \"State\": \"Telangana\"\n  }\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -488,6 +747,40 @@
     "title": "Get Customer Details",
     "name": "GetCustomerDetails",
     "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -499,7 +792,14 @@
             "description": "<p>Customer Id.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"customerId\": \"Customer id\" \n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -539,6 +839,40 @@
     "title": "Get Customer Orders",
     "name": "GetCustomerOrders",
     "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -571,7 +905,14 @@
             "description": "<p>Records Per Page.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n \"customerId\":\"10E4394670195C4AA1E4B7130A514187\",\n \"orderStatus\":\"1\",\n \"pageNumber\":\"\",\n \"recordsPerPage\":\"\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -611,6 +952,40 @@
     "title": "Get Favorite Vendors",
     "name": "GetFavoriteVendors",
     "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -622,7 +997,14 @@
             "description": "<p>Customer Id.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"customerId\": \"BA09714B34AEEC4BB84A5675FB3662BD\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -754,6 +1136,40 @@
     "title": "Get Recent Order",
     "name": "GetRecentOrder",
     "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -765,7 +1181,14 @@
             "description": "<p>Customer Id.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n \"customerId\": \"F501CE6E98E3A549B024E1565561EC62\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -805,6 +1228,40 @@
     "title": "Get Service Vendors",
     "name": "GetServiceVendors",
     "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -823,7 +1280,14 @@
             "description": "<p>Customer Id.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"serviceId\": \"47DAF7A1B95E8040BD9FA90252E72E17\",\n  \"customerId\": \"10E4394670195C4AA1E4B7130A514187\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -863,6 +1327,40 @@
     "title": "Get Services",
     "name": "GetServices",
     "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -913,6 +1411,33 @@
     "title": "Login",
     "name": "Login",
     "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Auth_Code",
+            "description": "<p>Authntication code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Auth_Code\": \"Authetication code that is generated using GetAuthCode API\" ,\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -931,7 +1456,14 @@
             "description": "<p>OTP.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"phoneNumber\": \"9849345086\",\n  \"OTP\": \"8FTLYc\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -971,6 +1503,40 @@
     "title": "Set Favorite Vendor",
     "name": "SetFavoriteVendor",
     "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -989,7 +1555,14 @@
             "description": "<p>Vendor Id.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n \"customerId\": \"BA09714B34AEEC4BB84A5675FB3662BD\",\n \"vendorId\": \"ACC75F79F2CFD94E8434D2B3E848889E\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -1029,6 +1602,33 @@
     "title": "SignUp",
     "name": "SignUp",
     "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Auth_Code",
+            "description": "<p>Authntication code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Auth_Code\": \"Authetication code that is generated using GetAuthCode API\" ,\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -1054,7 +1654,14 @@
             "description": "<p>Phone number.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"name\": \"srikanth test\",\n  \"emailId\": \"srikanth.penmetsa@gmail.com\",\n  \"phoneNumber\": \"9849345086\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -1094,6 +1701,40 @@
     "title": "Update Customer",
     "name": "UpdateCustomer",
     "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -1105,7 +1746,14 @@
             "description": "<p>Customer.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n\"customer\":\n {\n  \"Id\": \"10E4394670195C4AA1E4B7130A514187\",\n  \"Name\": \"srikanth testing\",\n  \"EmailAddress\": \"penmetsa.srikanth@gmail.com\",\n  \"MobileNumber\": \"9849345086\"\n }\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -1145,6 +1793,40 @@
     "title": "Update Customer Address",
     "name": "UpdateCustomerAddress",
     "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -1156,7 +1838,14 @@
             "description": "<p>Address Info.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n   \"addressInfo\": \n     {\n       \"Address\": \"plot no 101, vivekanandaNagar\",\n       \"AddressId\": \"542875B7E7719942AA82B3EABCEE64BF\",\n       \"City\": \"Hyderabad\",\n       \"Country\": \"India\",\n       \"Lattitude\": \"10\",\n       \"Locality\": \"kphb\",\n       \"Longitude\": \"200\",\n       \"Pincode\": \"500081\",\n       \"State\": \"Telangana\"\n     }\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -1196,6 +1885,33 @@
     "title": "Validate OTP",
     "name": "ValidateOTP",
     "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Auth_Code",
+            "description": "<p>Authntication code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Auth_Code\": \"Authetication code that is generated using GetAuthCode API\" ,\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -1214,7 +1930,14 @@
             "description": "<p>OTP to login.</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n \"phoneNumber\": \"9849345086\",\n \"OTP\": \"E3rwSC\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "examples": [
@@ -2103,7 +2826,7 @@
             "group": "Error 4xx",
             "optional": false,
             "field": "Authentication",
-            "description": "<p>Authentication failed.</p>"
+            "description": "<p>failed.</p>"
           }
         ]
       },

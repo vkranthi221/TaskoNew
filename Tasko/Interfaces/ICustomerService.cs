@@ -866,7 +866,7 @@ namespace Tasko.Interfaces
          *
          * @apiParamExample {json} Param-Example:
          *  {
-         *   customerId": "BA09714B34AEEC4BB84A5675FB3662BD"
+         *    "customerId": "BA09714B34AEEC4BB84A5675FB3662BD"
          *  }
          * 
          * @apiSuccessExample Success-Response:
