@@ -3266,7 +3266,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Param-Example:",
-          "content": "{\n  \"vendorServices\": \"List of Vendor services to be updated\"\n}",
+          "content": "{\n  \"vendorServices\": [\n {\n     \"__type\": \"VendorService:#Tasko.Model\",\n     \"Id\": \"196898FF2956FE478FB4FD9C2A8B49F6\",\n     \"ImageURL\": \"\",\n     \"IsActive\": true,\n     \"Name\": \"Carpentry\"\n },\n {\n     \"__type\": \"VendorService:#Tasko.Model\",\n     \"Id\": \"8B9BDFDF712B764E88FF29E8733A92C2\",\n     \"ImageURL\": \"\",\n     \"IsActive\": false,\n     \"Name\": \"Pest Control\"\n },\n {\n     \"__type\": \"VendorService:#Tasko.Model\",\n     \"Id\": \"9B41B620DFDFD24D8A861BFB96827DDD\",\n     \"ImageURL\": \"\",\n     \"IsActive\": true,\n     \"Name\": \"Microwave Service\"\n },\n {\n     \"__type\": \"VendorService:#Tasko.Model\",\n     \"Id\": \"E0311E79F6785541B6E008721A4B41BA\",\n     \"ImageURL\": \"\",\n     \"IsActive\": true,\n     \"Name\": \"Refrigerator Service\"\n },\n {\n     \"__type\": \"VendorService:#Tasko.Model\",\n     \"Id\": \"FB282BF584AB1145B73FB35CB8589C1E\",\n     \"ImageURL\": \"\",\n     \"IsActive\": true,\n     \"Name\": \"Plumber\"\n   }\n  ],\n }",
           "type": "json"
         }
       ]

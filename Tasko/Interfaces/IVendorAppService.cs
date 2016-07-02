@@ -386,8 +386,44 @@ namespace Tasko.Interfaces
          * @apiParam {List} vendorServices List of Vendor Services.          
          * 
          * @apiParamExample {json} Param-Example:
+         * {
+         *   "vendorServices": [
          *  {
-         *    "vendorServices": "List of Vendor services to be updated"
+         *      "__type": "VendorService:#Tasko.Model",
+         *      "Id": "196898FF2956FE478FB4FD9C2A8B49F6",
+         *      "ImageURL": "",
+         *      "IsActive": true,
+         *      "Name": "Carpentry"
+         *  },
+         *  {
+         *      "__type": "VendorService:#Tasko.Model",
+         *      "Id": "8B9BDFDF712B764E88FF29E8733A92C2",
+         *      "ImageURL": "",
+         *      "IsActive": false,
+         *      "Name": "Pest Control"
+         *  },
+         *  {
+         *      "__type": "VendorService:#Tasko.Model",
+         *      "Id": "9B41B620DFDFD24D8A861BFB96827DDD",
+         *      "ImageURL": "",
+         *      "IsActive": true,
+         *      "Name": "Microwave Service"
+         *  },
+         *  {
+         *      "__type": "VendorService:#Tasko.Model",
+         *      "Id": "E0311E79F6785541B6E008721A4B41BA",
+         *      "ImageURL": "",
+         *      "IsActive": true,
+         *      "Name": "Refrigerator Service"
+         *  },
+         *  {
+         *      "__type": "VendorService:#Tasko.Model",
+         *      "Id": "FB282BF584AB1145B73FB35CB8589C1E",
+         *      "ImageURL": "",
+         *      "IsActive": true,
+         *      "Name": "Plumber"
+         *    }
+         *   ],
          *  }
          * 
          * @apiSuccessExample Success-Response: 
