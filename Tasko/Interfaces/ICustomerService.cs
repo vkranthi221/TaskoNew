@@ -95,7 +95,23 @@ namespace Tasko.Interfaces
          * @apiName GetRecentOrder
          * @apiGroup Customer
          *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *     
          * @apiParam {String} customerId Customer Id.
+         *
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *   "customerId": "F501CE6E98E3A549B024E1565561EC62"
+         *  }
          *
          * @apiSuccessExample Success-Response:
          {
@@ -161,6 +177,17 @@ namespace Tasko.Interfaces
          * @apiName GetServices
          * @apiGroup Customer
          *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *     
          * @apiParam\n.
          *
          * @apiSuccessExample Success-Response:
@@ -212,8 +239,25 @@ namespace Tasko.Interfaces
          * @apiName GetServiceVendors
          * @apiGroup Customer
          *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
          * @apiParam {String} serviceId Service Id.
          * @apiParam {String} customerId Customer Id.
+         *
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *    "serviceId": "47DAF7A1B95E8040BD9FA90252E72E17",
+         *    "customerId": "10E4394670195C4AA1E4B7130A514187"
+         *  }
          *
          * @apiSuccessExample Success-Response:
          {
@@ -254,7 +298,56 @@ namespace Tasko.Interfaces
          * @apiName ConfirmOrder
          * @apiGroup Customer
          *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
          * @apiParam {Order} order order.
+         *
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *    "order": {
+         *    "Comments": "",
+         *    "CustomerId": "10E4394670195C4AA1E4B7130A514187",
+         *    "CustomerName": "srikanth test",
+         *    "DestinationAddress": {
+         *      "Address": "plot no 404, BaghyaNagar",
+         *      "City": "Hyderabad",
+         *      "Country": "India",
+         *      "Lattitude": "40",
+         *      "Locality": "HMT HILLS",
+         *      "Longitude": "600",
+         *      "Pincode": "500072",
+         *      "State": "Telangana"
+         *    },
+         *    "Location": "kphb",
+         *    "OrderStatus": "Requested",
+         *    "OrderStatusId": 1,
+         *    "RequestedDate": "/Date(1465353306423+0530)/",
+         *    "ServiceId": "BF0860B092FA2447AE6AA8B3609FDCA9",
+         *    "ServiceName": "Microwave Service",
+         *    "SourceAddress": {
+         *      "Address": "plot no 101, vivekanandaNagar",
+         *      "City": "Hyderabad",
+         *      "Country": "India",
+         *      "Lattitude": "10",
+         *      "Locality": "kphb",
+         *      "Longitude": "200",
+         *      "Pincode": "500081",
+         *      "State": "Telangana"
+         *    },
+         *    "VendorId": "B0269B0769CC8D48AEB92D2513EA14D6",
+         *    "VendorName": "Srikanth",
+         *    "VendorServiceId": "C9C834D79EE3BC48BF8D5669B2560D24"
+         *  }
+         *}
          *
          * @apiSuccessExample Success-Response:
          {
@@ -282,7 +375,29 @@ namespace Tasko.Interfaces
          * @apiName UpdateCustomer
          * @apiGroup Customer
          *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
          * @apiParam {Customer} Customer Customer.
+         *
+         * @apiParamExample {json} Param-Example:
+         * {
+         * "customer":
+         *  {
+         *   "Id": "10E4394670195C4AA1E4B7130A514187",
+         *   "Name": "srikanth testing",
+         *   "EmailAddress": "penmetsa.srikanth@gmail.com",
+         *   "MobileNumber": "9849345086"
+         *  }
+         * }
          *
          * @apiSuccessExample Success-Response:
          {
@@ -310,6 +425,17 @@ namespace Tasko.Interfaces
          * @apiName GetCustomerOrders
          * @apiGroup Customer
          *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
          * @apiParam {string} customerId Customer Id.
          * 
          * @apiParam {int} orderStatus Order Status.
@@ -317,6 +443,14 @@ namespace Tasko.Interfaces
          * @apiParam {int} pageNumber Page Number.
          * 
          * @apiParam {int} recordsPerPage Records Per Page.
+         *
+         * @apiParamExample {json} Param-Example:
+         * {
+         *  "customerId":"10E4394670195C4AA1E4B7130A514187",
+         *  "orderStatus":"1",
+         *  "pageNumber":"",
+         *  "recordsPerPage":""
+         * }
          *
          * @apiSuccessExample Success-Response:
          {
@@ -363,9 +497,36 @@ namespace Tasko.Interfaces
          * @apiName AddCustomerAddress
          * @apiGroup Customer
          *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
          * @apiParam {string} customerId Customer Id.
          * 
          * @apiParam {AddressInfo} addressInfo Address Info.
+         *
+         * @apiParamExample {json} Param-Example:
+         * {
+         *  "customerId": "10E4394670195C4AA1E4B7130A514187 ",
+         *  "addressInfo": 
+         *    {
+         *     "Address": "plot no 101, vivekanandaNagar",
+         *     "City": "Hyderabad",
+         *     "Country": "India",
+         *     "Lattitude": "10",
+         *     "Locality": "kphb",
+         *     "Longitude": "200",
+         *     "Pincode": "500081",
+         *     "State": "Telangana"
+         *    }
+         * }
          *
          * @apiSuccessExample Success-Response:
          {
@@ -393,7 +554,34 @@ namespace Tasko.Interfaces
          * @apiName UpdateCustomerAddress
          * @apiGroup Customer
          *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
          * @apiParam {AddressInfo} addressInfo Address Info.
+         *
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *     "addressInfo": 
+         *       {
+         *         "Address": "plot no 101, vivekanandaNagar",
+         *         "AddressId": "542875B7E7719942AA82B3EABCEE64BF",
+         *         "City": "Hyderabad",
+         *         "Country": "India",
+         *         "Lattitude": "10",
+         *         "Locality": "kphb",
+         *         "Longitude": "200",
+         *         "Pincode": "500081",
+         *         "State": "Telangana"
+         *       }
+         *  }
          *
          * @apiSuccessExample Success-Response:
          {
@@ -421,9 +609,26 @@ namespace Tasko.Interfaces
          * @apiName DeleteCustomerAddress
          * @apiGroup Customer
          *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
          * @apiParam {string} customerId Customer Id.
          * 
          * @apiParam {string} addressId Address Id.
+         *
+         * @apiParamExample {json} Param-Example:
+         * {
+         *  "customerId": "10E4394670195C4AA1E4B7130A514187",
+         *  "addressId": "346E84F8827D624FB39829A35A23209B"
+         * }
          *
          * @apiSuccessExample Success-Response:
          {
@@ -451,7 +656,34 @@ namespace Tasko.Interfaces
          * @apiName GetCustomerAddresses
          * @apiGroup Customer
          *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
          * @apiParam {string} customerId Customer Id.
+         *
+         * @apiParamExample {json} Param-Example:
+         * {
+         *  "customerId": "10E4394670195C4AA1E4B7130A514187 ",
+          * "addressInfo": 
+          *  {
+         *     "Address": "plot no 101, vivekanandaNagar",
+         *     "City": "Hyderabad",
+         *     "Country": "India",
+         *     "Lattitude": "10",
+         *     "Locality": "kphb",
+         *     "Longitude": "200",
+         *     "Pincode": "500081",
+         *     "State": "Telangana"
+         *   }
+         * }
          * 
          * @apiSuccessExample Success-Response:
          {
@@ -516,9 +748,35 @@ namespace Tasko.Interfaces
          * @apiName AddVendorRating
          * @apiGroup Customer
          *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
          * @apiParam {string} orderId Order Id.
          * 
          * @apiParam {VendorRating} vendorRating Vendor Rating.
+         *
+         * @apiParamExample {json} Param-Example:
+         * {
+         *   "orderId":"TASKO1012",
+         *   "vendorRating":
+         *   {   
+         *     "CustomerId": "10E4394670195C4AA1E4B7130A514187",
+         *     "VendorId": "B0269B0769CC8D48AEB92D2513EA14D6",
+         *     "ServiceQuality": "5",
+         *     "Punctuality": "5",
+         *     "Courtesy": "5",
+         *     "Price": "5",
+         *     "Comments":"Excellent"
+         *   }
+         * }
          *
          * @apiSuccessExample Success-Response:
          {
@@ -546,9 +804,26 @@ namespace Tasko.Interfaces
          * @apiName SetFavoriteVendor
          * @apiGroup Customer
          *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
          * @apiParam {string} customerId Customer Id.
          * 
          * @apiParam {string} vendorId Vendor Id.
+         *
+         * @apiParamExample {json} Param-Example:
+         * {
+         *  "customerId": "BA09714B34AEEC4BB84A5675FB3662BD",
+         *  "vendorId": "ACC75F79F2CFD94E8434D2B3E848889E"
+         * }
          *
          * @apiSuccessExample Success-Response:
          {
@@ -576,7 +851,23 @@ namespace Tasko.Interfaces
          * @apiName GetFavoriteVendors
          * @apiGroup Customer
          *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
          * @apiParam {string} customerId Customer Id.
+         *
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *   customerId": "BA09714B34AEEC4BB84A5675FB3662BD"
+         *  }
          * 
          * @apiSuccessExample Success-Response:
          {
@@ -611,9 +902,24 @@ namespace Tasko.Interfaces
          * @api {post} v1/GenerateOTP Generate OTP
          * @apiName GenerateOTP
          * @apiGroup Customer
+         *
+         * @apiHeader {string} Auth_Code Authentication Code
+         * @apiHeader {string} Content-Type application/json
          * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Auth_Code": "Authentication code generated using Auth API" ,
+         *    "Content-Type": "application/json"
+         *  }
+         *    
          * @apiParam {String} emailId Email Id.
          * @apiParam {String} phoneNumber Phone number.
+         *
+         * @apiParamExample {json} Param-Example:
+         * {
+         *  "emailId": "",
+         *  "phoneNumber": "9849345086"
+         * }
          *
          * @apiSuccessExample Success-Response:
          {
@@ -641,8 +947,23 @@ namespace Tasko.Interfaces
          * @apiName ValidateOTP
          * @apiGroup Customer
          *
+         * @apiHeader {string} Auth_Code Authntication code
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Auth_Code": "Authetication code that is generated using GetAuthCode API" ,
+         *    "Content-Type": "application/json"
+         *  }
+         *   
          * @apiParam {String} phoneNumber Phone number.
          * @apiParam {String} OTP OTP to login.
+         *
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *   "phoneNumber": "9849345086",
+         *   "OTP": "E3rwSC"
+         *  }
          *
          * @apiSuccessExample Success-Response:
          {
@@ -670,11 +991,27 @@ namespace Tasko.Interfaces
          * @apiName SignUp
          * @apiGroup Customer
          *
+         * @apiHeader {string} Auth_Code Authntication code
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Auth_Code": "Authetication code that is generated using GetAuthCode API" ,
+         *    "Content-Type": "application/json"
+         *  }
+         *   
          * @apiParam {String} name name of customer.
          * 
          * @apiParam {String} emailId Email.
          * 
          * @apiParam {String} phoneNumber Phone number.
+         *
+         * @apiParamExample {json} Param-Example:
+         * {
+         *   "name": "srikanth test",
+         *   "emailId": "srikanth.penmetsa@gmail.com",
+         *   "phoneNumber": "9849345086"
+         * }
          *
          * @apiSuccessExample Success-Response:
          {
@@ -706,9 +1043,24 @@ namespace Tasko.Interfaces
          * @apiName Login
          * @apiGroup Customer
          *
+         * @apiHeader {string} Auth_Code Authntication code
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Auth_Code": "Authetication code that is generated using GetAuthCode API" ,
+         *    "Content-Type": "application/json"
+         *  }
+         *   
          * @apiParam {String} name name of customer.
          * 
          * @apiParam {String} OTP OTP.
+         *
+         * @apiParamExample {json} Param-Example:
+         * {
+         *   "phoneNumber": "9849345086",
+         *   "OTP": "8FTLYc"
+         * }
          *
          * @apiSuccessExample Success-Response:
          {
@@ -739,7 +1091,15 @@ namespace Tasko.Interfaces
          * @api {post} c1/GetAuthCode Get Auth Code
          * @apiName GetAuthCode
          * @apiGroup Customer
+         *
+         * @apiHeader {string} X-APIKey API key
          * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "X-APIKey": "API Key" ,
+         *    "Content-Type": "application/json"
+         *  }
+         *   
          * @apiParam\n
          *
          * @apiSuccessExample Success-Response:
@@ -771,7 +1131,23 @@ namespace Tasko.Interfaces
          * @apiName GetCustomerDetails
          * @apiGroup Customer
          *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
          * @apiParam {string} customerId Customer Id.
+         *
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *    "customerId": "Customer id" 
+         *  }
          * 
          * @apiSuccessExample Success-Response:
          {
@@ -805,7 +1181,7 @@ namespace Tasko.Interfaces
          * @api {post} c1/DeleteFavoriteVendor Delete Favorite Vendor
          * @apiName DeleteFavoriteVendor
          * @apiGroup Customer
-         *
+         * 
          * @apiHeader {string} Token_Code Token Code
          * @apiHeader {string} User_Id User Id
          * @apiHeader {string} Content-Type application/json
