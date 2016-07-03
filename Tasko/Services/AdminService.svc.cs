@@ -172,20 +172,30 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                List<ServiceDetail> services = AdminData.GetAllServices();
-
-                if (services != null)
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
                 {
-                    r.Error = false;
-                    r.Message = CommonMessages.SUCCESS;
-                    r.Status = 200;
-                    r.Data = services;
+                    List<ServiceDetail> services = AdminData.GetAllServices();
+
+                    if (services != null)
+                    {
+                        r.Error = false;
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Status = 200;
+                        r.Data = services;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Message = CommonMessages.SERVICES_NOT_FOUND;
+                        r.Status = 400;
+                    }
                 }
                 else
                 {
                     r.Error = true;
-                    r.Message = CommonMessages.SERVICES_NOT_FOUND;
                     r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
             catch (Exception ex)
@@ -207,21 +217,31 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                List<OrderSummary> services = AdminData.GetOrdersByService(serviceId);
+                 bool isTokenValid = ValidateToken();
+                 if (isTokenValid)
+                 {
+                     List<OrderSummary> services = AdminData.GetOrdersByService(serviceId);
 
-                if (services != null)
-                {
-                    r.Error = false;
-                    r.Message = CommonMessages.SUCCESS;
-                    r.Status = 200;
-                    r.Data = services;
-                }
-                else
-                {
-                    r.Error = true;
-                    r.Message = CommonMessages.SERVICES_NOT_FOUND;
-                    r.Status = 400;
-                }
+                     if (services != null)
+                     {
+                         r.Error = false;
+                         r.Message = CommonMessages.SUCCESS;
+                         r.Status = 200;
+                         r.Data = services;
+                     }
+                     else
+                     {
+                         r.Error = true;
+                         r.Message = CommonMessages.SERVICES_NOT_FOUND;
+                         r.Status = 400;
+                     }
+                 }
+                 else
+                 {
+                     r.Error = true;
+                     r.Status = 400;
+                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                 }
             }
             catch (Exception ex)
             {
@@ -242,20 +262,30 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                List<VendorSummary> vendors = AdminData.GetVendorsByService(serviceId);
-
-                if (vendors != null)
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
                 {
-                    r.Error = false;
-                    r.Message = CommonMessages.SUCCESS;
-                    r.Status = 200;
-                    r.Data = vendors;
+                    List<VendorSummary> vendors = AdminData.GetVendorsByService(serviceId);
+
+                    if (vendors != null)
+                    {
+                        r.Error = false;
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Status = 200;
+                        r.Data = vendors;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Message = CommonMessages.SERVICES_NOT_FOUND;
+                        r.Status = 400;
+                    }
                 }
                 else
                 {
                     r.Error = true;
-                    r.Message = CommonMessages.SERVICES_NOT_FOUND;
                     r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
             catch (Exception ex)
@@ -264,7 +294,7 @@ namespace Tasko.Services
                 r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
             }
 
-            return r; 
+            return r;
         }
 
         /// <summary>
@@ -273,19 +303,17 @@ namespace Tasko.Services
         /// <returns>bool value</returns>
         private static bool ValidateToken()
         {
-            ////IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
-            ////WebHeaderCollection headers = request.Headers;
-            ////string tokenCode = headers["Token_Code"];
-            ////string userId = headers["User_Id"];
-            ////if (!string.IsNullOrEmpty(tokenCode) && !string.IsNullOrEmpty(userId))
-            ////{
-            ////    bool isTokenValid = VendorData.ValidateTokenCode(tokenCode, userId);
-            ////    return isTokenValid;
-            ////}
+            IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
+            WebHeaderCollection headers = request.Headers;
+            string tokenCode = headers["Token_Code"];
+            string userId = headers["User_Id"];
+            if (!string.IsNullOrEmpty(tokenCode) && !string.IsNullOrEmpty(userId))
+            {
+                bool isTokenValid = VendorData.ValidateTokenCode(tokenCode, userId);
+                return isTokenValid;
+            }
 
-            ////return false;
-
-            return true;
+            return false;
         }
 
         #endregion
