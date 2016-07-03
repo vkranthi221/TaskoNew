@@ -605,23 +605,11 @@
         }
       ]
     },
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "optional": false,
-            "field": "\\n",
-            "description": ""
-          }
-        ]
-      }
-    },
     "success": {
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n  \"Data\": \"3E71AF3FF2196045BB3212623BFDEF91\",\n  \"Error\": false,\n  \"Message\": \"Authentication Successful\",\n  \"Status\": 200\n}",
+          "content": " {\n  \"Data\": \"API key comes here\",\n  \"Error\": false,\n  \"Message\": \"Authentication Successful\",\n  \"Status\": 200\n}",
           "type": "json"
         }
       ]
@@ -2135,7 +2123,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n  \"Data\": \"3E71AF3FF2196045BB3212623BFDEF91\",\n  \"Error\": false,\n  \"Message\": \"Authentication Successful\",\n  \"Status\": 200\n}",
+          "content": " {\n  \"Data\": \"API key comes here\",\n  \"Error\": false,\n  \"Message\": \"Authentication Successful\",\n  \"Status\": 200\n}",
           "type": "json"
         }
       ]

@@ -47,5 +47,14 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public string ImageURL { get; set; }
+
+        /// <summary>
+        /// Gets or sets the status.
+        /// </summary>
+        /// <value>
+        /// The status.
+        /// </value>
+        [DataMember]
+        public short Status { get; set; }
     }
 }
