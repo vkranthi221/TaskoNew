@@ -2246,7 +2246,7 @@ define({ "api": [
   {
     "type": "post",
     "url": "v1/GetVendorOrders",
-    "title": "Vendor Orders",
+    "title": "Get Vendor Orders",
     "name": "GetVendorOrders",
     "group": "Vendor",
     "header": {
@@ -2319,7 +2319,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Param-Example:",
-          "content": "{\n  \"vendorId\": \"Vendor Id\",\n  \"orderStatusId\": \"Status of the order\",\n  \"recordsPerPage\": \"Number of records to be displayed per page\",\n  \"recordsPerPage\": \"Number of records per page\"\n}",
+          "content": "{\n  \"vendorId\": \"Vendor Id\",\n  \"orderStatusId\": \"Status of the order\",\n  \"pageNumber\": \"Page number\",\n  \"recordsPerPage\": \"Number of records per page\"\n}",
           "type": "json"
         }
       ]

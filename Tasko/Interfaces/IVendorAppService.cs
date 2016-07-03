@@ -624,7 +624,7 @@ namespace Tasko.Interfaces
         Response GetVendorOverallRatings(string vendorId);
 
         /**
-        * @api {post} v1/GetVendorOrders Vendor Orders
+        * @api {post} v1/GetVendorOrders Get Vendor Orders
         * @apiName GetVendorOrders
         * @apiGroup Vendor
         *
@@ -651,7 +651,7 @@ namespace Tasko.Interfaces
         *  {
         *    "vendorId": "Vendor Id",
         *    "orderStatusId": "Status of the order",
-        *    "recordsPerPage": "Number of records to be displayed per page",
+        *    "pageNumber": "Page number",
         *    "recordsPerPage": "Number of records per page"
         *  }
         *  
