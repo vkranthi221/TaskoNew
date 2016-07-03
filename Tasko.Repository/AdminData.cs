@@ -68,20 +68,24 @@ namespace Tasko.Repository
         /// Deletes the service.
         /// </summary>
         /// <param name="serviceId">The service identifier.</param>
-        public static void DeleteService(string serviceId)
+        /// <returns>Is service is in Use or not</returns>
+        public static bool DeleteService(string serviceId)
         {
+            bool isServiceInUse = false;
+
             List<SqlParameter> objParameters = new List<SqlParameter>();
             objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(serviceId)));
-            SqlHelper.ExecuteNonQuery("dbo.usp_DeleteService", objParameters.ToArray()); 
+            isServiceInUse = (bool)SqlHelper.ExecuteScalar("dbo.usp_DeleteService", objParameters.ToArray());
+            return isServiceInUse;
         }
 
         /// <summary>
         /// Gets all services.
         /// </summary>
         /// <returns>list of services</returns>
-        public static List<Service> GetAllServices()
+        public static List<ServiceDetail> GetAllServices()
         {
-            List<Service> services = new List<Service>();
+            List<ServiceDetail> services = new List<ServiceDetail>();
 
             List<SqlParameter> objParameters = new List<SqlParameter>();
             DataTable datatable = SqlHelper.GetDataTable("dbo.usp_GetAllServices", objParameters.ToArray());
@@ -89,21 +93,83 @@ namespace Tasko.Repository
             {
                 foreach (DataRow row in datatable.Rows)
                 {
-                    Service service = new Service();
-                    service.Id = BinaryConverter.ConvertByteToString((byte[])row["SERVICE_ID"]);
-                    service.Name = row["NAME"].ToString();
+                    ServiceDetail serviceDetail = new ServiceDetail();
+                    serviceDetail.Service.Id = BinaryConverter.ConvertByteToString((byte[])row["SERVICE_ID"]);
+                    serviceDetail.Service.Name = row["NAME"].ToString();
                     if (!(row["PARENT_SERVICE_ID"] is System.DBNull))
                     {
-                        service.ParentServiceId = BinaryConverter.ConvertByteToString((byte[])row["PARENT_SERVICE_ID"]);
+                        serviceDetail.Service.ParentServiceId = BinaryConverter.ConvertByteToString((byte[])row["PARENT_SERVICE_ID"]);
                     }
 
-                    service.Status = Convert.ToInt16(row["STATUS"]);
-                    service.ImageURL = row["IMAGE_URL"].ToString();
-                    services.Add(service);
+                    serviceDetail.Service.Status = Convert.ToInt16(row["STATUS"]);
+                    serviceDetail.Service.ImageURL = row["IMAGE_URL"].ToString();
+                    serviceDetail.TotalOrders = Convert.ToInt16(row["TOTAL_ORDERS"]);
+                    serviceDetail.TotalVendors = Convert.ToInt16(row["TOTAL_VENDORS"]);
+                    services.Add(serviceDetail);
                 }
             }
 
             return services;            
+        }
+
+        /// <summary>
+        /// Gets the orders by service.
+        /// </summary>
+        /// <param name="serviceId">The service identifier.</param>
+        /// <returns>list of Order summary</returns>
+        public static List<OrderSummary> GetOrdersByService(string serviceId)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(serviceId)));            
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetOrdersByService", objParameters.ToArray());
+            List<OrderSummary> orders = new List<OrderSummary>();
+
+            while (reader.Read())
+            {
+                OrderSummary order = new OrderSummary();
+                order.OrderId = reader["ORDER_ID"].ToString();
+                order.RequestedDate = Convert.ToDateTime(reader["REQUESTED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+                order.ServiceName = reader["SERVICE_NAME"].ToString();
+                order.OrderStatus = reader["ORDER_STATUS_NAME"].ToString();               
+                order.CustomerName = reader["CUSTOMER_NAME"].ToString();
+                order.VendorName = reader["VENDOR_NAME"].ToString();
+                orders.Add(order);
+            }
+
+            reader.Close();
+
+            return orders;
+        }
+
+        /// <summary>
+        /// Gets the vendors by service.
+        /// </summary>
+        /// <param name="serviceId">The service identifier.</param>
+        /// <returns>list of vendors</returns>
+        public static List<Vendor> GetVendorsByService(string serviceId)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(serviceId)));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorsByService", objParameters.ToArray());
+            List<Vendor> vendors = new List<Vendor>();
+
+            while (reader.Read())
+            {
+                Vendor objVendor = new Vendor();
+                objVendor.Id = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
+                objVendor.UserName = reader["USER_NAME"].ToString();
+                objVendor.Name = reader["NAME"].ToString();
+                objVendor.MobileNumber = reader["MOBILE_NUMBER"].ToString();
+                objVendor.EmailAddress = Convert.ToString(reader["EMAIL_ADDRESS"]);
+                objVendor.IsVendorLive = Convert.ToBoolean(reader["IS_VENDOR_LIVE"]);
+                vendors.Add(objVendor);
+            }
+
+            reader.Close();
+
+            return vendors;
         }
     }
 }

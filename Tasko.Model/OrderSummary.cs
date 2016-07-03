@@ -66,5 +66,23 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public string Comments { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the customer.
+        /// </summary>
+        /// <value>
+        /// The name of the customer.
+        /// </value>
+        [DataMember]
+        public string CustomerName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the vendor.
+        /// </summary>
+        /// <value>
+        /// The name of the vendor.
+        /// </value>
+        [DataMember]
+        public string VendorName { get; set; }
     }
 }

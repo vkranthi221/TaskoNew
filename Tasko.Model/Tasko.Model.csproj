@@ -52,6 +52,7 @@
     <Compile Include="Service.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ServiceDetail.cs" />
     <Compile Include="ServiceVendor.cs">
       <SubType>Code</SubType>
     </Compile>

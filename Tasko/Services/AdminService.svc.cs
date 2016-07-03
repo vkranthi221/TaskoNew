@@ -132,10 +132,19 @@ namespace Tasko.Services
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                    AdminData.DeleteService(serviceId);
-                    r.Error = false;
-                    r.Status = 200;
-                    r.Message = CommonMessages.SUCCESS;
+                   bool isServiceInUse = AdminData.DeleteService(serviceId);
+                   if (isServiceInUse)
+                   {
+                       r.Error = true;
+                       r.Status = 400;
+                       r.Message = CommonMessages.SUCCESS;
+                   }
+                   else
+                   {
+                       r.Error = false;
+                       r.Status = 200;
+                       r.Message = CommonMessages.SUCCESS;
+                   }
                 }
                 else
                 {
@@ -162,7 +171,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                List<Service> services = AdminData.GetAllServices();
+                List<ServiceDetail> services = AdminData.GetAllServices();
 
                 if (services != null)
                 {
@@ -188,6 +197,76 @@ namespace Tasko.Services
         }
 
         /// <summary>
+        /// Gets the orders by service.
+        /// </summary>
+        /// <param name="serviceId">The service identifier.</param>
+        /// <returns>Response Object</returns>
+        public Response GetOrdersByService(string serviceId)
+        {
+            Response r = new Response();
+            try
+            {
+                List<OrderSummary> services = AdminData.GetOrdersByService(serviceId);
+
+                if (services != null)
+                {
+                    r.Error = false;
+                    r.Message = CommonMessages.SUCCESS;
+                    r.Status = 200;
+                    r.Data = services;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Message = CommonMessages.SERVICES_NOT_FOUND;
+                    r.Status = 400;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r; 
+        }
+
+        /// <summary>
+        /// Gets the vendors by service.
+        /// </summary>
+        /// <param name="serviceId">The service identifier.</param>
+        /// <returns>Response Object</returns>
+        public Response GetVendorsByService(string serviceId)
+        {
+            Response r = new Response();
+            try
+            {
+                List<Vendor> vendors = AdminData.GetVendorsByService(serviceId);
+
+                if (vendors != null)
+                {
+                    r.Error = false;
+                    r.Message = CommonMessages.SUCCESS;
+                    r.Status = 200;
+                    r.Data = vendors;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Message = CommonMessages.SERVICES_NOT_FOUND;
+                    r.Status = 400;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r; 
+        }
+
+        /// <summary>
         /// Validates the token.
         /// </summary>
         /// <returns>bool value</returns>
@@ -204,6 +283,6 @@ namespace Tasko.Services
             }
 
             return false;
-        }
+        }        
     }
 }

@@ -380,14 +380,13 @@ namespace Tasko.Repository
         public static bool SetFavoriteVendor(string customerId, string vendorId)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
-            bool isValidOldPassword = false;
+            bool isFavouriteVendorAlreadySet = false;
 
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
-            isValidOldPassword = (bool)SqlHelper.ExecuteScalar("dbo.usp_SetFavoriteVendor", objParameters.ToArray());
-            SqlHelper.ExecuteNonQuery("dbo.usp_SetFavoriteVendor", objParameters.ToArray());
+            isFavouriteVendorAlreadySet = (bool)SqlHelper.ExecuteScalar("dbo.usp_SetFavoriteVendor", objParameters.ToArray());
 
-            return isValidOldPassword;
+            return isFavouriteVendorAlreadySet;
         }
 
         /// <summary>
