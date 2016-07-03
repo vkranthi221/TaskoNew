@@ -81,7 +81,7 @@ namespace TaskoTestClient
                 Console.WriteLine("MobileNumber : " + objVendor.MobileNumber);
                 Console.WriteLine("BaseRate : " + objVendor.BaseRate);
                 Console.WriteLine("IsVendorLive : " + objVendor.IsVendorLive);
-                Console.WriteLine("Address : " + objVendor.Address);
+                ////Console.WriteLine("Address : " + objVendor.Address);
                 Console.WriteLine("DataConsumption : " + objVendor.DataConsumption);
                 Console.WriteLine("CallsToCustomerCare : " + objVendor.CallsToCustomerCare);
                 Console.WriteLine("IsVendorVerified : " + objVendor.IsVendorVerified);

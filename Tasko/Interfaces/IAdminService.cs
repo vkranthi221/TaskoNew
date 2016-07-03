@@ -13,6 +13,7 @@ namespace Tasko.Interfaces
     [ServiceContract]
     public interface IAdminService
     {
+        #region Services
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
@@ -47,5 +48,19 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetVendorsByService(string serviceId);
+        #endregion
+
+        #region Vendors
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response AddVendor(Vendor vendor);
+        #endregion
+
+        #region Customers
+        #endregion
+
+        #region General
+        #endregion
     }
 }

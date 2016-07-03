@@ -16,6 +16,7 @@ namespace Tasko.Services
     // NOTE: In order to launch WCF Test Client for testing this service, please select AdminService.svc or AdminService.svc.cs at the Solution Explorer and start debugging.
     public class AdminService : IAdminService
     {
+        #region Services
         /// <summary>
         /// Adds the service.
         /// </summary>
@@ -283,6 +284,42 @@ namespace Tasko.Services
             }
 
             return false;
-        }        
+        }
+
+        #endregion
+
+        #region Vendors
+        /// <summary>
+        /// Adds the vendor.
+        /// </summary>
+        /// <param name="vendor">Vendor.</param>
+        /// <returns>Response Object</returns>
+        public Response AddVendor(Vendor vendor)
+        {
+            Response r = new Response();
+            try
+            {
+                //AdminData.AddVendor(vendor);
+                r.Error = false;
+                r.Message = CommonMessages.SUCCESS;
+                r.Status = 200;
+                r.Data = null;
+
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r; 
+        }
+        #endregion
+
+        #region Customers
+        #endregion
+
+        #region General
+        #endregion
     }
 }

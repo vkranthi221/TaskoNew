@@ -95,7 +95,8 @@ namespace Tasko.Repository
                 objVendor.Name = reader["NAME"].ToString();
                 objVendor.MobileNumber = reader["MOBILE_NUMBER"].ToString();
                 objVendor.EmailAddress = Convert.ToString(reader["EMAIL_ADDRESS"]);
-                objVendor.Address = reader["ADDRESS"].ToString();
+                //objVendor.VendorAddress = new AddressInfo();
+                //objVendor.VendorAddress.Address = reader["ADDRESS"].ToString();
                 objVendor.NoOfEmployees = Convert.ToInt32(reader["EMPLOYEE_COUNT"]);
                 objVendor.BaseRate = Convert.ToDouble(reader["BASE_RATE"]);
                 objVendor.IsVendorVerified = Convert.ToBoolean(reader["IS_VENDOR_VERIFIED"]);
@@ -407,14 +408,14 @@ namespace Tasko.Repository
             }
 
             // Address
-            if (!string.IsNullOrEmpty(vendor.Address))
-            {
-                objParameters.Add(SqlHelper.CreateParameter("@pAddress", DbType.String, vendor.Address));
-            }
-            else
-            {
-                objParameters.Add(SqlHelper.CreateParameter("@pAddress", DbType.String, DBNull.Value));
-            }
+            ////if (!string.IsNullOrEmpty(vendor.vendor))
+            ////{
+            ////    objParameters.Add(SqlHelper.CreateParameter("@pAddress", DbType.String, vendor.Address));
+            ////}
+            ////else
+            ////{
+            ////    objParameters.Add(SqlHelper.CreateParameter("@pAddress", DbType.String, DBNull.Value));
+            ////}
 
             // EmailAddress
             if (!string.IsNullOrEmpty(vendor.EmailAddress))
