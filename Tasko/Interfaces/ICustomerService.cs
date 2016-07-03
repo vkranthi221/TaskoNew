@@ -1100,11 +1100,10 @@ namespace Tasko.Interfaces
          *    "Content-Type": "application/json"
          *  }
          *   
-         * @apiParam\n
          *
          * @apiSuccessExample Success-Response:
          {
-          "Data": "3E71AF3FF2196045BB3212623BFDEF91",
+          "Data": "API key comes here",
           "Error": false,
           "Message": "Authentication Successful",
           "Status": 200
