@@ -117,3 +117,20 @@ GO
 DROP PROCEDURE [dbo].[usp_GetFavoriteVendors]
 GO
 DROP FUNCTION [dbo].[GetVendorTotalRating]
+GO
+DROP PROCEDURE [dbo].[usp_DeleteFavoriteVendor]
+GO
+DROP PROCEDURE [dbo].[usp_AddService]
+GO
+DROP PROCEDURE [dbo].[usp_UpdateService]
+GO
+DROP PROCEDURE [dbo].[usp_DisableService]
+GO
+DROP PROCEDURE [dbo].[usp_DeleteService]
+GO
+DROP PROCEDURE [dbo].[usp_GetALLServices]
+GO
+DROP PROCEDURE [dbo].[usp_GetOrdersByService]
+GO
+DROP PROCEDURE [dbo].[usp_GetVendorsByService]
+GO
