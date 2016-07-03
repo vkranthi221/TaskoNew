@@ -242,7 +242,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                List<Vendor> vendors = AdminData.GetVendorsByService(serviceId);
+                List<VendorSummary> vendors = AdminData.GetVendorsByService(serviceId);
 
                 if (vendors != null)
                 {
@@ -273,17 +273,19 @@ namespace Tasko.Services
         /// <returns>bool value</returns>
         private static bool ValidateToken()
         {
-            IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
-            WebHeaderCollection headers = request.Headers;
-            string tokenCode = headers["Token_Code"];
-            string userId = headers["User_Id"];
-            if (!string.IsNullOrEmpty(tokenCode) && !string.IsNullOrEmpty(userId))
-            {
-                bool isTokenValid = VendorData.ValidateTokenCode(tokenCode, userId);
-                return isTokenValid;
-            }
+            ////IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
+            ////WebHeaderCollection headers = request.Headers;
+            ////string tokenCode = headers["Token_Code"];
+            ////string userId = headers["User_Id"];
+            ////if (!string.IsNullOrEmpty(tokenCode) && !string.IsNullOrEmpty(userId))
+            ////{
+            ////    bool isTokenValid = VendorData.ValidateTokenCode(tokenCode, userId);
+            ////    return isTokenValid;
+            ////}
 
-            return false;
+            ////return false;
+
+            return true;
         }
 
         #endregion

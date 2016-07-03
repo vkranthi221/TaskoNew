@@ -1,6 +1,648 @@
 [
   {
     "type": "post",
+    "url": "a1/AddService",
+    "title": "Add Service",
+    "name": "AddService",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Service",
+            "optional": false,
+            "field": "service",
+            "description": "<p>Service Info.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n  \"service\":\n  {   \n    \"Name\": \"AC Service\",\n    \"ParentServiceId\": \"\",\n    \"ImageUrl\": \"http://api.tasko.in/serviceimages/ac_services.png\",\n    \"Status\": \"0\"\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/DeleteService",
+    "title": "Delete Service",
+    "name": "DeleteService",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "serviceId",
+            "description": "<p>Service Id.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n  \"serviceId\":\"54CFD4A388C27046918399822EAA7458\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n \"Data\": null,\n \"Error\": false,\n \"Message\": \"Success\",\n \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "SERVICE_IN_USE",
+            "description": "<p>Unable to delete the Service as it is in Use.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Invalid token code\",\n   \"Status\": 400\n }",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Unable to delete the Service as it is in Use\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/DisableService",
+    "title": "Disable Service",
+    "name": "DisableService",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "serviceId",
+            "description": "<p>Service Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "short",
+            "optional": false,
+            "field": "status",
+            "description": "<p>status {0 - Active; 1 - Disable}.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n  \"serviceId\":\"54CFD4A388C27046918399822EAA7458\",\n  \"status\":\"1\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetAllServices",
+    "title": "Get All Services",
+    "name": "GetAllServices",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n  \"Data\": [\n    {\n     \"__type\": \"ServiceDetail:#Tasko.Model\",\n     \"Service\": {\n       \"Id\": \"5EC9A583EFF0534897DD55B3653627C9\",\n       \"ImageURL\": \"http://api.tasko.in/serviceimages/bikeService.png\",\n       \"Name\": \"Bike Service\",\n       \"ParentServiceId\": null,\n       \"Status\": 0\n     },\n     \"TotalOrders\": 0,\n     \"TotalVendors\": 0\n   },\n   {\n     \"__type\": \"ServiceDetail:#Tasko.Model\",\n     \"Service\": {\n       \"Id\": \"6786E5D449D6B74396E8ADAEA1C17E37\",\n       \"ImageURL\": \"http://api.tasko.in/serviceimages/microwave.png\",\n       \"Name\": \"Microwave Service\",\n       \"ParentServiceId\": null,\n       \"Status\": 0\n     },\n     \"TotalOrders\": 10,\n     \"TotalVendors\": 1\n   },\n   {\n     \"__type\": \"ServiceDetail:#Tasko.Model\",\n     \"Service\": {\n       \"Id\": \"688B6A30A7895D40B3A64A0A03AE28D8\",\n       \"ImageURL\": \"http://api.tasko.in/serviceimages/carpenter.png\",\n       \"Name\": \"Carpentry\",\n       \"ParentServiceId\": null,\n       \"Status\": 0\n     },\n     \"TotalOrders\": 0,\n     \"TotalVendors\": 1\n   }\n     ],\n \"Error\": false,\n \"Message\": \"Success\",\n \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Invalid token code\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetOrdersByService",
+    "title": "Get Orders By Service",
+    "name": "GetOrdersByService",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "serviceId",
+            "description": "<p>Service Id.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n  \"serviceId\":\"6786E5D449D6B74396E8ADAEA1C17E37\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n \"Data\": [\n   {\n     \"__type\": \"OrderSummary:#Tasko.Model\",\n     \"Comments\": null,\n     \"CustomerName\": \"Shivaji123\",\n     \"OrderId\": \"TASKO1001\",\n     \"OrderStatus\": \"Requested\",\n     \"RequestedDate\": \"2016-07-03 17:43:19\",\n     \"ServiceId\": \"6786E5D449D6B74396E8ADAEA1C17E37\",\n     \"ServiceName\": \"Microwave Service\",\n     \"VendorName\": \"Srikanth\"\n   },\n   {\n     \"__type\": \"OrderSummary:#Tasko.Model\",\n     \"Comments\": null,\n     \"CustomerName\": \"Shivaji123\",\n     \"OrderId\": \"TASKO1002\",\n     \"OrderStatus\": \"Requested\",\n     \"RequestedDate\": \"2016-07-03 17:43:19\",\n     \"ServiceId\": \"6786E5D449D6B74396E8ADAEA1C17E37\",\n     \"ServiceName\": \"Microwave Service\",\n     \"VendorName\": \"Srikanth\"\n   }\n     ],\n \"Error\": false,\n \"Message\": \"Success\",\n \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Invalid token code\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetVendorsByService",
+    "title": "Get Vendors By Service",
+    "name": "GetVendorsByService",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "serviceId",
+            "description": "<p>Service Id.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n  \"serviceId\":\"6786E5D449D6B74396E8ADAEA1C17E37\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n    \"Data\": [\n    {\n        \"__type\": \"VendorSummary:#Tasko.Model\",\n        \"EmailAddress\": \"sree@gmail.com\",\n        \"Id\": \"6D76BCF5246BB44E8DD327C22780C6B0\",\n        \"IsVendorLive\": true,\n        \"MobileNumber\": \"1234567890\",\n        \"Name\": \"Srikanth\",\n        \"UserName\": \"sree123\"\n    }\n    ],\n    \"Error\": false,\n    \"Message\": \"Success\",\n    \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Invalid token code\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/UpdateService",
+    "title": "Update Service",
+    "name": "UpdateService",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Service",
+            "optional": false,
+            "field": "service",
+            "description": "<p>Service Info.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n  \"service\":\n  {   \n    \"Id\":\"054CFD4A388C27046918399822EAA7458\",\n    \"Name\": \"AC Service\",\n    \"ParentServiceId\": \"\",\n    \"ImageUrl\": \"http://api.tasko.in/serviceimages/ac_services.png\",\n    \"Status\": \"1\"\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
     "url": "c1/AddCustomerAddress",
     "title": "Add Customer Address",
     "name": "AddCustomerAddress",

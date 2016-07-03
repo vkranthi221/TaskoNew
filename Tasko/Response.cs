@@ -35,6 +35,9 @@ namespace Tasko
     [KnownType(typeof(FavoriteVendor))]
     [KnownType(typeof(List<FavoriteVendor>))]  
     [KnownType(typeof(List<ServiceDetail>))]
+    [KnownType(typeof(List<Vendor>))]
+    [KnownType(typeof(VendorSummary))]
+    [KnownType(typeof(List<VendorSummary>))]
     public class Response
     {
         /// <summary>

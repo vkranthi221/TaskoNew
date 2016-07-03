@@ -131,6 +131,7 @@ namespace Tasko.Repository
                 order.OrderId = reader["ORDER_ID"].ToString();
                 order.RequestedDate = Convert.ToDateTime(reader["REQUESTED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
                 order.ServiceName = reader["SERVICE_NAME"].ToString();
+                order.ServiceId = serviceId;
                 order.OrderStatus = reader["ORDER_STATUS_NAME"].ToString();               
                 order.CustomerName = reader["CUSTOMER_NAME"].ToString();
                 order.VendorName = reader["VENDOR_NAME"].ToString();
@@ -147,17 +148,17 @@ namespace Tasko.Repository
         /// </summary>
         /// <param name="serviceId">The service identifier.</param>
         /// <returns>list of vendors</returns>
-        public static List<Vendor> GetVendorsByService(string serviceId)
+        public static List<VendorSummary> GetVendorsByService(string serviceId)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
             objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(serviceId)));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorsByService", objParameters.ToArray());
-            List<Vendor> vendors = new List<Vendor>();
+            List<VendorSummary> vendors = new List<VendorSummary>();
 
             while (reader.Read())
             {
-                Vendor objVendor = new Vendor();
+                VendorSummary objVendor = new VendorSummary();
                 objVendor.Id = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
                 objVendor.UserName = reader["USER_NAME"].ToString();
                 objVendor.Name = reader["NAME"].ToString();
