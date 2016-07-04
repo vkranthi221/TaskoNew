@@ -358,7 +358,16 @@ namespace Tasko.Interfaces
             "Error": true,
             "Message": "Invalid token code",
             "Status": 400
-          }        
+          } 
+         * @apiError ORDERS_NOT_FOUND Order's not found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Order's not found",
+            "Status": 400
+          }
          */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
@@ -412,7 +421,16 @@ namespace Tasko.Interfaces
             "Error": true,
             "Message": "Invalid token code",
             "Status": 400
-          }        
+          }  
+         * @apiError VENDORS_NOT_FOUND Vendor's not found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Vendor's not found",
+            "Status": 400
+          }
          */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,

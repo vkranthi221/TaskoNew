@@ -138,7 +138,7 @@ namespace Tasko.Services
                    {
                        r.Error = true;
                        r.Status = 400;
-                       r.Message = CommonMessages.SUCCESS;
+                       r.Message = CommonMessages.SERVICE_IN_USE;
                    }
                    else
                    {
@@ -232,7 +232,7 @@ namespace Tasko.Services
                      else
                      {
                          r.Error = true;
-                         r.Message = CommonMessages.SERVICES_NOT_FOUND;
+                         r.Message = CommonMessages.ORDERS_NOT_FOUND;
                          r.Status = 400;
                      }
                  }
@@ -277,7 +277,7 @@ namespace Tasko.Services
                     else
                     {
                         r.Error = true;
-                        r.Message = CommonMessages.SERVICES_NOT_FOUND;
+                        r.Message = CommonMessages.VENDORS_NOT_FOUND;
                         r.Status = 400;
                     }
                 }

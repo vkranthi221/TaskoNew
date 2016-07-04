@@ -313,6 +313,15 @@ namespace Tasko {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to delete the selected service, as this service is in use..
+        /// </summary>
+        internal static string SERVICE_IN_USE {
+            get {
+                return ResourceManager.GetString("SERVICE_IN_USE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Services not found.
         /// </summary>
         internal static string SERVICES_NOT_FOUND {

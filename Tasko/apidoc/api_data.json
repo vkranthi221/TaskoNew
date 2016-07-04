@@ -442,6 +442,12 @@
             "optional": false,
             "field": "INVALID_TOKEN_CODE",
             "description": "<p>Invalid token code.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ORDERS_NOT_FOUND",
+            "description": "<p>Order's not found.</p>"
           }
         ]
       },
@@ -449,6 +455,11 @@
         {
           "title": "Error-Response:",
           "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Invalid token code\",\n   \"Status\": 400\n }",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Order's not found\",\n   \"Status\": 400\n }",
           "type": "json"
         }
       ]
@@ -534,6 +545,12 @@
             "optional": false,
             "field": "INVALID_TOKEN_CODE",
             "description": "<p>Invalid token code.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "VENDORS_NOT_FOUND",
+            "description": "<p>Vendor's not found.</p>"
           }
         ]
       },
@@ -541,6 +558,11 @@
         {
           "title": "Error-Response:",
           "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Invalid token code\",\n   \"Status\": 400\n }",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Vendor's not found\",\n   \"Status\": 400\n }",
           "type": "json"
         }
       ]

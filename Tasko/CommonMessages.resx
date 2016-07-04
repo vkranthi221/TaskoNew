@@ -216,5 +216,7 @@
   <data name="VENDOR_PRESENT_IN_FAVORITE_LIST" xml:space="preserve">
     <value>This vendor is already present in your favorite list.</value>
   </data>
-INVALID_OLD_PASSWORD
+  <data name="SERVICE_IN_USE" xml:space="preserve">
+    <value>Unable to delete the selected service, as this service is in use.</value>
+  </data>
 </root>
