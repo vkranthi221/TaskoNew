@@ -132,57 +132,13 @@ namespace Tasko.Model
         public string EmailAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the Password.
+        /// Gets or sets the vendor details.
         /// </summary>
         /// <value>
-        /// The Password.
+        /// The Vendor Details.
         /// </value>
         [DataMember]
-        public string Password { get; set; }
+        public VendorDetails VendorDetails { get; set; }
 
-        /// <summary>
-        /// Gets or sets the Gender.
-        /// </summary>
-        /// <value>
-        /// The Gender.
-        /// </value>
-        [DataMember]
-        public short Gender { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Date of birth.
-        /// </summary>
-        /// <value>
-        /// The Date of birth.
-        /// </value>
-        [DataMember]
-        public DateTime DateOfBirth { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Address Info.
-        /// </summary>
-        /// <value>
-        /// The Address Info.
-        /// </value>
-        [DataMember]
-        public AddressInfo VendorAddress { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Monthly Charge
-        /// </summary>
-        /// <value>
-        /// The Monthly Charge.
-        /// </value>
-        [DataMember]
-        public double MonthlyCharge { get; set; }
-
-        /// <summary>
-        /// Gets or sets the VendorServices
-        /// </summary>
-        /// <value>
-        /// The VendorServices.
-        /// </value>
-        [DataMember]
-        public VendorService VendorServices { get; set; }
     }
 }
