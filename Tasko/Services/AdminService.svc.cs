@@ -329,7 +329,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                //AdminData.AddVendor(vendor);
+                AdminData.AddVendor(vendor);
                 r.Error = false;
                 r.Message = CommonMessages.SUCCESS;
                 r.Status = 200;

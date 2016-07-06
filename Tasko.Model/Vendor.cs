@@ -139,6 +139,15 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public VendorDetails VendorDetails { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the address details.
+        /// </summary>
+        /// <value>
+        /// The Address Details.
+        /// </value>
+        [DataMember]
+        public AddressInfo AddressDetails { get; set; }
 
     }
 }

@@ -66,5 +66,32 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public List<VendorService> VendorServices { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Vendor is blocked
+        /// </summary>
+        /// <value>
+        /// The Is Vendor Blocked.
+        /// </value>
+        [DataMember]
+        public bool IsBlocked { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Vendor is power seller
+        /// </summary>
+        /// <value>
+        /// The Is Vendor power seller.
+        /// </value>
+        [DataMember]
+        public bool IsPowerSeller { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Vendor is blocked from orders
+        /// </summary>
+        /// <value>
+        /// The Is Vendor Blocked from orders.
+        /// </value>
+        [DataMember]
+        public bool AreOrdersBlocked { get; set; }
     }
 }

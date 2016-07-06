@@ -15,6 +15,7 @@ namespace Tasko.Repository
     /// </summary>
     public static class AdminData
     {
+        #region Services
         /// <summary>
         /// Adds the service.
         /// </summary>
@@ -172,5 +173,34 @@ namespace Tasko.Repository
 
             return vendors;
         }
+        #endregion
+
+        #region Vendor
+
+        /// <summary>
+        /// Adds the Vendor.
+        /// </summary>
+        /// <param name="vendor">The Vendor to add</param>
+        public static void AddVendor(Vendor vendor)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            //// add the source address and get the Source addressId
+            string vendorAddressId = CustomerData.AddAddress(vendor.AddressDetails);
+
+            //objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.xml, service.Name));
+            //objParameters.Add(SqlHelper.CreateParameter("@pImageUrl", DbType.String, service.ImageURL));
+            //if (string.IsNullOrWhiteSpace(service.ParentServiceId))
+            //{
+            //    objParameters.Add(SqlHelper.CreateParameter("@pParentServiceId", DbType.Binary, DBNull.Value));
+            //}
+            //else
+            //{
+            //    objParameters.Add(SqlHelper.CreateParameter("@pParentServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(service.ParentServiceId)));
+            //}
+
+            //objParameters.Add(SqlHelper.CreateParameter("@pStatus", DbType.Int16, service.Status));
+            //SqlHelper.ExecuteNonQuery("dbo.usp_AddService", objParameters.ToArray());
+        }
+        #endregion
     }
 }
