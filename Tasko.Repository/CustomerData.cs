@@ -425,7 +425,7 @@ namespace Tasko.Repository
         /// <returns>
         /// Address Info
         /// </returns>
-        private static AddressInfo PopulateAddress(DataRow dataRow)
+        public static AddressInfo PopulateAddress(DataRow dataRow)
         {
             AddressInfo addressInfo = new AddressInfo();
             addressInfo.AddressId = BinaryConverter.ConvertByteToString((byte[])dataRow["Address_ID"]);
@@ -446,7 +446,7 @@ namespace Tasko.Repository
         /// </summary>
         /// <param name="addressInfo">The address.</param>
         /// <returns>Address Id</returns>
-        private static string AddAddress(AddressInfo addressInfo)
+        public static string AddAddress(AddressInfo addressInfo)
         {
             string AddressId = string.Empty;
 
