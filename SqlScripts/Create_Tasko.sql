@@ -67,25 +67,40 @@ CREATE TABLE [dbo].[ID_PROOFS](
 
 GO
 
---For now I removed the VendorId column as i dont see any use case
 CREATE TABLE [dbo].[VENDOR](
-	[VENDOR_ID] Binary (16) NOT NULL ,
-	[USER_NAME] VARCHAR(MAX) NOT NULL,
-	[NAME] VARCHAR(MAX) NOT NULL,
+	[VENDOR_ID] [binary](16) NOT NULL,
+	[USER_NAME] [varchar](max) NOT NULL,
+	[NAME] [varchar](max) NOT NULL,
 	[MOBILE_NUMBER] [varchar](50) NOT NULL,
-	[PASSWORD] VARCHAR(MAX) NOT NULL,
-	[EMAIL_ADDRESS] VARCHAR(max) NULL,
-	[ADDRESS] VARCHAR(MAX) NOT NULL,
-	[PHOTO] [image] NULL,
-	[EMPLOYEE_COUNT] int NOT NULL,
-	[BASE_RATE] decimal(18, 0) NOT NULL,
-	[IS_VENDOR_VERIFIED] bit NOT NULL,
-	[IS_VENDOR_LIVE] bit NOT NULL,
-	[TIME_SPENT_ON_APP] time(7) NOT NULL,
-	[ACTIVE_TIME_PER_DAY] time(7) NOT NULL,
-	[DATA_CONSUMPTION] decimal(18, 0) NOT NULL,
-	[CALLS_TO_CUSTOMER_CARE] int NOT NULL,
-    CONSTRAINT [VENDOR_PK] PRIMARY KEY CLUSTERED(VENDOR_ID))
+	[PASSWORD] [varchar](max) NOT NULL,
+	[EMAIL_ADDRESS] [varchar](max) NULL,
+	[ADDRESS_ID] [binary](16) NULL,
+	[PHOTO] [varbinary](max) NULL,
+	[EMPLOYEE_COUNT] [int] NOT NULL,
+	[BASE_RATE] [decimal](18, 0) NOT NULL,
+	[IS_VENDOR_VERIFIED] [bit] NOT NULL,
+	[IS_VENDOR_LIVE] [bit] NOT NULL,
+	[TIME_SPENT_ON_APP] [time](7) NULL,
+	[ACTIVE_TIME_PER_DAY] [time](7) NULL,
+	[DATA_CONSUMPTION] [decimal](18, 0) NULL,
+	[CALLS_TO_CUSTOMER_CARE] [int] NULL,
+	[VENDOR_DETAILS] [xml] NULL,
+ CONSTRAINT [VENDOR_PK] PRIMARY KEY CLUSTERED 
+(
+	[VENDOR_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[VENDOR]  WITH CHECK ADD  CONSTRAINT [FK_VENDOR_ADDRESS] FOREIGN KEY([ADDRESS_ID])
+REFERENCES [dbo].[ADDRESS] ([Address_ID])
+GO
+
+ALTER TABLE [dbo].[VENDOR] CHECK CONSTRAINT [FK_VENDOR_ADDRESS]
 GO
 
 CREATE TABLE [dbo].[VENDOR_SERVICES](
@@ -356,25 +371,34 @@ BEGIN
 
 SET NOCOUNT ON;
 
-SELECT [VENDOR_ID]
-      ,[USER_NAME]
-      ,[NAME]
-      ,[MOBILE_NUMBER]
-      ,[EMAIL_ADDRESS]
-      ,[ADDRESS]
-      ,[PHOTO]
-      ,[EMPLOYEE_COUNT]
-      ,[BASE_RATE]
-      ,[IS_VENDOR_VERIFIED]
-      ,[IS_VENDOR_LIVE]
-      ,[TIME_SPENT_ON_APP]
-      ,[ACTIVE_TIME_PER_DAY]
-      ,[DATA_CONSUMPTION]
-      ,[CALLS_TO_CUSTOMER_CARE]
-FROM [dbo].[VENDOR] (NOLOCK)
+SELECT VD.VENDOR_ID
+      ,VD.USER_NAME
+      ,VD.NAME
+      ,VD.MOBILE_NUMBER
+      ,VD.EMAIL_ADDRESS
+      ,AD.Address AS VENDOR_ADDRESS
+	  ,AD.COUNTRY AS VENDOR_COUNTRY
+	  ,AD.CITY AS VENDOR_CITY
+	  ,AD.CITY AS VENDOR_STATE
+	  ,AD.LATITIUDE AS VENDOR_LATTITUDE
+	  ,AD.LOCALITY AS VENDOR_LOCALITY
+	  ,AD.LONGITUDE AS VENDOR_LONGITUDE
+	  ,AD.PINCODE AS VENDOR_PINCODE
+      ,VD.PHOTO
+      ,VD.EMPLOYEE_COUNT
+      ,VD.BASE_RATE
+      ,VD.IS_VENDOR_VERIFIED
+      ,VD.IS_VENDOR_LIVE
+      ,VD.TIME_SPENT_ON_APP
+      ,VD.ACTIVE_TIME_PER_DAY
+      ,VD.DATA_CONSUMPTION
+      ,VD.CALLS_TO_CUSTOMER_CARE
+FROM [dbo].[VENDOR] VD (NOLOCK)
+INNER JOIN ADDRESS AD ON VD.ADDRESS_ID = AD.Address_ID
 WHERE VENDOR_ID = @pVendorId 
 
 END
+
 GO
 CREATE PROCEDURE [dbo].[usp_GetOrderDetails]
 (
@@ -1470,6 +1494,53 @@ SELECT TOP 10 ORD.ORDER_ID, Cust.CUSTOMER_ID, CUST.NAME AS CUSTOMER_NAME, VS.VEN
 WHERE ORD.ORDER_STATUS_ID = @pStatus ORDER BY ORD.REQUESTED_DATE DESC
 
 END
+GO
+CREATE PROCEDURE [dbo].[usp_AddVendor]
+(
+  @pVendorDetails xml,
+  @pBaseRate float,
+  @pEmailAddress nvarchar(max),
+  @pIsVendorLive bit,
+  @pIsVendorVerified bit,
+  @pMobileNumber nvarchar(max),
+  @pName nvarchar(max),
+  @pNoOfEmployees int,
+  --@pTimeSpentOnApp nvarchar(max),
+  @pUserName nvarchar(max),
+  @pAddressId binary(16),
+  @pPassword nvarchar(max)
+  --@pActiveTimePerDay nvarchar(max),
+  --@pDataConsumption int,
+  --@pCallsToCustomerCare int
+)
+
+AS
+BEGIN
+SET NOCOUNT ON;
+DECLARE @vendorId Binary(16)
+SET @vendorId = NEWID()
+
+INSERT INTO VENDOR (VENDOR_ID, [USER_NAME], NAME, MOBILE_NUMBER, [PASSWORD], EMAIL_ADDRESS, ADDRESS_ID, EMPLOYEE_COUNT, BASE_RATE, IS_VENDOR_VERIFIED, IS_VENDOR_LIVE, VENDOR_DETAILS) 
+            VALUES (@vendorId, @pUserName, @pName, @pMobileNumber, @pPassword, @pEmailAddress, @pAddressId, @pNoOfEmployees, @pBaseRate,   @pIsVendorVerified,@pIsVendorLive, @pVendorDetails)
+			SELECT @vendorId as VENDOR_ID
+   
+END
+
+GO
+
+CREATE PROCEDURE [dbo].[usp_AddVendorService]
+(
+	@pServiceId Binary(16),
+	@pVendorId Binary(16),
+	@pIsActive bit
+)
+AS
+BEGIN
+
+ INSERT INTO [dbo].[VENDOR_SERVICES] VALUES (NEWID(), @pVendorId, @pServiceId, @pIsActive)
+
+END
+
 GO
 
 

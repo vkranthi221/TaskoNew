@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 using Tasko.Common;
 using Tasko.Model;
 
@@ -184,22 +187,61 @@ namespace Tasko.Repository
         public static void AddVendor(Vendor vendor)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
-            //// add the source address and get the Source addressId
+            //// add the vendor address 
             string vendorAddressId = CustomerData.AddAddress(vendor.AddressDetails);
+            
+            XmlSerializer xmlSerializer = new XmlSerializer(vendor.VendorDetails.GetType());
+            string vendorDetailsXml = string.Empty;
+            using (StringWriter sw = new StringWriter())
+            using (XmlWriter writer = XmlWriter.Create(sw))
+            {
+                xmlSerializer.Serialize(writer, vendor.VendorDetails);
+                vendorDetailsXml = sw.ToString(); // Your XML
+            }
 
-            //objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.xml, service.Name));
-            //objParameters.Add(SqlHelper.CreateParameter("@pImageUrl", DbType.String, service.ImageURL));
-            //if (string.IsNullOrWhiteSpace(service.ParentServiceId))
-            //{
-            //    objParameters.Add(SqlHelper.CreateParameter("@pParentServiceId", DbType.Binary, DBNull.Value));
-            //}
-            //else
-            //{
-            //    objParameters.Add(SqlHelper.CreateParameter("@pParentServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(service.ParentServiceId)));
-            //}
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorDetails", DbType.Xml, vendorDetailsXml));
+            objParameters.Add(SqlHelper.CreateParameter("@pBaseRate", DbType.Double, vendor.BaseRate));
+            objParameters.Add(SqlHelper.CreateParameter("@pEmailAddress", DbType.String, vendor.EmailAddress));
+            objParameters.Add(SqlHelper.CreateParameter("@pIsVendorLive", DbType.Boolean, vendor.IsVendorLive));
+            objParameters.Add(SqlHelper.CreateParameter("@pIsVendorVerified", DbType.Boolean, vendor.IsVendorVerified));
+            objParameters.Add(SqlHelper.CreateParameter("@pMobileNumber", DbType.String, vendor.MobileNumber));
+            objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.String, vendor.Name));
+            objParameters.Add(SqlHelper.CreateParameter("@pNoOfEmployees", DbType.Int32, vendor.NoOfEmployees));
+            //objParameters.Add(SqlHelper.CreateParameter("@pTimeSpentOnApp", DbType.String, vendor.TimeSpentOnApp));
+            objParameters.Add(SqlHelper.CreateParameter("@pUserName", DbType.String, vendor.UserName));
+            objParameters.Add(SqlHelper.CreateParameter("@pAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorAddressId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pPassword", DbType.String, vendor.Password));
+            //objParameters.Add(SqlHelper.CreateParameter("@pPhoto", DbType.varbin, vendor.Photo));
+            //objParameters.Add(SqlHelper.CreateParameter("@pActiveTimePerDay", DbType.String, vendor.ActiveTimePerDay));
+            //objParameters.Add(SqlHelper.CreateParameter("@pDataConsumption", DbType.Int32, vendor.DataConsumption));
+            //objParameters.Add(SqlHelper.CreateParameter("@pCallsToCustomerCare", DbType.Int32, vendor.CallsToCustomerCare));
+            byte[] vendorId = (byte[])SqlHelper.ExecuteScalar("dbo.usp_AddVendor", objParameters.ToArray());
 
-            //objParameters.Add(SqlHelper.CreateParameter("@pStatus", DbType.Int16, service.Status));
-            //SqlHelper.ExecuteNonQuery("dbo.usp_AddService", objParameters.ToArray());
+            if (vendor.VendorServices != null && vendorId != null)
+            {
+                string id = BinaryConverter.ConvertByteToString(vendorId);
+                AddVendorServices(vendor.VendorServices, id);
+            }
+        }
+
+        #endregion
+
+        #region Common
+        /// <summary>
+        /// Adds the Vendor services.
+        /// </summary>
+        /// <param name="vendorServices">The Vendor services to add</param>
+        /// <param name="vendorId">The Vendor Id</param>
+        private static void AddVendorServices(List<ServicesForVendor> vendorServices, string vendorId)
+        {
+            foreach (ServicesForVendor vendorService in vendorServices)
+            {
+                List<SqlParameter> objParameters = new List<SqlParameter>();
+                objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorService.ServiceId)));
+                objParameters.Add(SqlHelper.CreateParameter("@pIsActive", DbType.Boolean, vendorService.IsActive));
+                objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
+                SqlHelper.ExecuteNonQuery("dbo.usp_AddVendorService", objParameters.ToArray());
+            }
         }
         #endregion
     }

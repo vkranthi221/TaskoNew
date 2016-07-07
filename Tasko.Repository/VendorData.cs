@@ -95,13 +95,20 @@ namespace Tasko.Repository
                 objVendor.Name = reader["NAME"].ToString();
                 objVendor.MobileNumber = reader["MOBILE_NUMBER"].ToString();
                 objVendor.EmailAddress = Convert.ToString(reader["EMAIL_ADDRESS"]);
-                //objVendor.VendorAddress = new AddressInfo();
-                //objVendor.VendorAddress.Address = reader["ADDRESS"].ToString();
+                objVendor.AddressDetails = new AddressInfo();
+                objVendor.AddressDetails.Address = reader["VENDOR_ADDRESS"].ToString();
+                objVendor.AddressDetails.Country = reader["VENDOR_COUNTRY"].ToString();
+                objVendor.AddressDetails.City = reader["VENDOR_CITY"].ToString();
+                objVendor.AddressDetails.State = reader["VENDOR_STATE"].ToString();
+                objVendor.AddressDetails.Lattitude = reader["VENDOR_LATTITUDE"].ToString();
+                objVendor.AddressDetails.Locality = reader["VENDOR_LOCALITY"].ToString();
+                objVendor.AddressDetails.Longitude = reader["VENDOR_LONGITUDE"].ToString();
+                objVendor.AddressDetails.Pincode = reader["VENDOR_PINCODE"].ToString();
                 objVendor.NoOfEmployees = Convert.ToInt32(reader["EMPLOYEE_COUNT"]);
                 objVendor.BaseRate = Convert.ToDouble(reader["BASE_RATE"]);
                 objVendor.IsVendorVerified = Convert.ToBoolean(reader["IS_VENDOR_VERIFIED"]);
-                objVendor.DataConsumption = Convert.ToInt32(reader["DATA_CONSUMPTION"]);
-                objVendor.CallsToCustomerCare = Convert.ToInt32(reader["CALLS_TO_CUSTOMER_CARE"]);
+                //objVendor.DataConsumption = Convert.ToInt32(reader["DATA_CONSUMPTION"]);
+                //objVendor.CallsToCustomerCare = Convert.ToInt32(reader["CALLS_TO_CUSTOMER_CARE"]);
             }
 
             reader.Close();
@@ -387,6 +394,13 @@ namespace Tasko.Repository
         public static void UpdateVendor(Vendor vendor)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            ////Address
+            if (vendor.AddressDetails != null && !string.IsNullOrEmpty(vendor.AddressDetails.AddressId))
+            {
+                CustomerData.UpdateAddress(vendor.AddressDetails);
+            }
+
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendor.Id)));
             if (!string.IsNullOrEmpty(vendor.Name))
             {
@@ -406,16 +420,6 @@ namespace Tasko.Repository
             {
                 objParameters.Add(SqlHelper.CreateParameter("@pNpMobileNumberame", DbType.String, DBNull.Value));
             }
-
-            // Address
-            ////if (!string.IsNullOrEmpty(vendor.vendor))
-            ////{
-            ////    objParameters.Add(SqlHelper.CreateParameter("@pAddress", DbType.String, vendor.Address));
-            ////}
-            ////else
-            ////{
-            ////    objParameters.Add(SqlHelper.CreateParameter("@pAddress", DbType.String, DBNull.Value));
-            ////}
 
             // EmailAddress
             if (!string.IsNullOrEmpty(vendor.EmailAddress))

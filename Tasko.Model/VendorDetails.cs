@@ -13,14 +13,6 @@ namespace Tasko.Model
     [DataContract]
     public class VendorDetails
     {
-        /// <summary>
-        /// Gets or sets the Password.
-        /// </summary>
-        /// <value>
-        /// The Password.
-        /// </value>
-        [DataMember]
-        public string Password { get; set; }
 
         /// <summary>
         /// Gets or sets the Gender.
@@ -41,15 +33,6 @@ namespace Tasko.Model
         public DateTime DateOfBirth { get; set; }
 
         /// <summary>
-        /// Gets or sets the Address Info.
-        /// </summary>
-        /// <value>
-        /// The Address Info.
-        /// </value>
-        [DataMember]
-        public AddressInfo VendorAddress { get; set; }
-
-        /// <summary>
         /// Gets or sets the Monthly Charge
         /// </summary>
         /// <value>
@@ -57,15 +40,6 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public double MonthlyCharge { get; set; }
-
-        /// <summary>
-        /// Gets or sets the VendorServices
-        /// </summary>
-        /// <value>
-        /// The VendorServices.
-        /// </value>
-        [DataMember]
-        public List<VendorService> VendorServices { get; set; }
 
         /// <summary>
         /// Gets or sets the Vendor is blocked

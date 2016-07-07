@@ -11,13 +11,33 @@ GO
 SELECT * FROM [dbo].[ORDER_STATUS]
 GO
 
+INSERT INTO [dbo].[ADDRESS] VALUES(newId(),'India','Telangana','10','200','kphb','Hyderabad','plot no 101, vivekanandaNagar','500081')
+INSERT INTO [dbo].[ADDRESS] VALUES(newId(),'India','Telangana','40','600','HMT HILLS','Hyderabad','plot no 404, BaghyaNagar','500072')
+INSERT INTO [dbo].[ADDRESS] VALUES(newId(),'India','Telangana','80','90','DSNR','Hyderabad','plot no 202, DilsukhNagar','500068')
+
 ------------ Vendor TestData -----------
 --  VendorId Should be binary not int,
 --  Name and Number should be unique, 
 --  mobile number should not be varchar(max) change it to nVarchar(10)
   
-INSERT INTO [dbo].[Vendor] values(NEWID(),'mchandu123','chandra','9985466195','12345','mchandu123@gmail.com','KPHB,VivekanandaNagar',null,10,50.00,1,1,Getdate(),Getdate(),10.00,123)
-INSERT INTO [dbo].[Vendor] values(NEWID(),'sree123','Srikanth','1234567890','12345','sree@gmail.com','KPHB,HMT Hills',null,10,100.00,1,1,Getdate(),Getdate(),10.00,123)
+INSERT INTO [dbo].[Vendor] values(NEWID(),'mchandu123','chandra','9985466195','12345','mchandu123@gmail.com',(select ADDRESS_ID from [dbo].[ADDRESS] WHERE ADDRESS='kphb'),null,10,50.00,1,1,Getdate(),Getdate(),10.00,123,
+'<VendorDetails xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Gender>1</Gender>
+  <DateOfBirth>2016-07-07T10:40:52.97639+05:30</DateOfBirth>
+  <MonthlyCharge>100</MonthlyCharge>
+  <IsBlocked>false</IsBlocked>
+  <IsPowerSeller>true</IsPowerSeller>
+  <AreOrdersBlocked>false</AreOrdersBlocked>
+</VendorDetails>')
+INSERT INTO [dbo].[Vendor] values(NEWID(),'sree123','Srikanth','1234567890','12345','sree@gmail.com',(select ADDRESS_ID from [dbo].[ADDRESS] WHERE ADDRESS='HMT HILLS'),null,10,100.00,1,1,Getdate(),Getdate(),10.00,123,
+'<VendorDetails xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Gender>1</Gender>
+  <DateOfBirth>2016-07-07T10:40:52.97639+05:30</DateOfBirth>
+  <MonthlyCharge>100</MonthlyCharge>
+  <IsBlocked>false</IsBlocked>
+  <IsPowerSeller>true</IsPowerSeller>
+  <AreOrdersBlocked>false</AreOrdersBlocked>
+</VendorDetails>')
 SELECT * FROM [dbo].[Vendor]
 
 INSERT INTO [dbo].VENDOR_SERVICES values(newId(),(select Vendor_Id from [dbo].Vendor WHERE NAME='chandra'),(select Service_Id from [dbo].[SERVICES] WHERE NAME='Electrician'),1)
@@ -32,10 +52,6 @@ INSERT INTO [dbo].CUSTOMER values(newid(),'Shivaji123','shivaji123@gmail.com','9
 INSERT INTO [dbo].CUSTOMER values(newid(),'Shivaji456','shivaji456@gmail.com','9876543210')
 SELECT * FROM [dbo].Customer
 
-
-INSERT INTO [dbo].[ADDRESS] VALUES(newId(),'India','Telangana','10','200','kphb','Hyderabad','plot no 101, vivekanandaNagar','500081')
-INSERT INTO [dbo].[ADDRESS] VALUES(newId(),'India','Telangana','40','600','HMT HILLS','Hyderabad','plot no 404, BaghyaNagar','500072')
-INSERT INTO [dbo].[ADDRESS] VALUES(newId(),'India','Telangana','80','90','DSNR','Hyderabad','plot no 202, DilsukhNagar','500068')
 
 INSERT INTO [dbo].[ORDER] values(dbo.GenerateOrderID(),(select VENDOR_SERVICE_ID from [dbo].VENDOR_SERVICES where VENDOR_ID in (select VENDOR_ID from [dbo].Vendor WHERE NAME='chandra') AND SERVICE_ID IN (SELECT SERVICE_ID FROM [dbo].[SERVICES] WHERE NAME='Electrician')) ,(SELECT CUSTOMER_ID FROM [dbo].CUSTOMER WHERE NAME='Shivaji'),Getdate(),(SELECT ORDER_STATUS_Id FROM [dbo].ORDER_STATUS WHERE NAME='Requested'),'kphb',(SELECT address_ID FROM [dbo].Address WHERE Locality='kphb'),(SELECT address_ID FROM [dbo].Address WHERE Locality='HMT HILLS'),NULL)
 INSERT INTO [dbo].[ORDER] values(dbo.GenerateOrderID(),(select VENDOR_SERVICE_ID from [dbo].VENDOR_SERVICES where VENDOR_ID in (select VENDOR_ID from [dbo].Vendor WHERE NAME='Srikanth') AND SERVICE_ID IN (SELECT SERVICE_ID FROM [dbo].[SERVICES] WHERE NAME='Microwave Service')) ,(SELECT CUSTOMER_ID FROM [dbo].CUSTOMER WHERE NAME='Shivaji123'),Getdate(),(SELECT ORDER_STATUS_Id FROM [dbo].ORDER_STATUS WHERE NAME='Requested'),'kphb',(SELECT address_ID FROM [dbo].Address WHERE Locality='kphb'),(SELECT address_ID FROM [dbo].Address WHERE Locality='HMT HILLS'),NULL)

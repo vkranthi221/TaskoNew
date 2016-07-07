@@ -299,6 +299,15 @@ namespace Tasko.Repository
         /// <param name="addressInfo">The address information.</param>
         public static void UpdateCustomerAddress(AddressInfo addressInfo)
         {
+            UpdateAddress(addressInfo);
+        }
+
+        /// <summary>
+        /// Updates the address.
+        /// </summary>       
+        /// <param name="addressInfo">The address information.</param>
+        public static void UpdateAddress(AddressInfo addressInfo)
+        {
             List<SqlParameter> objParameters = new List<SqlParameter>();
             objParameters.Add(SqlHelper.CreateParameter("@pAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(addressInfo.AddressId)));
             objParameters.Add(SqlHelper.CreateParameter("@pCountry", DbType.String, addressInfo.Country));

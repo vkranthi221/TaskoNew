@@ -93,7 +93,7 @@ namespace Tasko.Model
         /// The time spent on application.
         /// </value>
         //[DataMember]
-        public string TimeSpentOnApp { get; set; }
+        ////public string TimeSpentOnApp { get; set; }
 
         /// <summary>
         /// Gets or sets the active time per day.
@@ -102,7 +102,7 @@ namespace Tasko.Model
         /// The active time per day.
         /// </value>
         //[DataMember]
-        public string ActiveTimePerDay { get; set; }
+        ////public string ActiveTimePerDay { get; set; }
 
         /// <summary>
         /// Gets or sets the data consumption.
@@ -110,8 +110,8 @@ namespace Tasko.Model
         /// <value>
         /// The data consumption.
         /// </value>
-        [DataMember]
-        public int DataConsumption { get; set; }
+        //[DataMember]
+        //public int DataConsumption { get; set; }
 
         /// <summary>
         /// Gets or sets the calls to customer care.
@@ -119,8 +119,8 @@ namespace Tasko.Model
         /// <value>
         /// The calls to customer care.
         /// </value>
-        [DataMember]
-        public int CallsToCustomerCare { get; set; }
+        //[DataMember]
+        //public int CallsToCustomerCare { get; set; }
 
         /// <summary>
         /// Gets or sets the email address.
@@ -148,6 +148,33 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public AddressInfo AddressDetails { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Password.
+        /// </summary>
+        /// <value>
+        /// The Password.
+        /// </value>
+        [DataMember]
+        public string Password { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Vendor photo
+        /// </summary>
+        /// <value>
+        /// The Vendor photo.
+        /// </value>
+        [DataMember]
+        public byte[] Photo { get; set; }
+
+        /// <summary>
+        /// Gets or sets the VendorServices
+        /// </summary>
+        /// <value>
+        /// The VendorServices.
+        /// </value>
+        [DataMember]
+        public List<ServicesForVendor> VendorServices { get; set; }
 
     }
 }
