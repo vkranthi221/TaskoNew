@@ -15,16 +15,16 @@ namespace TaskoTestClient
             string orderId = "TASKO1000";
             string vendorId = "70F974CDC6E6664A898A8106C3D3D693";
             string venodorServiceId = "287EB41076025347AAE5EC48F79BCE15";
-            VendorData.GetVendor("3BCF0E621CC9FA45B644AD360D3B7E29");
-            Vendor updateVendor = new Vendor();
-            updateVendor.Id = "9919728A25404C4A8BE6858C02CC8577";
-            updateVendor.Name="test6";
-            updateVendor.MobileNumber ="0000000000";
-            updateVendor.Gender = 0;
+            //VendorData.GetVendor("3BCF0E621CC9FA45B644AD360D3B7E29");
+            //Vendor updateVendor = new Vendor();
+            //updateVendor.Id = "9919728A25404C4A8BE6858C02CC8577";
+            //updateVendor.Name="test6";
+            //updateVendor.MobileNumber ="0000000000";
+            //updateVendor.Gender = 0;
 
-            VendorData.UpdateVendor(updateVendor);
+            //VendorData.UpdateVendor(updateVendor);
 
-
+            AdminData.GetServicesForVendor("AFB2B50F2164804C8E6D26A6C4A32982");
             Vendor vendor = new Vendor();
             //vendor.ActiveTimePerDay = "08:01:10.0800000";
             vendor.AddressDetails = new AddressInfo();

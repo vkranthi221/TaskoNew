@@ -30,5 +30,14 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public bool IsActive { get; set; }
+
+        /// <summary>
+        /// Gets or sets the service name.
+        /// </summary>
+        /// <value>
+        /// The service name.
+        /// </value>
+        [DataMember]
+        public string ServiceName { get; set; }
     }
 }

@@ -213,6 +213,7 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pPassword", DbType.String, vendor.Password));
             objParameters.Add(SqlHelper.CreateParameter("@pDOB", DbType.DateTime, vendor.DateOfBirth));
             objParameters.Add(SqlHelper.CreateParameter("@pGender", DbType.Int16, vendor.Gender));
+            objParameters.Add(SqlHelper.CreateParameter("@pPassword", DbType.Int16, vendor.Password));
             //objParameters.Add(SqlHelper.CreateParameter("@pPhoto", DbType.varbin, vendor.Photo));
             //objParameters.Add(SqlHelper.CreateParameter("@pActiveTimePerDay", DbType.String, vendor.ActiveTimePerDay));
             //objParameters.Add(SqlHelper.CreateParameter("@pDataConsumption", DbType.Int32, vendor.DataConsumption));
@@ -226,6 +227,37 @@ namespace Tasko.Repository
             }
         }
 
+        /// <summary>
+        /// Gets the services of the vendor
+        /// </summary>
+        /// <param name="vendorId">The Vendor Id to get services</param>
+        public static List<ServicesForVendor> GetServicesForVendor(string vendorId)
+        {
+            List<ServicesForVendor> services = new List<ServicesForVendor>();
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.String, BinaryConverter.ConvertStringToByte(vendorId)));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetServicesForVendor", objParameters.ToArray());
+            while (reader.Read())
+            {
+                ServicesForVendor vendorService = new ServicesForVendor();
+                vendorService.ServiceId = BinaryConverter.ConvertByteToString((byte[])reader["SERVICE_ID"]);
+                vendorService.ServiceName = reader["SERVICE_NAME"].ToString();
+                services.Add(vendorService);
+            }
+
+            return services;
+        }
+
+        /// <summary>
+        /// Updates the services of the vendor
+        /// </summary>
+        /// <param name="vendorId">vendor Id</param>
+        /// <param name="services">Services if vendor</param>
+        public static void UpdateServicesForVendor(string vendorId, List<ServicesForVendor> services)
+        {
+            DeleteVendorServices(vendorId);
+            AddVendorServices(services, vendorId);
+        }
         #endregion
 
         #region Common
@@ -244,6 +276,17 @@ namespace Tasko.Repository
                 objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
                 SqlHelper.ExecuteNonQuery("dbo.usp_AddVendorService", objParameters.ToArray());
             }
+        }
+
+        /// <summary>
+        /// Deletes the Vendor services.
+        /// </summary>
+        /// <param name="vendorId">The Vendor Id</param>
+        private static void DeleteVendorServices(string vendorId)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
+            SqlHelper.ExecuteNonQuery("dbo.usp_DeleteVendorServices", objParameters.ToArray());
         }
         #endregion
     }

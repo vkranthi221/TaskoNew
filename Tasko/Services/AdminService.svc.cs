@@ -329,12 +329,20 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                AdminData.AddVendor(vendor);
-                r.Error = false;
-                r.Message = CommonMessages.SUCCESS;
-                r.Status = 200;
-                r.Data = null;
-
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    AdminData.AddVendor(vendor);
+                    r.Error = false;
+                    r.Status = 200;
+                    r.Message = CommonMessages.SUCCESS;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
             }
             catch (Exception ex)
             {
@@ -343,6 +351,85 @@ namespace Tasko.Services
             }
 
             return r; 
+        }
+
+        /// <summary>
+        /// Get Services For Vendor.
+        /// </summary>
+        /// <param name="vendorId">Vendor Id.</param>
+        /// <returns>Response Object</returns>
+        public Response GetServicesForVendor(string vendorId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    List<ServicesForVendor> servicesForVendor = AdminData.GetServicesForVendor(vendorId);
+                    if (servicesForVendor != null)
+                    {
+                        r.Error = false;
+                        r.Status = 200;
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Data = servicesForVendor;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Message = CommonMessages.SERVICES_NOT_FOUND;
+                        r.Status = 40;
+                        r.Data = null;
+                    }
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r; 
+        }
+
+        /// <summary>
+        /// Updates Services For Vendor.
+        /// </summary>
+        /// <param name="services">Services for Vendor.</param>
+        /// <returns>Response Object</returns>
+        public Response UpdateServicesForVendor(string vendorId, List<ServicesForVendor> services)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    AdminData.UpdateServicesForVendor(vendorId, services);
+                    r.Error = false;
+                    r.Status = 200;
+                    r.Message = CommonMessages.SUCCESS;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
         }
         #endregion
 

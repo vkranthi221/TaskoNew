@@ -443,6 +443,110 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response AddVendor(Vendor vendor);
+
+        /**
+         * @api {post} a1/GetServicesForVendor Get Services For Vendor
+         * @apiName GetServicesForVendor
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *  
+         *  @apiParam {string} vendorId Vendor Id.
+         *
+         * @apiParamExample {json} Param-Example:
+         * { 
+         *   "vendorId":"AFB2B50F2164804C8E6D26A6C4A32982"
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+           "Data": [
+                    {
+                      "__type": "ServicesForVendor:#Tasko.Model",
+                      "IsActive": false,
+                      "ServiceId": "F4878463A2FF5043BF3763F8AA913DE1",
+                      "ServiceName": "Microwave Service"
+                    }
+                  ],
+                  "Error": false,
+                  "Message": "Success",
+                  "Status": 200
+         }
+         * @apiError SERVICES_NOT_FOUND Services not found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Services not found",
+            "Status": 400
+          }        
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetServicesForVendor(string vendorId);
+        /**
+         * @api {post} a1/UpdateServicesForVendor Update Services For Vendor
+         * @apiName UpdateServicesForVendor
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *  
+         * @apiParam {string} vendorId VendorId
+         * @apiParam {ServicesForVendor} services List of services for vendor.
+         *
+         * @apiParamExample {json} Param-Example:
+         * { 
+         *   "vendorId": "AFB2B50F2164804C8E6D26A6C4A32982",
+         *   "Data": [
+                    {
+                      "__type": "ServicesForVendor:#Tasko.Model",
+                      "ServiceId": "F4878463A2FF5043BF3763F8AA913DE1",
+                      "ServiceName": "Microwave Service"
+                    }
+                  ]
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+           "Data": null,
+            "Error": false,
+            "Message": "Success",
+            "Status": 200
+         }
+         * @apiError INVALID_TOKEN_CODE Invalid token code.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Invalid token code",
+            "Status": 400
+          }        
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response UpdateServicesForVendor(string vendorId, List<ServicesForVendor> services);
         #endregion
 
         #region Customers
