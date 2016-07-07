@@ -310,7 +310,7 @@ namespace Tasko.Repository
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
-            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, null));
+            //objParameters.Add(SqlHelper.CreateParameter("@pVENDORID", DbType.Binary, null));
             objParameters.Add(SqlHelper.CreateParameter("@pORDERSTATUSID", DbType.Int32, orderStatusId));
             objParameters.Add(SqlHelper.CreateParameter("@pRECORDSPERPAGE", DbType.Int32, 0));
             objParameters.Add(SqlHelper.CreateParameter("@pPAGENO", DbType.Int32, 0));

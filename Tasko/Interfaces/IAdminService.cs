@@ -562,17 +562,20 @@ namespace Tasko.Interfaces
 
         #region Orders
         /**
-        * @api {post} v1/GetVendorOrders Get Vendor Orders
-        * @apiName GetVendorOrders
-        * @apiGroup Vendor
+        * @api {post} a1/GetOrders Get Orders
+        * @apiName GetOrders
+        * @apiGroup Admin
         *
         * @apiHeader {string} Token_Code Token Code
         * @apiHeader {string} Content-Type application/json
+        * @apiHeader {string} User_Id User Id
+        * 
         * 
         * @apiHeaderExample {json} Header-Example:
         *  {
         *    "Token_Code": "Unique Token code that is generated after login" ,
         *    "Content-Type": "application/json"
+        *    "User_Id": "Logged in User ID",
         *  }
         *  
         * @apiParam {int} orderStatusId Order Status Id.
@@ -585,47 +588,42 @@ namespace Tasko.Interfaces
         * @apiSuccessExample Success-Response:
         {
          {
-          "Data": {
-            "__type": "Vendor:#Tasko.Model",
-            "AddressDetails": {
-              "Address": "test",
-              "AddressId": null,
-              "City": "Hyderabad",
-              "Country": "India",
-              "Lattitude": "1",
-              "Locality": "KPHB",
-              "Longitude": "2",
-              "Pincode": "500072",
-              "State": "Hyderabad"
-            },
-            "BaseRate": 100,
-            "DateOfBirth": "7/7/2016 1:51:33 PM",
-            "EmailAddress": "sree@gmail.com",
-            "Gender": 1,
-            "Id": "3BCF0E621CC9FA45B644AD360D3B7E29",
-            "IsVendorLive": false,
-            "IsVendorVerified": true,
-            "MobileNumber": "1234567890",
-            "Name": "Srikanth",
-            "NoOfEmployees": 10,
-            "Password": null,
-            "Photo": null,
-            "UserName": "sree123",
-            "VendorDetails": null,
-            "VendorServices": null
-          },
+           "Data": [
+                    {
+                      "__type": "OrderSummary:#Tasko.Model",
+                      "Comments": null,
+                      "CustomerName": "Shivaji",
+                      "OrderId": "TASKO1000",
+                      "OrderStatus": "Requested",
+                      "RequestedDate": "2016-07-07 14:12:55",
+                      "ServiceId": null,
+                      "ServiceName": "Electrician",
+                      "VendorName": "chandra"
+                    },
+                    {
+                      "__type": "OrderSummary:#Tasko.Model",
+                      "Comments": null,
+                      "CustomerName": "Shivaji123",
+                      "OrderId": "TASKO1001",
+                      "OrderStatus": "Requested",
+                      "RequestedDate": "2016-07-07 14:12:55",
+                      "ServiceId": null,
+                      "ServiceName": "Microwave Service",
+                      "VendorName": "srikanth test"
+                    }
+                  ]
           "Error": false,
           "Message": "Success",
           "Status": 200
         }
        }
-        * @apiError NO_ORDERS_FOR_VENDOR No orders for vendor
+        * @apiError NO_ORDERS No orders
         *
         * @apiErrorExample Error-Response:
         {
          "Data": null,
          "Error": true,
-         "Message": "No orders for vendor",
+         "Message": "No orders",
          "Status": 400
        }
         */

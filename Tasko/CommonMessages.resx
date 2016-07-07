@@ -219,4 +219,7 @@
   <data name="SERVICE_IN_USE" xml:space="preserve">
     <value>Unable to delete the selected service, as this service is in use.</value>
   </data>
+  <data name="NO_ORDERS" xml:space="preserve">
+    <value>No Orders</value>
+  </data>
 </root>

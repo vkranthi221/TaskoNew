@@ -494,7 +494,7 @@ namespace Tasko.Services
                     else
                     {
                         r.Error = true;
-                        r.Message = CommonMessages.NO_ORDERS_FOR_VENDOR;
+                        r.Message = CommonMessages.NO_ORDERS;
                         r.Status = 400;
                     }
                 }

@@ -250,6 +250,15 @@ namespace Tasko {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Orders.
+        /// </summary>
+        internal static string NO_ORDERS {
+            get {
+                return ResourceManager.GetString("NO_ORDERS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No orders for vendor.
         /// </summary>
         internal static string NO_ORDERS_FOR_VENDOR {
