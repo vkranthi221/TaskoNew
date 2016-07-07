@@ -15,6 +15,16 @@ namespace TaskoTestClient
             string orderId = "TASKO1000";
             string vendorId = "70F974CDC6E6664A898A8106C3D3D693";
             string venodorServiceId = "287EB41076025347AAE5EC48F79BCE15";
+            VendorData.GetVendor("3BCF0E621CC9FA45B644AD360D3B7E29");
+            Vendor updateVendor = new Vendor();
+            updateVendor.Id = "9919728A25404C4A8BE6858C02CC8577";
+            updateVendor.Name="test6";
+            updateVendor.MobileNumber ="0000000000";
+            updateVendor.Gender = 0;
+
+            VendorData.UpdateVendor(updateVendor);
+
+
             Vendor vendor = new Vendor();
             //vendor.ActiveTimePerDay = "08:01:10.0800000";
             vendor.AddressDetails = new AddressInfo();
@@ -33,23 +43,23 @@ namespace TaskoTestClient
             vendor.IsVendorLive=true;
             vendor.IsVendorVerified=true;
             vendor.MobileNumber="9999999999";
-            vendor.Name="Add Test";
+            vendor.Name="Add Test3";
             vendor.NoOfEmployees=1000;
             vendor.Password="123456";
             vendor.Photo= null;
             //vendor.TimeSpentOnApp = "08:01:10.0800000";
-            vendor.UserName="testuser";
+            vendor.UserName="testuser3";
             vendor.VendorDetails = new VendorDetails();
             vendor.VendorDetails.AreOrdersBlocked = false;
-            vendor.VendorDetails.DateOfBirth= DateTime.Now;
-            vendor.VendorDetails.Gender=1;
+            vendor.DateOfBirth= DateTime.Now.ToString();
+            vendor.Gender=1;
             vendor.VendorDetails.IsBlocked=false;
             vendor.VendorDetails.IsPowerSeller=true;
             vendor.VendorDetails.MonthlyCharge=100;
             vendor.VendorServices= new List<ServicesForVendor>();
-            vendor.VendorServices.Add(new ServicesForVendor{ServiceId = "1B007162FE059D48A5D24B988F85A7EC", IsActive = true});
-            vendor.VendorServices.Add(new ServicesForVendor{ServiceId = "37F0E68BFDA724488B6802C5A5F1E0F4", IsActive = true});
-            vendor.VendorServices.Add(new ServicesForVendor{ServiceId = "48892D44135C5C49823B105759026746", IsActive = false});
+            vendor.VendorServices.Add(new ServicesForVendor { ServiceId = "016685E608593F4BBF09875C208940B1", IsActive = true });
+            vendor.VendorServices.Add(new ServicesForVendor { ServiceId = "01B618DD27746D48ACAE77E8C7A083F2", IsActive = true });
+            vendor.VendorServices.Add(new ServicesForVendor { ServiceId = "12A0AE40BAEFB140AB2F6BFC6CC5E5D8", IsActive = false });
 
             AdminData.AddVendor(vendor);
             //Console.WriteLine(VendorData.ValidateTokenCode("4B050B867497BD45B39827166EFBD176", "74AEA79F14C3BD49A528A2FC8D440D20"));

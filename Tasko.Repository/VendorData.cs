@@ -107,6 +107,12 @@ namespace Tasko.Repository
                 objVendor.NoOfEmployees = Convert.ToInt32(reader["EMPLOYEE_COUNT"]);
                 objVendor.BaseRate = Convert.ToDouble(reader["BASE_RATE"]);
                 objVendor.IsVendorVerified = Convert.ToBoolean(reader["IS_VENDOR_VERIFIED"]);
+                if(reader["DATE_OF_BIRTH"] != null)
+                {
+                    objVendor.DateOfBirth = reader["DATE_OF_BIRTH"].ToString(); ;
+                }
+
+                objVendor.Gender = (Int16)reader["GENDER"];
                 //objVendor.DataConsumption = Convert.ToInt32(reader["DATA_CONSUMPTION"]);
                 //objVendor.CallsToCustomerCare = Convert.ToInt32(reader["CALLS_TO_CUSTOMER_CARE"]);
             }
@@ -429,6 +435,28 @@ namespace Tasko.Repository
             else
             {
                 objParameters.Add(SqlHelper.CreateParameter("@pEmailAddress", DbType.String, DBNull.Value));
+            }
+
+            if (vendor.Gender <=1)
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pGender", DbType.String, vendor.Gender));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pGender", DbType.String, DBNull.Value));
+            }
+
+            if (vendor.DateOfBirth != null)
+            {
+                DateTime dob = Convert.ToDateTime(vendor.DateOfBirth);
+                if (dob.Date.ToString() != "0001")
+                {
+                    objParameters.Add(SqlHelper.CreateParameter("@pDOB", DbType.String, vendor.DateOfBirth));
+                }
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pDOB", DbType.String, DBNull.Value));
             }
 
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendor", objParameters.ToArray());

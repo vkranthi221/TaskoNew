@@ -13,25 +13,6 @@ namespace Tasko.Model
     [DataContract]
     public class VendorDetails
     {
-
-        /// <summary>
-        /// Gets or sets the Gender.
-        /// </summary>
-        /// <value>
-        /// The Gender.
-        /// </value>
-        [DataMember]
-        public short Gender { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Date of birth.
-        /// </summary>
-        /// <value>
-        /// The Date of birth.
-        /// </value>
-        [DataMember]
-        public DateTime DateOfBirth { get; set; }
-
         /// <summary>
         /// Gets or sets the Monthly Charge
         /// </summary>

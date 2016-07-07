@@ -657,29 +657,40 @@ namespace Tasko.Interfaces
         *  
         * @apiSuccessExample Success-Response:
         {
-         "Data": [
-                    {
-                      "__type": "OrderSummary:#Tasko.Model",
-                      "Comments": "",
-                      "OrderId": "TASKO1010",
-                      "OrderStatus": "Requested",
-                      "RequestedDate": "2016-07-01 05:50:19",
-                      "ServiceId": null,
-                      "ServiceName": "Microwave Service"
-                    },
-                    {
-                      "__type": "OrderSummary:#Tasko.Model",
-                      "Comments": "",
-                      "OrderId": "TASKO1009",
-                      "OrderStatus": "Requested",
-                      "RequestedDate": "2016-07-01 05:50:19",
-                      "ServiceId": null,
-                      "ServiceName": "Microwave Service"
-                    }
-                  ],
-         "Error": false,
-         "Message": "Success",
-         "Status": 200
+         {
+          "Data": {
+            "__type": "Vendor:#Tasko.Model",
+            "AddressDetails": {
+              "Address": "test",
+              "AddressId": null,
+              "City": "Hyderabad",
+              "Country": "India",
+              "Lattitude": "1",
+              "Locality": "KPHB",
+              "Longitude": "2",
+              "Pincode": "500072",
+              "State": "Hyderabad"
+            },
+            "BaseRate": 100,
+            "DateOfBirth": "7/7/2016 1:51:33 PM",
+            "EmailAddress": "sree@gmail.com",
+            "Gender": 1,
+            "Id": "3BCF0E621CC9FA45B644AD360D3B7E29",
+            "IsVendorLive": false,
+            "IsVendorVerified": true,
+            "MobileNumber": "1234567890",
+            "Name": "Srikanth",
+            "NoOfEmployees": 10,
+            "Password": null,
+            "Photo": null,
+            "UserName": "sree123",
+            "VendorDetails": null,
+            "VendorServices": null
+          },
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
        }
         * @apiError NO_ORDERS_FOR_VENDOR No orders for vendor
         *

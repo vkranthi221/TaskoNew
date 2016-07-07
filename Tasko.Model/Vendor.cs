@@ -176,5 +176,31 @@ namespace Tasko.Model
         [DataMember]
         public List<ServicesForVendor> VendorServices { get; set; }
 
+        /// <summary>
+        /// Gets or sets the Gender.
+        /// </summary>
+        /// <value>
+        /// The Gender.
+        /// </value>
+        [DataMember]
+        public short Gender { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Date of birth.
+        /// </summary>
+        /// <value>
+        /// The Date of birth.
+        /// </value>
+        [DataMember]
+        public string DateOfBirth { get; set; }
+
+        /// <summary>
+        /// Vendor constructor
+        /// </summary>
+        public Vendor()
+        {
+            Gender = 2;
+        }
+
     }
 }

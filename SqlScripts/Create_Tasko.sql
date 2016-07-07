@@ -85,6 +85,8 @@ CREATE TABLE [dbo].[VENDOR](
 	[DATA_CONSUMPTION] [decimal](18, 0) NULL,
 	[CALLS_TO_CUSTOMER_CARE] [int] NULL,
 	[VENDOR_DETAILS] [xml] NULL,
+	[DATE_OF_BIRTH] [datetime] NULL,
+	[GENDER] [smallint] NULL,
  CONSTRAINT [VENDOR_PK] PRIMARY KEY CLUSTERED 
 (
 	[VENDOR_ID] ASC
@@ -370,7 +372,6 @@ AS
 BEGIN
 
 SET NOCOUNT ON;
-
 SELECT VD.VENDOR_ID
       ,VD.USER_NAME
       ,VD.NAME
@@ -393,13 +394,17 @@ SELECT VD.VENDOR_ID
       ,VD.ACTIVE_TIME_PER_DAY
       ,VD.DATA_CONSUMPTION
       ,VD.CALLS_TO_CUSTOMER_CARE
+	  ,VD.DATE_OF_BIRTH
+	  ,VD.GENDER
 FROM [dbo].[VENDOR] VD (NOLOCK)
 INNER JOIN ADDRESS AD ON VD.ADDRESS_ID = AD.Address_ID
 WHERE VENDOR_ID = @pVendorId 
 
 END
 
+
 GO
+
 CREATE PROCEDURE [dbo].[usp_GetOrderDetails]
 (
 	@pOrderId Varchar(50)
@@ -519,52 +524,7 @@ BEGIN
 END;
 
 GO
-CREATE PROCEDURE [dbo].[usp_UpdateVendorServices]
-(
-	@pVendorServiceId Binary(16),
-	@pActivateService bit
-)
-AS
-BEGIN
 
-SET NOCOUNT ON;
-
-IF(@pActivateService = 0)
-  BEGIN
-        IF(dbo.CheckIsParentServiceId(@pVendorServiceId) = 1)
-			BEGIN
-			 -- This is Parent Id so when Parent service is disabled then disable all the respective sub services as well.
-			 -- First Disable Parent service
-			  UPDATE VENDOR_SERVICES SET [IS_VENDOR_SERVICE_ACTIVE] = @pActivateService
-              WHERE VENDOR_SERVICE_ID = @pVendorServiceId
-
-			  DECLARE @VENDOR_ID Binary(16);
-			  SELECT @VENDOR_ID = VENDOR_ID FROM VENDOR_SERVICES WHERE VENDOR_SERVICE_ID = @pVendorServiceId
-
-			  DECLARE @PARENT_SERVICE_ID Binary(16);
-			  SELECT @PARENT_SERVICE_ID = SERVICE_ID FROM VENDOR_SERVICES WHERE VENDOR_SERVICE_ID = @pVendorServiceId
-
-			  --Disable SubServices
-			  UPDATE VENDOR_SERVICES SET [IS_VENDOR_SERVICE_ACTIVE] = @pActivateService
-              WHERE VENDOR_SERVICE_ID IN( SELECT VS.VENDOR_SERVICE_ID  FROM VENDOR_SERVICES VS 
-              WHERE VS.SERVICE_ID IN(SELECT SERVICE_ID FROM SERVICES WHERE PARENT_SERVICE_ID = @PARENT_SERVICE_ID)
-			  AND VS.VENDOR_ID = @VENDOR_ID)
-			END
-		ELSE
-			BEGIN
-			  UPDATE VENDOR_SERVICES SET [IS_VENDOR_SERVICE_ACTIVE] = @pActivateService
-              WHERE VENDOR_SERVICE_ID = @pVendorServiceId 
-			END
-  END
-ELSE
-  BEGIN
-       -- Enable Vendor Parent & Sub services individually.
-       UPDATE VENDOR_SERVICES SET [IS_VENDOR_SERVICE_ACTIVE] = @pActivateService
-       WHERE VENDOR_SERVICE_ID = @pVendorServiceId 
-  END
-END
-
-GO
 CREATE PROCEDURE [dbo].[usp_UpdateBaseRate]
 (
 	@pVendorId Binary(16),
@@ -1129,14 +1089,14 @@ GO
 
 SET QUOTED_IDENTIFIER ON
 GO
-
 CREATE PROCEDURE [dbo].[usp_UpdateVendor]
 (
 	@pVendorId binary(16),
 	@pName nvarchar(max),
 	@pMobileNumber nvarchar(max),  
-	@pAddress nvarchar(max),  
-	@pEmailAddress nvarchar(max)
+	@pEmailAddress nvarchar(max),
+	@pGender bit,
+	@pDOB datetime
 )
 
 AS
@@ -1145,14 +1105,17 @@ BEGIN
 SET NOCOUNT ON;
 
 UPDATE [dbo].VENDOR SET NAME = COALESCE(@pName,NAME),
-						MOBILE_NUMBER = COALESCE(@pMobileNumber,MOBILE_NUMBER),					    
-						ADDRESS = COALESCE(@pAddress, ADDRESS),
+						MOBILE_NUMBER = COALESCE(@pMobileNumber,MOBILE_NUMBER),	
+						DATE_OF_BIRTH = COALESCE(@pDOB,DATE_OF_BIRTH),	
+						GENDER = COALESCE(@pGender, GENDER),
 						EMAIL_ADDRESS = COALESCE(@pEmailAddress, EMAIL_ADDRESS)
 WHERE VENDOR_ID = @pVendorId
 
 END
 
+
 GO
+
 
 
 /****** Object:  StoredProcedure [dbo].[usp_InsertOTPDetails]    Script Date: 07-06-2016 02:09:33 ******/
@@ -1495,6 +1458,7 @@ WHERE ORD.ORDER_STATUS_ID = @pStatus ORDER BY ORD.REQUESTED_DATE DESC
 
 END
 GO
+
 CREATE PROCEDURE [dbo].[usp_AddVendor]
 (
   @pVendorDetails xml,
@@ -1508,7 +1472,9 @@ CREATE PROCEDURE [dbo].[usp_AddVendor]
   --@pTimeSpentOnApp nvarchar(max),
   @pUserName nvarchar(max),
   @pAddressId binary(16),
-  @pPassword nvarchar(max)
+  @pPassword nvarchar(max),
+  @pDOB datetime,
+  @pGender bit
   --@pActiveTimePerDay nvarchar(max),
   --@pDataConsumption int,
   --@pCallsToCustomerCare int
@@ -1520,11 +1486,12 @@ SET NOCOUNT ON;
 DECLARE @vendorId Binary(16)
 SET @vendorId = NEWID()
 
-INSERT INTO VENDOR (VENDOR_ID, [USER_NAME], NAME, MOBILE_NUMBER, [PASSWORD], EMAIL_ADDRESS, ADDRESS_ID, EMPLOYEE_COUNT, BASE_RATE, IS_VENDOR_VERIFIED, IS_VENDOR_LIVE, VENDOR_DETAILS) 
-            VALUES (@vendorId, @pUserName, @pName, @pMobileNumber, @pPassword, @pEmailAddress, @pAddressId, @pNoOfEmployees, @pBaseRate,   @pIsVendorVerified,@pIsVendorLive, @pVendorDetails)
+INSERT INTO VENDOR (VENDOR_ID, [USER_NAME], NAME, MOBILE_NUMBER, [PASSWORD], EMAIL_ADDRESS, ADDRESS_ID, EMPLOYEE_COUNT, BASE_RATE, IS_VENDOR_VERIFIED, IS_VENDOR_LIVE, VENDOR_DETAILS, DATE_OF_BIRTH, GENDER) 
+            VALUES (@vendorId, @pUserName, @pName, @pMobileNumber, @pPassword, @pEmailAddress, @pAddressId, @pNoOfEmployees, @pBaseRate,   @pIsVendorVerified,@pIsVendorLive, @pVendorDetails, @pDOB, @pGender)
 			SELECT @vendorId as VENDOR_ID
    
 END
+
 
 GO
 
