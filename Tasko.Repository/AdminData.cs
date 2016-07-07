@@ -258,6 +258,21 @@ namespace Tasko.Repository
             DeleteVendorServices(vendorId);
             AddVendorServices(services, vendorId);
         }
+
+        public static VendorOverview GetVendorOverview(string vendorId)
+        {
+            VendorOverview vendorOverview = null;
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.String, BinaryConverter.ConvertStringToByte(vendorId)));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorOverview", objParameters.ToArray());
+            while (reader.Read())
+            {
+                vendorOverview = new VendorOverview();
+                vendorOverview.AverageMonthlyAmount = 1;
+            }
+
+            return vendorOverview;
+        }
         #endregion
 
         #region Common
@@ -287,6 +302,36 @@ namespace Tasko.Repository
             List<SqlParameter> objParameters = new List<SqlParameter>();
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
             SqlHelper.ExecuteNonQuery("dbo.usp_DeleteVendorServices", objParameters.ToArray());
+        }
+        #endregion
+
+        #region Orders
+        public static List<OrderSummary> GetOrders(int orderStatusId)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, null));
+            objParameters.Add(SqlHelper.CreateParameter("@pORDERSTATUSID", DbType.Int32, orderStatusId));
+            objParameters.Add(SqlHelper.CreateParameter("@pRECORDSPERPAGE", DbType.Int32, 0));
+            objParameters.Add(SqlHelper.CreateParameter("@pPAGENO", DbType.Int32, 0));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorOrders", objParameters.ToArray());
+            List<OrderSummary> orders = new List<OrderSummary>();
+
+            while (reader.Read())
+            {
+                OrderSummary order = new OrderSummary();
+                order.OrderId = reader["ORDER_ID"].ToString();
+                order.RequestedDate = Convert.ToDateTime(reader["REQUESTED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+                order.ServiceName = reader["SERVICENAME"].ToString();
+                order.OrderStatus = reader["ORDERSTATUSNAME"].ToString();
+                order.VendorName = reader["VENDOR_NAME"].ToString();
+                order.CustomerName = reader["CUSTOMER_NAME"].ToString();
+                orders.Add(order);
+            }
+
+            reader.Close();
+
+            return orders;
         }
         #endregion
     }

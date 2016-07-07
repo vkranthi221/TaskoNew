@@ -431,12 +431,88 @@ namespace Tasko.Services
 
             return r;
         }
+        
+        /// <summary>
+        /// Gets the vendor overview
+        /// </summary>
+        /// <param name="vendorId">Vendor Id.</param>
+        /// <returns>Response Object</returns>
+        public Response GetVendorOverview(string vendorId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    AdminData.GetVendorOverview(vendorId);
+                    r.Error = false;
+                    r.Status = 200;
+                    r.Message = CommonMessages.SUCCESS;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
         #endregion
 
         #region Customers
         #endregion
 
         #region General
+        #endregion
+
+        #region Orders
+        public Response GetOrders(int orderStatusId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    List<OrderSummary> objOrders = AdminData.GetOrders(orderStatusId);
+
+                    if (objOrders != null && objOrders.Count > 0)
+                    {
+                        r.Error = false;
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Status = 200;
+                        r.Data = objOrders;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Message = CommonMessages.NO_ORDERS_FOR_VENDOR;
+                        r.Status = 400;
+                    }
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                    r.Error = true;
+                    r.Status = 400;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
         #endregion
     }
 }

@@ -59,6 +59,7 @@
     </Compile>
     <Compile Include="User.cs" />
     <Compile Include="VendorDetails.cs" />
+    <Compile Include="VendorOverview.cs" />
     <Compile Include="VendorSummary.cs" />
     <Compile Include="Vendor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -547,12 +547,92 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response UpdateServicesForVendor(string vendorId, List<ServicesForVendor> services);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetVendorOverview(string vendorId);
         #endregion
 
         #region Customers
         #endregion
 
         #region General
+        #endregion
+
+        #region Orders
+        /**
+        * @api {post} v1/GetVendorOrders Get Vendor Orders
+        * @apiName GetVendorOrders
+        * @apiGroup Vendor
+        *
+        * @apiHeader {string} Token_Code Token Code
+        * @apiHeader {string} Content-Type application/json
+        * 
+        * @apiHeaderExample {json} Header-Example:
+        *  {
+        *    "Token_Code": "Unique Token code that is generated after login" ,
+        *    "Content-Type": "application/json"
+        *  }
+        *  
+        * @apiParam {int} orderStatusId Order Status Id.
+        *  
+        * @apiParamExample {json} Param-Example:
+        *  {
+        *    "orderStatusId": "Status of the order",
+        *  }
+        *  
+        * @apiSuccessExample Success-Response:
+        {
+         {
+          "Data": {
+            "__type": "Vendor:#Tasko.Model",
+            "AddressDetails": {
+              "Address": "test",
+              "AddressId": null,
+              "City": "Hyderabad",
+              "Country": "India",
+              "Lattitude": "1",
+              "Locality": "KPHB",
+              "Longitude": "2",
+              "Pincode": "500072",
+              "State": "Hyderabad"
+            },
+            "BaseRate": 100,
+            "DateOfBirth": "7/7/2016 1:51:33 PM",
+            "EmailAddress": "sree@gmail.com",
+            "Gender": 1,
+            "Id": "3BCF0E621CC9FA45B644AD360D3B7E29",
+            "IsVendorLive": false,
+            "IsVendorVerified": true,
+            "MobileNumber": "1234567890",
+            "Name": "Srikanth",
+            "NoOfEmployees": 10,
+            "Password": null,
+            "Photo": null,
+            "UserName": "sree123",
+            "VendorDetails": null,
+            "VendorServices": null
+          },
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+       }
+        * @apiError NO_ORDERS_FOR_VENDOR No orders for vendor
+        *
+        * @apiErrorExample Error-Response:
+        {
+         "Data": null,
+         "Error": true,
+         "Message": "No orders for vendor",
+         "Status": 400
+       }
+        */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetOrders(int orderStatusId);
         #endregion
     }
 }
