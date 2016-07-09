@@ -295,6 +295,15 @@ namespace Tasko {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vendors not found.
+        /// </summary>
+        internal static string NO_VENDORS {
+            get {
+                return ResourceManager.GetString("NO_VENDORS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Order not Confirmed.
         /// </summary>
         internal static string ORDER_NOT_CONFIRMED {

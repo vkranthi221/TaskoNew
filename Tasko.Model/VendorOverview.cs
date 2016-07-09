@@ -56,15 +56,15 @@ namespace Tasko.Model
         /// Total Order amount.
         /// </value>
         [DataMember]
-        public double TotalOrderAmount { get; set; }
+        public decimal TotalOrderAmount { get; set; }
 
         [DataMember]
-        public double WeeklyOrderAmount { get; set; }
+        public decimal WeeklyOrderAmount { get; set; }
 
         [DataMember]
-        public double HighestOrderAmount { get; set; }
+        public decimal HighestOrderAmount { get; set; }
 
         [DataMember]
-        public double AverageMonthlyAmount { get; set; }
+        public decimal AverageMonthlyAmount { get; set; }
     }
 }

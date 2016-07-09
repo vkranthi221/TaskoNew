@@ -21,6 +21,7 @@ namespace TaskoTestClient
             //updateVendor.Name="test6";
             //updateVendor.MobileNumber ="0000000000";
             //updateVendor.Gender = 0;
+            AdminData.GetVendorOverview("AFB2B50F2164804C8E6D26A6C4A32982");
             AdminData.GetOrders(1);
             //VendorData.UpdateVendor(updateVendor);
 
@@ -46,7 +47,7 @@ namespace TaskoTestClient
             vendor.Name="Add Test3";
             vendor.NoOfEmployees=1000;
             vendor.Password="123456";
-            vendor.Photo= null;
+            vendor.Photo= string.Empty;
             //vendor.TimeSpentOnApp = "08:01:10.0800000";
             vendor.UserName="testuser3";
             vendor.VendorDetails = new VendorDetails();

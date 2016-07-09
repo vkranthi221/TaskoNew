@@ -165,7 +165,7 @@ namespace Tasko.Model
         /// The Vendor photo.
         /// </value>
         [DataMember]
-        public byte[] Photo { get; set; }
+        public string Photo { get; set; }
 
         /// <summary>
         /// Gets or sets the VendorServices

@@ -214,7 +214,7 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pDOB", DbType.DateTime, vendor.DateOfBirth));
             objParameters.Add(SqlHelper.CreateParameter("@pGender", DbType.Int16, vendor.Gender));
             objParameters.Add(SqlHelper.CreateParameter("@pPassword", DbType.Int16, vendor.Password));
-            //objParameters.Add(SqlHelper.CreateParameter("@pPhoto", DbType.varbin, vendor.Photo));
+            objParameters.Add(SqlHelper.CreateParameter("@pPhoto", DbType.String, vendor.Photo));
             //objParameters.Add(SqlHelper.CreateParameter("@pActiveTimePerDay", DbType.String, vendor.ActiveTimePerDay));
             //objParameters.Add(SqlHelper.CreateParameter("@pDataConsumption", DbType.Int32, vendor.DataConsumption));
             //objParameters.Add(SqlHelper.CreateParameter("@pCallsToCustomerCare", DbType.Int32, vendor.CallsToCustomerCare));
@@ -268,10 +268,42 @@ namespace Tasko.Repository
             while (reader.Read())
             {
                 vendorOverview = new VendorOverview();
-                vendorOverview.AverageMonthlyAmount = 1;
+                vendorOverview.OrdersToday = Convert.ToInt32(reader["ORDERS_TODAY"]);
+                vendorOverview.OrdersThisWeek = Convert.ToInt32(reader["ORDERS_THIS_WEEK"]);
+                vendorOverview.TotalOrders = Convert.ToInt32(reader["TOTAL_ORDERS"]);
+                vendorOverview.TotalOrderAmount = Convert.ToDecimal(reader["TOTAL_ORDER_AMOUNT"]);
+                vendorOverview.WeeklyOrderAmount = Convert.ToDecimal(reader["WEEK_ORDER_AMOUNT"]);
+                vendorOverview.HighestOrderAmount = Convert.ToDecimal(reader["BIGGEST_ORDER_AMOUNT"]);
+                vendorOverview.AverageMonthlyAmount = Convert.ToDecimal(reader["AVERAGE_MONTHLY"]);
+                vendorOverview.Name = reader["VENDOR_NAME"].ToString();
             }
 
             return vendorOverview;
+        }
+
+        public static List<VendorSummary> GetVendorsByStatus(int vendorStatus)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorStatus", DbType.Int32, vendorStatus));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorsByStatus", objParameters.ToArray());
+            List<VendorSummary> vendors = new List<VendorSummary>();
+
+            while (reader.Read())
+            {
+                VendorSummary objVendor = new VendorSummary();
+                objVendor.Id = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
+                objVendor.UserName = reader["USER_NAME"].ToString();
+                objVendor.Name = reader["NAME"].ToString();
+                objVendor.MobileNumber = reader["MOBILE_NUMBER"].ToString();
+                objVendor.EmailAddress = Convert.ToString(reader["EMAIL_ADDRESS"]);
+                objVendor.IsVendorLive = Convert.ToBoolean(reader["IS_VENDOR_LIVE"]);
+                vendors.Add(objVendor);
+            }
+
+            reader.Close();
+
+            return vendors;
         }
         #endregion
 
