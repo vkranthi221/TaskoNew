@@ -1003,6 +1003,98 @@
   },
   {
     "type": "post",
+    "url": "a1/GetVendorOverview",
+    "title": "Get Vendor overview",
+    "name": "GetVendorOverview",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "vendorId",
+            "description": "<p>VendorId</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n  \"vendorId\": \"AFB2B50F2164804C8E6D26A6C4A32982\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n   \"Data\": {\n               \"__type\": \"VendorOverview:#Tasko.Model\",\n               \"AverageMonthlyAmount\": 3750,\n               \"HighestOrderAmount\": 600,\n               \"Name\": \"Srikanth\",\n               \"OrdersThisWeek\": 10,\n               \"OrdersToday\": 10,\n               \"TotalOrderAmount\": 3750,\n               \"TotalOrders\": 10,\n               \"WeeklyOrderAmount\": 3750\n             },\n   \"Error\": false,\n   \"Message\": \"Success\",\n   \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "VENDOR_NOT_FOUND",
+            "description": "<p>Vendor not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Vendor not found\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
     "url": "a1/GetVendorsByService",
     "title": "Get Vendors By Service",
     "name": "GetVendorsByService",
@@ -1096,6 +1188,98 @@
         {
           "title": "Error-Response:",
           "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Vendor's not found\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetVendorsByStatus",
+    "title": "Get Vendors by status",
+    "name": "GetVendorsByStatus",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "vendorStatus",
+            "description": "<p>Vendor Status {0- All, 1-Online, 2-Offline   }</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n  \"vendorStatus\": \"0\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n   \"Data\": [\n               {\n                 \"__type\": \"VendorSummary:#Tasko.Model\",\n                 \"EmailAddress\": \"mchandu123@gmail.com\",\n                 \"Id\": \"40C58B1908D4CE439FA05FF0B138EA8A\",\n                 \"IsVendorLive\": true,\n                 \"MobileNumber\": \"9985466195\",\n                 \"Name\": \"chandra\",\n                 \"UserName\": \"chandra\"\n               },\n               {\n                 \"__type\": \"VendorSummary:#Tasko.Model\",\n                 \"EmailAddress\": \"sree@gmail.com\",\n                 \"Id\": \"B6C163EABE8C0A4B8F4BAFA9CAA7DDB1\",\n                 \"IsVendorLive\": true,\n                 \"MobileNumber\": \"1234567890\",\n                 \"Name\": \"Srikanth\",\n                 \"UserName\": \"srikanth\"\n               }\n         ],\n   \"Error\": false,\n   \"Message\": \"Success\",\n   \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NO_VENDORS",
+            "description": "<p>Vendors not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Vendors not found\",\n   \"Status\": 400\n }",
           "type": "json"
         }
       ]
@@ -1258,7 +1442,7 @@
       "examples": [
         {
           "title": "Param-Example:",
-          "content": "{ \n  \"vendorId\": \"AFB2B50F2164804C8E6D26A6C4A32982\",\n  \"Data\": [\n                    {\n                      \"__type\": \"ServicesForVendor:#Tasko.Model\",\n                      \"ServiceId\": \"F4878463A2FF5043BF3763F8AA913DE1\",\n                      \"ServiceName\": \"Microwave Service\"\n                    }\n                  ]\n}",
+          "content": "{ \n  \"vendorId\": \"AFB2B50F2164804C8E6D26A6C4A32982\",\n  \"Data\": [\n                    {\n                      \"ServiceId\": \"F4878463A2FF5043BF3763F8AA913DE1\",\n                    }\n                  ]\n}",
           "type": "json"
         }
       ]
