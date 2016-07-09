@@ -277,6 +277,15 @@ namespace Tasko {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recent Activities are not found.
+        /// </summary>
+        internal static string NO_RECENT_ACTIVITIES {
+            get {
+                return ResourceManager.GetString("NO_RECENT_ACTIVITIES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No services available.
         /// </summary>
         internal static string NO_SERVICES_AVAILABLE {

@@ -887,6 +887,93 @@ namespace Tasko.Interfaces
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetDashboardMeters();
 
+        /**
+         * @api {post} a1/GetDashboardRecentActivities Get Recent Activities
+         * @apiName GetDashboardRecentActivities
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *
+         * @apiSuccessExample Success-Response:
+            {
+                "Data": [
+                {
+                    "__type": "RecentActivities:#Tasko.Model",
+                    "ActivityId": "5FD87BC4BF91424DB08F4298F9580641",
+                    "ActivityType": "ORDER",
+                    "Comment": "TASKO1010 Order  is completed.",
+                    "CustomerId": null,
+                    "OrderId": "TASKO1010",
+                    "TimeSince": "2016-07-09 17:55:14",
+                    "VendorId": null
+                },
+                {
+                    "__type": "RecentActivities:#Tasko.Model",
+                    "ActivityId": "08020C7D838046409B42714FEB382761",
+                    "ActivityType": "ORDER",
+                    "Comment": "New Order TASKO1012 has been placed.",
+                    "CustomerId": null,
+                    "OrderId": "TASKO1012",
+                    "TimeSince": "2016-07-09 17:44:08",
+                    "VendorId": null
+                },
+                {
+                    "__type": "RecentActivities:#Tasko.Model",
+                    "ActivityId": "272910E262B17D45B16A11F70C5CD3AA",
+                    "ActivityType": "CUSTOMER",
+                    "Comment": "Customer Shaker registered.",
+                    "CustomerId": "13D97F236A0E0547B22A7734B63488F8",
+                    "OrderId": null,
+                    "TimeSince": "2016-07-09 17:16:29",
+                    "VendorId": null
+                },
+                {
+                    "__type": "RecentActivities:#Tasko.Model",
+                    "ActivityId": "9D234754C3B4754BBD8B1ECCCB510DCB",
+                    "ActivityType": "VENDOR",
+                    "Comment": "Vendor Chandra registered",
+                    "CustomerId": null,
+                    "OrderId": null,
+                    "TimeSince": "2016-07-09 16:59:51",
+                    "VendorId": "13D97F236A0E0547B22A7734B63488F8"
+                }
+                ],
+                "Error": false,
+                "Message": "Success",
+                "Status": 200
+            }
+         * @apiError INVALID_TOKEN_CODE Invalid token code.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Invalid token code",
+            "Status": 400
+          } 
+         * @apiError NO_RECENT_ACTIVITIES Recent Activities are not found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Recent Activities are not found",
+            "Status": 400
+          }
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetDashboardRecentActivities();
         #endregion
     }
 }

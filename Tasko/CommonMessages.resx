@@ -225,4 +225,7 @@
   <data name="NO_VENDORS" xml:space="preserve">
     <value>Vendors not found</value>
   </data>
+  <data name="NO_RECENT_ACTIVITIES" xml:space="preserve">
+    <value>Recent Activities are not found</value>
+  </data>
 </root>

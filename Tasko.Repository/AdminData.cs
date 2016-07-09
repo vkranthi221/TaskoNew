@@ -425,6 +425,46 @@ namespace Tasko.Repository
             return dashboardMeter;
         }
 
+        /// <summary>
+        /// Gets the dashboard recent activities.
+        /// </summary>
+        /// <returns>list of RecentActivities</returns>
+        public static List<RecentActivities> GetDashboardRecentActivities()
+        {
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetDashboardRecentActivities");
+            List<RecentActivities> RecentActivities = new List<RecentActivities>();
+
+            while (reader.Read())
+            {
+                RecentActivities RecentActivity = new RecentActivities();
+                RecentActivity.ActivityId = BinaryConverter.ConvertByteToString((byte[])reader["ACTIVITY_ID"]);
+                RecentActivity.ActivityType = reader["ACTIVITY_TYPE_NAME"].ToString();
+
+                if (!(reader["CUSTOMER_ID"] is System.DBNull))
+                {
+                    RecentActivity.CustomerId = BinaryConverter.ConvertByteToString((byte[])reader["CUSTOMER_ID"]);
+                }
+
+                if (!(reader["VENDOR_ID"] is System.DBNull))
+                {
+                    RecentActivity.VendorId = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
+                }
+
+                if (!(reader["ORDER_ID"] is System.DBNull))
+                {
+                    RecentActivity.OrderId = reader["ORDER_ID"].ToString();
+                }
+
+                RecentActivity.Comment = reader["COMMENTS"].ToString();                
+                RecentActivity.TimeSince = Convert.ToDateTime(reader["ACTIVITY_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+                RecentActivities.Add(RecentActivity);
+            }
+
+            reader.Close();
+
+            return RecentActivities;
+        }
+
         #endregion
     }
 }

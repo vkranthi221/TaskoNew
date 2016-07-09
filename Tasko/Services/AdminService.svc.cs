@@ -767,6 +767,54 @@ namespace Tasko.Services
             return r;
         }
 
+        /// <summary>
+        /// Gets the dashboard recent activities.
+        /// </summary>
+        /// <returns></returns>
+        public Response GetDashboardRecentActivities()
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    List<RecentActivities> recentActivities = AdminData.GetDashboardRecentActivities();
+
+                    if (recentActivities != null)
+                    {
+                        r.Error = false;
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Status = 200;
+                        r.Data = recentActivities;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Message = CommonMessages.NO_RECENT_ACTIVITIES;
+                        r.Status = 400;
+                    }
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        #endregion
+
+        #region Payments
+
         #endregion
 
         #region Private Methods
@@ -786,9 +834,9 @@ namespace Tasko.Services
                 return isTokenValid;
             }
 
-            return false;
+            //return false;
 
-            //return true;
+            return true;
         }
         #endregion
     }

@@ -514,6 +514,13 @@ SET NOCOUNT ON;
 IF EXISTS (Select NAME from ORDER_STATUS WHERE ORDER_STATUS_ID = @pOrderStatus)
   BEGIN
         UPDATE [dbo].[ORDER]  SET ORDER_STATUS_ID = @pOrderStatus,COMMENTS =@pComments WHERE ORDER_ID = @pOrderId
+
+		IF (@pOrderStatus = 6)
+		BEGIN
+			DECLARE @pComment nvarchar(max)
+			SET @pComment = CONCAT(@pOrderId,' Order ', ' is completed.')
+			EXEC [dbo].[usp_AddActivity] 'ORDER', null, null, @pOrderId, @pComment
+		END
   END
 ELSE
 BEGIN
@@ -857,6 +864,13 @@ SET NOCOUNT ON;
 
   INSERT INTO [dbo].[ORDER] VALUES(@OrderId,@pVendorServiceId,@pCustomerId,GetDate(),1,'',@pSourceAddressId,@pDestinationAddressId,null, null)
 
+  IF EXISTS (Select ORDER_ID FROM dbo.[ORDER] WHERE ORDER_ID = @OrderId)
+  BEGIN
+     --- We should log the activity only when the above insert statement is success.
+	  DECLARE @pComment nvarchar(max)
+	  SET @pComment = CONCAT('New Order ', @OrderId, ' has been placed.')
+	  EXEC [dbo].[usp_AddActivity] 'ORDER', null, null, @OrderId, @pComment
+  END
   SELECT @OrderId as ORDER_ID
 END
 
@@ -1251,15 +1265,20 @@ SET NOCOUNT ON;
 DECLARE @customerId Binary(16)
 DECLARE @authCode Binary(16)
 SET @customerId = NEWID()
-set @authCode = NEWID()
+SET @authCode = NEWID()
 
-INSERT INTO CUSTOMER (CUSTOMER_ID, NAME, EMAIL_ADDRESS, MOBILE_NUMBER) VALUES (@customerId, @pName, @pEmailId, @pPhoneNumber)
+   INSERT INTO CUSTOMER (CUSTOMER_ID, NAME, EMAIL_ADDRESS, MOBILE_NUMBER) VALUES (@customerId, @pName, @pEmailId, @pPhoneNumber)
    INSERT INTO LOGGEDON_USER VALUES(@customerId, @authCode)
-   
+
+	IF EXISTS (Select CUSTOMER_ID FROM dbo.CUSTOMER WHERE CUSTOMER_ID = @customerId)
+	  BEGIN   
+	    DECLARE @pComment nvarchar(max)
+		SET @pComment = CONCAT('Customer ', @pName, ' registered.')
+		EXEC [dbo].[usp_AddActivity] 'CUSTOMER', @customerId, null, null, @pComment
+      END
    SELECT @customerId as USERID, @authCode as AUTH_CODE
 
 END
-
 GO
 
 CREATE PROCEDURE [dbo].[usp_CustomerLoginValidateOTP]
@@ -1548,8 +1567,17 @@ DECLARE @vendorId Binary(16)
 SET @vendorId = NEWID()
 
 INSERT INTO VENDOR (VENDOR_ID, [USER_NAME], NAME, MOBILE_NUMBER, [PASSWORD], EMAIL_ADDRESS, ADDRESS_ID, EMPLOYEE_COUNT, BASE_RATE, IS_VENDOR_VERIFIED, IS_VENDOR_LIVE, VENDOR_DETAILS, DATE_OF_BIRTH, GENDER) 
-            VALUES (@vendorId, @pUserName, @pName, @pMobileNumber, @pPassword, @pEmailAddress, @pAddressId, @pNoOfEmployees, @pBaseRate,   @pIsVendorVerified,@pIsVendorLive, @pVendorDetails, @pDOB, @pGender)
-			SELECT @vendorId as VENDOR_ID
+    VALUES (@vendorId, @pUserName, @pName, @pMobileNumber, @pPassword, @pEmailAddress, @pAddressId, @pNoOfEmployees, @pBaseRate,   @pIsVendorVerified,@pIsVendorLive, @pVendorDetails, @pDOB, @pGender)
+
+	IF EXISTS (Select VENDOR_ID FROM dbo.VENDOR WHERE VENDOR_ID = @vendorId)
+	BEGIN   
+	-- If add Vendor success then only add the entry in Activity table
+		DECLARE @pComment nvarchar(max)
+		SET @pComment = CONCAT('Vendor ', @pName, ' registered.')
+		EXEC [dbo].[usp_AddActivity] 'VENDOR', null, @vendorId, null, @pComment
+	END
+
+	SELECT @vendorId as VENDOR_ID
    
 END
 
@@ -1640,9 +1668,8 @@ SELECT @TOTAL_ORDERS AS TOTAL_ORDERS, @TOTAL_VENDORS AS TOTAL_VENDORS, @TOTAL_CU
 @TOTAL_CUSTOMER_REVIEWS AS TOTAL_CUSTOMER_REVIEWS, @TOTAL_USERS AS TOTAL_USERS, @TOTAL_SERVICES AS TOTAL_SERVICES, @TOTAL_PAYMENTS AS TOTAL_PAYMENTS
 END
 
-
-
 GO
+
 CREATE PROCEDURE [dbo].[usp_GetVendorOverview]
 (
 	@pVendorId Binary(16)
@@ -1687,5 +1714,57 @@ BEGIN
 
 END
 
+GO
+
+CREATE TABLE [dbo].[ACTIVITY](
+	[ACTIVITY_ID] [binary](16) NOT NULL,
+	[ACTIVITY_TYPE_ID] [binary](16) NOT NULL,
+	[CUSTOMER_ID] [binary](16) NULL,
+	[VENDOR_ID] [binary](16) NULL,
+	[ORDER_ID] [nvarchar](50) NULL,
+	[COMMENTS] [nvarchar](max) NULL,
+	[ACTIVITY_DATE] dateTime NOT NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
+
+CREATE TABLE [dbo].[ACTIVITY_TYPE](
+	[ID] [binary](16) NOT NULL,
+	[ACTIVITY_TYPE_NAME] [nvarchar](50) NULL
+) ON [PRIMARY]
+
+GO
+
+CREATE PROCEDURE [dbo].[usp_AddActivity]
+(
+  @pActivityTypeName nvarchar(max),
+  @pCustomerId binary(16),
+  @pVendorId binary(16),
+  @pOrderId nvarchar(max),
+  @pComment nvarchar(max)
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+DECLARE @pActivityTypeId Binary(16)
+SELECT @pActivityTypeId = ID FROM ACTIVITY_TYPE WHERE ACTIVITY_TYPE_NAME =@pActivityTypeName
+
+INSERT INTO ACTIVITY VALUES (NEWID(), @pActivityTypeId, @pCustomerId, @pVendorId, @pOrderId, @pComment, GetDate())
+
+END
+
+GO
+
+CREATE PROCEDURE [dbo].[usp_GetDashboardRecentActivities]
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+SELECT TOP 20 ACTIVITY_ID, ACTIVITY_TYPE_NAME, CUSTOMER_ID, VENDOR_ID, ORDER_ID, COMMENTS, ACTIVITY_DATE FROM dbo.ACTIVITY AC
+INNER JOIN ACTIVITY_TYPE AT ON AT.ID = AC.ACTIVITY_TYPE_ID
+ORDER BY ACTIVITY_DATE DESC
+
+END

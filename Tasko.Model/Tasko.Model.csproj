@@ -51,6 +51,7 @@
     <Compile Include="LoginInfo.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderSummary.cs" />
+    <Compile Include="RecentActivities.cs" />
     <Compile Include="Service.cs">
       <SubType>Code</SubType>
     </Compile>

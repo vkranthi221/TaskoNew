@@ -439,6 +439,89 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "a1/GetDashboardRecentActivities",
+    "title": "Get Recent Activities",
+    "name": "GetDashboardRecentActivities",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"Data\": [\n    {\n        \"__type\": \"RecentActivities:#Tasko.Model\",\n        \"ActivityId\": \"5FD87BC4BF91424DB08F4298F9580641\",\n        \"ActivityType\": \"ORDER\",\n        \"Comment\": \"TASKO1010 Order  is completed.\",\n        \"CustomerId\": null,\n        \"OrderId\": \"TASKO1010\",\n        \"TimeSince\": \"2016-07-09 17:55:14\",\n        \"VendorId\": null\n    },\n    {\n        \"__type\": \"RecentActivities:#Tasko.Model\",\n        \"ActivityId\": \"08020C7D838046409B42714FEB382761\",\n        \"ActivityType\": \"ORDER\",\n        \"Comment\": \"New Order TASKO1012 has been placed.\",\n        \"CustomerId\": null,\n        \"OrderId\": \"TASKO1012\",\n        \"TimeSince\": \"2016-07-09 17:44:08\",\n        \"VendorId\": null\n    },\n    {\n        \"__type\": \"RecentActivities:#Tasko.Model\",\n        \"ActivityId\": \"272910E262B17D45B16A11F70C5CD3AA\",\n        \"ActivityType\": \"CUSTOMER\",\n        \"Comment\": \"Customer Shaker registered.\",\n        \"CustomerId\": \"13D97F236A0E0547B22A7734B63488F8\",\n        \"OrderId\": null,\n        \"TimeSince\": \"2016-07-09 17:16:29\",\n        \"VendorId\": null\n    },\n    {\n        \"__type\": \"RecentActivities:#Tasko.Model\",\n        \"ActivityId\": \"9D234754C3B4754BBD8B1ECCCB510DCB\",\n        \"ActivityType\": \"VENDOR\",\n        \"Comment\": \"Vendor Chandra registered\",\n        \"CustomerId\": null,\n        \"OrderId\": null,\n        \"TimeSince\": \"2016-07-09 16:59:51\",\n        \"VendorId\": \"13D97F236A0E0547B22A7734B63488F8\"\n    }\n    ],\n    \"Error\": false,\n    \"Message\": \"Success\",\n    \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NO_RECENT_ACTIVITIES",
+            "description": "<p>Recent Activities are not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Invalid token code\",\n   \"Status\": 400\n }",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Recent Activities are not found\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
     "url": "a1/GetDashboardRecentOrdersByStatus",
     "title": "Get Dashboard Recent Orders",
     "name": "GetDashboardRecentOrdersByStatus",
@@ -3541,7 +3624,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n  {\n   \"Data\": {\n     \"__type\": \"Vendor:#Tasko.Model\",\n     \"AddressDetails\": {\n       \"Address\": \"test\",\n       \"AddressId\": null,\n       \"City\": \"Hyderabad\",\n       \"Country\": \"India\",\n       \"Lattitude\": \"1\",\n       \"Locality\": \"KPHB\",\n       \"Longitude\": \"2\",\n       \"Pincode\": \"500072\",\n       \"State\": \"Hyderabad\"\n     },\n     \"BaseRate\": 100,\n     \"DateOfBirth\": \"7/7/2016 1:51:33 PM\",\n     \"EmailAddress\": \"sree@gmail.com\",\n     \"Gender\": 1,\n     \"Id\": \"3BCF0E621CC9FA45B644AD360D3B7E29\",\n     \"IsVendorLive\": false,\n     \"IsVendorVerified\": true,\n     \"MobileNumber\": \"1234567890\",\n     \"Name\": \"Srikanth\",\n     \"NoOfEmployees\": 10,\n     \"Password\": null,\n     \"Photo\": null,\n     \"UserName\": \"sree123\",\n     \"VendorDetails\": null,\n     \"VendorServices\": null\n   },\n   \"Error\": false,\n   \"Message\": \"Success\",\n   \"Status\": 200\n }\n}",
+          "content": " {\n  {\n   \"Data\": {\n     \"__type\": \"Vendor:#Tasko.Model\",\n     \"AddressDetails\": {\n       \"Address\": \"test\",\n       \"AddressId\": null,\n       \"City\": \"Hyderabad\",\n       \"Country\": \"India\",\n       \"Lattitude\": \"1\",\n       \"Locality\": \"KPHB\",\n       \"Longitude\": \"2\",\n       \"Pincode\": \"500072\",\n       \"State\": \"Hyderabad\"\n     },\n     \"BaseRate\": 100,\n     \"DateOfBirth\": \"7/7/2016 1:51:33 PM\",\n     \"EmailAddress\": \"sree@gmail.com\",\n     \"Gender\": 1,\n     \"Id\": \"3BCF0E621CC9FA45B644AD360D3B7E29\",\n     \"IsVendorLive\": false,\n     \"IsVendorVerified\": true,\n     \"MobileNumber\": \"1234567890\",\n     \"Name\": \"Srikanth\",\n     \"NoOfEmployees\": 10,\n     \"Password\": null,\n     \"Photo\": \"\",\n     \"UserName\": \"sree123\",\n     \"VendorDetails\": null,\n     \"VendorServices\": null\n   },\n   \"Error\": false,\n   \"Message\": \"Success\",\n   \"Status\": 200\n }\n}",
           "type": "json"
         }
       ]
