@@ -426,10 +426,20 @@ namespace Tasko.Services
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                    AdminData.GetVendorOverview(vendorId);
-                    r.Error = false;
-                    r.Status = 200;
-                    r.Message = CommonMessages.SUCCESS;
+                    VendorOverview vendorOverview = AdminData.GetVendorOverview(vendorId);
+                    if (vendorOverview != null)
+                    {
+                        r.Data = vendorOverview;
+                        r.Error = false;
+                        r.Status = 200;
+                        r.Message = CommonMessages.SUCCESS;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Status = 400;
+                        r.Message = CommonMessages.VENDOR_NOT_FOUND;
+                    }
                 }
                 else
                 {
@@ -455,16 +465,27 @@ namespace Tasko.Services
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                    AdminData.GetVendorsByStatus(vendorStatus);
-                    r.Error = false;
-                    r.Status = 200;
-                    r.Message = CommonMessages.SUCCESS;
+                    List<VendorSummary> vendors = AdminData.GetVendorsByStatus(vendorStatus);
+                    if (vendors != null && vendors.Count > 0)
+                    {
+                        r.Data = vendors;
+                        r.Error = false;
+                        r.Status = 200;
+                        r.Message = CommonMessages.SUCCESS;
+                    }
+                    else
+                    {
+                        r.Data = null;
+                        r.Error = false;
+                        r.Status = 200;
+                        r.Message = CommonMessages.NO_VENDORS;
+                    }
                 }
                 else
                 {
                     r.Error = true;
                     r.Status = 400;
-                    r.Message = CommonMessages.NO_VENDORS;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
             catch (Exception ex)

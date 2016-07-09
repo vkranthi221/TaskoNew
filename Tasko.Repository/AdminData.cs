@@ -255,8 +255,21 @@ namespace Tasko.Repository
         /// <param name="services">Services if vendor</param>
         public static void UpdateServicesForVendor(string vendorId, List<ServicesForVendor> services)
         {
-            DeleteVendorServices(vendorId);
-            AddVendorServices(services, vendorId);
+            DeactivateAllVendorServices(vendorId);
+            foreach (ServicesForVendor vendorService in services)
+            {
+                List<SqlParameter> objParameters = new List<SqlParameter>();
+                objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorService.ServiceId)));
+                objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
+                SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendorService", objParameters.ToArray());
+            }
+        }
+
+        public static void DeactivateAllVendorServices(string vendorId)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
+            SqlHelper.ExecuteNonQuery("dbo.usp_DeactivateVendorServices", objParameters.ToArray());
         }
 
         public static VendorOverview GetVendorOverview(string vendorId)

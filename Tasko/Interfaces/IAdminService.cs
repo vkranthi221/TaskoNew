@@ -491,6 +491,7 @@ namespace Tasko.Interfaces
             "Status": 400
           }        
          */
+
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
@@ -519,9 +520,7 @@ namespace Tasko.Interfaces
          *   "vendorId": "AFB2B50F2164804C8E6D26A6C4A32982",
          *   "Data": [
                     {
-                      "__type": "ServicesForVendor:#Tasko.Model",
                       "ServiceId": "F4878463A2FF5043BF3763F8AA913DE1",
-                      "ServiceName": "Microwave Service"
                     }
                   ]
          * }
@@ -548,11 +547,120 @@ namespace Tasko.Interfaces
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response UpdateServicesForVendor(string vendorId, List<ServicesForVendor> services);
 
+        /**
+         * @api {post} a1/GetVendorOverview Get Vendor overview
+         * @apiName GetVendorOverview
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *  
+         * @apiParam {string} vendorId VendorId
+         *
+         * @apiParamExample {json} Param-Example:
+         * { 
+         *   "vendorId": "AFB2B50F2164804C8E6D26A6C4A32982",
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+            "Data": {
+                        "__type": "VendorOverview:#Tasko.Model",
+                        "AverageMonthlyAmount": 3750,
+                        "HighestOrderAmount": 600,
+                        "Name": "Srikanth",
+                        "OrdersThisWeek": 10,
+                        "OrdersToday": 10,
+                        "TotalOrderAmount": 3750,
+                        "TotalOrders": 10,
+                        "WeeklyOrderAmount": 3750
+                      },
+            "Error": false,
+            "Message": "Success",
+            "Status": 200
+         }
+         * @apiError VENDOR_NOT_FOUND Vendor not found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Vendor not found",
+            "Status": 400
+          }        
+         */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetVendorOverview(string vendorId);
 
+        /**
+         * @api {post} a1/GetVendorsByStatus Get Vendors by status
+         * @apiName GetVendorsByStatus
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *  
+         * @apiParam {string} vendorStatus Vendor Status {0- All, 1-Online, 2-Offline   }
+         *
+         * @apiParamExample {json} Param-Example:
+         * { 
+         *   "vendorStatus": "0"
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+            "Data": [
+                        {
+                          "__type": "VendorSummary:#Tasko.Model",
+                          "EmailAddress": "mchandu123@gmail.com",
+                          "Id": "40C58B1908D4CE439FA05FF0B138EA8A",
+                          "IsVendorLive": true,
+                          "MobileNumber": "9985466195",
+                          "Name": "chandra",
+                          "UserName": "chandra"
+                        },
+                        {
+                          "__type": "VendorSummary:#Tasko.Model",
+                          "EmailAddress": "sree@gmail.com",
+                          "Id": "B6C163EABE8C0A4B8F4BAFA9CAA7DDB1",
+                          "IsVendorLive": true,
+                          "MobileNumber": "1234567890",
+                          "Name": "Srikanth",
+                          "UserName": "srikanth"
+                        }
+                  ],
+            "Error": false,
+            "Message": "Success",
+            "Status": 200
+         }
+         * @apiError NO_VENDORS Vendors not found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Vendors not found",
+            "Status": 400
+          }        
+         */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
