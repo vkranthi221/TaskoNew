@@ -682,7 +682,7 @@ namespace Tasko.Interfaces
             "Name": "Srikanth",
             "NoOfEmployees": 10,
             "Password": null,
-            "Photo": null,
+            "Photo": "",
             "UserName": "sree123",
             "VendorDetails": null,
             "VendorServices": null

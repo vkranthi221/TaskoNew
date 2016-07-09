@@ -75,7 +75,7 @@ CREATE TABLE [dbo].[VENDOR](
 	[PASSWORD] [varchar](max) NOT NULL,
 	[EMAIL_ADDRESS] [varchar](max) NULL,
 	[ADDRESS_ID] [binary](16) NULL,
-	[PHOTO] [varbinary](max) NULL,
+	[PHOTO] [varchar](50) NULL,
 	[EMPLOYEE_COUNT] [int] NOT NULL,
 	[BASE_RATE] [decimal](18, 0) NOT NULL,
 	[IS_VENDOR_VERIFIED] [bit] NOT NULL,

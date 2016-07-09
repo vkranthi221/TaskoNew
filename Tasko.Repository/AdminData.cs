@@ -214,7 +214,7 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pDOB", DbType.DateTime, vendor.DateOfBirth));
             objParameters.Add(SqlHelper.CreateParameter("@pGender", DbType.Int16, vendor.Gender));
             objParameters.Add(SqlHelper.CreateParameter("@pPassword", DbType.Int16, vendor.Password));
-            //objParameters.Add(SqlHelper.CreateParameter("@pPhoto", DbType.varbin, vendor.Photo));
+            objParameters.Add(SqlHelper.CreateParameter("@pPhoto", DbType.String, vendor.Photo));
             //objParameters.Add(SqlHelper.CreateParameter("@pActiveTimePerDay", DbType.String, vendor.ActiveTimePerDay));
             //objParameters.Add(SqlHelper.CreateParameter("@pDataConsumption", DbType.Int32, vendor.DataConsumption));
             //objParameters.Add(SqlHelper.CreateParameter("@pCallsToCustomerCare", DbType.Int32, vendor.CallsToCustomerCare));

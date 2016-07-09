@@ -47,7 +47,7 @@ namespace TaskoTestClient
             vendor.Name="Add Test3";
             vendor.NoOfEmployees=1000;
             vendor.Password="123456";
-            vendor.Photo= null;
+            vendor.Photo= string.Empty;
             //vendor.TimeSpentOnApp = "08:01:10.0800000";
             vendor.UserName="testuser3";
             vendor.VendorDetails = new VendorDetails();
