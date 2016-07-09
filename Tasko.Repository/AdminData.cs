@@ -347,6 +347,35 @@ namespace Tasko.Repository
             return customers;
         }
 
+        public static List<VendorRating> CustomerRatingsForOrders(string customerId, int noOfRecords)
+        {
+            List<VendorRating> vendorRatings = new List<VendorRating>();
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pNoOfRecords", DbType.Int32, noOfRecords));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.[usp_GetCustomerRatingForOrders]", objParameters.ToArray());
+            while (reader.Read())
+            {
+                VendorRating rating = new VendorRating();
+               rating.CustomerName = reader["customer_name"].ToString();
+               rating.VendorName = reader["vendor_name"].ToString();
+               rating.OrderId = reader["order_id"].ToString();
+               rating.OverAllRating = Convert.ToDecimal(reader["OVERALL_RATING"]);     
+                    
+                        
+                rating.ServiceQuality = Convert.ToDecimal(reader["SERVICE_QUALITY"]);
+                rating.Punctuality = Convert.ToDecimal(reader["PUNCTUALITY"]);
+                rating.Courtesy = Convert.ToDecimal(reader["COURTESY"]);
+                rating.Price = Convert.ToDecimal(reader["PRICE"]);
+                
+                vendorRatings.Add(rating);
+            }
+
+            reader.Close();
+
+            return vendorRatings;
+        }
 
         #endregion
         #region Common

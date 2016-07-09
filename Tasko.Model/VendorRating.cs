@@ -32,6 +32,19 @@ namespace Tasko.Model
         public string CustomerName { get; set; }
 
         /// <summary>
+        /// Gets o sets the name of the vendor 
+        /// </summary>
+        [DataMember]
+        public string VendorName { get; set; }
+
+        /// <summary>
+        /// Gets o sets the order id
+        /// </summary>
+        [DataMember]
+        public string OrderId { get; set; }
+
+
+        /// <summary>
         /// Gets or sets the over all rating.
         /// </summary>
         /// <value>

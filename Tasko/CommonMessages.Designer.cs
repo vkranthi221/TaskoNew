@@ -259,6 +259,15 @@ namespace Tasko {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customer ratings not found.
+        /// </summary>
+        internal static string NO_CUSTOMER_RATINGS {
+            get {
+                return ResourceManager.GetString("NO_CUSTOMER_RATINGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customers not found.
         /// </summary>
         internal static string NO_CUSTOMERS {

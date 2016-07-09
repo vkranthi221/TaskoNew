@@ -234,4 +234,7 @@
   <data name="NO_CUSTOMERS" xml:space="preserve">
     <value>Customers not found</value>
   </data>
+  <data name="NO_CUSTOMER_RATINGS" xml:space="preserve">
+    <value>Customer ratings not found</value>
+  </data>
 </root>

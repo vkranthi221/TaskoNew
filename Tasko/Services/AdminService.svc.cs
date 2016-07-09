@@ -537,7 +537,36 @@ namespace Tasko.Services
 
             return r;
         }
-	
+
+        public Response GetCustomerRatingsForOrders(string customerId, int noOfRecords) 
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    AdminData.CustomerRatingsForOrders(customerId, noOfRecords);
+                    r.Error = false;
+                    r.Status = 200;
+                    r.Message = CommonMessages.SUCCESS;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.NO_CUSTOMER_RATINGS;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
         public Response GetCustomerAddresses(string customerId)
         {	
             Response r = new Response();
