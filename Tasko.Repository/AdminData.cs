@@ -273,6 +273,31 @@ namespace Tasko.Repository
 
             return vendorOverview;
         }
+
+        public static List<VendorSummary> GetVendorsByStatus(int vendorStatus)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorStatus", DbType.Int32, vendorStatus));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorsByStatus", objParameters.ToArray());
+            List<VendorSummary> vendors = new List<VendorSummary>();
+
+            while (reader.Read())
+            {
+                VendorSummary objVendor = new VendorSummary();
+                objVendor.Id = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
+                objVendor.UserName = reader["USER_NAME"].ToString();
+                objVendor.Name = reader["NAME"].ToString();
+                objVendor.MobileNumber = reader["MOBILE_NUMBER"].ToString();
+                objVendor.EmailAddress = Convert.ToString(reader["EMAIL_ADDRESS"]);
+                objVendor.IsVendorLive = Convert.ToBoolean(reader["IS_VENDOR_LIVE"]);
+                vendors.Add(objVendor);
+            }
+
+            reader.Close();
+
+            return vendors;
+        }
         #endregion
 
         #region Common
