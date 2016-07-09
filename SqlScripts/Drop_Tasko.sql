@@ -40,6 +40,8 @@ DROP PROCEDURE [dbo].[usp_GetVendorSubServices]
 GO
 DROP PROCEDURE [dbo].[usp_UpdateVendorServices]
 GO
+DROP PROCEDURE [dbo].[usp_UpdateVendorService]
+GO
 DROP PROCEDURE [dbo].[usp_UpdateVendor]
 GO
 DROP PROCEDURE [dbo].[usp_InsertOTPDetails]
