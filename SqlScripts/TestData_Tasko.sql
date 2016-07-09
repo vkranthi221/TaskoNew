@@ -47,9 +47,9 @@ INSERT INTO [dbo].VENDOR_SERVICES values(newId(),(select Vendor_Id from [dbo].Ve
 INSERT INTO [dbo].VENDOR_SERVICES values(newId(),(select Vendor_Id from [dbo].Vendor WHERE NAME='chandra'),(select Service_Id from [dbo].[SERVICES] WHERE NAME='AC Installation'),1)
 SELECT * FROM [dbo].VENDOR_SERVICES
 
-INSERT INTO [dbo].CUSTOMER values(newid(),'Shivaji','shivaji@gmail.com','1234567890')
-INSERT INTO [dbo].CUSTOMER values(newid(),'Shivaji123','shivaji123@gmail.com','9999999999')
-INSERT INTO [dbo].CUSTOMER values(newid(),'Shivaji456','shivaji456@gmail.com','9876543210')
+INSERT INTO [dbo].CUSTOMER values(newid(),'Shivaji','shivaji@gmail.com','1234567890', 1)
+INSERT INTO [dbo].CUSTOMER values(newid(),'Shivaji123','shivaji123@gmail.com','9999999999',1)
+INSERT INTO [dbo].CUSTOMER values(newid(),'Shivaji456','shivaji456@gmail.com','9876543210',1)
 SELECT * FROM [dbo].Customer
 
 

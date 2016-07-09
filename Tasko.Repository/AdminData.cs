@@ -323,6 +323,32 @@ namespace Tasko.Repository
         }
         #endregion
 
+        #region Customers
+        public static List<Customer> GetCustomersByStatus(int customerStatus)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            objParameters.Add(SqlHelper.CreateParameter("@pStatus", DbType.Int16, customerStatus));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetAllCustomersByStatus", objParameters.ToArray());
+            List<Customer> customers = new List<Customer>();
+
+            while (reader.Read())
+            {
+                Customer objCustomer = new Customer();
+                objCustomer.Id = BinaryConverter.ConvertByteToString((byte[])reader["CUSTOMER_ID"]);
+                objCustomer.Name = reader["NAME"].ToString();
+                objCustomer.MobileNumber = reader["MOBILE_NUMBER"].ToString();
+                objCustomer.EmailAddress = Convert.ToString(reader["EMAIL_ADDRESS"]);
+                customers.Add(objCustomer);
+            }
+
+            reader.Close();
+
+            return customers;
+        }
+
+
+        #endregion
         #region Common
         /// <summary>
         /// Adds the Vendor services.

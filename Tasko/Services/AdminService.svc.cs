@@ -508,6 +508,75 @@ namespace Tasko.Services
         }
         #endregion
 
+        # region Customers
+        public Response GetAllCustomersByStatus(int customerStatus)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    AdminData.GetVendorsByStatus(customerStatus);
+                    r.Error = false;
+                    r.Status = 200;
+                    r.Message = CommonMessages.SUCCESS;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.NO_CUSTOMERS;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+	
+        public Response GetCustomerAddresses(string customerId)
+        {	
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                List<AddressInfo> customerAddresses = null;
+                if (isTokenValid)
+                {
+                    customerAddresses = CustomerData.GetCustomerAddresses(customerId);
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+
+                if (customerAddresses != null && customerAddresses.Count > 0)
+                {
+                    r.Message = CommonMessages.SUCCESS;
+                    r.Data = customerAddresses;
+                }
+                else
+                {
+                    r.Message = CommonMessages.CUSTOMER_ADDRESS_NOT_FOUND;
+                }
+
+                r.Error = false;
+                r.Status = 200;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+            return r;
+        }
+
+        # endregion
         #region General
         #endregion
 

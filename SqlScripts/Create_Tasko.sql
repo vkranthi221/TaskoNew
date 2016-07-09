@@ -177,6 +177,7 @@ CREATE TABLE [dbo].[CUSTOMER](
 	[NAME] VARCHAR(MAX) NOT NULL,
 	[EMAIL_ADDRESS] VARCHAR(MAX) NOT NULL,
 	[MOBILE_NUMBER] VARCHAR(MAX) NOT NULL,
+	[STATUS] smallint NOT NULL
  CONSTRAINT [CUSTOMER_PK] PRIMARY KEY CLUSTERED(CUSTOMER_ID))
  
 GO
@@ -1864,3 +1865,35 @@ ELSE
 END
 
 GO
+/****** Object:  StoredProcedure [dbo].[usp_GetAllCustomersByStatus]    Script Date: 09-07-2016 16:32:01 ******/
+
+
+CREATE PROCEDURE [dbo].[usp_GetAllCustomersByStatus]
+(
+	@pStatus smallint
+)
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+
+	if(@pStatus = 0)
+	BEGIN
+		SELECT [CUSTOMER_ID]
+			  ,[NAME]
+			  ,[MOBILE_NUMBER]
+			  ,[EMAIL_ADDRESS]
+		FROM [dbo].[CUSTOMER] (NOLOCK)
+	END
+	ELSE
+	BEGIN
+		SELECT [CUSTOMER_ID]
+			  ,[NAME]
+			  ,[MOBILE_NUMBER]
+			  ,[EMAIL_ADDRESS]
+		FROM [dbo].[CUSTOMER] (NOLOCK)
+		WHERE STATUS = @pStatus
+	END
+END
+
+

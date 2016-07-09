@@ -231,4 +231,7 @@
   <data name="ADD_VENDOR_FAILED" xml:space="preserve">
     <value>Error adding vendor.</value>
   </data>
+  <data name="NO_CUSTOMERS" xml:space="preserve">
+    <value>Customers not found</value>
+  </data>
 </root>

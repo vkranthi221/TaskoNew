@@ -668,6 +668,11 @@ namespace Tasko.Interfaces
         #endregion
 
         #region Customers
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetAllCustomersByStatus(int customerStatus);
+
         #endregion
 
         #region Orders
