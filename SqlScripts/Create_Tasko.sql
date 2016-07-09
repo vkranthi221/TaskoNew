@@ -388,6 +388,25 @@ GO
 ALTER TABLE [dbo].[COMPLAINT] ADD  CONSTRAINT [DF_Complaint_Complaint_Id]  DEFAULT ((1000)) FOR [Complaint_Id]
 GO
 
+CREATE TABLE [dbo].[ACTIVITY](
+	[ACTIVITY_ID] [binary](16) NOT NULL,
+	[ACTIVITY_TYPE_ID] [binary](16) NOT NULL,
+	[CUSTOMER_ID] [binary](16) NULL,
+	[VENDOR_ID] [binary](16) NULL,
+	[ORDER_ID] [nvarchar](50) NULL,
+	[COMMENTS] [nvarchar](max) NULL,
+	[ACTIVITY_DATE] dateTime NOT NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
+CREATE TABLE [dbo].[ACTIVITY_TYPE](
+	[ID] [binary](16) NOT NULL,
+	[ACTIVITY_TYPE_NAME] [nvarchar](50) NULL
+) ON [PRIMARY]
+
+GO
+
 /*********** Stored Procedures **************************/
 GO
 CREATE PROCEDURE [dbo].[usp_GetVendorDetails]
@@ -499,6 +518,42 @@ WHERE PARENT_SERVICE_ID = (SELECT SERVICE_ID FROM VENDOR_SERVICES WHERE VENDOR_S
 END
 
 GO
+
+CREATE PROCEDURE [dbo].[usp_AddActivity]
+(
+  @pActivityTypeName nvarchar(max),
+  @pCustomerId binary(16),
+  @pVendorId binary(16),
+  @pOrderId nvarchar(max),
+  @pComment nvarchar(max)
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+DECLARE @pActivityTypeId Binary(16)
+SELECT @pActivityTypeId = ID FROM ACTIVITY_TYPE WHERE ACTIVITY_TYPE_NAME =@pActivityTypeName
+
+INSERT INTO ACTIVITY VALUES (NEWID(), @pActivityTypeId, @pCustomerId, @pVendorId, @pOrderId, @pComment, GetDate())
+
+END
+
+GO
+
+CREATE PROCEDURE [dbo].[usp_GetDashboardRecentActivities]
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+SELECT TOP 20 ACTIVITY_ID, ACTIVITY_TYPE_NAME, CUSTOMER_ID, VENDOR_ID, ORDER_ID, COMMENTS, ACTIVITY_DATE FROM dbo.ACTIVITY AC
+INNER JOIN ACTIVITY_TYPE AT ON AT.ID = AC.ACTIVITY_TYPE_ID
+ORDER BY ACTIVITY_DATE DESC
+
+END
+GO
+
 CREATE PROCEDURE [dbo].[usp_UpdateOrderStatus]
 (
 	@pOrderId varchar(50),
@@ -1131,8 +1186,6 @@ END
 
 GO
 
-USE [Tasko]
-GO
 
 /****** Object:  StoredProcedure [dbo].[usp_UpdateVendor]    Script Date: 01-06-2016 00:36:20 ******/
 SET ANSI_NULLS ON
@@ -1716,55 +1769,59 @@ END
 
 GO
 
-CREATE TABLE [dbo].[ACTIVITY](
-	[ACTIVITY_ID] [binary](16) NOT NULL,
-	[ACTIVITY_TYPE_ID] [binary](16) NOT NULL,
-	[CUSTOMER_ID] [binary](16) NULL,
-	[VENDOR_ID] [binary](16) NULL,
-	[ORDER_ID] [nvarchar](50) NULL,
-	[COMMENTS] [nvarchar](max) NULL,
-	[ACTIVITY_DATE] dateTime NOT NULL
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-
-GO
-
-CREATE TABLE [dbo].[ACTIVITY_TYPE](
-	[ID] [binary](16) NOT NULL,
-	[ACTIVITY_TYPE_NAME] [nvarchar](50) NULL
-) ON [PRIMARY]
-
-GO
-
-CREATE PROCEDURE [dbo].[usp_AddActivity]
-(
-  @pActivityTypeName nvarchar(max),
-  @pCustomerId binary(16),
-  @pVendorId binary(16),
-  @pOrderId nvarchar(max),
-  @pComment nvarchar(max)
+CREATE PROCEDURE [dbo].[usp_GetVendorsByStatus]
+(  
+  @pVendorStatus int
 )
 
 AS
 BEGIN
 
 SET NOCOUNT ON;
-DECLARE @pActivityTypeId Binary(16)
-SELECT @pActivityTypeId = ID FROM ACTIVITY_TYPE WHERE ACTIVITY_TYPE_NAME =@pActivityTypeName
+IF(@pVendorStatus != 0)
+SELECT V.[VENDOR_ID],[NAME],[USER_NAME],[MOBILE_NUMBER],[EMAIL_ADDRESS],[IS_VENDOR_LIVE]
+   FROM [dbo].[VENDOR] V
+   WHERE V.IS_VENDOR_LIVE = @pVendorStatus
+ELSE
+SELECT V.[VENDOR_ID],[NAME],[USER_NAME],[MOBILE_NUMBER],[EMAIL_ADDRESS],[IS_VENDOR_LIVE]
+   FROM [dbo].[VENDOR] V
+END
 
-INSERT INTO ACTIVITY VALUES (NEWID(), @pActivityTypeId, @pCustomerId, @pVendorId, @pOrderId, @pComment, GetDate())
+
+GO
+
+CREATE PROCEDURE [dbo].[usp_DeactivateVendorServices]
+(
+	@pVendorId Binary(16)
+)
+AS
+BEGIN
+
+ UPDATE [dbo].[VENDOR_SERVICES] SET IS_VENDOR_SERVICE_ACTIVE = 0 WHERE VENDOR_ID = @pVendorId
 
 END
 
 GO
 
-CREATE PROCEDURE [dbo].[usp_GetDashboardRecentActivities]
+
+CREATE PROCEDURE [dbo].[usp_UpdateVendorService]
+(
+	@pServiceId Binary(16),
+	@pVendorId Binary(16)
+)
 AS
 BEGIN
 
-SET NOCOUNT ON;
+DECLARE @SERVICECOUNT INT
 
-SELECT TOP 20 ACTIVITY_ID, ACTIVITY_TYPE_NAME, CUSTOMER_ID, VENDOR_ID, ORDER_ID, COMMENTS, ACTIVITY_DATE FROM dbo.ACTIVITY AC
-INNER JOIN ACTIVITY_TYPE AT ON AT.ID = AC.ACTIVITY_TYPE_ID
-ORDER BY ACTIVITY_DATE DESC
+SET @SERVICECOUNT = (SELECT COUNT(*) FROM [dbo].[VENDOR_SERVICES] WHERE VENDOR_ID = @pVendorId AND SERVICE_ID = @pServiceId)
+IF(@SERVICECOUNT > 0)
+UPDATE [dbo].[VENDOR_SERVICES] SET IS_VENDOR_SERVICE_ACTIVE = 1 WHERE VENDOR_ID = @pVendorId AND SERVICE_ID = @pServiceId
+ELSE
+ INSERT INTO [dbo].[VENDOR_SERVICES] VALUES (NEWID(), @pVendorId, @pServiceId, 1)
 
 END
+
+GO
+
+
