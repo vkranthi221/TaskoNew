@@ -557,9 +557,6 @@ namespace Tasko.Interfaces
         #region Customers
         #endregion
 
-        #region General
-        #endregion
-
         #region Orders
         /**
         * @api {post} a1/GetOrders Get Orders
@@ -631,6 +628,106 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetOrders(int orderStatusId);
+
+        /**
+         * @api {post} c1/GetOrderDetails Get Order details
+         * @apiName GetOrderDetails
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *     
+         * @apiParam {String} orderId Order Id.
+         *
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *    "OrderId": "Order Id that you would like to get the details" 
+         *  }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": {
+            "__type": "Order:#Tasko.Model",
+            "Comments": "",
+            "CustomerId": "692BD435A5173E42916438F889F5DA08",
+            "CustomerName": "Shivaji",
+            "DestinationAddress": {
+              "Address": "plot no 404, BaghyaNagar",
+              "AddressId": "8397A91B6E997F438A9D4D9D49D3E12A",
+              "City": "Hyderabad",
+              "Country": "India",
+              "Lattitude": "40",
+              "Locality": "HMT HILLS",
+              "Longitude": "600",
+              "Pincode": "500072",
+              "State": "Telangana"
+            },
+            "Location": "kphb",
+            "OrderId": "TASKO1000",
+            "OrderStatus": "Requested",
+            "OrderStatusId": 1,
+            "RequestedDate": "2016-06-29 22:49:47",
+            "ServiceId": "9661D3C7E345B747BBE62DEA76F00B82",
+            "ServiceName": "Electrician",
+            "SourceAddress": {
+              "Address": "plot no 101, vivekanandaNagar",
+              "AddressId": "36F6A0E2C85F7D46AF68C4EB73148B2A",
+              "City": "Hyderabad",
+              "Country": "India",
+              "Lattitude": "10",
+              "Locality": "kphb",
+              "Longitude": "200",
+              "Pincode": "500081",
+              "State": "Telangana"
+            },
+            "VendorId": "C3A4A364DA1DE542BA70FBAD2435D571",
+            "VendorName": "chandra",
+            "VendorServiceId": "CD2CA27D52CE5E4D8E897D53CC4379CB"
+          },
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError ORDER_NOT_FOUND The Order id was not found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Order not found",
+          "Status": 400
+        }
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetOrderDetails(string orderId);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response AddComplaint(Complaint complaint);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetComplaints(int complaintStatus);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response UpdateComplaint(Complaint complaint);
+        #endregion
+
+        #region General
         #endregion
     }
 }
