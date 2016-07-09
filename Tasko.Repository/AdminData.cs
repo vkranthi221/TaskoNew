@@ -451,7 +451,7 @@ namespace Tasko.Repository
             {
                 RecentActivities RecentActivity = new RecentActivities();
                 RecentActivity.ActivityId = BinaryConverter.ConvertByteToString((byte[])reader["ACTIVITY_ID"]);
-                RecentActivity.ActivityType = reader["ACTIVITY_TYPE_NAME"].ToString();
+                RecentActivity.ActivityType = reader["ACTIVITY_TYPE"].ToString();
 
                 if (!(reader["CUSTOMER_ID"] is System.DBNull))
                 {

@@ -134,3 +134,29 @@ DROP PROCEDURE [dbo].[usp_GetOrdersByService]
 GO
 DROP PROCEDURE [dbo].[usp_GetVendorsByService]
 GO
+DROP TABLE [dbo].[ACTIVITY]
+Go
+DROP PROCEDURE [dbo].[usp_AddActivity]
+GO
+DROP PROCEDURE [dbo].[usp_GetDashboardMeters]
+GO
+DROP PROCEDURE [dbo].[usp_GetDashboardRecentActivities]
+GO
+DROP PROCEDURE [dbo].[usp_GetDashboardRecentOrdersByStatus]
+GO
+DROP PROCEDURE [dbo].[usp_AddVendor]
+GO
+DROP PROCEDURE [dbo].[usp_AddVendorService]
+GO
+DROP PROCEDURE [dbo].[usp_DeleteVendorServices]
+GO
+DROP PROCEDURE [dbo].[usp_GetServicesForVendor]
+GO
+DROP PROCEDURE [dbo].[usp_GetVendorOverview]
+GO
+DROP TABLE [dbo].[COMPLAINT]
+GO
+DROP PROCEDURE [dbo].[usp_DeactivateVendorServices]
+GO
+DROP PROCEDURE [dbo].[usp_GetVendorsByStatus]
+GO

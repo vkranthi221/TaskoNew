@@ -390,20 +390,13 @@ GO
 
 CREATE TABLE [dbo].[ACTIVITY](
 	[ACTIVITY_ID] [binary](16) NOT NULL,
-	[ACTIVITY_TYPE_ID] [binary](16) NOT NULL,
+	[ACTIVITY_TYPE] [nvarchar](max) NOT NULL,
 	[CUSTOMER_ID] [binary](16) NULL,
 	[VENDOR_ID] [binary](16) NULL,
 	[ORDER_ID] [nvarchar](50) NULL,
 	[COMMENTS] [nvarchar](max) NULL,
 	[ACTIVITY_DATE] dateTime NOT NULL
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-
-GO
-
-CREATE TABLE [dbo].[ACTIVITY_TYPE](
-	[ID] [binary](16) NOT NULL,
-	[ACTIVITY_TYPE_NAME] [nvarchar](50) NULL
-) ON [PRIMARY]
 
 GO
 
@@ -521,7 +514,7 @@ GO
 
 CREATE PROCEDURE [dbo].[usp_AddActivity]
 (
-  @pActivityTypeName nvarchar(max),
+  @pActivityType nvarchar(max),
   @pCustomerId binary(16),
   @pVendorId binary(16),
   @pOrderId nvarchar(max),
@@ -532,10 +525,8 @@ AS
 BEGIN
 
 SET NOCOUNT ON;
-DECLARE @pActivityTypeId Binary(16)
-SELECT @pActivityTypeId = ID FROM ACTIVITY_TYPE WHERE ACTIVITY_TYPE_NAME =@pActivityTypeName
 
-INSERT INTO ACTIVITY VALUES (NEWID(), @pActivityTypeId, @pCustomerId, @pVendorId, @pOrderId, @pComment, GetDate())
+INSERT INTO ACTIVITY VALUES (NEWID(), @pActivityType, @pCustomerId, @pVendorId, @pOrderId, @pComment, GetDate())
 
 END
 
@@ -547,8 +538,7 @@ BEGIN
 
 SET NOCOUNT ON;
 
-SELECT TOP 20 ACTIVITY_ID, ACTIVITY_TYPE_NAME, CUSTOMER_ID, VENDOR_ID, ORDER_ID, COMMENTS, ACTIVITY_DATE FROM dbo.ACTIVITY AC
-INNER JOIN ACTIVITY_TYPE AT ON AT.ID = AC.ACTIVITY_TYPE_ID
+SELECT TOP 20 ACTIVITY_ID, ACTIVITY_TYPE, CUSTOMER_ID, VENDOR_ID, ORDER_ID, COMMENTS, ACTIVITY_DATE FROM dbo.ACTIVITY AC
 ORDER BY ACTIVITY_DATE DESC
 
 END
