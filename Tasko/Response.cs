@@ -40,6 +40,7 @@ namespace Tasko
     [KnownType(typeof(List<VendorSummary>))]
     [KnownType(typeof(ServicesForVendor))]
     [KnownType(typeof(List<ServicesForVendor>))]
+    [KnownType(typeof(DashboardMeter ))]
     public class Response
     {
         /// <summary>

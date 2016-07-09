@@ -729,5 +729,159 @@ namespace Tasko.Interfaces
 
         #region General
         #endregion
+
+        #region Dashboard
+
+        /**
+         * @api {post} a1/GetDashboardRecentOrdersByStatus Get Dashboard Recent Orders
+         * @apiName GetDashboardRecentOrdersByStatus
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         * @apiParam {string} orderStatusId Order Status Id {If Order status Id is 6 it will return Completed orders else it will return the pending orders}
+         *
+         * @apiParamExample {json} Param-Example 1:
+         * { 
+         *   "orderStatusId":6
+         * }
+         *
+         * @apiSuccessExample Success-Response 1:
+         {
+          "Data": [
+            {
+              "__type": "OrderSummary:#Tasko.Model",
+              "Comments": null,
+              "CustomerName": "Shivaji123",
+              "OrderId": "TASKO1007",
+              "OrderStatus": "Completed",
+              "RequestedDate": "2016-07-03 17:43:19",
+              "ServiceId": null,
+              "ServiceName": "Microwave Service",
+              "VendorName": "Srikanth"
+            },
+            {
+              "__type": "OrderSummary:#Tasko.Model",
+              "Comments": null,
+              "CustomerName": "Shivaji",
+              "OrderId": "TASKO1000",
+              "OrderStatus": "Completed",
+              "RequestedDate": "2016-07-03 17:43:19",
+              "ServiceId": null,
+              "ServiceName": "Electrician",
+              "VendorName": "chandra"
+            }
+          ],
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+         }
+         * @apiParamExample {json} Param-Example 2:
+         * { 
+         *   "orderStatusId":1
+         * }
+         *
+         * @apiSuccessExample Success-Response 2:
+         {
+          "Data": [
+             {
+              "__type": "OrderSummary:#Tasko.Model",
+              "Comments": null,
+              "CustomerName": "Shivaji123",
+              "OrderId": "TASKO1010",
+              "OrderStatus": "Requested",
+              "RequestedDate": "2016-07-03 17:43:19",
+              "ServiceId": null,
+              "ServiceName": "Microwave Service",
+              "VendorName": "Srikanth"
+            },
+            {
+              "__type": "OrderSummary:#Tasko.Model",
+              "Comments": null,
+              "CustomerName": "Shivaji123",
+              "OrderId": "TASKO1009",
+              "OrderStatus": "Accepted",
+              "RequestedDate": "2016-07-03 17:43:19",
+              "ServiceId": null,
+              "ServiceName": "Microwave Service",
+              "VendorName": "Srikanth"
+            }
+          ],
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError INVALID_TOKEN_CODE Invalid token code.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Invalid token code",
+            "Status": 400
+          }        
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetDashboardRecentOrdersByStatus(int orderStatusId);
+
+        /**
+         * @api {post} a1/GetDashboardMeters Get Dashboard Meter Values
+         * @apiName GetDashboardMeters
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *
+         * @apiSuccessExample Success-Response:
+        {
+            "Data": {
+            "__type": "DashboardMeter:#Tasko.Model",
+            "TotalCustomerReviews": 1,
+            "TotalCustomers": 3,
+            "TotalOrders": 11,
+            "TotalPayments": 0,
+            "TotalServices": 15,
+            "TotalUsers": 0,
+            "TotalVendorReviews": 11,
+            "TotalVendors": 2
+            },
+            "Error": false,
+            "Message": "Success",
+            "Status": 200
+        }
+         * @apiError INVALID_TOKEN_CODE Invalid token code.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Invalid token code",
+            "Status": 400
+          }  
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetDashboardMeters();
+
+        #endregion
     }
 }

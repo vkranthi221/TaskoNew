@@ -295,26 +295,7 @@ namespace Tasko.Services
             }
 
             return r;
-        }
-
-        /// <summary>
-        /// Validates the token.
-        /// </summary>
-        /// <returns>bool value</returns>
-        private static bool ValidateToken()
-        {
-            IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
-            WebHeaderCollection headers = request.Headers;
-            string tokenCode = headers["Token_Code"];
-            string userId = headers["User_Id"];
-            if (!string.IsNullOrEmpty(tokenCode) && !string.IsNullOrEmpty(userId))
-            {
-                bool isTokenValid = VendorData.ValidateTokenCode(tokenCode, userId);
-                return isTokenValid;
-            }
-
-            return false;
-        }
+        }       
 
         #endregion
 
@@ -671,6 +652,115 @@ namespace Tasko.Services
         #endregion
 
         #region Customers
+        #endregion
+
+        #region Dashboard
+        /// <summary>
+        /// Gets the dashboard recent orders by status.
+        /// </summary>
+        /// <param name="orderStatusId">The order status identifier.</param>
+        /// <returns>Response Object</returns>        
+        public Response GetDashboardRecentOrdersByStatus(int orderStatusId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    List<OrderSummary> recentOrders = AdminData.GetDashboardRecentOrdersByStatus(orderStatusId);
+
+                    if (recentOrders != null)
+                    {
+                        r.Error = false;
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Status = 200;
+                        r.Data = recentOrders;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Message = CommonMessages.ORDERS_NOT_FOUND;
+                        r.Status = 400;
+                    }
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r; 
+        }
+
+        /// <summary>
+        /// Gets the dashboard meters.
+        /// </summary>
+        /// <returns>Response Object</returns>
+        public Response GetDashboardMeters()
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    DashboardMeter dashboardMeter = AdminData.GetDashboardMeters();
+
+                    if (dashboardMeter != null)
+                    {
+                        r.Error = false;
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Status = 200;
+                        r.Data = dashboardMeter;
+                    }                    
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        #endregion
+
+        #region Private Methods
+        /// <summary>
+        /// Validates the token.
+        /// </summary>
+        /// <returns>bool value</returns>
+        private static bool ValidateToken()
+        {
+            IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
+            WebHeaderCollection headers = request.Headers;
+            string tokenCode = headers["Token_Code"];
+            string userId = headers["User_Id"];
+            if (!string.IsNullOrEmpty(tokenCode) && !string.IsNullOrEmpty(userId))
+            {
+                bool isTokenValid = VendorData.ValidateTokenCode(tokenCode, userId);
+                return isTokenValid;
+            }
+
+            return false;
+
+            //return true;
+        }
         #endregion
     }
 }

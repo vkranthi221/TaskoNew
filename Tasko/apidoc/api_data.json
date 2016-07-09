@@ -367,6 +367,364 @@
   },
   {
     "type": "post",
+    "url": "a1/GetDashboardMeters",
+    "title": "Get Dashboard Meter Values",
+    "name": "GetDashboardMeters",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"Data\": {\n    \"__type\": \"DashboardMeter:#Tasko.Model\",\n    \"TotalCustomerReviews\": 1,\n    \"TotalCustomers\": 3,\n    \"TotalOrders\": 11,\n    \"TotalPayments\": 0,\n    \"TotalServices\": 15,\n    \"TotalUsers\": 0,\n    \"TotalVendorReviews\": 11,\n    \"TotalVendors\": 2\n    },\n    \"Error\": false,\n    \"Message\": \"Success\",\n    \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Invalid token code\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetDashboardRecentOrdersByStatus",
+    "title": "Get Dashboard Recent Orders",
+    "name": "GetDashboardRecentOrdersByStatus",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "orderStatusId",
+            "description": "<p>Order Status Id {If Order status Id is 6 it will return Completed orders else it will return the pending orders}</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example 1:",
+          "content": "{ \n  \"orderStatusId\":6\n}",
+          "type": "json"
+        },
+        {
+          "title": "Param-Example 2:",
+          "content": "{ \n  \"orderStatusId\":1\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response 1:",
+          "content": "{\n \"Data\": [\n   {\n     \"__type\": \"OrderSummary:#Tasko.Model\",\n     \"Comments\": null,\n     \"CustomerName\": \"Shivaji123\",\n     \"OrderId\": \"TASKO1007\",\n     \"OrderStatus\": \"Completed\",\n     \"RequestedDate\": \"2016-07-03 17:43:19\",\n     \"ServiceId\": null,\n     \"ServiceName\": \"Microwave Service\",\n     \"VendorName\": \"Srikanth\"\n   },\n   {\n     \"__type\": \"OrderSummary:#Tasko.Model\",\n     \"Comments\": null,\n     \"CustomerName\": \"Shivaji\",\n     \"OrderId\": \"TASKO1000\",\n     \"OrderStatus\": \"Completed\",\n     \"RequestedDate\": \"2016-07-03 17:43:19\",\n     \"ServiceId\": null,\n     \"ServiceName\": \"Electrician\",\n     \"VendorName\": \"chandra\"\n   }\n ],\n \"Error\": false,\n \"Message\": \"Success\",\n \"Status\": 200\n}",
+          "type": "json"
+        },
+        {
+          "title": "Success-Response 2:",
+          "content": " {\n  \"Data\": [\n     {\n      \"__type\": \"OrderSummary:#Tasko.Model\",\n      \"Comments\": null,\n      \"CustomerName\": \"Shivaji123\",\n      \"OrderId\": \"TASKO1010\",\n      \"OrderStatus\": \"Requested\",\n      \"RequestedDate\": \"2016-07-03 17:43:19\",\n      \"ServiceId\": null,\n      \"ServiceName\": \"Microwave Service\",\n      \"VendorName\": \"Srikanth\"\n    },\n    {\n      \"__type\": \"OrderSummary:#Tasko.Model\",\n      \"Comments\": null,\n      \"CustomerName\": \"Shivaji123\",\n      \"OrderId\": \"TASKO1009\",\n      \"OrderStatus\": \"Accepted\",\n      \"RequestedDate\": \"2016-07-03 17:43:19\",\n      \"ServiceId\": null,\n      \"ServiceName\": \"Microwave Service\",\n      \"VendorName\": \"Srikanth\"\n    }\n  ],\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Invalid token code\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "c1/GetOrderDetails",
+    "title": "Get Order details",
+    "name": "GetOrderDetails",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "orderId",
+            "description": "<p>Order Id.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"OrderId\": \"Order Id that you would like to get the details\" \n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": {\n    \"__type\": \"Order:#Tasko.Model\",\n    \"Comments\": \"\",\n    \"CustomerId\": \"692BD435A5173E42916438F889F5DA08\",\n    \"CustomerName\": \"Shivaji\",\n    \"DestinationAddress\": {\n      \"Address\": \"plot no 404, BaghyaNagar\",\n      \"AddressId\": \"8397A91B6E997F438A9D4D9D49D3E12A\",\n      \"City\": \"Hyderabad\",\n      \"Country\": \"India\",\n      \"Lattitude\": \"40\",\n      \"Locality\": \"HMT HILLS\",\n      \"Longitude\": \"600\",\n      \"Pincode\": \"500072\",\n      \"State\": \"Telangana\"\n    },\n    \"Location\": \"kphb\",\n    \"OrderId\": \"TASKO1000\",\n    \"OrderStatus\": \"Requested\",\n    \"OrderStatusId\": 1,\n    \"RequestedDate\": \"2016-06-29 22:49:47\",\n    \"ServiceId\": \"9661D3C7E345B747BBE62DEA76F00B82\",\n    \"ServiceName\": \"Electrician\",\n    \"SourceAddress\": {\n      \"Address\": \"plot no 101, vivekanandaNagar\",\n      \"AddressId\": \"36F6A0E2C85F7D46AF68C4EB73148B2A\",\n      \"City\": \"Hyderabad\",\n      \"Country\": \"India\",\n      \"Lattitude\": \"10\",\n      \"Locality\": \"kphb\",\n      \"Longitude\": \"200\",\n      \"Pincode\": \"500081\",\n      \"State\": \"Telangana\"\n    },\n    \"VendorId\": \"C3A4A364DA1DE542BA70FBAD2435D571\",\n    \"VendorName\": \"chandra\",\n    \"VendorServiceId\": \"CD2CA27D52CE5E4D8E897D53CC4379CB\"\n  },\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ORDER_NOT_FOUND",
+            "description": "<p>The Order id was not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Order not found\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetOrders",
+    "title": "Get Orders",
+    "name": "GetOrders",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "orderStatusId",
+            "description": "<p>Order Status Id.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"orderStatusId\": \"Status of the order\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  {\n    \"Data\": [\n             {\n               \"__type\": \"OrderSummary:#Tasko.Model\",\n               \"Comments\": null,\n               \"CustomerName\": \"Shivaji\",\n               \"OrderId\": \"TASKO1000\",\n               \"OrderStatus\": \"Requested\",\n               \"RequestedDate\": \"2016-07-07 14:12:55\",\n               \"ServiceId\": null,\n               \"ServiceName\": \"Electrician\",\n               \"VendorName\": \"chandra\"\n             },\n             {\n               \"__type\": \"OrderSummary:#Tasko.Model\",\n               \"Comments\": null,\n               \"CustomerName\": \"Shivaji123\",\n               \"OrderId\": \"TASKO1001\",\n               \"OrderStatus\": \"Requested\",\n               \"RequestedDate\": \"2016-07-07 14:12:55\",\n               \"ServiceId\": null,\n               \"ServiceName\": \"Microwave Service\",\n               \"VendorName\": \"srikanth test\"\n             }\n           ]\n   \"Error\": false,\n   \"Message\": \"Success\",\n   \"Status\": 200\n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NO_ORDERS",
+            "description": "<p>No orders</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"No orders\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
     "url": "a1/GetOrdersByService",
     "title": "Get Orders By Service",
     "name": "GetOrdersByService",
@@ -460,6 +818,98 @@
         {
           "title": "Error-Response:",
           "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Order's not found\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetServicesForVendor",
+    "title": "Get Services For Vendor",
+    "name": "GetServicesForVendor",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "vendorId",
+            "description": "<p>Vendor Id.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n  \"vendorId\":\"AFB2B50F2164804C8E6D26A6C4A32982\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n  \"Data\": [\n           {\n             \"__type\": \"ServicesForVendor:#Tasko.Model\",\n             \"IsActive\": false,\n             \"ServiceId\": \"F4878463A2FF5043BF3763F8AA913DE1\",\n             \"ServiceName\": \"Microwave Service\"\n           }\n         ],\n         \"Error\": false,\n         \"Message\": \"Success\",\n         \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "SERVICES_NOT_FOUND",
+            "description": "<p>Services not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Services not found\",\n   \"Status\": 400\n }",
           "type": "json"
         }
       ]
@@ -655,6 +1105,105 @@
         {
           "title": "Error-Response:",
           "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/UpdateServicesForVendor",
+    "title": "Update Services For Vendor",
+    "name": "UpdateServicesForVendor",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "vendorId",
+            "description": "<p>VendorId</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "ServicesForVendor",
+            "optional": false,
+            "field": "services",
+            "description": "<p>List of services for vendor.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n  \"vendorId\": \"AFB2B50F2164804C8E6D26A6C4A32982\",\n  \"Data\": [\n                    {\n                      \"__type\": \"ServicesForVendor:#Tasko.Model\",\n                      \"ServiceId\": \"F4878463A2FF5043BF3763F8AA913DE1\",\n                      \"ServiceName\": \"Microwave Service\"\n                    }\n                  ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n  \"Data\": null,\n   \"Error\": false,\n   \"Message\": \"Success\",\n   \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Invalid token code\",\n   \"Status\": 400\n }",
           "type": "json"
         }
       ]
@@ -2992,7 +3541,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n  \"Data\": [\n             {\n               \"__type\": \"OrderSummary:#Tasko.Model\",\n               \"Comments\": \"\",\n               \"OrderId\": \"TASKO1010\",\n               \"OrderStatus\": \"Requested\",\n               \"RequestedDate\": \"2016-07-01 05:50:19\",\n               \"ServiceId\": null,\n               \"ServiceName\": \"Microwave Service\"\n             },\n             {\n               \"__type\": \"OrderSummary:#Tasko.Model\",\n               \"Comments\": \"\",\n               \"OrderId\": \"TASKO1009\",\n               \"OrderStatus\": \"Requested\",\n               \"RequestedDate\": \"2016-07-01 05:50:19\",\n               \"ServiceId\": null,\n               \"ServiceName\": \"Microwave Service\"\n             }\n           ],\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "content": " {\n  {\n   \"Data\": {\n     \"__type\": \"Vendor:#Tasko.Model\",\n     \"AddressDetails\": {\n       \"Address\": \"test\",\n       \"AddressId\": null,\n       \"City\": \"Hyderabad\",\n       \"Country\": \"India\",\n       \"Lattitude\": \"1\",\n       \"Locality\": \"KPHB\",\n       \"Longitude\": \"2\",\n       \"Pincode\": \"500072\",\n       \"State\": \"Hyderabad\"\n     },\n     \"BaseRate\": 100,\n     \"DateOfBirth\": \"7/7/2016 1:51:33 PM\",\n     \"EmailAddress\": \"sree@gmail.com\",\n     \"Gender\": 1,\n     \"Id\": \"3BCF0E621CC9FA45B644AD360D3B7E29\",\n     \"IsVendorLive\": false,\n     \"IsVendorVerified\": true,\n     \"MobileNumber\": \"1234567890\",\n     \"Name\": \"Srikanth\",\n     \"NoOfEmployees\": 10,\n     \"Password\": null,\n     \"Photo\": null,\n     \"UserName\": \"sree123\",\n     \"VendorDetails\": null,\n     \"VendorServices\": null\n   },\n   \"Error\": false,\n   \"Message\": \"Success\",\n   \"Status\": 200\n }\n}",
           "type": "json"
         }
       ]

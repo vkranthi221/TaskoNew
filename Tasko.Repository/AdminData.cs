@@ -334,5 +334,65 @@ namespace Tasko.Repository
             return orders;
         }
         #endregion
+
+        #region Dashboard
+
+        /// <summary>
+        /// Gets the dashboard recent orders by status.
+        /// </summary>
+        /// <param name="orderStatusId">The order status identifier.</param>
+        /// <returns></returns>
+        public static List<OrderSummary> GetDashboardRecentOrdersByStatus(int orderStatusId)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            objParameters.Add(SqlHelper.CreateParameter("@pStatus", DbType.Int32, orderStatusId));            
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetDashboardRecentOrdersByStatus", objParameters.ToArray());
+            List<OrderSummary> orders = new List<OrderSummary>();
+
+            while (reader.Read())
+            {
+                OrderSummary order = new OrderSummary();
+                order.OrderId = reader["ORDER_ID"].ToString();
+                order.CustomerName = reader["CUSTOMER_NAME"].ToString();
+                order.VendorName = reader["VENDOR_NAME"].ToString();
+                order.ServiceName = reader["SERVICE_NAME"].ToString();
+                order.OrderStatus = reader["ORDERSTATUS_NAME"].ToString();
+                order.RequestedDate = Convert.ToDateTime(reader["REQUESTED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+                orders.Add(order);
+            }
+
+            reader.Close();
+
+            return orders;
+        }
+
+        /// <summary>
+        /// Gets the dashboard meters.
+        /// </summary>
+        /// <returns>DashboardMeter Object</returns>
+        public static DashboardMeter GetDashboardMeters()
+        {
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetDashboardMeters");
+            DashboardMeter dashboardMeter = new DashboardMeter();
+
+            while (reader.Read())
+            {
+                dashboardMeter.TotalOrders = Convert.ToInt16(reader["TOTAL_ORDERS"].ToString());
+                dashboardMeter.TotalVendors = Convert.ToInt16(reader["TOTAL_VENDORS"].ToString());
+                dashboardMeter.TotalCustomers = Convert.ToInt16(reader["TOTAL_CUSTOMERS"].ToString());
+                dashboardMeter.TotalVendorReviews = Convert.ToInt16(reader["TOTAL_VENDOR_REVIEWS"].ToString());
+                dashboardMeter.TotalCustomerReviews = Convert.ToInt16(reader["TOTAL_CUSTOMER_REVIEWS"].ToString());
+                dashboardMeter.TotalServices = Convert.ToInt16(reader["TOTAL_SERVICES"].ToString());
+                dashboardMeter.TotalUsers = Convert.ToInt16(reader["TOTAL_USERS"].ToString());
+                dashboardMeter.TotalPayments = Convert.ToDouble(reader["TOTAL_PAYMENTS"].ToString());
+            }
+
+            reader.Close();
+
+            return dashboardMeter;
+        }
+
+        #endregion
     }
 }
