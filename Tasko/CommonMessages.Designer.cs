@@ -61,6 +61,15 @@ namespace Tasko {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error adding vendor..
+        /// </summary>
+        internal static string ADD_VENDOR_FAILED {
+            get {
+                return ResourceManager.GetString("ADD_VENDOR_FAILED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Authentication failed.
         /// </summary>
         internal static string AUTHENTICATION_FAILED {

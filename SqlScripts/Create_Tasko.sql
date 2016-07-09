@@ -1606,9 +1606,14 @@ CREATE PROCEDURE [dbo].[usp_AddVendor]
 AS
 BEGIN
 SET NOCOUNT ON;
-DECLARE @vendorId Binary(16)
+DECLARE @vendorId Binary(16),
+		@vendorCount int
 SET @vendorId = NEWID()
 
+SET @vendorCount = (SELECT COUNT(*) FROM VENDOR WHERE [USER_NAME] = @PUSERNAME)
+
+if(@vendorCount = 0)
+BEGIN
 INSERT INTO VENDOR (VENDOR_ID, [USER_NAME], NAME, MOBILE_NUMBER, [PASSWORD], EMAIL_ADDRESS, ADDRESS_ID, EMPLOYEE_COUNT, BASE_RATE, IS_VENDOR_VERIFIED, IS_VENDOR_LIVE, VENDOR_DETAILS, DATE_OF_BIRTH, GENDER) 
     VALUES (@vendorId, @pUserName, @pName, @pMobileNumber, @pPassword, @pEmailAddress, @pAddressId, @pNoOfEmployees, @pBaseRate,   @pIsVendorVerified,@pIsVendorLive, @pVendorDetails, @pDOB, @pGender)
 
@@ -1621,9 +1626,8 @@ INSERT INTO VENDOR (VENDOR_ID, [USER_NAME], NAME, MOBILE_NUMBER, [PASSWORD], EMA
 	END
 
 	SELECT @vendorId as VENDOR_ID
-   
+  END 
 END
-
 
 GO
 

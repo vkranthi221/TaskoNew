@@ -184,12 +184,12 @@ namespace Tasko.Repository
         /// Adds the Vendor.
         /// </summary>
         /// <param name="vendor">The Vendor to add</param>
-        public static void AddVendor(Vendor vendor)
+        public static string AddVendor(Vendor vendor)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
             //// add the vendor address 
             string vendorAddressId = CustomerData.AddAddress(vendor.AddressDetails);
-            
+
             XmlSerializer xmlSerializer = new XmlSerializer(vendor.VendorDetails.GetType());
             string vendorDetailsXml = string.Empty;
             using (StringWriter sw = new StringWriter())
@@ -213,18 +213,21 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pPassword", DbType.String, vendor.Password));
             objParameters.Add(SqlHelper.CreateParameter("@pDOB", DbType.DateTime, vendor.DateOfBirth));
             objParameters.Add(SqlHelper.CreateParameter("@pGender", DbType.Int16, vendor.Gender));
-            objParameters.Add(SqlHelper.CreateParameter("@pPassword", DbType.Int16, vendor.Password));
             objParameters.Add(SqlHelper.CreateParameter("@pPhoto", DbType.String, vendor.Photo));
             //objParameters.Add(SqlHelper.CreateParameter("@pActiveTimePerDay", DbType.String, vendor.ActiveTimePerDay));
             //objParameters.Add(SqlHelper.CreateParameter("@pDataConsumption", DbType.Int32, vendor.DataConsumption));
             //objParameters.Add(SqlHelper.CreateParameter("@pCallsToCustomerCare", DbType.Int32, vendor.CallsToCustomerCare));
+            //string result = SqlHelper.ExecuteScalar("dbo.usp_AddVendor", objParameters.ToArray()).ToString();
             byte[] vendorId = (byte[])SqlHelper.ExecuteScalar("dbo.usp_AddVendor", objParameters.ToArray());
 
+            string id = string.Empty;
             if (vendor.VendorServices != null && vendorId != null)
             {
-                string id = BinaryConverter.ConvertByteToString(vendorId);
+                id = BinaryConverter.ConvertByteToString(vendorId);
                 AddVendorServices(vendor.VendorServices, id);
             }
+
+            return id;
         }
 
         /// <summary>

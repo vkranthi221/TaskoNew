@@ -228,4 +228,7 @@
   <data name="NO_RECENT_ACTIVITIES" xml:space="preserve">
     <value>Recent Activities are not found</value>
   </data>
+  <data name="ADD_VENDOR_FAILED" xml:space="preserve">
+    <value>Error adding vendor.</value>
+  </data>
 </root>

@@ -313,10 +313,20 @@ namespace Tasko.Services
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                    AdminData.AddVendor(vendor);
-                    r.Error = false;
-                    r.Status = 200;
-                    r.Message = CommonMessages.SUCCESS;
+                    string vendorId = AdminData.AddVendor(vendor);
+                    if (!string.IsNullOrEmpty(vendorId))
+                    {
+                        r.Error = false;
+                        r.Status = 200;
+                        r.Message = CommonMessages.SUCCESS;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Status = 400;
+                        r.Message = CommonMessages.ADD_VENDOR_FAILED;
+
+                    }
                 }
                 else
                 {
