@@ -1092,5 +1092,208 @@ namespace Tasko.Interfaces
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetDashboardRecentActivities();
         #endregion
+
+        #region Payments
+
+        /**
+         * @api {post} a1/AddPayment Add Payment
+         * @apiName AddPayment
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
+         * @apiParam {Payment} payment Payment details.
+         * 
+         *
+         * @apiParamExample {json} Param-Example:
+        {
+            "payment": {
+            "VendorId": "F9756A47F455F64DAD4B24E49A257188",
+            "DueDate": "23/6/2016",
+            "PaidDate": "10/7/2016",
+            "Amount": 300,
+            "Status": "Pending",
+            "Description": "OutStanding Charge",
+            "PayForMonth": "June 2016"
+            }
+        }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError INVALID_TOKEN_CODE Invalid token code.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Invalid token code",
+          "Status": 400
+        }
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response AddPayment(Payment payment);
+
+        /**
+         * @api {post} a1/UpdatePayment Update Payment
+         * @apiName UpdatePayment
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
+         * @apiParam {Payment} payment Payment details.
+         * 
+         *
+         * @apiParamExample {json} Param-Example:
+        {
+            "payment": {
+            "PaymentId": "TASKOPAY1002"
+            "VendorId": "F9756A47F455F64DAD4B24E49A257188",
+            "DueDate": "23/6/2016",
+            "PaidDate": "10/7/2016",
+            "Amount": 400,
+            "Status": "Completed",
+            "Description": "OutStanding Charge",
+            "PayForMonth": "June 2016"
+            }
+        }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError INVALID_TOKEN_CODE Invalid token code.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Invalid token code",
+          "Status": 400
+        }
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response UpdatePayment(Payment payment);
+
+        /**
+         * @api {post} a1/GetAllPaymentsByStatus Get All Payments
+         * @apiName GetAllPaymentsByStatus
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *
+         * @apiParam {String} status Status {Pending, Completed}.
+         * 
+         *
+         * @apiParamExample {json} Param-Example1:
+         * { 
+         *     "status": "ALL"
+         * }
+         * @apiSuccessExample Success-Response:
+            {
+            "Data": [
+            {
+                "__type": "Payment:#Tasko.Model",
+                "Amount": 500,
+                "Description": "Monthly Charge",
+                "DueDate": "2016-06-23",
+                "PaidDate": "2016-07-07",
+                "PayForMonth": "May 2016",
+                "PaymentId": "TASKOPAY1000",
+                "Status": "Completed",
+                "VendorId": "System.Byte[]",
+                "VendorName": "Srikanth"
+            },
+            {
+                "__type": "Payment:#Tasko.Model",
+                "Amount": 300,
+                "Description": "OutStanding Charge",
+                "DueDate": "2016-06-23",
+                "PaidDate": "2016-07-10",
+                "PayForMonth": "June 2016",
+                "PaymentId": "TASKOPAY1001",
+                "Status": "Completed",
+                "VendorId": "System.Byte[]",
+                "VendorName": "Srikanth"
+            },
+            {
+                "__type": "Payment:#Tasko.Model",
+                "Amount": 400,
+                "Description": "Partial Payment made",
+                "DueDate": "2016-06-23",
+                "PaidDate": "2016-07-10",
+                "PayForMonth": "June 2016",
+                "PaymentId": "TASKOPAY1002",
+                "Status": "Pending",
+                "VendorId": "System.Byte[]",
+                "VendorName": "chandra"
+            }
+            ],
+            "Error": false,
+            "Message": "Success",
+            "Status": 200
+        }
+         * @apiError INVALID_TOKEN_CODE Invalid token code.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Invalid token code",
+            "Status": 400
+          } 
+         * @apiError NO_PAYMENTS_FOUND No Payments found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Recent Activities are not found",
+            "Status": 400
+          }
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetAllPaymentsByStatus(string status);
+        #endregion
     }
 }

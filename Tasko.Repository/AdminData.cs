@@ -38,7 +38,7 @@ namespace Tasko.Repository
             }
 
             objParameters.Add(SqlHelper.CreateParameter("@pStatus", DbType.Int16, service.Status));
-            SqlHelper.ExecuteNonQuery("dbo.usp_AddService", objParameters.ToArray());            
+            SqlHelper.ExecuteNonQuery("dbo.usp_AddService", objParameters.ToArray());
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.String, service.Name));
             objParameters.Add(SqlHelper.CreateParameter("@pImageUrl", DbType.String, service.ImageURL));
             objParameters.Add(SqlHelper.CreateParameter("@pStatus", DbType.Int16, service.Status));
-            SqlHelper.ExecuteNonQuery("dbo.usp_UpdateService", objParameters.ToArray());              
+            SqlHelper.ExecuteNonQuery("dbo.usp_UpdateService", objParameters.ToArray());
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Tasko.Repository
             List<SqlParameter> objParameters = new List<SqlParameter>();
             objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(serviceId)));
             objParameters.Add(SqlHelper.CreateParameter("@pStatus", DbType.Int16, status));
-            SqlHelper.ExecuteNonQuery("dbo.usp_DisableService", objParameters.ToArray()); 
+            SqlHelper.ExecuteNonQuery("dbo.usp_DisableService", objParameters.ToArray());
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Tasko.Repository
                 }
             }
 
-            return services;            
+            return services;
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Tasko.Repository
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
-            objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(serviceId)));            
+            objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(serviceId)));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetOrdersByService", objParameters.ToArray());
             List<OrderSummary> orders = new List<OrderSummary>();
 
@@ -136,7 +136,7 @@ namespace Tasko.Repository
                 order.RequestedDate = Convert.ToDateTime(reader["REQUESTED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
                 order.ServiceName = reader["SERVICE_NAME"].ToString();
                 order.ServiceId = serviceId;
-                order.OrderStatus = reader["ORDER_STATUS_NAME"].ToString();               
+                order.OrderStatus = reader["ORDER_STATUS_NAME"].ToString();
                 order.CustomerName = reader["CUSTOMER_NAME"].ToString();
                 order.VendorName = reader["VENDOR_NAME"].ToString();
                 orders.Add(order);
@@ -358,17 +358,17 @@ namespace Tasko.Repository
             while (reader.Read())
             {
                 VendorRating rating = new VendorRating();
-               rating.CustomerName = reader["customer_name"].ToString();
-               rating.VendorName = reader["vendor_name"].ToString();
-               rating.OrderId = reader["order_id"].ToString();
-               rating.OverAllRating = Convert.ToDecimal(reader["OVERALL_RATING"]);     
-                    
-                        
+                rating.CustomerName = reader["customer_name"].ToString();
+                rating.VendorName = reader["vendor_name"].ToString();
+                rating.OrderId = reader["order_id"].ToString();
+                rating.OverAllRating = Convert.ToDecimal(reader["OVERALL_RATING"]);
+
+
                 rating.ServiceQuality = Convert.ToDecimal(reader["SERVICE_QUALITY"]);
                 rating.Punctuality = Convert.ToDecimal(reader["PUNCTUALITY"]);
                 rating.Courtesy = Convert.ToDecimal(reader["COURTESY"]);
                 rating.Price = Convert.ToDecimal(reader["PRICE"]);
-                
+
                 vendorRatings.Add(rating);
             }
 
@@ -378,6 +378,7 @@ namespace Tasko.Repository
         }
 
         #endregion
+
         #region Common
         /// <summary>
         /// Adds the Vendor services.
@@ -449,7 +450,7 @@ namespace Tasko.Repository
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
-            objParameters.Add(SqlHelper.CreateParameter("@pStatus", DbType.Int32, orderStatusId));            
+            objParameters.Add(SqlHelper.CreateParameter("@pStatus", DbType.Int32, orderStatusId));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetDashboardRecentOrdersByStatus", objParameters.ToArray());
             List<OrderSummary> orders = new List<OrderSummary>();
 
@@ -526,7 +527,7 @@ namespace Tasko.Repository
                     RecentActivity.OrderId = reader["ORDER_ID"].ToString();
                 }
 
-                RecentActivity.Comment = reader["COMMENTS"].ToString();                
+                RecentActivity.Comment = reader["COMMENTS"].ToString();
                 RecentActivity.TimeSince = Convert.ToDateTime(reader["ACTIVITY_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
                 RecentActivities.Add(RecentActivity);
             }
@@ -534,6 +535,82 @@ namespace Tasko.Repository
             reader.Close();
 
             return RecentActivities;
+        }
+
+        #endregion
+
+        #region Payments
+
+        /// <summary>
+        /// Adds the payment.
+        /// </summary>
+        /// <param name="payment">The payment.</param>
+        public static void AddPayment(Payment payment)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(payment.VendorId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pDueDate", DbType.Date, Convert.ToDateTime(payment.DueDate)));
+            objParameters.Add(SqlHelper.CreateParameter("@pPaidDate", DbType.Date, Convert.ToDateTime(payment.PaidDate)));
+            objParameters.Add(SqlHelper.CreateParameter("@pPaidAmount", DbType.Decimal, payment.Amount));
+            objParameters.Add(SqlHelper.CreateParameter("@pStatus", DbType.String, payment.Status));
+            objParameters.Add(SqlHelper.CreateParameter("@pDescription", DbType.String, payment.Description));
+            objParameters.Add(SqlHelper.CreateParameter("@pMonth", DbType.String, payment.PayForMonth));
+            SqlHelper.ExecuteNonQuery("dbo.usp_AddPayment", objParameters.ToArray());
+        }
+
+        /// <summary>
+        /// Updates the payment.
+        /// </summary>
+        /// <param name="payment">The payment.</param>
+        public static void UpdatePayment(Payment payment)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pPaymentId", DbType.String, payment.PaymentId));
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(payment.VendorId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pDueDate", DbType.Date, Convert.ToDateTime(payment.DueDate)));
+            objParameters.Add(SqlHelper.CreateParameter("@pPaidDate", DbType.Date, Convert.ToDateTime(payment.PaidDate)));
+            objParameters.Add(SqlHelper.CreateParameter("@pPaidAmount", DbType.Decimal, payment.Amount));
+            objParameters.Add(SqlHelper.CreateParameter("@pStatus", DbType.String, payment.Status));
+            objParameters.Add(SqlHelper.CreateParameter("@pDescription", DbType.String, payment.Description));
+            objParameters.Add(SqlHelper.CreateParameter("@pMonth", DbType.String, payment.PayForMonth));
+            SqlHelper.ExecuteNonQuery("dbo.usp_UpdatePayment", objParameters.ToArray());
+        }
+
+        /// <summary>
+        /// Gets all payments by status.
+        /// </summary>
+        /// <param name="paymentStatus">The payment status.</param>
+        /// <returns>List of Payments</returns>
+        public static List<Payment> GetAllPaymentsByStatus(string paymentStatus)
+        {
+            paymentStatus = string.IsNullOrEmpty(paymentStatus) ? string.Empty : paymentStatus;
+
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pStatus", DbType.String, paymentStatus.ToUpper()));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetAllPaymentsByStatus", objParameters.ToArray());
+            List<Payment> payments = new List<Payment>();
+
+            while (reader.Read())
+            {
+                Payment payment = new Payment();
+                payment.PaymentId = reader["PAYMENT_ID"].ToString();
+                payment.VendorId = reader["VENDOR_ID"].ToString();
+                payment.VendorName = reader["VENDOR_NAME"].ToString();
+
+                payment.DueDate = Convert.ToDateTime(reader["DUE_DATE"]).ToString("yyyy'-'MM'-'dd"); 
+                payment.PaidDate =Convert.ToDateTime(reader["PAID_DATE"]).ToString("yyyy'-'MM'-'dd");
+                payment.Amount = Convert.ToDouble(reader["AMOUNT"]);
+                
+                //payment.Amount = Convert.ToDateTime(reader["REQUESTED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+                payment.Status = reader["STATUS"].ToString();
+                payment.Description = reader["DESCRIPTION"].ToString();
+                payment.PayForMonth = reader["MONTH"].ToString();
+                payments.Add(payment);
+            }
+
+            reader.Close();
+
+            return payments;
         }
 
         #endregion

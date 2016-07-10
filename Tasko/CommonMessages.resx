@@ -237,4 +237,7 @@
   <data name="NO_CUSTOMER_RATINGS" xml:space="preserve">
     <value>Customer ratings not found</value>
   </data>
+  <data name="NO_PAYMENTS_FOUND" xml:space="preserve">
+    <value>No Payments found</value>
+  </data>  
 </root>

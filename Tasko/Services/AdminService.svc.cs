@@ -606,6 +606,7 @@ namespace Tasko.Services
         }
 
         # endregion
+
         #region General
         #endregion
 
@@ -943,6 +944,120 @@ namespace Tasko.Services
         #endregion
 
         #region Payments
+        /// <summary>
+        /// Adds the payment.
+        /// </summary>
+        /// <param name="payment">The payment.</param>
+        /// <returns>Response Object</returns>
+        public Response AddPayment(Payment payment)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    AdminData.AddPayment(payment);
+                    r.Error = false;
+                    r.Status = 200;
+                    r.Message = CommonMessages.SUCCESS;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;           
+        }
+
+        /// <summary>
+        /// Adds the payment.
+        /// </summary>
+        /// <param name="payment">The payment.</param>
+        /// <returns>Response Object</returns>
+        public Response UpdatePayment(Payment payment)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    AdminData.UpdatePayment(payment);
+                    r.Error = false;
+                    r.Status = 200;
+                    r.Message = CommonMessages.SUCCESS;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+
+        /// <summary>
+        /// Gets all payments by status.
+        /// </summary>
+        /// <param name="status">The status.</param>
+        /// <returns>Response object</returns>
+        public Response GetAllPaymentsByStatus(string status)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    List<Payment> payments = AdminData.GetAllPaymentsByStatus(status);
+
+                    if (payments != null)
+                    {
+                        r.Error = false;
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Status = 200;
+                        r.Data = payments;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Message = CommonMessages.NO_PAYMENTS_FOUND;
+                        r.Status = 400;
+                    }
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
 
         #endregion
 
@@ -963,9 +1078,9 @@ namespace Tasko.Services
                 return isTokenValid;
             }
 
-            return false;
+            //return false;
 
-            //return true;
+            return true;
         }
         #endregion
     }

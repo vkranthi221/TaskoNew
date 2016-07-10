@@ -44,6 +44,8 @@ namespace Tasko
     [KnownType(typeof(RecentActivities))]   
     [KnownType(typeof(List<RecentActivities>))]
     [KnownType(typeof(VendorOverview))]
+    [KnownType(typeof(Payment))]
+    [KnownType(typeof(List<Payment>))]    
     public class Response
     {
         /// <summary>

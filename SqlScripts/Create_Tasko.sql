@@ -401,6 +401,23 @@ CREATE TABLE [dbo].[ACTIVITY](
 
 GO
 
+CREATE TABLE [dbo].[PAYMENTS](
+	[PAYMENT_ID] [varchar](50) NOT NULL,
+	[VENDOR_ID] [binary](16) NOT NULL,
+	[DUE_DATE] [date] NOT NULL,
+	[PAID_DATE] [date] NOT NULL,
+	[AMOUNT] [decimal](18, 0) NOT NULL,
+	[STATUS] [nvarchar](50) NOT NULL,
+	[DESCRIPTION] [nvarchar](max) NULL,
+	[MONTH] [nvarchar](50) NULL,
+ CONSTRAINT [PK_PAYMENTS] PRIMARY KEY CLUSTERED 
+(
+	[PAYMENT_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
 /*********** Stored Procedures **************************/
 GO
 CREATE PROCEDURE [dbo].[usp_GetVendorDetails]
@@ -1709,8 +1726,8 @@ SELECT @TOTAL_SERVICES = Count(*) FROM dbo.[SERVICES]
 
 --SELECT @TOTAL_USERS = Count(*) FROM dbo.[USER] 
 SET @TOTAL_USERS =0
---SELECT @TOTAL_PAYMENTS = Count(*) FROM dbo.[PAYMENT]     
-SET @TOTAL_PAYMENTS =0
+
+SELECT @TOTAL_PAYMENTS = SUM(AMOUNT) FROM dbo.[PAYMENTS]     
 
 SELECT @TOTAL_ORDERS AS TOTAL_ORDERS, @TOTAL_VENDORS AS TOTAL_VENDORS, @TOTAL_CUSTOMERS AS TOTAL_CUSTOMERS, @TOTAL_VENDOR_REVIEWS AS TOTAL_VENDOR_REVIEWS, 
 @TOTAL_CUSTOMER_REVIEWS AS TOTAL_CUSTOMER_REVIEWS, @TOTAL_USERS AS TOTAL_USERS, @TOTAL_SERVICES AS TOTAL_SERVICES, @TOTAL_PAYMENTS AS TOTAL_PAYMENTS
@@ -1919,3 +1936,113 @@ GROUP BY VR.VENDOR_RATING_ID, VR.SERVICE_QUALITY, VR.PUNCTUALITY, VR.COURTESY,VR
 
 END
 
+GO
+
+CREATE FUNCTION [dbo].[GeneratePaymentId]()
+RETURNS VARCHAR(MAX) 
+AS 
+-- Returns the New Order ID
+BEGIN
+    DECLARE @PAYMENT_ID VARCHAR(MAX);
+    DECLARE @START_INDEX_PAYMENT_ID int;
+    SET @START_INDEX_PAYMENT_ID = 1000;
+    DECLARE @PAYMENT_COUNT int;
+    
+    SELECT @PAYMENT_COUNT = Count(*) FROM dbo.[PAYMENTS]
+    
+    IF(@PAYMENT_COUNT > 0)
+      BEGIN
+         SET @PAYMENT_ID = 'TASKOPAY' + CONVERT(varchar, @START_INDEX_PAYMENT_ID + @PAYMENT_COUNT)
+      END
+    ELSE 
+      BEGIN
+         SET @PAYMENT_ID = 'TASKOPAY' + CONVERT(varchar, @START_INDEX_PAYMENT_ID)
+      END 
+      
+    RETURN @PAYMENT_ID;
+END;
+
+GO
+CREATE PROCEDURE [dbo].[usp_AddPayment]
+(  
+  @pVendorId binary(16),
+  @pDueDate Date,
+  @pPaidDate Date,
+  @pPaidAmount decimal,
+  @pStatus nvarchar(50),
+  @pDescription nvarchar(max),
+  @pMonth nvarchar(50)
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+DECLARE @PaymentId nvarchar(max)
+SET @PaymentId =  (SELECT [dbo].[GeneratePaymentId]())
+
+INSERT INTO PAYMENTS VALUES (@PaymentId, @pVendorId, @pDueDate, @pPaidDate, @pPaidAmount, @pStatus, @pDescription, @pMonth)
+
+END
+
+GO
+CREATE PROCEDURE [dbo].[usp_UpdatePayment]
+(  
+  @pPaymentId nvarchar(50),
+  @pVendorId binary(16),
+  @pDueDate Date,
+  @pPaidDate Date,
+  @pPaidAmount decimal,
+  @pStatus nvarchar(50),
+  @pDescription nvarchar(max),
+  @pMonth nvarchar(50)
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+UPDATE PAYMENTS SET VENDOR_ID = @pVendorId,DUE_DATE = @pDueDate, PAID_DATE = @pPaidDate, 
+AMOUNT= @pPaidAmount, [STATUS] = @pStatus, [DESCRIPTION] = @pDescription, [MONTH] = @pMonth WHERE PAYMENT_ID = @pPaymentId 
+
+END
+
+GO
+CREATE PROCEDURE [dbo].[usp_GetAllPaymentsByStatus]
+(
+	@pStatus nvarchar(50)
+)
+AS
+BEGIN
+
+
+SET NOCOUNT ON;
+
+DECLARE @VSQL NVARCHAR(MAX)
+
+SET @VSQL = 'SELECT [PAYMENT_ID] , PAY.[VENDOR_ID], VEN.[NAME] AS VENDOR_NAME, [DUE_DATE],[PAID_DATE],[AMOUNT],[STATUS],[DESCRIPTION],[MONTH]
+  FROM dbo.[PAYMENTS] PAY  
+  INNER JOIN VENDOR VEN ON PAY.VENDOR_ID= VEN.VENDOR_ID'
+   
+IF(@pStatus = 'PENDING')
+BEGIN
+	SET @VSQL = @VSQL + ' WHERE PAY.STATUS = @vStatus' 
+END
+ELSE IF(@pStatus = 'COMPLETED')
+BEGIN
+	SET @VSQL = @VSQL + ' WHERE PAY.STATUS = @vStatus' 
+END
+ELSE IF(@pStatus = 'ALL')
+BEGIN
+   SET @VSQL = @VSQL
+END
+
+SET @VSQL = @VSQL + ' ORDER BY PAY.PAYMENT_ID'
+
+EXEC SP_EXECUTESQL @VSQL,N'@vStatus nvarchar(50)', @pStatus
+
+END
+
+GO
