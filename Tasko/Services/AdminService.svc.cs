@@ -506,6 +506,36 @@ namespace Tasko.Services
 
             return r;
         }
+
+        public Response UpdateVendorDetails(Vendor vendor)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    AdminData.UpdateVendorDetails(vendor);
+                    r.Data = null;
+                    r.Error = false;
+                    r.Status = 200;
+                    r.Message = CommonMessages.NO_VENDORS;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
         #endregion
 
         # region Customers

@@ -50,13 +50,12 @@ namespace TaskoTestClient
             vendor.Photo= string.Empty;
             //vendor.TimeSpentOnApp = "08:01:10.0800000";
             vendor.UserName="testuser3";
-            vendor.VendorDetails = new VendorDetails();
-            vendor.VendorDetails.AreOrdersBlocked = false;
+            vendor.AreOrdersBlocked = false;
             vendor.DateOfBirth= DateTime.Now.ToString();
             vendor.Gender=1;
-            vendor.VendorDetails.IsBlocked=false;
-            vendor.VendorDetails.IsPowerSeller=true;
-            vendor.VendorDetails.MonthlyCharge=100;
+            vendor.IsBlocked=false;
+            vendor.IsPowerSeller=true;
+            vendor.MonthlyCharge=100;
             vendor.VendorServices= new List<ServicesForVendor>();
             vendor.VendorServices.Add(new ServicesForVendor { ServiceId = "016685E608593F4BBF09875C208940B1", IsActive = true });
             vendor.VendorServices.Add(new ServicesForVendor { ServiceId = "01B618DD27746D48ACAE77E8C7A083F2", IsActive = true });

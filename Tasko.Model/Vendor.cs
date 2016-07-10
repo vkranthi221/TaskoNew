@@ -130,15 +130,6 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public string EmailAddress { get; set; }
-
-        /// <summary>
-        /// Gets or sets the vendor details.
-        /// </summary>
-        /// <value>
-        /// The Vendor Details.
-        /// </value>
-        [DataMember]
-        public VendorDetails VendorDetails { get; set; }
         
         /// <summary>
         /// Gets or sets the address details.
@@ -193,6 +184,18 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public string DateOfBirth { get; set; }
+
+        [DataMember]
+        public bool IsPowerSeller { get; set; }
+
+        [DataMember]
+        public decimal MonthlyCharge { get; set; }
+
+        [DataMember]
+        public bool IsBlocked { get; set; }
+
+        [DataMember]
+        public bool AreOrdersBlocked { get; set; }
 
         /// <summary>
         /// Vendor constructor

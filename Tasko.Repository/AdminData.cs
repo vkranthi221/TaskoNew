@@ -190,16 +190,6 @@ namespace Tasko.Repository
             //// add the vendor address 
             string vendorAddressId = CustomerData.AddAddress(vendor.AddressDetails);
 
-            XmlSerializer xmlSerializer = new XmlSerializer(vendor.VendorDetails.GetType());
-            string vendorDetailsXml = string.Empty;
-            using (StringWriter sw = new StringWriter())
-            using (XmlWriter writer = XmlWriter.Create(sw))
-            {
-                xmlSerializer.Serialize(writer, vendor.VendorDetails);
-                vendorDetailsXml = sw.ToString(); // Your XML
-            }
-
-            objParameters.Add(SqlHelper.CreateParameter("@pVendorDetails", DbType.Xml, vendorDetailsXml));
             objParameters.Add(SqlHelper.CreateParameter("@pBaseRate", DbType.Double, vendor.BaseRate));
             objParameters.Add(SqlHelper.CreateParameter("@pEmailAddress", DbType.String, vendor.EmailAddress));
             objParameters.Add(SqlHelper.CreateParameter("@pIsVendorLive", DbType.Boolean, vendor.IsVendorLive));
@@ -214,6 +204,10 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pDOB", DbType.DateTime, vendor.DateOfBirth));
             objParameters.Add(SqlHelper.CreateParameter("@pGender", DbType.Int16, vendor.Gender));
             objParameters.Add(SqlHelper.CreateParameter("@pPhoto", DbType.String, vendor.Photo));
+            objParameters.Add(SqlHelper.CreateParameter("@pAreOrdersBlocked", DbType.Boolean, vendor.AreOrdersBlocked));
+            objParameters.Add(SqlHelper.CreateParameter("@pIsBlocked", DbType.Boolean, vendor.IsBlocked));
+            objParameters.Add(SqlHelper.CreateParameter("@pMonthlyCharge", DbType.Decimal, vendor.MonthlyCharge));
+            objParameters.Add(SqlHelper.CreateParameter("@pIsPowerSeller", DbType.Boolean, vendor.IsPowerSeller));
             //objParameters.Add(SqlHelper.CreateParameter("@pActiveTimePerDay", DbType.String, vendor.ActiveTimePerDay));
             //objParameters.Add(SqlHelper.CreateParameter("@pDataConsumption", DbType.Int32, vendor.DataConsumption));
             //objParameters.Add(SqlHelper.CreateParameter("@pCallsToCustomerCare", DbType.Int32, vendor.CallsToCustomerCare));
@@ -320,6 +314,85 @@ namespace Tasko.Repository
             reader.Close();
 
             return vendors;
+        }
+
+        public static void UpdateVendorDetails(Vendor vendor)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            ////Address
+            if (vendor.AddressDetails != null && !string.IsNullOrEmpty(vendor.AddressDetails.AddressId))
+            {
+                CustomerData.UpdateAddress(vendor.AddressDetails);
+            }
+
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendor.Id)));
+            if (!string.IsNullOrEmpty(vendor.Name))
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.String, vendor.Name));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.String, DBNull.Value));
+            }
+
+            // Mobile Number
+            if (!string.IsNullOrEmpty(vendor.MobileNumber))
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pMobileNumber", DbType.String, vendor.MobileNumber));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pNpMobileNumberame", DbType.String, DBNull.Value));
+            }
+
+            // EmailAddress
+            if (!string.IsNullOrEmpty(vendor.EmailAddress))
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pEmailAddress", DbType.String, vendor.EmailAddress));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pEmailAddress", DbType.String, DBNull.Value));
+            }
+
+            if (vendor.Gender <= 1)
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pGender", DbType.String, vendor.Gender));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pGender", DbType.String, DBNull.Value));
+            }
+
+            if (vendor.DateOfBirth != null)
+            {
+                DateTime dob = Convert.ToDateTime(vendor.DateOfBirth);
+                if (dob.Date.ToString() != "0001")
+                {
+                    objParameters.Add(SqlHelper.CreateParameter("@pDOB", DbType.String, vendor.DateOfBirth));
+                }
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pDOB", DbType.String, DBNull.Value));
+            }
+
+            if (!string.IsNullOrEmpty(vendor.Photo))
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pPhoto", DbType.String, vendor.Photo));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pPhoto", DbType.String, DBNull.Value));
+            }
+
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorsBlocked", DbType.Boolean, vendor.AreOrdersBlocked));
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorsBlocked", DbType.Boolean, vendor.IsBlocked));
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorsBlocked", DbType.Boolean, vendor.AreOrdersBlocked));
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorsBlocked", DbType.Boolean, vendor.AreOrdersBlocked));
+
+            SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendor", objParameters.ToArray());
         }
         #endregion
 
