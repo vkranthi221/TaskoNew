@@ -1,6 +1,98 @@
 [
   {
     "type": "post",
+    "url": "a1/AddPayment",
+    "title": "Add Payment",
+    "name": "AddPayment",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Payment",
+            "optional": false,
+            "field": "payment",
+            "description": "<p>Payment details.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n    \"payment\": {\n    \"VendorId\": \"F9756A47F455F64DAD4B24E49A257188\",\n    \"DueDate\": \"23/6/2016\",\n    \"PaidDate\": \"10/7/2016\",\n    \"Amount\": 300,\n    \"Status\": \"Pending\",\n    \"Description\": \"OutStanding Charge\",\n    \"PayForMonth\": \"June 2016\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
     "url": "a1/AddService",
     "title": "Add Service",
     "name": "AddService",
@@ -285,6 +377,109 @@
         {
           "title": "Error-Response:",
           "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetAllPaymentsByStatus",
+    "title": "Get All Payments",
+    "name": "GetAllPaymentsByStatus",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status {Pending, Completed}.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example1:",
+          "content": "{ \n    \"status\": \"ALL\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "    {\n    \"Data\": [\n    {\n        \"__type\": \"Payment:#Tasko.Model\",\n        \"Amount\": 500,\n        \"Description\": \"Monthly Charge\",\n        \"DueDate\": \"2016-06-23\",\n        \"PaidDate\": \"2016-07-07\",\n        \"PayForMonth\": \"May 2016\",\n        \"PaymentId\": \"TASKOPAY1000\",\n        \"Status\": \"Completed\",\n        \"VendorId\": \"System.Byte[]\",\n        \"VendorName\": \"Srikanth\"\n    },\n    {\n        \"__type\": \"Payment:#Tasko.Model\",\n        \"Amount\": 300,\n        \"Description\": \"OutStanding Charge\",\n        \"DueDate\": \"2016-06-23\",\n        \"PaidDate\": \"2016-07-10\",\n        \"PayForMonth\": \"June 2016\",\n        \"PaymentId\": \"TASKOPAY1001\",\n        \"Status\": \"Completed\",\n        \"VendorId\": \"System.Byte[]\",\n        \"VendorName\": \"Srikanth\"\n    },\n    {\n        \"__type\": \"Payment:#Tasko.Model\",\n        \"Amount\": 400,\n        \"Description\": \"Partial Payment made\",\n        \"DueDate\": \"2016-06-23\",\n        \"PaidDate\": \"2016-07-10\",\n        \"PayForMonth\": \"June 2016\",\n        \"PaymentId\": \"TASKOPAY1002\",\n        \"Status\": \"Pending\",\n        \"VendorId\": \"System.Byte[]\",\n        \"VendorName\": \"chandra\"\n    }\n    ],\n    \"Error\": false,\n    \"Message\": \"Success\",\n    \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NO_PAYMENTS_FOUND",
+            "description": "<p>No Payments found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Invalid token code\",\n   \"Status\": 400\n }",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Recent Activities are not found\",\n   \"Status\": 400\n }",
           "type": "json"
         }
       ]
@@ -1280,6 +1475,98 @@
         {
           "title": "Error-Response:",
           "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Vendors not found\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/UpdatePayment",
+    "title": "Update Payment",
+    "name": "UpdatePayment",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Payment",
+            "optional": false,
+            "field": "payment",
+            "description": "<p>Payment details.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n    \"payment\": {\n    \"PaymentId\": \"TASKOPAY1002\"\n    \"VendorId\": \"F9756A47F455F64DAD4B24E49A257188\",\n    \"DueDate\": \"23/6/2016\",\n    \"PaidDate\": \"10/7/2016\",\n    \"Amount\": 400,\n    \"Status\": \"Completed\",\n    \"Description\": \"OutStanding Charge\",\n    \"PayForMonth\": \"June 2016\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
