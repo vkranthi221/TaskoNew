@@ -665,6 +665,63 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetVendorsByStatus(int vendorStatus);
+
+        /**
+        * @api {post} v1/UpdateVendorDetails Update Vendor Details
+        * @apiName UpdateVendorDetails
+        * @apiGroup Admin
+        *
+        * @apiHeader {string} Token_Code Token Code
+        * @apiHeader {string} Content-Type application/json
+        * @apiHeader {string} User_Id User Id
+        * 
+        * @apiHeaderExample {json} Header-Example:
+        *  {
+        *    "Token_Code": "Unique Token code that is generated after login" ,
+        *    "Content-Type": "application/json"
+        *    "User_Id": "Logged in User ID",
+        *  }
+        *  
+        * @apiParam {Vendor} vendor Vendor.
+        * 
+        * @apiParamExample {json} Param-Example:
+        *  {
+        *    "vendor": {
+        *               "Id": "FC73EC7242E28142ACCAFDF4703F0EBF",
+        *               "MobileNumber": "9849345086",
+        *               "Name": "srikanth",
+        *               "EmailAddress":"srikanth@tasko.com",
+        *               "Photo": "",
+        *               "DateOfBirth":"2016-07-07 14:12:55",
+        *               "AreOrdersBlocked":"0",
+        *               "IsBlocked":"0",
+        *               "IsPowerSeller":"1",
+        *               "MonthlyCharge":"300",
+        *               
+        *              } 
+        *  }
+        *
+        * @apiSuccessExample Success-Response:
+        {
+         "Data": null,
+         "Error": false,
+         "Message": "Success",
+         "Status": 200
+       }
+        * @apiError INVALID_TOKEN_CODE Invalid token code
+        *
+        * @apiErrorExample Error-Response:
+        {
+         "Data": null,
+         "Error": true,
+         "Message": "Invalid token code",
+         "Status": 400
+       }
+        */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response UpdateVendorDetails(Vendor vendor);
         #endregion
 
         #region Customers
