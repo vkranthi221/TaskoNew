@@ -601,13 +601,13 @@ namespace Tasko.Repository
                 }
 
                 RecentActivity.Comment = reader["COMMENTS"].ToString();
-                RecentActivity.TimeSince = Convert.ToDateTime(reader["ACTIVITY_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+                RecentActivity.TimeSince = DateHelper.RelativeDate(Convert.ToDateTime(reader["ACTIVITY_DATE"]));
                 RecentActivities.Add(RecentActivity);
             }
 
             reader.Close();
 
-            return RecentActivities;
+            return RecentActivities.Count > 0 ? RecentActivities : null;
         }
 
         #endregion
