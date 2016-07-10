@@ -21,23 +21,9 @@ INSERT INTO [dbo].[ADDRESS] VALUES(newId(),'India','Telangana','80','90','DSNR',
 --  mobile number should not be varchar(max) change it to nVarchar(10)
   
 INSERT INTO [dbo].[Vendor] values(NEWID(),'chandra','chandra','9985466195','12345','mchandu123@gmail.com',(select ADDRESS_ID from [dbo].[ADDRESS] WHERE LOCALITY='kphb'),null,10,50.00,1,1,Getdate(),Getdate(),10.00,123,
-'<VendorDetails xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Gender>1</Gender>
-  <DateOfBirth>2016-07-07T10:40:52.97639+05:30</DateOfBirth>
-  <MonthlyCharge>100</MonthlyCharge>
-  <IsBlocked>false</IsBlocked>
-  <IsPowerSeller>true</IsPowerSeller>
-  <AreOrdersBlocked>false</AreOrdersBlocked>
-</VendorDetails>',GETDATE(), 0)
+GETDATE(), 0,0,0,300,1)
 INSERT INTO [dbo].[Vendor] values(NEWID(),'srikanth','Srikanth','1234567890','12345','sree@gmail.com',(select ADDRESS_ID from [dbo].[ADDRESS] WHERE LOCALITY='HMT HILLS'),null,10,100.00,1,1,Getdate(),Getdate(),10.00,123,
-'<VendorDetails xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Gender>1</Gender>
-  <DateOfBirth>2016-07-07T10:40:52.97639+05:30</DateOfBirth>
-  <MonthlyCharge>100</MonthlyCharge>
-  <IsBlocked>false</IsBlocked>
-  <IsPowerSeller>true</IsPowerSeller>
-  <AreOrdersBlocked>false</AreOrdersBlocked>
-</VendorDetails>',GETDATE(), 0)
+GETDATE(), 0,0,0,300,1)
 SELECT * FROM [dbo].[Vendor]
 
 INSERT INTO [dbo].VENDOR_SERVICES values(newId(),(select Vendor_Id from [dbo].Vendor WHERE NAME='chandra'),(select Service_Id from [dbo].[SERVICES] WHERE NAME='Electrician'),1)

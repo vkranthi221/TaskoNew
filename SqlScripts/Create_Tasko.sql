@@ -75,7 +75,7 @@ CREATE TABLE [dbo].[VENDOR](
 	[PASSWORD] [varchar](max) NOT NULL,
 	[EMAIL_ADDRESS] [varchar](max) NULL,
 	[ADDRESS_ID] [binary](16) NULL,
-	[PHOTO] [varchar](50) NULL,
+	[PHOTO] [varchar](max) NULL,
 	[EMPLOYEE_COUNT] [int] NOT NULL,
 	[BASE_RATE] [decimal](18, 0) NOT NULL,
 	[IS_VENDOR_VERIFIED] [bit] NOT NULL,
@@ -84,9 +84,12 @@ CREATE TABLE [dbo].[VENDOR](
 	[ACTIVE_TIME_PER_DAY] [time](7) NULL,
 	[DATA_CONSUMPTION] [decimal](18, 0) NULL,
 	[CALLS_TO_CUSTOMER_CARE] [int] NULL,
-	[VENDOR_DETAILS] [xml] NULL,
 	[DATE_OF_BIRTH] [datetime] NULL,
 	[GENDER] [smallint] NULL,
+	[ARE_ORDERS_BLOCKED] [bit] NULL,
+	[IS_BLOCKED] [bit] NULL,
+	[MONTHLY_CHARGE] [decimal](18, 0) NULL,
+	[IS_POWER_SELLER] [bit] NULL,
  CONSTRAINT [VENDOR_PK] PRIMARY KEY CLUSTERED 
 (
 	[VENDOR_ID] ASC
@@ -1615,7 +1618,12 @@ CREATE PROCEDURE [dbo].[usp_AddVendor]
   @pAddressId binary(16),
   @pPassword nvarchar(max),
   @pDOB datetime,
-  @pGender bit
+  @pGender bit,
+  @pAreOrdersBlocked bit,
+  @pIsBlocked bit,
+  @pIsPowerSeller bit,
+  @pMonthlyCharge decimal
+
   --@pActiveTimePerDay nvarchar(max),
   --@pDataConsumption int,
   --@pCallsToCustomerCare int
@@ -1632,8 +1640,8 @@ SET @vendorCount = (SELECT COUNT(*) FROM VENDOR WHERE [USER_NAME] = @PUSERNAME)
 
 if(@vendorCount = 0)
 BEGIN
-INSERT INTO VENDOR (VENDOR_ID, [USER_NAME], NAME, MOBILE_NUMBER, [PASSWORD], EMAIL_ADDRESS, ADDRESS_ID, EMPLOYEE_COUNT, BASE_RATE, IS_VENDOR_VERIFIED, IS_VENDOR_LIVE, VENDOR_DETAILS, DATE_OF_BIRTH, GENDER) 
-    VALUES (@vendorId, @pUserName, @pName, @pMobileNumber, @pPassword, @pEmailAddress, @pAddressId, @pNoOfEmployees, @pBaseRate,   @pIsVendorVerified,@pIsVendorLive, @pVendorDetails, @pDOB, @pGender)
+INSERT INTO VENDOR (VENDOR_ID, [USER_NAME], NAME, MOBILE_NUMBER, [PASSWORD], EMAIL_ADDRESS, ADDRESS_ID, EMPLOYEE_COUNT, BASE_RATE, IS_VENDOR_VERIFIED, IS_VENDOR_LIVE, DATE_OF_BIRTH, GENDER, ARE_ORDERS_BLOCKED, IS_BLOCKED,MONTHLY_CHARGE,IS_POWER_SELLER) 
+    VALUES (@vendorId, @pUserName, @pName, @pMobileNumber, @pPassword, @pEmailAddress, @pAddressId, @pNoOfEmployees, @pBaseRate,   @pIsVendorVerified,@pIsVendorLive, @pDOB, @pGender, @pAreOrdersBlocked,@pIsBlocked,@pMonthlyCharge,@pIsPowerSeller)
 
 	IF EXISTS (Select VENDOR_ID FROM dbo.VENDOR WHERE VENDOR_ID = @vendorId)
 	BEGIN   
@@ -1646,6 +1654,9 @@ INSERT INTO VENDOR (VENDOR_ID, [USER_NAME], NAME, MOBILE_NUMBER, [PASSWORD], EMA
 	SELECT @vendorId as VENDOR_ID
   END 
 END
+
+
+
 
 GO
 
@@ -2042,6 +2053,41 @@ END
 SET @VSQL = @VSQL + ' ORDER BY PAY.PAYMENT_ID'
 
 EXEC SP_EXECUTESQL @VSQL,N'@vStatus nvarchar(50)', @pStatus
+
+END
+
+GO
+CREATE PROCEDURE [dbo].[usp_UpdateVendorDetails]
+(
+	@pVendorId binary(16),
+	@pName nvarchar(max),
+	@pMobileNumber nvarchar(max),  
+	@pEmailAddress nvarchar(max),
+	@pGender bit,
+	@pDOB datetime,
+	@pPhoto nvarchar(max),
+	@pAreOrdersBlocked bit,
+	@pIsPowerSeller bit,
+	@pIsBlocked bit,
+	@pMonthlyCharge decimal
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+UPDATE [dbo].VENDOR SET NAME = COALESCE(@pName,NAME),
+						MOBILE_NUMBER = COALESCE(@pMobileNumber,MOBILE_NUMBER),	
+						DATE_OF_BIRTH = COALESCE(@pDOB,DATE_OF_BIRTH),	
+						GENDER = COALESCE(@pGender, GENDER),
+						EMAIL_ADDRESS = COALESCE(@pEmailAddress, EMAIL_ADDRESS),
+						PHOTO =  COALESCE(@pPhoto, PHOTO),
+						ARE_ORDERS_BLOCKED = @pAreOrdersBlocked,
+						IS_BLOCKED = @pIsBlocked,
+						MONTHLY_CHARGE = @pMonthlyCharge,
+						IS_POWER_SELLER = @pIsPowerSeller
+WHERE VENDOR_ID = @pVendorId
 
 END
 
