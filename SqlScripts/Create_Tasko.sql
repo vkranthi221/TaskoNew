@@ -2092,3 +2092,32 @@ WHERE VENDOR_ID = @pVendorId
 END
 
 GO
+
+CREATE PROCEDURE [dbo].[usp_GetCustomerOverview]
+(
+	@pCustomerId Binary(16)
+)
+AS
+BEGIN
+	declare @TotalOrders int
+	declare @WeeklyOrders int
+	declare @TodayOrders int
+
+	declare @TotalPayments int
+	declare @Weeklypayments int
+	declare @BiggestPayments int
+	declare @MonthlyPayments int
+
+	select @TodayOrders= count(1) from dbo.[order] where customer_id = @pCustomerId and requested_date = CONVERT(DATE,GETDATE(),101)
+
+	select @WeeklyOrders=count(1) from dbo.[order] where customer_id = @pCustomerId and requested_date >= CONVERT(DATE,DATEADD(day,-7, GETDATE()),101)
+	select @TotalOrders = count(1) from dbo.[order] where customer_id = @pCustomerId 
+
+	select @TotalPayments = sum(Amount) from dbo.[order] where customer_id = @pCustomerId
+	select @Weeklypayments = sum(Amount) from dbo.[order] where customer_id = @pCustomerId and requested_date >= CONVERT(DATE,DATEADD(day,-7, GETDATE()),101)
+	select @MonthlyPayments = sum(Amount) from dbo.[order] where customer_id = @pCustomerId and requested_date >= CONVERT(DATE,DATEADD(day,-30, GETDATE()),101)
+	select @BiggestPayments = MAX(Amount) from dbo.[order] where customer_id = @pCustomerId
+	select @TotalOrders as Total_Orders,@WeeklyOrders as Weekly_Orders,@TodayOrders as Today_Orders,@TotalPayments as Total_Payments,@Weeklypayments as Weekly_Payments,
+	@BiggestPayments as Biggest_Payments,@MonthlyPayments as Monthly_Payments, Name from customer where customer_id= @pCustomerId
+END
+

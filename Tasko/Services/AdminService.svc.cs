@@ -635,6 +635,45 @@ namespace Tasko.Services
             return r;
         }
 
+        public Response GetCustomerOverview(string customerId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    VendorOverview vendorOverview = AdminData.GetVendorOverview(customerId);
+                    if (vendorOverview != null)
+                    {
+                        r.Data = vendorOverview;
+                        r.Error = false;
+                        r.Status = 200;
+                        r.Message = CommonMessages.SUCCESS;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Status = 400;
+                        r.Message = CommonMessages.CUSTOMER_NOT_FOUND;
+                    }
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
         # endregion
 
         #region General

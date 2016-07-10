@@ -420,6 +420,29 @@ namespace Tasko.Repository
             return customers;
         }
 
+        public static CustomerOverview GetCustomerOverview(string customerId)
+        {
+            CustomerOverview customerOverview = null;
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerrId", DbType.String, BinaryConverter.ConvertStringToByte(customerId)));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetCustomerOverview", objParameters.ToArray());
+            while (reader.Read())
+            {
+                customerOverview = new CustomerOverview();
+
+                customerOverview.TotalOrders = Convert.ToInt32(reader["Total_Orders"]);
+                customerOverview.WeeklyOrders = Convert.ToInt32(reader["ORDEWeekly_OrdersRS_THIS_WEEK"]);
+                customerOverview.TodayOrders = Convert.ToInt32(reader["Today_Orders"]);
+                customerOverview.TotalPayments = Convert.ToDecimal(reader["Total_Payments"]);
+                customerOverview.WeeklyPayments = Convert.ToDecimal(reader["Weekly_Payments"]);
+                customerOverview.BiggestPayments = Convert.ToDecimal(reader["Biggest_Payments"]);
+                customerOverview.MonthlyPayments = Convert.ToDecimal(reader["Monthly_Payments"]);
+                customerOverview.Name = (reader["Name"]).ToString();
+            }
+
+            return customerOverview;
+        }
+
         public static List<VendorRating> CustomerRatingsForOrders(string customerId, int noOfRecords)
         {
             List<VendorRating> vendorRatings = new List<VendorRating>();
