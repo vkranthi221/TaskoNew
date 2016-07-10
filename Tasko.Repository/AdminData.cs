@@ -387,12 +387,12 @@ namespace Tasko.Repository
                 objParameters.Add(SqlHelper.CreateParameter("@pPhoto", DbType.String, DBNull.Value));
             }
 
-            objParameters.Add(SqlHelper.CreateParameter("@pVendorsBlocked", DbType.Boolean, vendor.AreOrdersBlocked));
-            objParameters.Add(SqlHelper.CreateParameter("@pVendorsBlocked", DbType.Boolean, vendor.IsBlocked));
-            objParameters.Add(SqlHelper.CreateParameter("@pVendorsBlocked", DbType.Boolean, vendor.AreOrdersBlocked));
-            objParameters.Add(SqlHelper.CreateParameter("@pVendorsBlocked", DbType.Boolean, vendor.AreOrdersBlocked));
+            objParameters.Add(SqlHelper.CreateParameter("@pAreOrdersBlocked", DbType.Boolean, vendor.AreOrdersBlocked));
+            objParameters.Add(SqlHelper.CreateParameter("@pIsBlocked", DbType.Boolean, vendor.IsBlocked));
+            objParameters.Add(SqlHelper.CreateParameter("@pIsPowerSeller", DbType.Boolean, vendor.IsPowerSeller));
+            objParameters.Add(SqlHelper.CreateParameter("@pMonthlyCharge ", DbType.Decimal, vendor.MonthlyCharge));
 
-            SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendor", objParameters.ToArray());
+            SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendorDetails", objParameters.ToArray());
         }
         #endregion
 

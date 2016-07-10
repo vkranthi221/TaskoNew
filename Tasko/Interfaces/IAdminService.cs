@@ -690,7 +690,14 @@ namespace Tasko.Interfaces
         *               "Id": "FC73EC7242E28142ACCAFDF4703F0EBF",
         *               "MobileNumber": "9849345086",
         *               "Name": "srikanth",
-        *               "EmailAddress":"srikanth@tasko.com"
+        *               "EmailAddress":"srikanth@tasko.com",
+        *               "Photo": "",
+        *               "DateOfBirth":"2016-07-07 14:12:55",
+        *               "AreOrdersBlocked":"0",
+        *               "IsBlocked":"0",
+        *               "IsPowerSeller":"1",
+        *               "MonthlyCharge":"300",
+        *               
         *              } 
         *  }
         *
