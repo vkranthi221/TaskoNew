@@ -421,6 +421,32 @@ CREATE TABLE [dbo].[PAYMENTS](
 
 GO
 
+
+CREATE TABLE [dbo].[USER](
+	[USER_ID] [binary](16) NOT NULL,
+	[USER_NAME] [varchar](50) NOT NULL,
+	[NAME] [varchar](50) NOT NULL,
+	[PASSWORD] [varchar](50) NOT NULL,
+	[EMAIL_ADDRESS] [varchar](50) NOT NULL,
+	[MOBILE_NUMBER] [varchar](50) NOT NULL,
+	[ISADMIN] [bit] NOT NULL,
+	[JOINED_DATE] [datetime] NOT NULL,
+	[ISACTIVE] [bit] NOT NULL,
+ CONSTRAINT [USER_PK] PRIMARY KEY CLUSTERED 
+(
+	[USER_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+ CONSTRAINT [IX_USER] UNIQUE NONCLUSTERED 
+(
+	[USER_NAME] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
 /*********** Stored Procedures **************************/
 GO
 CREATE PROCEDURE [dbo].[usp_GetVendorDetails]
@@ -2154,3 +2180,58 @@ SET NOCOUNT ON;
  INNER JOIN dbo.VENDOR V ON V.[ADDRESS_ID] = Addr.[Address_ID]
  WHERE V.VENDOR_ID = @pVendorId 
 END
+
+CREATE PROCEDURE [dbo].[usp_GetAllUsers]
+
+AS
+BEGIN
+
+select USER_ID, USER_NAME,NAME, PASSWORD,EMAIL_ADDRESS, MOBILE_NUMBER, ISADMIN, JOINED_DATE, ISACTIVE from [user]
+
+END
+
+GO
+
+CREATE PROCEDURE [dbo].[usp_DeleteUser]
+(
+@pUserId Binary(16)
+)
+AS
+BEGIN
+	DELETE FROM dbo.[USER] where USER_ID = @pUserId
+END
+GO
+
+CREATE PROCEDURE [dbo].[usp_AddUser]
+(
+  @pUserName varchar(50),
+  @pPassword varchar(50),
+  @pName nvarchar(max),
+  @pEmailId nvarchar(max),
+  @pPhoneNumber nvarchar(max),
+  @pIsAdmin bit,
+  @pIsActive bit
+)
+
+AS
+BEGIN
+
+declare @UserId binary(16)
+
+
+declare @count smallint
+select  @count= count(1) from dbo.[user] where USER_NAME = @pUserName
+if(@count >0)
+BEGIN
+set @UserId = NEWID()
+insert into dbo.[user] values(@UserId,@pUserName, @pName, @pPassword, @pEmailId,@pPhoneNumber, @pIsAdmin, GetDate(), @pIsActive)
+END
+
+select @UserId
+
+END
+GO
+
+
+
+

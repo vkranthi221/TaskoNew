@@ -243,4 +243,13 @@
   <data name="NO_PAYMENT_FOUND" xml:space="preserve">
     <value>No Payment found</value>
   </data>
+  <data name="NO_USERS" xml:space="preserve">
+    <value>No Users available</value>
+  </data>
+  <data name="USER_NAME_EXISTS" xml:space="preserve">
+    <value>User Name Exists</value>
+  </data>
+  <data name="USER_NOT_FOUND" xml:space="preserve">
+    <value>User not found</value>
+  </data>
 </root>

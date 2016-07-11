@@ -349,6 +349,15 @@ namespace Tasko {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Users available.
+        /// </summary>
+        internal static string NO_USERS {
+            get {
+                return ResourceManager.GetString("NO_USERS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vendors not found.
         /// </summary>
         internal static string NO_VENDORS {
@@ -408,6 +417,24 @@ namespace Tasko {
         internal static string SUCCESS {
             get {
                 return ResourceManager.GetString("SUCCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Name Exists.
+        /// </summary>
+        internal static string USER_NAME_EXISTS {
+            get {
+                return ResourceManager.GetString("USER_NAME_EXISTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User not found.
+        /// </summary>
+        internal static string USER_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("USER_NOT_FOUND", resourceCulture);
             }
         }
         

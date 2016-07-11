@@ -791,5 +791,102 @@ namespace Tasko.Repository
             return vendorAddress;
         }
         #endregion
+
+        #region User
+        public static string AddUser(User user)
+        {
+            string userId = string.Empty;
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pUserName", DbType.String, user.UserName));
+            objParameters.Add(SqlHelper.CreateParameter("@pPassword", DbType.String, user.PassWord));
+            objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.String, user.Name));
+            objParameters.Add(SqlHelper.CreateParameter("@pEmailId", DbType.String, user.EmailId));
+            objParameters.Add(SqlHelper.CreateParameter("@pPhoneNumber", DbType.String, user.MobileNumber));
+            objParameters.Add(SqlHelper.CreateParameter("@pIsAdmin", DbType.Boolean, user.IsAdmin));
+            objParameters.Add(SqlHelper.CreateParameter("@pIsActive", DbType.Boolean, user.IsActive));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_AddUser", objParameters.ToArray());
+            while (reader.Read())
+            {
+                if (reader["User_Id"] is System.DBNull)
+                {
+                    userId = string.Empty;
+                }
+                else
+                {
+                    userId = reader["User_ID"].ToString();
+                }
+            }
+
+            reader.Close();
+            return userId;
+        }
+
+        public static List<User> GetAllUsers()
+        {
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorOrders");
+            List<User> users = new List<User>();
+
+            while (reader.Read())
+            {
+                //USER_ID, USER_NAME,NAME, PASSWORD,EMAIL_ADDRESS, MOBILE_NUMBER, ISADMIN, JOINED_DATE, ISACTIVE
+                User user = new User();
+                user.Id = reader["USER_ID"].ToString();
+                user.Name = reader["NAME"].ToString();
+                user.PassWord = reader["PASSWORD"].ToString();
+                user.EmailId = reader["EMAIL_ADDRESS"].ToString();
+                user.MobileNumber = reader["MOBILE_NUMBER"].ToString();
+                user.IsAdmin = (bool)reader["ISADMIN"];
+                user.JoinedDate = Convert.ToDateTime(reader["JOINED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+                user.IsActive = (bool)reader["ISACTIVE"];
+                users.Add(user);
+            }
+
+            reader.Close();
+
+            return users;
+        }
+
+        public static User GetUserDetails(string userId)
+        {
+            User user = null;
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            objParameters.Add(SqlHelper.CreateParameter("@pUserId", DbType.Binary, BinaryConverter.ConvertStringToByte(userId)));
+
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetUserDetails", objParameters.ToArray());
+
+
+            if (reader.Read())
+            {
+                user = new User();
+                //USER_ID, USER_NAME,NAME, PASSWORD,EMAIL_ADDRESS, MOBILE_NUMBER, ISADMIN, JOINED_DATE, ISACTIVE
+                user.Id = reader["USER_ID"].ToString();
+                user.Name = reader["NAME"].ToString();
+                user.UserName = reader["USER_NAME"].ToString();
+                user.PassWord = reader["PASSWORD"].ToString();
+                user.EmailId = reader["EMAIL_ADDRESS"].ToString();
+                user.MobileNumber = reader["MOBILE_NUMBER"].ToString();
+                user.IsAdmin = (bool)reader["ISADMIN"];
+                user.IsActive = (bool)reader["ISACTIVE"];
+                user.JoinedDate = Convert.ToDateTime(reader["JOINED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+
+            }
+
+            reader.Close();
+
+            return user;
+        }
+
+        public static void DeleteUser(string userId)
+        {
+
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pUserId", DbType.Binary, BinaryConverter.ConvertStringToByte(userId)));
+            SqlHelper.ExecuteNonQuery("dbo.usp_DeleteUser", objParameters.ToArray());
+
+        }
+
+        #endregion
+
     }
 }

@@ -57,5 +57,35 @@ namespace Tasko.Model
         [DataMember]
         public string MobileNumber { get; set; }
 
+        /// <summary>
+        /// Gets or sets the email id.
+        /// </summary>
+        /// <value>
+        /// The email id.
+        /// </value>
+        [DataMember]
+        public string EmailId { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets whether user is admin.
+        /// </summary>
+        /// <value>
+        /// The isadmin
+        /// </value>
+        [DataMember]
+        public bool IsAdmin { get; set; }
+
+        /// <summary>
+        /// Gets or set sthe joining date
+        /// </summary>
+        [DataMember]
+        public string JoinedDate { get; set; }
+        
+        /// <summary>
+        /// Gets or sets whether the user is active
+        /// </summary>
+        [DataMember]
+        public bool IsActive { get; set; }
     }
 }

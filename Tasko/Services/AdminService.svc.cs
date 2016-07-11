@@ -1242,5 +1242,158 @@ namespace Tasko.Services
             //return true;
         }
         #endregion
+
+        #region Users
+        public Response AddUser(User user)
+        {
+            Response r = new Response();
+            string userId = string.Empty;
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    userId = AdminData.AddUser(user);
+                    if (string.IsNullOrEmpty(userId))
+                    {
+                        r.Error = true;
+                        r.Status = 400;
+                        r.Message = CommonMessages.USER_NAME_EXISTS;
+
+                    }
+                    else
+                    {
+                        r.Error = false;
+                        r.Status = 200;
+                        r.Message = CommonMessages.SUCCESS;
+                    }
+                    r.Data = userId;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        public Response GetAllUsers()
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    List<User> users = AdminData.GetAllUsers();
+
+                    if (users != null && users.Count > 0)
+                    {
+                        r.Error = false;
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Status = 200;
+                        r.Data = users;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Message = CommonMessages.NO_USERS;
+                        r.Status = 400;
+                    }
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                    r.Error = true;
+                    r.Status = 400;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        public Response GeUserDetails(string userId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                User objUser = null;
+                if (isTokenValid)
+                {
+                    objUser = AdminData.GetUserDetails(userId);
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+
+                if (objUser != null)
+                {
+                    r.Error = false;
+                    r.Message = CommonMessages.SUCCESS;
+                    r.Status = 200;
+                    r.Data = objUser;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Message = CommonMessages.USER_NOT_FOUND;
+                    r.Status = 400;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        public Response DeleteUser(string userId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    AdminData.DeleteUser(userId);
+
+                    r.Error = false;
+                    r.Status = 200;
+                    r.Message = CommonMessages.SUCCESS;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        #endregion
     }
 }
