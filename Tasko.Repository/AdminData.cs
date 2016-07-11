@@ -690,7 +690,7 @@ namespace Tasko.Repository
             {
                 Payment payment = new Payment();
                 payment.PaymentId = reader["PAYMENT_ID"].ToString();
-                payment.VendorId = reader["VENDOR_ID"].ToString();
+                payment.VendorId = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]); 
                 payment.VendorName = reader["VENDOR_NAME"].ToString();
 
                 payment.DueDate = Convert.ToDateTime(reader["DUE_DATE"]).ToString("yyyy'-'MM'-'dd"); 
@@ -709,6 +709,87 @@ namespace Tasko.Repository
             return payments;
         }
 
+        /// <summary>
+        /// Gets the payment invoice.
+        /// </summary>
+        /// <param name="paymentId">The payment identifier.</param>
+        /// <returns>VendorPaymentInvoice Object</returns>
+        public static VendorPaymentInvoice GetPaymentInvoice(string paymentId)
+        {
+            VendorPaymentInvoice vendorPaymentInvoice = null;
+            Payment payment = GetPayment(paymentId);
+            if (payment != null && !string.IsNullOrEmpty(payment.VendorId))
+            {
+                vendorPaymentInvoice = new VendorPaymentInvoice();
+                vendorPaymentInvoice.Payment = payment;
+                vendorPaymentInvoice.VendorAddress = GetVendorAddress(payment.VendorId);
+            }
+
+            return vendorPaymentInvoice;
+        }
+
+        /// <summary>
+        /// Gets the payment.
+        /// </summary>
+        /// <param name="paymentId">The payment identifier.</param>
+        /// <returns>Payment Object</returns>
+        public static Payment GetPayment(string paymentId)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pPaymentId", DbType.String, paymentId));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetPayment", objParameters.ToArray());
+            Payment payment = null;
+
+            while (reader.Read())
+            {
+                payment = new Payment();
+                payment.PaymentId = reader["PAYMENT_ID"].ToString();
+                payment.VendorId = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
+                payment.VendorName = reader["VENDOR_NAME"].ToString();
+
+                payment.DueDate = Convert.ToDateTime(reader["DUE_DATE"]).ToString("yyyy'-'MM'-'dd");
+                payment.PaidDate = Convert.ToDateTime(reader["PAID_DATE"]).ToString("yyyy'-'MM'-'dd");
+                payment.Amount = Convert.ToDouble(reader["AMOUNT"]);
+                payment.Status = reader["STATUS"].ToString();
+                payment.Description = reader["DESCRIPTION"].ToString();
+                payment.PayForMonth = reader["MONTH"].ToString();                
+            }
+
+            reader.Close();
+
+            return payment;
+        }
+
+        /// <summary>
+        /// Gets the vendor address.
+        /// </summary>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <returns>AddressInfo Object</returns>
+        public static AddressInfo GetVendorAddress(string vendorId)
+        {
+            AddressInfo vendorAddress = null;
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorAddress", objParameters.ToArray());
+            
+            while (reader.Read())
+            {
+                vendorAddress = new AddressInfo();
+                vendorAddress.AddressId = BinaryConverter.ConvertByteToString((byte[])reader["Address_ID"]);
+                vendorAddress.Country = reader["COUNTRY"].ToString();
+                vendorAddress.State = reader["STATE"].ToString();
+                vendorAddress.City = reader["CITY"].ToString();
+                vendorAddress.Locality = reader["LOCALITY"].ToString();
+                vendorAddress.Address = reader["ADDRESS"].ToString();
+                vendorAddress.Pincode = reader["PINCODE"].ToString();
+                vendorAddress.Lattitude = reader["LATITIUDE"].ToString();
+                vendorAddress.Longitude = reader["LONGITUDE"].ToString();
+            }
+
+            reader.Close();
+
+            return vendorAddress;
+        }
         #endregion
     }
 }

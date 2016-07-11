@@ -496,6 +496,7 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetServicesForVendor(string vendorId);
+
         /**
          * @api {post} a1/UpdateServicesForVendor Update Services For Vendor
          * @apiName UpdateServicesForVendor
@@ -1153,6 +1154,7 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetDashboardRecentActivities();
+
         #endregion
 
         #region Payments
@@ -1301,7 +1303,7 @@ namespace Tasko.Interfaces
                 "PayForMonth": "May 2016",
                 "PaymentId": "TASKOPAY1000",
                 "Status": "Completed",
-                "VendorId": "System.Byte[]",
+                "VendorId": "682D49C154DB16499DA55BF1D50930FF",
                 "VendorName": "Srikanth"
             },
             {
@@ -1313,7 +1315,7 @@ namespace Tasko.Interfaces
                 "PayForMonth": "June 2016",
                 "PaymentId": "TASKOPAY1001",
                 "Status": "Completed",
-                "VendorId": "System.Byte[]",
+                "VendorId": "682D49C154DB16499DA55BF1D50930FF",
                 "VendorName": "Srikanth"
             },
             {
@@ -1325,7 +1327,7 @@ namespace Tasko.Interfaces
                 "PayForMonth": "June 2016",
                 "PaymentId": "TASKOPAY1002",
                 "Status": "Pending",
-                "VendorId": "System.Byte[]",
+                "VendorId": "682D49C154DB16499DA55BF1D50930FF",
                 "VendorName": "chandra"
             }
             ],
@@ -1348,7 +1350,7 @@ namespace Tasko.Interfaces
          {
             "Data": null,
             "Error": true,
-            "Message": "Recent Activities are not found",
+            "Message": "No Payments found",
             "Status": 400
           }
          */
@@ -1356,6 +1358,150 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetAllPaymentsByStatus(string status);
+
+        /**
+         * @api {post} a1/GetPayment Get Payment
+         * @apiName GetPayment
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *
+         * @apiParam {String} paymentId PaymentId.
+         * 
+         *
+         * @apiParamExample {json} Param-Example:
+         * { 
+         *     "paymentId": "TASKOPAY1000"
+         * }
+         * @apiSuccessExample Success-Response:
+           {
+            "Data": {
+            "__type": "Payment:#Tasko.Model",
+            "Amount": 500,
+            "Description": "Test",
+            "DueDate": "1986-01-14",
+            "PaidDate": "1999-12-22",
+            "PayForMonth": "May 2016",
+            "PaymentId": "TASKOPAY1000",
+            "Status": "Pending",
+            "VendorId": "682D49C154DB16499DA55BF1D50930FF",
+            "VendorName": "Srikanth"
+            },
+            "Error": false,
+            "Message": "Success",
+            "Status": 200
+           }
+         * @apiError INVALID_TOKEN_CODE Invalid token code.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Invalid token code",
+            "Status": 400
+          } 
+         * @apiError NO_PAYMENT_FOUND No Payments found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "No Paymnet found",
+            "Status": 400
+          }
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetPayment(string paymentId);
+
+        /**
+         * @api {post} a1/GetPaymentInvoice Get Payment Invoice
+         * @apiName GetPaymentInvoice
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *
+         * @apiParam {String} paymentId PaymentId.
+         * 
+         *
+         * @apiParamExample {json} Param-Example:
+         * { 
+         *     "paymentId": "TASKOPAY1000"
+         * }
+         * @apiSuccessExample Success-Response:
+            {
+              "Data": {
+                "__type": "VendorPaymentInvoice:#Tasko.Model",
+                "Payment": {
+                  "Amount": 500,
+                  "Description": "Test",
+                  "DueDate": "1986-01-14",
+                  "PaidDate": "1999-12-22",
+                  "PayForMonth": "May 2016",
+                  "PaymentId": "TASKOPAY1000",
+                  "Status": "Pending",
+                  "VendorId": "682D49C154DB16499DA55BF1D50930FF",
+                  "VendorName": "Srikanth"
+                },
+                "VendorAddress": {
+                  "Address": "plot no 404, BaghyaNagar",
+                  "AddressId": "F3378ADDB47E164DB5A585CCC36FC5BA",
+                  "City": "Hyderabad",
+                  "Country": "India",
+                  "Lattitude": "40",
+                  "Locality": "HMT HILLS",
+                  "Longitude": "600",
+                  "Pincode": "500072",
+                  "State": "Telangana"
+                }
+              },
+              "Error": false,
+              "Message": "Success",
+              "Status": 200
+            }
+         * @apiError INVALID_TOKEN_CODE Invalid token code.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Invalid token code",
+            "Status": 400
+          } 
+         * @apiError NO_PAYMENT_FOUND No Payments found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "No Paymnet found",
+            "Status": 400
+          }
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetPaymentInvoice(string paymentId);
+
         #endregion
     }
 }

@@ -295,6 +295,15 @@ namespace Tasko {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Payment found.
+        /// </summary>
+        internal static string NO_PAYMENT_FOUND {
+            get {
+                return ResourceManager.GetString("NO_PAYMENT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Payments found.
         /// </summary>
         internal static string NO_PAYMENTS_FOUND {

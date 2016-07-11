@@ -449,7 +449,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "    {\n    \"Data\": [\n    {\n        \"__type\": \"Payment:#Tasko.Model\",\n        \"Amount\": 500,\n        \"Description\": \"Monthly Charge\",\n        \"DueDate\": \"2016-06-23\",\n        \"PaidDate\": \"2016-07-07\",\n        \"PayForMonth\": \"May 2016\",\n        \"PaymentId\": \"TASKOPAY1000\",\n        \"Status\": \"Completed\",\n        \"VendorId\": \"System.Byte[]\",\n        \"VendorName\": \"Srikanth\"\n    },\n    {\n        \"__type\": \"Payment:#Tasko.Model\",\n        \"Amount\": 300,\n        \"Description\": \"OutStanding Charge\",\n        \"DueDate\": \"2016-06-23\",\n        \"PaidDate\": \"2016-07-10\",\n        \"PayForMonth\": \"June 2016\",\n        \"PaymentId\": \"TASKOPAY1001\",\n        \"Status\": \"Completed\",\n        \"VendorId\": \"System.Byte[]\",\n        \"VendorName\": \"Srikanth\"\n    },\n    {\n        \"__type\": \"Payment:#Tasko.Model\",\n        \"Amount\": 400,\n        \"Description\": \"Partial Payment made\",\n        \"DueDate\": \"2016-06-23\",\n        \"PaidDate\": \"2016-07-10\",\n        \"PayForMonth\": \"June 2016\",\n        \"PaymentId\": \"TASKOPAY1002\",\n        \"Status\": \"Pending\",\n        \"VendorId\": \"System.Byte[]\",\n        \"VendorName\": \"chandra\"\n    }\n    ],\n    \"Error\": false,\n    \"Message\": \"Success\",\n    \"Status\": 200\n}",
+          "content": "    {\n    \"Data\": [\n    {\n        \"__type\": \"Payment:#Tasko.Model\",\n        \"Amount\": 500,\n        \"Description\": \"Monthly Charge\",\n        \"DueDate\": \"2016-06-23\",\n        \"PaidDate\": \"2016-07-07\",\n        \"PayForMonth\": \"May 2016\",\n        \"PaymentId\": \"TASKOPAY1000\",\n        \"Status\": \"Completed\",\n        \"VendorId\": \"682D49C154DB16499DA55BF1D50930FF\",\n        \"VendorName\": \"Srikanth\"\n    },\n    {\n        \"__type\": \"Payment:#Tasko.Model\",\n        \"Amount\": 300,\n        \"Description\": \"OutStanding Charge\",\n        \"DueDate\": \"2016-06-23\",\n        \"PaidDate\": \"2016-07-10\",\n        \"PayForMonth\": \"June 2016\",\n        \"PaymentId\": \"TASKOPAY1001\",\n        \"Status\": \"Completed\",\n        \"VendorId\": \"682D49C154DB16499DA55BF1D50930FF\",\n        \"VendorName\": \"Srikanth\"\n    },\n    {\n        \"__type\": \"Payment:#Tasko.Model\",\n        \"Amount\": 400,\n        \"Description\": \"Partial Payment made\",\n        \"DueDate\": \"2016-06-23\",\n        \"PaidDate\": \"2016-07-10\",\n        \"PayForMonth\": \"June 2016\",\n        \"PaymentId\": \"TASKOPAY1002\",\n        \"Status\": \"Pending\",\n        \"VendorId\": \"682D49C154DB16499DA55BF1D50930FF\",\n        \"VendorName\": \"chandra\"\n    }\n    ],\n    \"Error\": false,\n    \"Message\": \"Success\",\n    \"Status\": 200\n}",
           "type": "json"
         }
       ]
@@ -479,7 +479,7 @@
         },
         {
           "title": "Error-Response:",
-          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Recent Activities are not found\",\n   \"Status\": 400\n }",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"No Payments found\",\n   \"Status\": 400\n }",
           "type": "json"
         }
       ]
@@ -1096,6 +1096,212 @@
         {
           "title": "Error-Response:",
           "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Order's not found\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetPayment",
+    "title": "Get Payment",
+    "name": "GetPayment",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "paymentId",
+            "description": "<p>PaymentId.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n    \"paymentId\": \"TASKOPAY1000\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n \"Data\": {\n \"__type\": \"Payment:#Tasko.Model\",\n \"Amount\": 500,\n \"Description\": \"Test\",\n \"DueDate\": \"1986-01-14\",\n \"PaidDate\": \"1999-12-22\",\n \"PayForMonth\": \"May 2016\",\n \"PaymentId\": \"TASKOPAY1000\",\n \"Status\": \"Pending\",\n \"VendorId\": \"682D49C154DB16499DA55BF1D50930FF\",\n \"VendorName\": \"Srikanth\"\n },\n \"Error\": false,\n \"Message\": \"Success\",\n \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NO_PAYMENT_FOUND",
+            "description": "<p>No Payments found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Invalid token code\",\n   \"Status\": 400\n }",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"No Paymnet found\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetPaymentInvoice",
+    "title": "Get Payment Invoice",
+    "name": "GetPaymentInvoice",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "paymentId",
+            "description": "<p>PaymentId.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n    \"paymentId\": \"TASKOPAY1000\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n  \"Data\": {\n    \"__type\": \"VendorPaymentInvoice:#Tasko.Model\",\n    \"Payment\": {\n      \"Amount\": 500,\n      \"Description\": \"Test\",\n      \"DueDate\": \"1986-01-14\",\n      \"PaidDate\": \"1999-12-22\",\n      \"PayForMonth\": \"May 2016\",\n      \"PaymentId\": \"TASKOPAY1000\",\n      \"Status\": \"Pending\",\n      \"VendorId\": \"682D49C154DB16499DA55BF1D50930FF\",\n      \"VendorName\": \"Srikanth\"\n    },\n    \"VendorAddress\": {\n      \"Address\": \"plot no 404, BaghyaNagar\",\n      \"AddressId\": \"F3378ADDB47E164DB5A585CCC36FC5BA\",\n      \"City\": \"Hyderabad\",\n      \"Country\": \"India\",\n      \"Lattitude\": \"40\",\n      \"Locality\": \"HMT HILLS\",\n      \"Longitude\": \"600\",\n      \"Pincode\": \"500072\",\n      \"State\": \"Telangana\"\n    }\n  },\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NO_PAYMENT_FOUND",
+            "description": "<p>No Payments found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Invalid token code\",\n   \"Status\": 400\n }",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"No Paymnet found\",\n   \"Status\": 400\n }",
           "type": "json"
         }
       ]
@@ -1758,6 +1964,98 @@
         {
           "title": "Error-Response:",
           "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Invalid token code\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "v1/UpdateVendorDetails",
+    "title": "Update Vendor Details",
+    "name": "UpdateVendorDetails",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Vendor",
+            "optional": false,
+            "field": "vendor",
+            "description": "<p>Vendor.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"vendor\": {\n             \"Id\": \"FC73EC7242E28142ACCAFDF4703F0EBF\",\n             \"MobileNumber\": \"9849345086\",\n             \"Name\": \"srikanth\",\n             \"EmailAddress\":\"srikanth@tasko.com\",\n             \"Photo\": \"\",\n             \"DateOfBirth\":\"2016-07-07 14:12:55\",\n             \"AreOrdersBlocked\":\"0\",\n             \"IsBlocked\":\"0\",\n             \"IsPowerSeller\":\"1\",\n             \"MonthlyCharge\":\"300\",\n             \n            } \n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]

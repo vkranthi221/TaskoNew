@@ -2120,4 +2120,37 @@ BEGIN
 	select @TotalOrders as Total_Orders,@WeeklyOrders as Weekly_Orders,@TodayOrders as Today_Orders,@TotalPayments as Total_Payments,@Weeklypayments as Weekly_Payments,
 	@BiggestPayments as Biggest_Payments,@MonthlyPayments as Monthly_Payments, Name from customer where customer_id= @pCustomerId
 END
+GO
+CREATE PROCEDURE [dbo].[usp_GetPayment]
+(
+	@pPaymentId nvarchar(50)
+)
+AS
+BEGIN
 
+
+SET NOCOUNT ON;
+
+  SELECT [PAYMENT_ID] , PAY.[VENDOR_ID], VEN.[NAME] AS VENDOR_NAME, [DUE_DATE],[PAID_DATE],[AMOUNT],[STATUS],[DESCRIPTION],[MONTH]
+  FROM dbo.[PAYMENTS] PAY  
+  INNER JOIN VENDOR VEN ON PAY.VENDOR_ID= VEN.VENDOR_ID
+  WHERE PAY.PAYMENT_ID = @pPaymentId
+
+END
+
+GO
+CREATE PROCEDURE [dbo].[usp_GetVendorAddress]
+(
+  @pVendorId binary(16)
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+ SELECT Addr.ADDRESS_ID,COUNTRY,STATE,LATITIUDE ,LONGITUDE ,LOCALITY,CITY,ADDRESS,PINCODE
+ FROM dbo.[ADDRESS] Addr
+ INNER JOIN dbo.VENDOR V ON V.[ADDRESS_ID] = Addr.[Address_ID]
+ WHERE V.VENDOR_ID = @pVendorId 
+END

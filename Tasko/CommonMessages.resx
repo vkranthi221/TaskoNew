@@ -239,5 +239,8 @@
   </data>
   <data name="NO_PAYMENTS_FOUND" xml:space="preserve">
     <value>No Payments found</value>
-  </data>  
+  </data>
+  <data name="NO_PAYMENT_FOUND" xml:space="preserve">
+    <value>No Payment found</value>
+  </data>
 </root>

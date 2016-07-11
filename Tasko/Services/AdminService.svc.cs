@@ -1081,7 +1081,6 @@ namespace Tasko.Services
             return r;
         }
 
-
         /// <summary>
         /// Gets all payments by status.
         /// </summary>
@@ -1127,6 +1126,97 @@ namespace Tasko.Services
             return r;
         }
 
+        /// <summary>
+        /// Gets the payment.
+        /// </summary>
+        /// <param name="paymentId">The payment identifier.</param>
+        /// <returns>
+        /// Response object
+        /// </returns>
+        public Response GetPayment(string paymentId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    Payment payment = AdminData.GetPayment(paymentId);
+
+                    if (payment != null)
+                    {
+                        r.Error = false;
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Status = 200;
+                        r.Data = payment;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Message = CommonMessages.NO_PAYMENT_FOUND;
+                        r.Status = 400;
+                    }
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        /// <summary>
+        /// Gets the payment invoice.
+        /// </summary>
+        /// <param name="paymentId">The payment identifier.</param>
+        /// <returns>Response Object</returns>
+        public Response GetPaymentInvoice(string paymentId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    VendorPaymentInvoice paymentInvoice = AdminData.GetPaymentInvoice(paymentId);
+
+                    if (paymentInvoice != null)
+                    {
+                        r.Error = false;
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Status = 200;
+                        r.Data = paymentInvoice;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Message = CommonMessages.NO_PAYMENTS_FOUND;
+                        r.Status = 400;
+                    }
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
 
         #endregion
 

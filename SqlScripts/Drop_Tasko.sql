@@ -162,3 +162,25 @@ DROP PROCEDURE [dbo].[usp_DeactivateVendorServices]
 GO
 DROP PROCEDURE [dbo].[usp_GetVendorsByStatus]
 GO
+DROP TABLE [dbo].[PAYMENTS]
+GO
+DROP FUNCTION [dbo].[GeneratePaymentId]
+GO
+DROP PROCEDURE [dbo].[usp_AddPayment]
+GO
+DROP PROCEDURE [dbo].[usp_UpdatePayment]
+GO
+DROP PROCEDURE [dbo].[usp_GetAllPaymentsByStatus]
+GO
+DROP PROCEDURE [dbo].[usp_GetAllCustomersByStatus]
+GO
+DROP PROCEDURE [dbo].[usp_GetCustomerRatingForOrders]
+GO
+DROP PROCEDURE [dbo].[usp_UpdateVendorDetails]
+GO
+DROP PROCEDURE [dbo].[usp_GetCustomerOverview]
+GO
+DROP PROCEDURE [dbo].[usp_GetPayment]
+GO
+DROP PROCEDURE [dbo].[usp_GetVendorAddress]
+
