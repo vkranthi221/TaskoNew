@@ -66,7 +66,6 @@ CREATE TABLE [dbo].[ID_PROOFS](
  CONSTRAINT [ID_PROOFS_PK] PRIMARY KEY CLUSTERED(ID_PROOF_ID))
 
 GO
-
 CREATE TABLE [dbo].[VENDOR](
 	[VENDOR_ID] [binary](16) NOT NULL,
 	[USER_NAME] [varchar](max) NOT NULL,
@@ -90,6 +89,8 @@ CREATE TABLE [dbo].[VENDOR](
 	[IS_BLOCKED] [bit] NULL,
 	[MONTHLY_CHARGE] [decimal](18, 0) NULL,
 	[IS_POWER_SELLER] [bit] NULL,
+	[VENDOR_REF_ID] [int] IDENTITY(1,1) NOT NULL,
+	[REGISTERED_DATE] [datetime] NOT NULL,
  CONSTRAINT [VENDOR_PK] PRIMARY KEY CLUSTERED 
 (
 	[VENDOR_ID] ASC
@@ -99,6 +100,9 @@ CREATE TABLE [dbo].[VENDOR](
 GO
 
 SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[VENDOR] ADD  CONSTRAINT [DF_VENDOR_REGISTERED_DATE]  DEFAULT (getdate()) FOR [REGISTERED_DATE]
 GO
 
 ALTER TABLE [dbo].[VENDOR]  WITH CHECK ADD  CONSTRAINT [FK_VENDOR_ADDRESS] FOREIGN KEY([ADDRESS_ID])
@@ -1628,10 +1632,8 @@ EXEC SP_EXECUTESQL @VSQL,N'@vStatus int', @pStatus
 
 END
 GO
-
 CREATE PROCEDURE [dbo].[usp_AddVendor]
 (
-  @pVendorDetails xml,
   @pBaseRate float,
   @pEmailAddress nvarchar(max),
   @pIsVendorLive bit,
@@ -1645,6 +1647,7 @@ CREATE PROCEDURE [dbo].[usp_AddVendor]
   @pPassword nvarchar(max),
   @pDOB datetime,
   @pGender bit,
+  @pPhoto nvarchar(max),
   @pAreOrdersBlocked bit,
   @pIsBlocked bit,
   @pIsPowerSeller bit,
@@ -1666,8 +1669,8 @@ SET @vendorCount = (SELECT COUNT(*) FROM VENDOR WHERE [USER_NAME] = @PUSERNAME)
 
 if(@vendorCount = 0)
 BEGIN
-INSERT INTO VENDOR (VENDOR_ID, [USER_NAME], NAME, MOBILE_NUMBER, [PASSWORD], EMAIL_ADDRESS, ADDRESS_ID, EMPLOYEE_COUNT, BASE_RATE, IS_VENDOR_VERIFIED, IS_VENDOR_LIVE, DATE_OF_BIRTH, GENDER, ARE_ORDERS_BLOCKED, IS_BLOCKED,MONTHLY_CHARGE,IS_POWER_SELLER) 
-    VALUES (@vendorId, @pUserName, @pName, @pMobileNumber, @pPassword, @pEmailAddress, @pAddressId, @pNoOfEmployees, @pBaseRate,   @pIsVendorVerified,@pIsVendorLive, @pDOB, @pGender, @pAreOrdersBlocked,@pIsBlocked,@pMonthlyCharge,@pIsPowerSeller)
+INSERT INTO VENDOR (VENDOR_ID, [USER_NAME], NAME, MOBILE_NUMBER, [PASSWORD], EMAIL_ADDRESS, ADDRESS_ID, EMPLOYEE_COUNT, BASE_RATE, IS_VENDOR_VERIFIED, IS_VENDOR_LIVE, DATE_OF_BIRTH, GENDER, PHOTO, ARE_ORDERS_BLOCKED, IS_BLOCKED,MONTHLY_CHARGE,IS_POWER_SELLER, REGISTERED_DATE) 
+    VALUES (@vendorId, @pUserName, @pName, @pMobileNumber, @pPassword, @pEmailAddress, @pAddressId, @pNoOfEmployees, @pBaseRate,   @pIsVendorVerified,@pIsVendorLive, @pDOB, @pGender, @pPhoto, @pAreOrdersBlocked,@pIsBlocked,@pMonthlyCharge,@pIsPowerSeller, GETDATE())
 
 	IF EXISTS (Select VENDOR_ID FROM dbo.VENDOR WHERE VENDOR_ID = @vendorId)
 	BEGIN   
@@ -1680,10 +1683,6 @@ INSERT INTO VENDOR (VENDOR_ID, [USER_NAME], NAME, MOBILE_NUMBER, [PASSWORD], EMA
 	SELECT @vendorId as VENDOR_ID
   END 
 END
-
-
-
-
 GO
 
 CREATE PROCEDURE [dbo].[usp_AddVendorService]
@@ -2180,6 +2179,7 @@ SET NOCOUNT ON;
  INNER JOIN dbo.VENDOR V ON V.[ADDRESS_ID] = Addr.[Address_ID]
  WHERE V.VENDOR_ID = @pVendorId 
 END
+GO
 
 CREATE PROCEDURE [dbo].[usp_GetAllUsers]
 
