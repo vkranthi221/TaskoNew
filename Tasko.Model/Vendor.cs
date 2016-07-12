@@ -201,7 +201,7 @@ namespace Tasko.Model
         public int VenorRefId { get; set; }
 
         [DataMember]
-        public DateTime RegisteredDate { get; set; }
+        public string RegisteredDate { get; set; }
 
         /// <summary>
         /// Vendor constructor

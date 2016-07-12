@@ -107,9 +107,11 @@ namespace Tasko.Repository
                 objVendor.NoOfEmployees = Convert.ToInt32(reader["EMPLOYEE_COUNT"]);
                 objVendor.BaseRate = Convert.ToDouble(reader["BASE_RATE"]);
                 objVendor.IsVendorVerified = Convert.ToBoolean(reader["IS_VENDOR_VERIFIED"]);
+                objVendor.VenorRefId = Convert.ToInt32(reader["VENDOR_REF_ID"]);
+                objVendor.RegisteredDate = Convert.ToDateTime(reader["REGISTERED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
                 if(reader["DATE_OF_BIRTH"] != null)
                 {
-                    objVendor.DateOfBirth = reader["DATE_OF_BIRTH"].ToString(); ;
+                    objVendor.DateOfBirth = Convert.ToDateTime(reader["DATE_OF_BIRTH"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
                 }
 
                 objVendor.Gender = (Int16)reader["GENDER"];
