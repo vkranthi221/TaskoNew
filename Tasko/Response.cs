@@ -46,7 +46,9 @@ namespace Tasko
     [KnownType(typeof(VendorOverview))]
     [KnownType(typeof(Payment))]
     [KnownType(typeof(List<Payment>))]
-    [KnownType(typeof(VendorPaymentInvoice))]    
+    [KnownType(typeof(VendorPaymentInvoice))]
+    [KnownType(typeof(ServiceOverview))]
+    [KnownType(typeof(CustomerOverview))]
     public class Response
     {
         /// <summary>

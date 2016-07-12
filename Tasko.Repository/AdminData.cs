@@ -176,6 +176,32 @@ namespace Tasko.Repository
 
             return vendors;
         }
+
+        /// <summary>
+        /// Gets the service overview.
+        /// </summary>
+        /// <param name="serviceId">The service identifier.</param>
+        /// <returns>Service overview object</returns>
+        public static ServiceOverview GetServiceOverview(string serviceId)
+        {
+            ServiceOverview serviceOverview = null;
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.String, BinaryConverter.ConvertStringToByte(serviceId)));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetServiceOverview", objParameters.ToArray());
+            while (reader.Read())
+            {
+                serviceOverview = new ServiceOverview();
+                serviceOverview.TotalPayments = Convert.ToDecimal(reader["TOTAL_PAYMENTS"]);
+                serviceOverview.WeeklyPayments = Convert.ToDecimal(reader["WEEKLY_PAYMENTS"]);
+                serviceOverview.BiggestPayment = Convert.ToDecimal(reader["BIGGEST_PAYMENT"]);
+                serviceOverview.MonthlyPayments = Convert.ToDecimal(reader["MONTHLY_PAYMENTS"]);
+                serviceOverview.ServiceName = (reader["SERVICE_NAME"]).ToString();
+                serviceOverview.ServiceId = serviceId;
+            }
+
+            return serviceOverview;
+        }
+
         #endregion
 
         #region Vendor
@@ -424,14 +450,14 @@ namespace Tasko.Repository
         {
             CustomerOverview customerOverview = null;
             List<SqlParameter> objParameters = new List<SqlParameter>();
-            objParameters.Add(SqlHelper.CreateParameter("@pCustomerrId", DbType.String, BinaryConverter.ConvertStringToByte(customerId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.String, BinaryConverter.ConvertStringToByte(customerId)));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetCustomerOverview", objParameters.ToArray());
             while (reader.Read())
             {
                 customerOverview = new CustomerOverview();
 
                 customerOverview.TotalOrders = Convert.ToInt32(reader["Total_Orders"]);
-                customerOverview.WeeklyOrders = Convert.ToInt32(reader["ORDEWeekly_OrdersRS_THIS_WEEK"]);
+                customerOverview.WeeklyOrders = Convert.ToInt32(reader["Weekly_Orders"]);
                 customerOverview.TodayOrders = Convert.ToInt32(reader["Today_Orders"]);
                 customerOverview.TotalPayments = Convert.ToDecimal(reader["Total_Payments"]);
                 customerOverview.WeeklyPayments = Convert.ToDecimal(reader["Weekly_Payments"]);

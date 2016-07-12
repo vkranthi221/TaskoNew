@@ -436,6 +436,68 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetVendorsByService(string serviceId);
+
+        /**
+         * @api {post} a1/GetServiceOverview Get Service Overview
+         * @apiName GetServiceOverview
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         * @apiParam {string} serviceId Service Id.
+         *
+         * @apiParamExample {json} Param-Example:
+         * { 
+         *   "serviceId":"6786E5D449D6B74396E8ADAEA1C17E37"
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+            {
+              "Data": {
+                "__type": "ServiceOverview:#Tasko.Model",
+                "BiggestPayment": 600,
+                "MonthlyPayments": 3750,
+                "ServiceId": "43FFEE168D9E3C4B9FC28B263AA403F7",
+                "ServiceName": "Microwave Service",
+                "TotalPayments": 3750,
+                "WeeklyPayments": 3750
+              },
+              "Error": false,
+              "Message": "Success",
+              "Status": 200
+            }
+         * @apiError INVALID_TOKEN_CODE Invalid token code.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Invalid token code",
+            "Status": 400
+          }  
+         * @apiError NO_SERVICES_EXIST No Payments found for the selected service.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "No Payments found for the selected service",
+            "Status": 400
+          }
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetServiceOverview(string serviceId);
+
         #endregion
 
         #region Vendors
@@ -736,6 +798,64 @@ namespace Tasko.Interfaces
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetCustomerRatingsForOrders(string customerId, int noOfRecords);
 
+        /**
+         * @api {post} a1/GetCustomerOverview Get Customer Overview
+         * @apiName GetCustomerOverview
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         * @apiParam {string} customerId Customer Id.
+         *
+         * @apiParamExample {json} Param-Example:
+         * { 
+         *   "customerId":"6786E5D449D6B74396E8ADAEA1C17E37"
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+            {
+              "Data": {
+                "__type": "CustomerOverview:#Tasko.Model",
+                "BiggestPayments": 600,
+                "MonthlyPayments": 3750,
+                "Name": "Shivaji123",
+                "TodayOrders": 0,
+                "TotalOrders": 10,
+                "TotalPayments": 3750,
+                "WeeklyOrders": 10,
+                "WeeklyPayments": 3750
+              },
+              "Error": false,
+              "Message": "Success",
+              "Status": 200
+            }
+         * @apiError INVALID_TOKEN_CODE Invalid token code.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Invalid token code",
+            "Status": 400
+          }  
+         * @apiError CUSTOMER_NOT_FOUND Customer's not found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Customer's not found",
+            "Status": 400
+          }
+         */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
@@ -1503,6 +1623,7 @@ namespace Tasko.Interfaces
         Response GetPaymentInvoice(string paymentId);
 
         #endregion
+
         #region Users
 
         [OperationContract]
@@ -1526,7 +1647,5 @@ namespace Tasko.Interfaces
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response DeleteUser(string userId);
         #endregion
-
-
     }
 }

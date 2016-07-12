@@ -295,7 +295,104 @@ namespace Tasko.Services
             }
 
             return r;
-        }       
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="serviceId"></param>
+        /// <returns></returns>
+        /// * @api {post} a1/GetServiceOverview Get Service Overview
+        /// * @apiName GetServiceOverview
+        /// * @apiGroup Admin
+        /// *
+        /// * @apiHeader {string} Token_Code Token Code
+        /// * @apiHeader {string} User_Id User Id
+        /// * @apiHeader {string} Content-Type application/json
+        /// *
+        /// * @apiHeaderExample {json} Header-Example:
+        /// *  {
+        /// *    "Token_Code": "Unique Token code that is generated after login" ,
+        /// *    "User_Id": "Logged in User ID",
+        /// *    "Content-Type": "application/json"
+        /// *  }
+        /// * @apiParam {string} serviceId Service Id.
+        /// *
+        /// * @apiParamExample {json} Param-Example:
+        /// * {
+        /// *   "serviceId":"6786E5D449D6B74396E8ADAEA1C17E37"
+        /// * }
+        /// *
+        /// * @apiSuccessExample Success-Response:
+        /// {
+        /// "Data": {
+        /// "__type": "ServiceOverview:#Tasko.Model",
+        /// "BiggestPayment": 600,
+        /// "MonthlyPayments": 3750,
+        /// "ServiceId": "43FFEE168D9E3C4B9FC28B263AA403F7",
+        /// "ServiceName": "Microwave Service",
+        /// "TotalPayments": 3750,
+        /// "WeeklyPayments": 3750
+        /// },
+        /// "Error": false,
+        /// "Message": "Success",
+        /// "Status": 200
+        /// }
+        /// * @apiError INVALID_TOKEN_CODE Invalid token code.
+        /// *
+        /// * @apiErrorExample Error-Response:
+        /// {
+        /// "Data": null,
+        /// "Error": true,
+        /// "Message": "Invalid token code",
+        /// "Status": 400
+        /// }
+        /// * @apiError NO_SERVICES_EXIST No Payments found for the selected service.
+        /// *
+        /// * @apiErrorExample Error-Response:
+        /// {
+        /// "Data": null,
+        /// "Error": true,
+        /// "Message": "No Payments found for the selected service",
+        /// "Status": 400
+        /// }
+        public Response GetServiceOverview(string serviceId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    ServiceOverview serviceOverview = AdminData.GetServiceOverview(serviceId);
+                    if (serviceOverview != null)
+                    {
+                        r.Data = serviceOverview;
+                        r.Error = false;
+                        r.Status = 200;
+                        r.Message = CommonMessages.SUCCESS;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Status = 400;
+                        r.Message = CommonMessages.NO_PAYMENTS_EXIST_FOR_SERVICE;
+                    }
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
 
         #endregion
 
@@ -643,10 +740,10 @@ namespace Tasko.Services
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                    VendorOverview vendorOverview = AdminData.GetVendorOverview(customerId);
-                    if (vendorOverview != null)
+                    CustomerOverview customerOverview = AdminData.GetCustomerOverview(customerId);
+                    if (customerOverview != null)
                     {
-                        r.Data = vendorOverview;
+                        r.Data = customerOverview;
                         r.Error = false;
                         r.Status = 200;
                         r.Message = CommonMessages.SUCCESS;
@@ -877,9 +974,6 @@ namespace Tasko.Services
 
             return r;
         }
-        #endregion
-
-        #region Customers
         #endregion
 
         #region Dashboard
@@ -1218,30 +1312,7 @@ namespace Tasko.Services
             return r;
         }
 
-        #endregion
-
-        #region Private Methods
-        /// <summary>
-        /// Validates the token.
-        /// </summary>
-        /// <returns>bool value</returns>
-        private static bool ValidateToken()
-        {
-            IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
-            WebHeaderCollection headers = request.Headers;
-            string tokenCode = headers["Token_Code"];
-            string userId = headers["User_Id"];
-            if (!string.IsNullOrEmpty(tokenCode) && !string.IsNullOrEmpty(userId))
-            {
-                bool isTokenValid = VendorData.ValidateTokenCode(tokenCode, userId);
-                return isTokenValid;
-            }
-
-            return false;
-
-            //return true;
-        }
-        #endregion
+        #endregion      
 
         #region Users
         public Response AddUser(User user)
@@ -1394,6 +1465,29 @@ namespace Tasko.Services
             return r;
         }
 
+        #endregion
+
+        #region Private Methods
+        /// <summary>
+        /// Validates the token.
+        /// </summary>
+        /// <returns>bool value</returns>
+        private static bool ValidateToken()
+        {
+            IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
+            WebHeaderCollection headers = request.Headers;
+            string tokenCode = headers["Token_Code"];
+            string userId = headers["User_Id"];
+            if (!string.IsNullOrEmpty(tokenCode) && !string.IsNullOrEmpty(userId))
+            {
+                bool isTokenValid = VendorData.ValidateTokenCode(tokenCode, userId);
+                return isTokenValid;
+            }
+
+            return false;
+
+            //return true;
+        }
         #endregion
     }
 }
