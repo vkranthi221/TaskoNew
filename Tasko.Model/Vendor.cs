@@ -197,6 +197,12 @@ namespace Tasko.Model
         [DataMember]
         public bool AreOrdersBlocked { get; set; }
 
+        [DataMember]
+        public int VenorRefId { get; set; }
+
+        [DataMember]
+        public DateTime RegisteredDate { get; set; }
+
         /// <summary>
         /// Vendor constructor
         /// </summary>
