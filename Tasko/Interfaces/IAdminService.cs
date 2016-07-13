@@ -787,11 +787,123 @@ namespace Tasko.Interfaces
         #endregion
 
         #region Customers
+        /**
+        * @api {post} a1/GetAllCustomersByStatus Get all the customers for a specified status. 0 - All, 1- Online, 2- Offline, 3- Blocked
+        * @apiName GetAllCustomersByStatus
+        * @apiGroup Admin
+        *
+        * @apiHeader {string} Token_Code Token Code
+        * @apiHeader {string} Content-Type application/json
+        * @apiHeader {string} User_Id User Id
+        * 
+        * @apiHeaderExample {json} Header-Example:
+        *  {
+        *    "Token_Code": "Unique Token code that is generated after login" ,
+        *    "Content-Type": "application/json"
+        *    "User_Id": "Logged in User ID",
+        *  }
+        *  
+        * @apiParam {customerStatus} customerStatus 0 - All, 1- Online, 2- Offline, 3- Blocked.
+        * 
+        * @apiParamExample {json} Param-Example:
+        *  {
+            "customerStatus": 0
+           }
+        *
+        * @apiSuccessExample Success-Response:
+        {
+          "Data": [
+            {
+              "__type": "Customer:#Tasko.Model",
+              "EmailAddress": "shivaji@gmail.com",
+              "Id": "3B456AD997CC9046B4B8F45244B50A57",
+              "MobileNumber": "1234567890",
+              "Name": "Shivaji"
+            },
+            {
+              "__type": "Customer:#Tasko.Model",
+              "EmailAddress": "shivaji456@gmail.com",
+              "Id": "41F53C6CE848E843B75FA43A274FD18C",
+              "MobileNumber": "9876543210",
+              "Name": "Shivaji456"
+            },
+          ],
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+        * @apiError INVALID_TOKEN_CODE Invalid token code
+        *
+        * @apiErrorExample Error-Response:
+        {
+         "Data": null,
+         "Error": true,
+         "Message": "Invalid token code",
+         "Status": 400
+       }
+        */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetAllCustomersByStatus(int customerStatus);
 
+        /**
+        * @api {post} a1/GetAllCustomersByStatus Get all the customers for a specified status. 0 - All, 1- Online, 2- Offline, 3- Blocked
+        * @apiName GetAllCustomersByStatus
+        * @apiGroup Admin
+        *
+        * @apiHeader {string} Token_Code Token Code
+        * @apiHeader {string} Content-Type application/json
+        * @apiHeader {string} User_Id User Id
+        * 
+        * @apiHeaderExample {json} Header-Example:
+        *  {
+        *    "Token_Code": "Unique Token code that is generated after login" ,
+        *    "Content-Type": "application/json"
+        *    "User_Id": "Logged in User ID",
+        *  }
+        *  
+        * @apiParam {customerStatus} customerStatus 0 - All, 1- Online, 2- Offline, 3- Blocked.
+        * 
+        * @apiParamExample {json} Param-Example:
+        *  {
+            "customerStatus": 0
+           }
+        *
+        * @apiSuccessExample Success-Response:
+        {
+            "Data": [
+                {
+                    "__type": "CustomerRating:#Tasko.Model",
+                    "Comments": null,
+                    "Courtesy": 3,
+                    "CustomerId": null,
+                    "CustomerName": "Shivaji",
+                    "Id": null,
+                    "OrderId": "TASKO1000",
+                    "OverAllRating": 2,
+                    "Price": 1,
+                    "Punctuality": 2,
+                    "ReviewDate": null,
+                    "ServiceQuality": 2,
+                    "VendorId": null,
+                    "VendorName": "chandra"
+                }
+            ],
+        "Error": false,
+        "Message": "Success",
+        "Status": 200
+        }
+        * @apiError INVALID_TOKEN_CODE Invalid token code
+        *
+        * @apiErrorExample Error-Response:
+        {
+          "Data": null,
+          "Error": true,
+          "Message": "Invalid token code",
+          "Status": 400
+        }
+        */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
@@ -1812,7 +1924,65 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response AddUser(User user);
-       
+
+        /**
+         * @api {post} a1/GetAllUsers Get all the users
+         * @apiName GetAllusers
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Authntication code
+         * @apiHeader {string} User_Id user id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Token code got from login API" ,
+         *    "User_Id": "User id" ,
+         *    "Content-Type": "application/json"
+         *  }
+         *   
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": [
+            {
+              "__type": "User:#Tasko.Model",
+              "EmailId": "test@test.com",
+              "Id": "236E155155DB7A489E8101290DEDECE1",
+              "IsActive": true,
+              "IsAdmin": true,
+              "JoinedDate": "2016-07-13 20:38:06",
+              "MobileNumber": "9898987878",
+              "Name": "testuser",
+              "PassWord": "testuser",
+              "UserName": null
+            },
+            {
+              "__type": "User:#Tasko.Model",
+              "EmailId": "testuse1r@testuser.com",
+              "Id": "EFB93DAEFECC0D409E2AC5FEB4441615",
+              "IsActive": true,
+              "IsAdmin": true,
+              "JoinedDate": "2016-07-13 20:32:29",
+              "MobileNumber": "9898987876",
+              "Name": "testuser11",
+              "PassWord": "testuser11",
+              "UserName": null
+            }
+          ],
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+         }
+         * @apiError INVALID_CREDENTIALS Invalid credentials.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Invalid token code",
+          "Status": 400
+         }
+         */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
