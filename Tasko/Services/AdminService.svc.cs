@@ -1461,6 +1461,7 @@ namespace Tasko.Services
             }
             catch (Exception ex)
             {
+                r.Message = CommonMessages.FAIL;
                 r.Error = true;
                 r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
             }

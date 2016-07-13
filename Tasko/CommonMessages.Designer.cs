@@ -187,6 +187,15 @@ namespace Tasko {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fail.
+        /// </summary>
+        internal static string FAIL {
+            get {
+                return ResourceManager.GetString("FAIL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid Authcode.
         /// </summary>
         internal static string INVALID_AUTHCODE {

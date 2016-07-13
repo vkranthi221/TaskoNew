@@ -255,4 +255,7 @@
   <data name="NO_PAYMENTS_EXIST_FOR_SERVICE" xml:space="preserve">
     <value>No Payments found for the selected service.</value>
   </data>
+  <data name="FAIL" xml:space="preserve">
+    <value>Fail</value>
+  </data>
 </root>

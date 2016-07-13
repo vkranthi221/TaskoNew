@@ -1625,8 +1625,7 @@ namespace Tasko.Interfaces
         #endregion
 
         #region Users
-
-        [OperationContract]
+             
 
         /**
          * @api {post} a1/Login Login 
@@ -1677,6 +1676,7 @@ namespace Tasko.Interfaces
           "Status": 200
         }
          */
+        [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response Login(string userName, string password);
@@ -1808,6 +1808,48 @@ namespace Tasko.Interfaces
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetUserDetails(string userId);
 
+        /**
+        * @api {post} a1/DeleteUser Delete user
+        * @apiName DeleteUser
+        * @apiGroup Admin
+        *
+        * @apiHeader {string} Token_Code Authntication code
+        * @apiHeader {string} User_Id user id
+        * @apiHeader {string} Content-Type application/json
+        * 
+        * @apiHeaderExample {json} Header-Example:
+        *  {
+        *    "Token_Code": "Token code got from login API" ,
+        *    "User_Id": "User id" ,
+        *    "Content-Type": "application/json"
+        *  }
+        *   
+        * @apiParam {String} userId user id of admin user.
+        * 
+        *
+        * @apiParamExample {json} Param-Example:
+        * 
+          {
+            "userId": "E51DF58EF04A1947BE85BB5B04AC94A9"
+          }
+        *
+        * @apiSuccessExample Success-Response:
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+        * @apiError INVALID_CREDENTIALS Invalid credentials.
+        *
+        * @apiErrorExample Error-Response:
+        {
+         "Data": null,
+         "Error": true,
+         "Message": "Fail",
+         "Status": 400
+       }
+        */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
