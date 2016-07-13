@@ -67,6 +67,7 @@
     <Compile Include="CustomerOverview.cs" />
     <Compile Include="VendorOverview.cs" />
     <Compile Include="VendorPaymentInvoice.cs" />
+    <Compile Include="CustomerRating.cs" />
     <Compile Include="VendorSummary.cs" />
     <Compile Include="Vendor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

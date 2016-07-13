@@ -2255,6 +2255,36 @@ END
 
 GO
 
+CREATE PROCEDURE [dbo].usp_LoginAdminUser
+(
+	@pUserName Varchar(max),
+	@pPassword nvarchar(10)
+	
+
+)
+AS
+BEGIN
+
+SET NOCOUNT ON;
+declare @TokenCode binary(15)
+declare @UserID binary(16)
+
+set @TokenCode = NEWId()
+ 
+ IF @pUserName IS NOT NULL AND LEN(@pUserName) > 0 --username is passed
+	BEGIN
+		select @UserID= user_id from [user] where [USER_NAME] = @pUserName and PASSWORD = @pPassword
+	END
+ 
+
+
+if(@UserID is not null)
+BEGIN
+	insert into loggedon_user values(@UserID, @TokenCode)
+END
+SELECT @TokenCode as Token_CODE, @UserID as USERID
+END
+
 
 
 

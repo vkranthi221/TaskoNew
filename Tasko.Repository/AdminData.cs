@@ -469,9 +469,9 @@ namespace Tasko.Repository
             return customerOverview;
         }
 
-        public static List<VendorRating> CustomerRatingsForOrders(string customerId, int noOfRecords)
+        public static List<CustomerRating> CustomerRatingsForOrders(string customerId, int noOfRecords)
         {
-            List<VendorRating> vendorRatings = new List<VendorRating>();
+            List<CustomerRating> customerRatings = new List<CustomerRating>();
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
@@ -479,7 +479,7 @@ namespace Tasko.Repository
             IDataReader reader = SqlHelper.GetDataReader("dbo.[usp_GetCustomerRatingForOrders]", objParameters.ToArray());
             while (reader.Read())
             {
-                VendorRating rating = new VendorRating();
+                CustomerRating rating = new CustomerRating();
                 rating.CustomerName = reader["customer_name"].ToString();
                 rating.VendorName = reader["vendor_name"].ToString();
                 rating.OrderId = reader["order_id"].ToString();
@@ -491,12 +491,26 @@ namespace Tasko.Repository
                 rating.Courtesy = Convert.ToDecimal(reader["COURTESY"]);
                 rating.Price = Convert.ToDecimal(reader["PRICE"]);
 
-                vendorRatings.Add(rating);
+                customerRatings.Add(rating);
             }
 
             reader.Close();
 
-            return vendorRatings;
+            return customerRatings;
+        }
+        public static bool ValidateAuthCode(string authCode, bool isDeleteRequired)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pAuthCode", DbType.Binary, BinaryConverter.ConvertStringToByte(authCode)));
+            objParameters.Add(SqlHelper.CreateParameter("@pIsDeleteRequired", DbType.Boolean, isDeleteRequired));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_ValidateAuthCode", objParameters.ToArray());
+
+            if (reader.Read())
+            {
+                return (bool)reader["IsValid"];
+            }
+            return false;
+
         }
 
         #endregion
@@ -912,6 +926,26 @@ namespace Tasko.Repository
 
         }
 
+        public static LoginInfo LoginAdminUser(string userName, string password)
+        {
+            string tokenCode = string.Empty;
+            LoginInfo loginInfo = new LoginInfo();
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pUserName", DbType.String, userName));
+            objParameters.Add(SqlHelper.CreateParameter("@pPassword", DbType.String, password));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_LoginAdminUser", objParameters.ToArray());
+
+
+            if (reader.Read())
+            {
+                loginInfo.TokenId = reader["Token_Code"].ToString();
+                loginInfo.UserId = reader["UserId"].ToString();
+
+            }
+
+            return loginInfo;
+
+        }
         #endregion
 
     }

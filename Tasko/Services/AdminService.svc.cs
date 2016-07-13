@@ -644,10 +644,11 @@ namespace Tasko.Services
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                    AdminData.GetVendorsByStatus(customerStatus);
-                    r.Error = false;
-                    r.Status = 200;
-                    r.Message = CommonMessages.SUCCESS;
+                   List<Customer> customers = AdminData.GetCustomersByStatus(customerStatus);
+                   r.Data = customers;
+                   r.Error = false;
+                   r.Status = 200;
+                   r.Message = CommonMessages.SUCCESS;
                 }
                 else
                 {
@@ -673,7 +674,8 @@ namespace Tasko.Services
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                    AdminData.CustomerRatingsForOrders(customerId, noOfRecords);
+                    List<CustomerRating> customerRatings = AdminData.CustomerRatingsForOrders(customerId, noOfRecords);
+                    r.Data = customerRatings;
                     r.Error = false;
                     r.Status = 200;
                     r.Message = CommonMessages.SUCCESS;
@@ -1327,6 +1329,7 @@ namespace Tasko.Services
                     userId = AdminData.AddUser(user);
                     if (string.IsNullOrEmpty(userId))
                     {
+                        r.Data = userId;
                         r.Error = true;
                         r.Status = 400;
                         r.Message = CommonMessages.USER_NAME_EXISTS;
@@ -1463,6 +1466,49 @@ namespace Tasko.Services
             }
 
             return r;
+        }
+
+        public Response Login(string userName, string password)
+        {
+            Response r = new Response();
+            try
+            {
+                IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
+                WebHeaderCollection headers = request.Headers;
+                string authCode = headers["Auth_Code"];
+                bool isTokenValid = AdminData.ValidateAuthCode(authCode, true);
+                if (isTokenValid)
+                {
+                    LoginInfo loginInfo = AdminData.LoginAdminUser(userName, password);
+                    if (!string.IsNullOrEmpty(loginInfo.UserId))
+                    {
+                        r.Message = CommonMessages.SUCCESS;
+                    }
+                    else
+                    {
+                        r.Message = CommonMessages.INVALID_CREDENTIALS;
+                    }
+
+                    r.Data = loginInfo;
+                    r.Error = false;
+                    r.Status = 200;
+                    
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        
         }
 
         #endregion
