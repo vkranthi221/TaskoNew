@@ -2229,7 +2229,7 @@ set @UserId = NEWID()
 insert into dbo.[user] values(@UserId,@pUserName, @pName, @pPassword, @pEmailId,@pPhoneNumber, @pIsAdmin, GetDate(), @pIsActive)
 END
 
-select @UserId
+select @UserId as user_id
 
 END
 GO
@@ -2266,7 +2266,7 @@ AS
 BEGIN
 
 SET NOCOUNT ON;
-declare @TokenCode binary(15)
+declare @TokenCode binary(16)
 declare @UserID binary(16)
 
 set @TokenCode = NEWId()

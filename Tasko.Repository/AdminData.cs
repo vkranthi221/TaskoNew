@@ -863,7 +863,7 @@ namespace Tasko.Repository
 
         public static List<User> GetAllUsers()
         {
-            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorOrders");
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetAllUsers");
             List<User> users = new List<User>();
 
             while (reader.Read())
@@ -900,7 +900,7 @@ namespace Tasko.Repository
             {
                 user = new User();
                 //USER_ID, USER_NAME,NAME, PASSWORD,EMAIL_ADDRESS, MOBILE_NUMBER, ISADMIN, JOINED_DATE, ISACTIVE
-                user.Id = reader["USER_ID"].ToString();
+                user.Id = BinaryConverter.ConvertByteToString((byte[])reader["USER_ID"]);
                 user.Name = reader["NAME"].ToString();
                 user.UserName = reader["USER_NAME"].ToString();
                 user.PassWord = reader["PASSWORD"].ToString();
@@ -938,8 +938,11 @@ namespace Tasko.Repository
 
             if (reader.Read())
             {
-                loginInfo.TokenId = reader["Token_Code"].ToString();
-                loginInfo.UserId = reader["UserId"].ToString();
+                loginInfo.TokenId = BinaryConverter.ConvertByteToString((byte[])reader["Token_Code"]);
+                if (!(reader["UserId"] is System.DBNull))
+                {
+                    loginInfo.UserId = BinaryConverter.ConvertByteToString((byte[])reader["UserId"]);
+                }
 
             }
 

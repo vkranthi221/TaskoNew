@@ -1627,25 +1627,186 @@ namespace Tasko.Interfaces
         #region Users
 
         [OperationContract]
+
+        /**
+         * @api {post} a1/Login Login 
+         * @apiName Login
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Auth_Code Authntication code
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Auth_Code": "Authetication code that is generated using GetAuthCode API" ,
+         *    "Content-Type": "application/json"
+         *  }
+         *   
+         * @apiParam {String} userName user name of customer.
+         * 
+         * @apiParam {String} password password.
+         *
+         * @apiParamExample {json} Param-Example:
+         * {
+         *   "userName": "kranthi ",
+         *   "password":"kranthi"
+         *   }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": {
+            "__type": "LoginInfo:#Tasko.Model",
+            "TokenId": "B282108B71974748876F5BAC53A93F",
+            "UserId": "E51DF58EF04A1947BE85BB5B04AC94A9"
+          },
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+         }
+         * @apiError INVALID_CREDENTIALS Invalid credentials.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": {
+            "__type": "LoginInfo:#Tasko.Model",
+            "TokenId": "7BC33345FA08BF488335AC75E3DBA6",
+            "UserId": null
+          },
+          "Error": false,
+          "Message": "Invalid Credentials",
+          "Status": 200
+        }
+         */
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response Login(string userName, string password);
 
+
+        /**
+         * @api {post} a1/AddUser Add Admin User
+         * @apiName AddUser
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Authntication code
+         * @apiHeader {string} User_Id user id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Token code got from login API" ,
+         *    "User_Id": "User id" ,
+         *    "Content-Type": "application/json"
+         *  }
+         *   
+         * @apiParam {String} userName user name of customer.
+         * 
+         * @apiParam {String} password password.
+         *
+         * @apiParamExample {json} Param-Example:
+         * {
+         *  user:
+           {
+            "__type": "User:#Tasko.Model",
+            "EmailId": "testuser@testuser.com",
+            "Id": "E51DF58EF04A1947BE85BB5B04AC94A9",
+            "IsActive": true,
+            "IsAdmin": true,
+            "JoinedDate": "2016-07-13 15:13:01",
+            "MobileNumber": "9898987876",
+            "Name": "testuser",
+            "PassWord": "testuser",
+            "UserName": "testuser"
+          }
+          }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": {
+            "__type": "LoginInfo:#Tasko.Model",
+            "TokenId": "B282108B71974748876F5BAC53A93F",
+            "UserId": "E51DF58EF04A1947BE85BB5B04AC94A9"
+          },
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+         }
+         * @apiError INVALID_CREDENTIALS Invalid credentials.
+         *
+         * @apiErrorExample Error-Response:
+         {
+              "Data": "",
+              "Error": true,
+              "Message": "User Name Exists",
+              "Status": 400
+         }
+         */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response AddUser(User user);
-
-
+       
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetAllUsers();
 
+        /**
+         * @api {post} a1/GetUserDetails Get user details
+         * @apiName AddUser
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Authntication code
+         * @apiHeader {string} User_Id user id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Token code got from login API" ,
+         *    "User_Id": "User id" ,
+         *    "Content-Type": "application/json"
+         *  }
+         *   
+         * @apiParam {String} userId user id of admin user.
+         * 
+         *
+         * @apiParamExample {json} Param-Example:
+         * 
+           {
+             "userId": "E51DF58EF04A1947BE85BB5B04AC94A9"
+           }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": {
+            "__type": "User:#Tasko.Model",
+            "EmailId": "kranthi@kr.com",
+            "Id": "E51DF58EF04A1947BE85BB5B04AC94A9",
+            "IsActive": true,
+            "IsAdmin": true,
+            "JoinedDate": "2016-07-13 15:13:01",
+            "MobileNumber": "9898987876",
+            "Name": "kranthi",
+            "PassWord": "kranthi",
+            "UserName": "kranthi"
+          },
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+         }
+         * @apiError INVALID_CREDENTIALS Invalid credentials.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "User not found",
+          "Status": 400
+        }
+         */    
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response GeUserDetails(string userId);
+        Response GetUserDetails(string userId);
 
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,

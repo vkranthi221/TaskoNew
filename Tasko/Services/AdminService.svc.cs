@@ -1399,7 +1399,7 @@ namespace Tasko.Services
             return r;
         }
 
-        public Response GeUserDetails(string userId)
+        public Response GetUserDetails(string userId)
         {
             Response r = new Response();
             try
