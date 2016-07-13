@@ -91,6 +91,7 @@ CREATE TABLE [dbo].[VENDOR](
 	[IS_POWER_SELLER] [bit] NULL,
 	[VENDOR_REF_ID] [int] IDENTITY(1,1) NOT NULL,
 	[REGISTERED_DATE] [datetime] NOT NULL,
+	[DUE_DATE] [datetime] NULL,
  CONSTRAINT [VENDOR_PK] PRIMARY KEY CLUSTERED 
 (
 	[VENDOR_ID] ASC
@@ -2021,7 +2022,14 @@ DECLARE @PaymentId nvarchar(max)
 SET @PaymentId =  (SELECT [dbo].[GeneratePaymentId]())
 
 INSERT INTO PAYMENTS VALUES (@PaymentId, @pVendorId, @pDueDate, @pPaidDate, @pPaidAmount, @pStatus, @pDescription, @pMonth)
-
+IF EXISTS (SELECT PAYMENT_ID FROM dbo.PAYMENTS WHERE PAYMENT_ID = @PaymentId)
+	BEGIN   
+	IF (UPPER(@pStatus) = 'COMPLETED')
+	  BEGIN
+	-- If add Payment success and it is full payment then only update the DueDate in Vendor table
+		UPDATE VENDOR SET DUE_DATE = @pDueDate WHERE VENDOR_ID = @pVendorId
+	  END
+	END
 END
 
 GO
@@ -2158,7 +2166,7 @@ BEGIN
 
 SET NOCOUNT ON;
 
-  SELECT [PAYMENT_ID] , PAY.[VENDOR_ID], VEN.[NAME] AS VENDOR_NAME, [DUE_DATE],[PAID_DATE],[AMOUNT],[STATUS],[DESCRIPTION],[MONTH]
+  SELECT [PAYMENT_ID] , PAY.[VENDOR_ID], VEN.[NAME] AS VENDOR_NAME, PAY.[DUE_DATE],[PAID_DATE],[AMOUNT],[STATUS],[DESCRIPTION],[MONTH]
   FROM dbo.[PAYMENTS] PAY  
   INNER JOIN VENDOR VEN ON PAY.VENDOR_ID= VEN.VENDOR_ID
   WHERE PAY.PAYMENT_ID = @pPaymentId
@@ -2266,26 +2274,34 @@ AS
 BEGIN
 
 SET NOCOUNT ON;
-declare @TokenCode binary(16)
-declare @UserID binary(16)
+DECLARE @TokenCode binary(16)
+DECLARE @UserID binary(16)
 
-set @TokenCode = NEWId()
+SET @TokenCode = NEWId()
  
  IF @pUserName IS NOT NULL AND LEN(@pUserName) > 0 --username is passed
 	BEGIN
-		select @UserID= user_id from [user] where [USER_NAME] = @pUserName and PASSWORD = @pPassword
+		select @UserID= USER_ID FROM [USER] WHERE [USER_NAME] = @pUserName AND PASSWORD = @pPassword
 	END
  
+   IF(@UserID IS NOT NULL)
+     BEGIN
+	  INSERT INTO LOGGEDON_USER VALUES(@UserID, @TokenCode)
+     END
+  SELECT @TokenCode AS TOKEN_CODE, @UserID as USERID
+END
 
+GO
 
-if(@UserID is not null)
+CREATE PROCEDURE [dbo].[usp_GetAllVendorsSummary]
+AS
 BEGIN
-	insert into loggedon_user values(@UserID, @TokenCode)
+
+SET NOCOUNT ON;
+
+SELECT [VENDOR_ID],[NAME],[USER_NAME],[MOBILE_NUMBER],[EMAIL_ADDRESS],[VENDOR_REF_ID],[IS_VENDOR_LIVE], [MONTHLY_CHARGE],[REGISTERED_DATE],[DUE_DATE]
+FROM [dbo].[VENDOR]
+
 END
-SELECT @TokenCode as Token_CODE, @UserID as USERID
-END
-
-
-
-
+GO
 

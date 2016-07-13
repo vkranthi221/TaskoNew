@@ -185,6 +185,197 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "a1/AddUser",
+    "title": "Add Admin User",
+    "name": "AddUser",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Authntication code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>user id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Token code got from login API\" ,\n  \"User_Id\": \"User id\" ,\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userName",
+            "description": "<p>user name of customer.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>password.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n user:\n           {\n            \"__type\": \"User:#Tasko.Model\",\n            \"EmailId\": \"testuser@testuser.com\",\n            \"Id\": \"E51DF58EF04A1947BE85BB5B04AC94A9\",\n            \"IsActive\": true,\n            \"IsAdmin\": true,\n            \"JoinedDate\": \"2016-07-13 15:13:01\",\n            \"MobileNumber\": \"9898987876\",\n            \"Name\": \"testuser\",\n            \"PassWord\": \"testuser\",\n            \"UserName\": \"testuser\"\n          }\n          }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n \"Data\": {\n   \"__type\": \"LoginInfo:#Tasko.Model\",\n   \"TokenId\": \"B282108B71974748876F5BAC53A93F\",\n   \"UserId\": \"E51DF58EF04A1947BE85BB5B04AC94A9\"\n },\n \"Error\": false,\n \"Message\": \"Success\",\n \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_CREDENTIALS",
+            "description": "<p>Invalid credentials.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n     \"Data\": \"\",\n     \"Error\": true,\n     \"Message\": \"User Name Exists\",\n     \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetUserDetails",
+    "title": "Get user details",
+    "name": "AddUser",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Authntication code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>user id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Token code got from login API\" ,\n  \"User_Id\": \"User id\" ,\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>user id of admin user.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "\n{\n  \"userId\": \"E51DF58EF04A1947BE85BB5B04AC94A9\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n \"Data\": {\n   \"__type\": \"User:#Tasko.Model\",\n   \"EmailId\": \"kranthi@kr.com\",\n   \"Id\": \"E51DF58EF04A1947BE85BB5B04AC94A9\",\n   \"IsActive\": true,\n   \"IsAdmin\": true,\n   \"JoinedDate\": \"2016-07-13 15:13:01\",\n   \"MobileNumber\": \"9898987876\",\n   \"Name\": \"kranthi\",\n   \"PassWord\": \"kranthi\",\n   \"UserName\": \"kranthi\"\n },\n \"Error\": false,\n \"Message\": \"Success\",\n \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_CREDENTIALS",
+            "description": "<p>Invalid credentials.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"User not found\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
     "url": "a1/DeleteService",
     "title": "Delete Service",
     "name": "DeleteService",
@@ -278,6 +469,98 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Unable to delete the Service as it is in Use\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/DeleteUser",
+    "title": "Delete user",
+    "name": "DeleteUser",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Authntication code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>user id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Token code got from login API\" ,\n  \"User_Id\": \"User id\" ,\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>user id of admin user.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "\n{\n  \"userId\": \"E51DF58EF04A1947BE85BB5B04AC94A9\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_CREDENTIALS",
+            "description": "<p>Invalid credentials.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Fail\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
@@ -552,6 +835,89 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Invalid token code\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetAllVendorsSummary",
+    "title": "Get All Vendors Summary",
+    "name": "GetAllVendorsSummary",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n   \"Data\": [\n    {\n       \"__type\": \"VendorSummary:#Tasko.Model\",\n       \"DueDate\": \"2016-08-13\",\n       \"EmailAddress\": \"mchandu123@gmail.com\",\n       \"IsVendorLive\": true,\n       \"MobileNumber\": \"9985466195\",\n       \"MonthlyCharge\": 300,\n       \"Name\": \"chandra\",\n       \"UniqueId\": 1,\n       \"UserName\": \"chandra\",\n       \"VendorId\": \"365D5778496AF745975DA6692AC64661\"\n    },\n    {\n       \"__type\": \"VendorSummary:#Tasko.Model\",\n       \"DueDate\": \"2016-08-13\",\n       \"EmailAddress\": \"sree@gmail.com\",\n       \"IsVendorLive\": true,\n       \"MobileNumber\": \"1234567890\",\n       \"MonthlyCharge\": 300,\n       \"Name\": \"Srikanth\",\n       \"UniqueId\": 2,\n       \"UserName\": \"srikanth\",\n       \"VendorId\": \"F1EFDAF4136F2847B99F259519C1D729\"\n    }\n    ],\n   \"Error\": false,\n   \"Message\": \"Success\",\n   \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "VENDORS_NOT_FOUND",
+            "description": "<p>Vendor's not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Invalid token code\",\n   \"Status\": 400\n }",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Vendor's not found\",\n   \"Status\": 400\n }",
           "type": "json"
         }
       ]
@@ -1764,7 +2130,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n    \"Data\": [\n    {\n        \"__type\": \"VendorSummary:#Tasko.Model\",\n        \"EmailAddress\": \"sree@gmail.com\",\n        \"Id\": \"6D76BCF5246BB44E8DD327C22780C6B0\",\n        \"IsVendorLive\": true,\n        \"MobileNumber\": \"1234567890\",\n        \"Name\": \"Srikanth\",\n        \"UserName\": \"sree123\"\n    }\n    ],\n    \"Error\": false,\n    \"Message\": \"Success\",\n    \"Status\": 200\n}",
+          "content": " {\n    \"Data\": [\n    {\n        \"__type\": \"VendorSummary:#Tasko.Model\",\n        \"EmailAddress\": \"sree@gmail.com\",\n        \"VendorId\": \"6D76BCF5246BB44E8DD327C22780C6B0\",\n        \"IsVendorLive\": true,\n        \"MobileNumber\": \"1234567890\",\n        \"Name\": \"Srikanth\",\n        \"UserName\": \"sree123\"\n    }\n    ],\n    \"Error\": false,\n    \"Message\": \"Success\",\n    \"Status\": 200\n}",
           "type": "json"
         }
       ]
@@ -1806,7 +2172,7 @@ define({ "api": [
   {
     "type": "post",
     "url": "a1/GetVendorsByStatus",
-    "title": "Get Vendors by status",
+    "title": "Get Vendors by Status",
     "name": "GetVendorsByStatus",
     "group": "Admin",
     "header": {
@@ -1867,7 +2233,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\n   \"Data\": [\n               {\n                 \"__type\": \"VendorSummary:#Tasko.Model\",\n                 \"EmailAddress\": \"mchandu123@gmail.com\",\n                 \"Id\": \"40C58B1908D4CE439FA05FF0B138EA8A\",\n                 \"IsVendorLive\": true,\n                 \"MobileNumber\": \"9985466195\",\n                 \"Name\": \"chandra\",\n                 \"UserName\": \"chandra\"\n               },\n               {\n                 \"__type\": \"VendorSummary:#Tasko.Model\",\n                 \"EmailAddress\": \"sree@gmail.com\",\n                 \"Id\": \"B6C163EABE8C0A4B8F4BAFA9CAA7DDB1\",\n                 \"IsVendorLive\": true,\n                 \"MobileNumber\": \"1234567890\",\n                 \"Name\": \"Srikanth\",\n                 \"UserName\": \"srikanth\"\n               }\n         ],\n   \"Error\": false,\n   \"Message\": \"Success\",\n   \"Status\": 200\n}",
+          "content": "{\n   \"Data\": [\n               {\n                 \"__type\": \"VendorSummary:#Tasko.Model\",\n                 \"EmailAddress\": \"mchandu123@gmail.com\",\n                 \"VendorId\": \"40C58B1908D4CE439FA05FF0B138EA8A\",\n                 \"IsVendorLive\": true,\n                 \"MobileNumber\": \"9985466195\",\n                 \"Name\": \"chandra\",\n                 \"UserName\": \"chandra\"\n               },\n               {\n                 \"__type\": \"VendorSummary:#Tasko.Model\",\n                 \"EmailAddress\": \"sree@gmail.com\",\n                 \"VendorId\": \"B6C163EABE8C0A4B8F4BAFA9CAA7DDB1\",\n                 \"IsVendorLive\": true,\n                 \"MobileNumber\": \"1234567890\",\n                 \"Name\": \"Srikanth\",\n                 \"UserName\": \"srikanth\"\n               }\n         ],\n   \"Error\": false,\n   \"Message\": \"Success\",\n   \"Status\": 200\n}",
           "type": "json"
         }
       ]
@@ -1887,6 +2253,98 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Vendors not found\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/Login",
+    "title": "Login",
+    "name": "Login",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Auth_Code",
+            "description": "<p>Authntication code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Auth_Code\": \"Authetication code that is generated using GetAuthCode API\" ,\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userName",
+            "description": "<p>user name of customer.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>password.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"userName\": \"kranthi \",\n  \"password\":\"kranthi\"\n  }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n \"Data\": {\n   \"__type\": \"LoginInfo:#Tasko.Model\",\n   \"TokenId\": \"B282108B71974748876F5BAC53A93F\",\n   \"UserId\": \"E51DF58EF04A1947BE85BB5B04AC94A9\"\n },\n \"Error\": false,\n \"Message\": \"Success\",\n \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_CREDENTIALS",
+            "description": "<p>Invalid credentials.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": {\n    \"__type\": \"LoginInfo:#Tasko.Model\",\n    \"TokenId\": \"7BC33345FA08BF488335AC75E3DBA6\",\n    \"UserId\": null\n  },\n  \"Error\": false,\n  \"Message\": \"Invalid Credentials\",\n  \"Status\": 200\n}",
           "type": "json"
         }
       ]

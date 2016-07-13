@@ -163,12 +163,13 @@ namespace Tasko.Repository
             while (reader.Read())
             {
                 VendorSummary objVendor = new VendorSummary();
-                objVendor.Id = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
+                objVendor.VendorId = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
                 objVendor.UserName = reader["USER_NAME"].ToString();
                 objVendor.Name = reader["NAME"].ToString();
+                objVendor.UniqueId = Convert.ToInt32(reader["VENDOR_REF_ID"]);
                 objVendor.MobileNumber = reader["MOBILE_NUMBER"].ToString();
                 objVendor.EmailAddress = Convert.ToString(reader["EMAIL_ADDRESS"]);
-                objVendor.IsVendorLive = Convert.ToBoolean(reader["IS_VENDOR_LIVE"]);
+                objVendor.IsVendorLive = Convert.ToBoolean(reader["IS_VENDOR_LIVE"]);                
                 vendors.Add(objVendor);
             }
 
@@ -328,7 +329,7 @@ namespace Tasko.Repository
             while (reader.Read())
             {
                 VendorSummary objVendor = new VendorSummary();
-                objVendor.Id = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
+                objVendor.VendorId = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
                 objVendor.UserName = reader["USER_NAME"].ToString();
                 objVendor.Name = reader["NAME"].ToString();
                 objVendor.MobileNumber = reader["MOBILE_NUMBER"].ToString();
@@ -830,6 +831,44 @@ namespace Tasko.Repository
 
             return vendorAddress;
         }
+
+        /// <summary>
+        /// Gets all vendors summary.
+        /// </summary>
+        /// <returns>list of vendor Summary</returns>
+        public static List<VendorSummary> GetAllVendorsSummary()
+        {
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetAllVendorsSummary");
+            List<VendorSummary> vendors = new List<VendorSummary>();
+
+            while (reader.Read())
+            {
+                VendorSummary objVendor = new VendorSummary();
+                objVendor.VendorId = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
+                objVendor.UserName = reader["USER_NAME"].ToString();
+                objVendor.Name = reader["NAME"].ToString();
+                objVendor.UniqueId = Convert.ToInt32(reader["VENDOR_REF_ID"]);
+                objVendor.MobileNumber = reader["MOBILE_NUMBER"].ToString();
+                objVendor.EmailAddress = Convert.ToString(reader["EMAIL_ADDRESS"]);
+                objVendor.IsVendorLive = Convert.ToBoolean(reader["IS_VENDOR_LIVE"]);
+                objVendor.MonthlyCharge = Convert.ToDouble(reader["MONTHLY_CHARGE"]);
+                if (reader["DUE_DATE"] is System.DBNull)
+                {
+                    objVendor.DueDate = Convert.ToDateTime(reader["REGISTERED_DATE"]).AddMonths(1).ToString("yyyy'-'MM'-'dd"); 
+                }
+                else
+                {
+                    objVendor.DueDate = Convert.ToDateTime(reader["DUE_DATE"]).AddMonths(1).ToString("yyyy'-'MM'-'dd");
+                }
+
+                vendors.Add(objVendor);
+            }
+
+            reader.Close();
+
+            return vendors;
+        }
+
         #endregion
 
         #region User

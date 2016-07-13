@@ -21,7 +21,7 @@ namespace Tasko.Model
         /// The identifier.
         /// </value>
         [DataMember]
-        public string Id { get; set; }
+        public string VendorId { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the user.
@@ -40,6 +40,15 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the unique identifier.
+        /// </summary>
+        /// <value>
+        /// The unique identifier.
+        /// </value>
+        [DataMember]
+        public int UniqueId { get; set; }
 
         /// <summary>
         /// Gets or sets the mobile number.
@@ -67,5 +76,23 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public string EmailAddress { get; set; }
+
+        /// <summary>
+        /// Gets or sets the due date.
+        /// </summary>
+        /// <value>
+        /// The due date.
+        /// </value>
+        [DataMember]
+        public string DueDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the monthly charge.
+        /// </summary>
+        /// <value>
+        /// The monthly charge.
+        /// </value>
+        [DataMember]
+        public double MonthlyCharge { get; set; }
     }
 }

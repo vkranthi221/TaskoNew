@@ -1314,6 +1314,50 @@ namespace Tasko.Services
             return r;
         }
 
+        /// <summary>
+        /// Gets all vendors summary.
+        /// </summary>
+        /// <returns>Response object</returns>
+        public Response GetAllVendorsSummary()
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    List<VendorSummary> vendors = AdminData.GetAllVendorsSummary();
+
+                    if (vendors != null)
+                    {
+                        r.Error = false;
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Status = 200;
+                        r.Data = vendors;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Message = CommonMessages.VENDORS_NOT_FOUND;
+                        r.Status = 400;
+                    }
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;        
+        }
+
         #endregion      
 
         #region Users

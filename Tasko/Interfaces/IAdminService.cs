@@ -402,7 +402,7 @@ namespace Tasko.Interfaces
             {
                 "__type": "VendorSummary:#Tasko.Model",
                 "EmailAddress": "sree@gmail.com",
-                "Id": "6D76BCF5246BB44E8DD327C22780C6B0",
+                "VendorId": "6D76BCF5246BB44E8DD327C22780C6B0",
                 "IsVendorLive": true,
                 "MobileNumber": "1234567890",
                 "Name": "Srikanth",
@@ -553,7 +553,6 @@ namespace Tasko.Interfaces
             "Status": 400
           }        
          */
-
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
@@ -666,7 +665,7 @@ namespace Tasko.Interfaces
         Response GetVendorOverview(string vendorId);
 
         /**
-         * @api {post} a1/GetVendorsByStatus Get Vendors by status
+         * @api {post} a1/GetVendorsByStatus Get Vendors by Status
          * @apiName GetVendorsByStatus
          * @apiGroup Admin
          *
@@ -694,7 +693,7 @@ namespace Tasko.Interfaces
                         {
                           "__type": "VendorSummary:#Tasko.Model",
                           "EmailAddress": "mchandu123@gmail.com",
-                          "Id": "40C58B1908D4CE439FA05FF0B138EA8A",
+                          "VendorId": "40C58B1908D4CE439FA05FF0B138EA8A",
                           "IsVendorLive": true,
                           "MobileNumber": "9985466195",
                           "Name": "chandra",
@@ -703,7 +702,7 @@ namespace Tasko.Interfaces
                         {
                           "__type": "VendorSummary:#Tasko.Model",
                           "EmailAddress": "sree@gmail.com",
-                          "Id": "B6C163EABE8C0A4B8F4BAFA9CAA7DDB1",
+                          "VendorId": "B6C163EABE8C0A4B8F4BAFA9CAA7DDB1",
                           "IsVendorLive": true,
                           "MobileNumber": "1234567890",
                           "Name": "Srikanth",
@@ -1622,10 +1621,80 @@ namespace Tasko.Interfaces
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetPaymentInvoice(string paymentId);
 
+        /**
+         * @api {post} a1/GetAllVendorsSummary Get All Vendors Summary
+         * @apiName GetAllVendorsSummary
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+            "Data": [
+             {
+                "__type": "VendorSummary:#Tasko.Model",
+                "DueDate": "2016-08-13",
+                "EmailAddress": "mchandu123@gmail.com",
+                "IsVendorLive": true,
+                "MobileNumber": "9985466195",
+                "MonthlyCharge": 300,
+                "Name": "chandra",
+                "UniqueId": 1,
+                "UserName": "chandra",
+                "VendorId": "365D5778496AF745975DA6692AC64661"
+             },
+             {
+                "__type": "VendorSummary:#Tasko.Model",
+                "DueDate": "2016-08-13",
+                "EmailAddress": "sree@gmail.com",
+                "IsVendorLive": true,
+                "MobileNumber": "1234567890",
+                "MonthlyCharge": 300,
+                "Name": "Srikanth",
+                "UniqueId": 2,
+                "UserName": "srikanth",
+                "VendorId": "F1EFDAF4136F2847B99F259519C1D729"
+             }
+             ],
+            "Error": false,
+            "Message": "Success",
+            "Status": 200
+         }
+         * @apiError INVALID_TOKEN_CODE Invalid token code.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Invalid token code",
+            "Status": 400
+          }  
+         * @apiError VENDORS_NOT_FOUND Vendor's not found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Vendor's not found",
+            "Status": 400
+          }
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetAllVendorsSummary();
         #endregion
 
-        #region Users
-             
+        #region Users             
 
         /**
          * @api {post} a1/Login Login 
@@ -1680,7 +1749,6 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response Login(string userName, string password);
-
 
         /**
          * @api {post} a1/AddUser Add Admin User

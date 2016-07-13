@@ -183,4 +183,16 @@ GO
 DROP PROCEDURE [dbo].[usp_GetPayment]
 GO
 DROP PROCEDURE [dbo].[usp_GetVendorAddress]
+GO
+DROP PROCEDURE [dbo].[usp_GetServiceOverview]
+GO
+DROP PROCEDURE [dbo].[usp_AddUser]
+GO
+DROP PROCEDURE [dbo].[usp_DeleteUser]
+GO
+DROP PROCEDURE [dbo].[usp_GetAllUsers]
+GO
+DROP PROCEDURE [dbo].[usp_LoginAdminUser]
+GO
+DROP TABLE [dbo].[USER]
 
