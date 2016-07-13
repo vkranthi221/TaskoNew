@@ -2223,7 +2223,7 @@ declare @UserId binary(16)
 
 declare @count smallint
 select  @count= count(1) from dbo.[user] where USER_NAME = @pUserName
-if(@count >0)
+if(@count =0)
 BEGIN
 set @UserId = NEWID()
 insert into dbo.[user] values(@UserId,@pUserName, @pName, @pPassword, @pEmailId,@pPhoneNumber, @pIsAdmin, GetDate(), @pIsActive)

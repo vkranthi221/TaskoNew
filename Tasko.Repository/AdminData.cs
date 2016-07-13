@@ -853,7 +853,7 @@ namespace Tasko.Repository
                 }
                 else
                 {
-                    userId = reader["User_ID"].ToString();
+                    userId = BinaryConverter.ConvertByteToString((byte[]) reader["User_ID"]);
                 }
             }
 
