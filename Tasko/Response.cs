@@ -28,6 +28,7 @@ namespace Tasko
     [KnownType(typeof(FaultException))]
     [KnownType(typeof(ErrorDetails))]
     [KnownType(typeof(List<Service>))]
+    [KnownType(typeof(List<User>))]
     [KnownType(typeof(List<ServiceVendor>))]    
     [KnownType(typeof(Customer))]
     [KnownType(typeof(OrderSummary))]
@@ -49,6 +50,8 @@ namespace Tasko
     [KnownType(typeof(VendorPaymentInvoice))]
     [KnownType(typeof(ServiceOverview))]
     [KnownType(typeof(CustomerOverview))]
+    [KnownType(typeof(List<Customer>))]
+    [KnownType(typeof(List<CustomerRating>))]
     public class Response
     {
         /// <summary>

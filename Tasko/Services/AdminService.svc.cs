@@ -684,7 +684,7 @@ namespace Tasko.Services
                 {
                     r.Error = true;
                     r.Status = 400;
-                    r.Message = CommonMessages.NO_CUSTOMER_RATINGS;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
             catch (Exception ex)
