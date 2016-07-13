@@ -870,7 +870,7 @@ namespace Tasko.Repository
             {
                 //USER_ID, USER_NAME,NAME, PASSWORD,EMAIL_ADDRESS, MOBILE_NUMBER, ISADMIN, JOINED_DATE, ISACTIVE
                 User user = new User();
-                user.Id = reader["USER_ID"].ToString();
+                user.Id = BinaryConverter.ConvertByteToString((byte[])reader["USER_ID"]);
                 user.Name = reader["NAME"].ToString();
                 user.PassWord = reader["PASSWORD"].ToString();
                 user.EmailId = reader["EMAIL_ADDRESS"].ToString();
