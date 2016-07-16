@@ -288,6 +288,31 @@ CREATE TABLE [dbo].[CUSTOMER_ADDRESS](
 
 GO
 /*********** Functions **************************/
+CREATE FUNCTION [dbo].[GenerateComplaintID]()
+RETURNS VARCHAR(MAX) 
+AS 
+-- Returns the New Complaint ID
+BEGIN
+    DECLARE @COMPLAINT_ID VARCHAR(MAX);
+    DECLARE @START_INDEX_COMPLAINT_ID int;
+    SET @START_INDEX_COMPLAINT_ID = 1000;
+    DECLARE @COMPLAINT_COUNT int;
+    
+    SELECT @COMPLAINT_COUNT = Count(*) FROM dbo.COMPLAINT
+    
+    IF(@COMPLAINT_COUNT > 0)
+      BEGIN
+         SET @COMPLAINT_ID = 'Complaint#' + CONVERT(varchar, @START_INDEX_COMPLAINT_ID + @COMPLAINT_COUNT)
+      END
+    ELSE 
+      BEGIN
+         SET @COMPLAINT_ID = 'Complaint#' + CONVERT(varchar, @START_INDEX_COMPLAINT_ID)
+      END 
+      
+    RETURN @COMPLAINT_ID;
+END;
+GO
+
 CREATE FUNCTION dbo.GenerateOrderID()
 RETURNS VARCHAR(MAX) 
 AS 
@@ -374,15 +399,12 @@ GO
 
 CREATE TABLE [dbo].[COMPLAINT](
 	[Complaint_Id] [varchar](50) NOT NULL,
-	[Vendor_Id] [binary](16) NOT NULL,
-	[Customer_Id] [binary](16) NOT NULL,
-	[Title] [varchar](50) NOT NULL,
-	[Message] [varchar](max) NULL,
-	[Reply] [varchar](max) NULL,
+	[Title] [varchar](max) NOT NULL,
 	[Assigned_To] [binary](16) NULL,
 	[Logged_On_Date] [datetime] NOT NULL,
 	[Due_Date] [datetime] NULL,
 	[Complaint_Status] [int] NOT NULL,
+	[Order_Id] [varchar](50) NULL,
  CONSTRAINT [PK_Complaint] PRIMARY KEY CLUSTERED 
 (
 	[Complaint_Id] ASC
@@ -395,6 +417,39 @@ SET ANSI_PADDING OFF
 GO
 
 ALTER TABLE [dbo].[COMPLAINT] ADD  CONSTRAINT [DF_Complaint_Complaint_Id]  DEFAULT ((1000)) FOR [Complaint_Id]
+GO
+
+ALTER TABLE [dbo].[COMPLAINT]  WITH CHECK ADD  CONSTRAINT [FK_COMPLAINT_ORDER] FOREIGN KEY([Order_Id])
+REFERENCES [dbo].[ORDER] ([ORDER_ID])
+GO
+
+ALTER TABLE [dbo].[COMPLAINT] CHECK CONSTRAINT [FK_COMPLAINT_ORDER]
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+CREATE TABLE [dbo].[COMPLAINTCHAT](
+	[ComplaintChatId] [binary](16) NOT NULL,
+	[ComplaintId] [varchar](50) NOT NULL,
+	[ChatMessage] [varchar](max) NULL,
+	[ChatDate] [datetime] NULL,
+ CONSTRAINT [PK_ComplaintChat] PRIMARY KEY CLUSTERED 
+(
+	[ComplaintChatId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[COMPLAINTCHAT]  WITH CHECK ADD  CONSTRAINT [FK_ComplaintChat_COMPLAINT] FOREIGN KEY([ComplaintId])
+REFERENCES [dbo].[COMPLAINT] ([Complaint_Id])
+GO
+
+ALTER TABLE [dbo].[COMPLAINTCHAT] CHECK CONSTRAINT [FK_ComplaintChat_COMPLAINT]
 GO
 
 CREATE TABLE [dbo].[ACTIVITY](
@@ -2305,3 +2360,41 @@ FROM [dbo].[VENDOR]
 END
 GO
 
+CREATE PROCEDURE [dbo].[usp_AddComplaint]
+(
+  @pComplaintStatus int,
+  @pOrderId varchar(MAX),
+  @pTitle varchar(MAX)
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+  DECLARE @ComplaintId Varchar(50)
+  SET  @ComplaintId = dbo.GenerateComplaintID()
+
+  INSERT INTO [dbo].[COMPLAINT] VALUES(@ComplaintId,@pTitle,NULL,GetDate(),GETDATE(),0,@pOrderId)
+
+  SELECT @ComplaintId as COMPLAINT_ID
+END
+
+GO
+
+CREATE PROCEDURE [dbo].[usp_AddComplaintChat]
+(
+  @pComplaintId varchar(MAX),
+  @pChatContent varchar(MAX)
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+  INSERT INTO [dbo].[COMPLAINTCHAT] VALUES(NEWID(),@pComplaintId,@pChatContent,GetDate())
+
+END
+
+GO

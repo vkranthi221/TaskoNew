@@ -29,7 +29,7 @@ namespace Tasko.Repository
             DataSet dataSet = SqlHelper.GetDataSet("dbo.usp_GetOrderDetails", objParameters.ToArray());
 
             if (dataSet != null && dataSet.Tables.Count == 3)
-            {                
+            {
                 //// Order Table Info
                 DataTable ObjOrderInfo = dataSet.Tables[0];
 
@@ -608,5 +608,36 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
             SqlHelper.ExecuteNonQuery("dbo.usp_DeleteFavoriteVendor", objParameters.ToArray());
         }
+
+        #region Complaint
+
+        public static string AddComplaint(Complaint complaint)
+        {
+            string complaintId = string.Empty;
+
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pComplaintStatus", DbType.Int32, complaint.ComplaintStatus));
+            objParameters.Add(SqlHelper.CreateParameter("@pOrderId", DbType.String, complaint.OrderId));
+            objParameters.Add(SqlHelper.CreateParameter("@pTitle", DbType.String, complaint.Title));
+            complaintId = (string)SqlHelper.ExecuteScalar("dbo.usp_AddComplaint", objParameters.ToArray());
+            if (!string.IsNullOrEmpty(complaintId))
+            {
+                AddComplaintChat(complaint.ComplaintChats, complaintId);
+            }
+
+            return complaintId;
+        }
+
+        public static void AddComplaintChat(List<ComplaintChat> chats, string complaintId)
+        {
+            foreach (ComplaintChat chat in chats)
+            {
+                List<SqlParameter> objParameters = new List<SqlParameter>();
+                objParameters.Add(SqlHelper.CreateParameter("@pComplaintId", DbType.String, complaintId));
+                objParameters.Add(SqlHelper.CreateParameter("@pChatContent", DbType.String, chat.ChatContent));
+                SqlHelper.ExecuteNonQuery("dbo.usp_AddComplaintChat", objParameters.ToArray());
+            }
+        }
+        #endregion
     }
 }

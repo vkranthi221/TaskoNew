@@ -863,119 +863,6 @@ namespace Tasko.Services
             return r;
         }
 
-        public Response AddComplaint(Complaint complaint)
-        {
-            Response r = new Response();
-            try
-            {
-                bool isTokenValid = ValidateToken();
-                Order objOrder = null;
-                if (isTokenValid)
-                {
-                }
-                else
-                {
-                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
-                }
-
-                if (objOrder != null)
-                {
-                    r.Error = false;
-                    r.Message = CommonMessages.SUCCESS;
-                    r.Status = 200;
-                    r.Data = objOrder;
-                }
-                else
-                {
-                    ////r.Error = true;
-                    ////r.Message = CommonMessages.ORDER_NOT_FOUND;
-                    ////r.Status = 400;
-                }
-            }
-            catch (Exception ex)
-            {
-                r.Error = true;
-                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
-            }
-
-            return r;
-        }
-
-        public Response GetComplaints(int complaintStatus)
-        {
-            Response r = new Response();
-            try
-            {
-                bool isTokenValid = ValidateToken();
-                Order objOrder = null;
-                if (isTokenValid)
-                {
-                }
-                else
-                {
-                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
-                }
-
-                if (objOrder != null)
-                {
-                    r.Error = false;
-                    r.Message = CommonMessages.SUCCESS;
-                    r.Status = 200;
-                    r.Data = objOrder;
-                }
-                else
-                {
-                    ////r.Error = true;
-                    ////r.Message = CommonMessages.ORDER_NOT_FOUND;
-                    ////r.Status = 400;
-                }
-            }
-            catch (Exception ex)
-            {
-                r.Error = true;
-                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
-            }
-
-            return r;
-        }
-
-        public Response UpdateComplaint(Complaint complaint)
-        {
-            Response r = new Response();
-            try
-            {
-                bool isTokenValid = ValidateToken();
-                Order objOrder = null;
-                if (isTokenValid)
-                {
-                }
-                else
-                {
-                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
-                }
-
-                if (objOrder != null)
-                {
-                    r.Error = false;
-                    r.Message = CommonMessages.SUCCESS;
-                    r.Status = 200;
-                    r.Data = objOrder;
-                }
-                else
-                {
-                    ////r.Error = true;
-                    ////r.Message = CommonMessages.ORDER_NOT_FOUND;
-                    ////r.Status = 400;
-                }
-            }
-            catch (Exception ex)
-            {
-                r.Error = true;
-                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
-            }
-
-            return r;
-        }
         #endregion
 
         #region Dashboard
@@ -1556,6 +1443,85 @@ namespace Tasko.Services
         
         }
 
+        #endregion
+
+        #region Complaints
+
+        public Response GetComplaints(int complaintStatus)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                Order objOrder = null;
+                if (isTokenValid)
+                {
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+
+                if (objOrder != null)
+                {
+                    r.Error = false;
+                    r.Message = CommonMessages.SUCCESS;
+                    r.Status = 200;
+                    r.Data = objOrder;
+                }
+                else
+                {
+                    ////r.Error = true;
+                    ////r.Message = CommonMessages.ORDER_NOT_FOUND;
+                    ////r.Status = 400;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        public Response UpdateComplaint(Complaint complaint)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                Order objOrder = null;
+                if (isTokenValid)
+                {
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+
+                if (objOrder != null)
+                {
+                    r.Error = false;
+                    r.Message = CommonMessages.SUCCESS;
+                    r.Status = 200;
+                    r.Data = objOrder;
+                }
+                else
+                {
+                    ////r.Error = true;
+                    ////r.Message = CommonMessages.ORDER_NOT_FOUND;
+                    ////r.Status = 400;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
         #endregion
 
         #region Private Methods

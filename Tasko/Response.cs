@@ -52,6 +52,10 @@ namespace Tasko
     [KnownType(typeof(CustomerOverview))]
     [KnownType(typeof(List<Customer>))]
     [KnownType(typeof(List<CustomerRating>))]
+    [KnownType(typeof(Complaint))]
+    [KnownType(typeof(List<Complaint>))]
+    [KnownType(typeof(ComplaintChat))]
+    [KnownType(typeof(List<ComplaintChat>))]
     public class Response
     {
         /// <summary>

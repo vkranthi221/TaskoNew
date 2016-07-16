@@ -22,22 +22,23 @@ namespace Tasko.Model
         [DataMember]
         public string ComplaintId { get; set; }
 
+        [DataMember]
+        public string OrderId { get; set; }
+
+        [DataMember]
         public string Title { get; set; }
 
-        public string Message { get; set; }
-
-        public string Reply { get; set; }
-
-        public string VendorName { get; set; }
-
-        public string CustomerName { get; set; }
-
+        [DataMember]
         public string LoggedDate { get; set; }
 
+        [DataMember]
         public string DueDate { get; set; }
 
+        [DataMember]
         public int ComplaintStatus { get; set; }
 
-        public string CustomerEmailAddress { get; set; }
+        [DataMember]
+        public List<ComplaintChat> ComplaintChats { get; set; }
+
     }
 }

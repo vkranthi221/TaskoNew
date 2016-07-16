@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Address.cs" />
     <Compile Include="Complaint.cs" />
+    <Compile Include="ComplaintChat.cs" />
     <Compile Include="Customer.cs">
       <SubType>Code</SubType>
     </Compile>

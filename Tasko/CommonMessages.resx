@@ -258,4 +258,7 @@
   <data name="FAIL" xml:space="preserve">
     <value>Fail</value>
   </data>
+  <data name="ERROR_ADDING_COMPLAINT" xml:space="preserve">
+    <value>Error Adding Complaint</value>
+  </data>
 </root>

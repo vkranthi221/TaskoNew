@@ -169,7 +169,7 @@ namespace Tasko.Repository
                 objVendor.UniqueId = Convert.ToInt32(reader["VENDOR_REF_ID"]);
                 objVendor.MobileNumber = reader["MOBILE_NUMBER"].ToString();
                 objVendor.EmailAddress = Convert.ToString(reader["EMAIL_ADDRESS"]);
-                objVendor.IsVendorLive = Convert.ToBoolean(reader["IS_VENDOR_LIVE"]);                
+                objVendor.IsVendorLive = Convert.ToBoolean(reader["IS_VENDOR_LIVE"]);
                 vendors.Add(objVendor);
             }
 
@@ -731,13 +731,13 @@ namespace Tasko.Repository
             {
                 Payment payment = new Payment();
                 payment.PaymentId = reader["PAYMENT_ID"].ToString();
-                payment.VendorId = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]); 
+                payment.VendorId = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
                 payment.VendorName = reader["VENDOR_NAME"].ToString();
 
-                payment.DueDate = Convert.ToDateTime(reader["DUE_DATE"]).ToString("yyyy'-'MM'-'dd"); 
-                payment.PaidDate =Convert.ToDateTime(reader["PAID_DATE"]).ToString("yyyy'-'MM'-'dd");
+                payment.DueDate = Convert.ToDateTime(reader["DUE_DATE"]).ToString("yyyy'-'MM'-'dd");
+                payment.PaidDate = Convert.ToDateTime(reader["PAID_DATE"]).ToString("yyyy'-'MM'-'dd");
                 payment.Amount = Convert.ToDouble(reader["AMOUNT"]);
-                
+
                 //payment.Amount = Convert.ToDateTime(reader["REQUESTED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
                 payment.Status = reader["STATUS"].ToString();
                 payment.Description = reader["DESCRIPTION"].ToString();
@@ -793,7 +793,7 @@ namespace Tasko.Repository
                 payment.Amount = Convert.ToDouble(reader["AMOUNT"]);
                 payment.Status = reader["STATUS"].ToString();
                 payment.Description = reader["DESCRIPTION"].ToString();
-                payment.PayForMonth = reader["MONTH"].ToString();                
+                payment.PayForMonth = reader["MONTH"].ToString();
             }
 
             reader.Close();
@@ -812,7 +812,7 @@ namespace Tasko.Repository
             List<SqlParameter> objParameters = new List<SqlParameter>();
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorAddress", objParameters.ToArray());
-            
+
             while (reader.Read())
             {
                 vendorAddress = new AddressInfo();
@@ -854,7 +854,7 @@ namespace Tasko.Repository
                 objVendor.MonthlyCharge = Convert.ToDouble(reader["MONTHLY_CHARGE"]);
                 if (reader["DUE_DATE"] is System.DBNull)
                 {
-                    objVendor.DueDate = Convert.ToDateTime(reader["REGISTERED_DATE"]).AddMonths(1).ToString("yyyy'-'MM'-'dd"); 
+                    objVendor.DueDate = Convert.ToDateTime(reader["REGISTERED_DATE"]).AddMonths(1).ToString("yyyy'-'MM'-'dd");
                 }
                 else
                 {
@@ -892,7 +892,7 @@ namespace Tasko.Repository
                 }
                 else
                 {
-                    userId = BinaryConverter.ConvertByteToString((byte[]) reader["User_ID"]);
+                    userId = BinaryConverter.ConvertByteToString((byte[])reader["User_ID"]);
                 }
             }
 
@@ -990,5 +990,11 @@ namespace Tasko.Repository
         }
         #endregion
 
+        #region Complaint
+
+        public static void AddComplaint(Complaint complaint)
+        {
+        }
+        #endregion
     }
 }

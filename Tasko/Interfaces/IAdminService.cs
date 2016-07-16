@@ -1127,23 +1127,6 @@ namespace Tasko.Interfaces
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetOrderDetails(string orderId);
 
-        [OperationContract]
-        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response AddComplaint(Complaint complaint);
-
-        [OperationContract]
-        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response GetComplaints(int complaintStatus);
-
-        [OperationContract]
-        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response UpdateComplaint(Complaint complaint);
-        #endregion
-
-        #region General
         #endregion
 
         #region Dashboard
@@ -1806,7 +1789,7 @@ namespace Tasko.Interfaces
         Response GetAllVendorsSummary();
         #endregion
 
-        #region Users             
+        #region Users
 
         /**
          * @api {post} a1/Login Login 
@@ -2092,6 +2075,16 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response DeleteUser(string userId);
+        #endregion
+
+        #region Complaints
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetComplaints(int complaintStatus);
+
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response UpdateComplaint(Complaint complaint);
         #endregion
     }
 }
