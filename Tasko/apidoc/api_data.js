@@ -376,6 +376,98 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "a1/AddVendor",
+    "title": "Add Vendor",
+    "name": "AddVendor",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "vendor",
+            "description": "<p>Vendor .</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n  \"vendor\": {\n                        \"AddressDetails\": {\n                          \"Address\": \"plot no 404, BaghyaNagar\",\n                          \"AddressId\": null,\n                          \"City\": \"Hyderabad\",\n                          \"Country\": \"India\",\n                          \"Lattitude\": \"40\",\n                          \"Locality\": \"HMT HILLS\",\n                          \"Longitude\": \"600\",\n                          \"Pincode\": \"500072\",\n                          \"State\": \"Hyderabad\"\n                        },\n                        \"BaseRate\": 100,\n                        \"DateOfBirth\": \"7/7/2016 2:12:55 PM\",\n                        \"EmailAddress\": \"sree@gmail.com\",\n                        \"Gender\": 0,\n                        \"IsVendorLive\": false,\n                        \"IsVendorVerified\": true,\n                        \"MobileNumber\": \"9985466195\",\n                        \"Name\": \"srikanth3\",\n                        \"NoOfEmployees\": 10,\n                        \"Password\": \"123456\",\n                        \"Photo\": \"test photo\",\n                        \"UserName\": \"srikanth3\",\n                        \"VendorDetails\": {\n                          \"MonthlyCharge\": \"1000\",\n                          \"IsBlocked\": \"false\",\n                          \"IsPowerSeller\": \"true\",\n                          \"AreOrdersBlocked\": \"false\"\n                        },\n                        \"VendorServices\": [\n                                    {\n                                      \"ServiceId\": \"226AC0D8D240344294A5D1FC4DC96273\"\n                                    },\n                                    {\n                                     \"ServiceId\": \"B42A577C337BEB4988E8E02200F28965\"  \n                                    }\n                                 ]\n                      }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n  \"Data\":\"D519EDD9B0713B4699E75C0D24F54370\" ,\n         \"Error\": false,\n         \"Message\": \"Success\",\n         \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ADD_VENDOR_FAILED",
+            "description": "<p>Error adding vendor.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Error adding vendor.\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
     "url": "a1/DeleteService",
     "title": "Delete Service",
     "name": "DeleteService",
@@ -670,6 +762,282 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "a1/GetAllComplaints",
+    "title": "Get All Complaints",
+    "name": "GetAllComplaints",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "complaintStatus",
+            "description": "<p>Complaint status where 0 refers to all complaints.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n      {\n                  \"complaintStatus\": 1\n                }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"Complaint:#Tasko.Model\",\n              \"ComplaintChats\": null,\n              \"ComplaintId\": \"Complaint#1000\",\n              \"ComplaintStatus\": 0,\n              \"DueDate\": null,\n              \"LoggedDate\": \"2016-07-16 07:16:28\",\n              \"OrderId\": null,\n              \"Title\": \"Test\"\n            }\n          ],\n          \"Error\": false,\n          \"Message\": \"Success\",\n          \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "COMPLAINT_NOT_FOUND",
+            "description": "<p>Complaints not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Complaints not found\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetAllCustomersByStatus",
+    "title": "Get all the customers for a specified status. 0 - All, 1- Online, 2- Offline, 3- Blocked",
+    "name": "GetAllCustomersByStatus",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "customerStatus",
+            "optional": false,
+            "field": "customerStatus",
+            "description": "<p>0 - All, 1- Online, 2- Offline, 3- Blocked.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n           \"customerStatus\": 0\n          }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"Data\": [\n        {\n            \"__type\": \"CustomerRating:#Tasko.Model\",\n            \"Comments\": null,\n            \"Courtesy\": 3,\n            \"CustomerId\": null,\n            \"CustomerName\": \"Shivaji\",\n            \"Id\": null,\n            \"OrderId\": \"TASKO1000\",\n            \"OverAllRating\": 2,\n            \"Price\": 1,\n            \"Punctuality\": 2,\n            \"ReviewDate\": null,\n            \"ServiceQuality\": 2,\n            \"VendorId\": null,\n            \"VendorName\": \"chandra\"\n        }\n    ],\n\"Error\": false,\n\"Message\": \"Success\",\n\"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetAllCustomersByStatus",
+    "title": "Get all the customers for a specified status. 0 - All, 1- Online, 2- Offline, 3- Blocked",
+    "name": "GetAllCustomersByStatus",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "customerStatus",
+            "optional": false,
+            "field": "customerStatus",
+            "description": "<p>0 - All, 1- Online, 2- Offline, 3- Blocked.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n           \"customerStatus\": 0\n          }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n  \"Data\": [\n    {\n      \"__type\": \"Customer:#Tasko.Model\",\n      \"EmailAddress\": \"shivaji@gmail.com\",\n      \"Id\": \"3B456AD997CC9046B4B8F45244B50A57\",\n      \"MobileNumber\": \"1234567890\",\n      \"Name\": \"Shivaji\"\n    },\n    {\n      \"__type\": \"Customer:#Tasko.Model\",\n      \"EmailAddress\": \"shivaji456@gmail.com\",\n      \"Id\": \"41F53C6CE848E843B75FA43A274FD18C\",\n      \"MobileNumber\": \"9876543210\",\n      \"Name\": \"Shivaji456\"\n    },\n  ],\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
     "url": "a1/GetAllPaymentsByStatus",
     "title": "Get All Payments",
     "name": "GetAllPaymentsByStatus",
@@ -918,6 +1286,78 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Vendor's not found\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetAllUsers",
+    "title": "Get all the users",
+    "name": "GetAllusers",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Authntication code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>user id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Token code got from login API\" ,\n  \"User_Id\": \"User id\" ,\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n \"Data\": [\n   {\n     \"__type\": \"User:#Tasko.Model\",\n     \"EmailId\": \"test@test.com\",\n     \"Id\": \"236E155155DB7A489E8101290DEDECE1\",\n     \"IsActive\": true,\n     \"IsAdmin\": true,\n     \"JoinedDate\": \"2016-07-13 20:38:06\",\n     \"MobileNumber\": \"9898987878\",\n     \"Name\": \"testuser\",\n     \"PassWord\": \"testuser\",\n     \"UserName\": null\n   },\n   {\n     \"__type\": \"User:#Tasko.Model\",\n     \"EmailId\": \"testuse1r@testuser.com\",\n     \"Id\": \"EFB93DAEFECC0D409E2AC5FEB4441615\",\n     \"IsActive\": true,\n     \"IsAdmin\": true,\n     \"JoinedDate\": \"2016-07-13 20:32:29\",\n     \"MobileNumber\": \"9898987876\",\n     \"Name\": \"testuser11\",\n     \"PassWord\": \"testuser11\",\n     \"UserName\": null\n   }\n ],\n \"Error\": false,\n \"Message\": \"Success\",\n \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_CREDENTIALS",
+            "description": "<p>Invalid credentials.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n \"Data\": null,\n \"Error\": true,\n \"Message\": \"Invalid token code\",\n \"Status\": 400\n}",
           "type": "json"
         }
       ]
@@ -2730,6 +3170,190 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "c1/AddComplaint",
+    "title": "Add Complaint",
+    "name": "AddComplaint",
+    "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "complaint",
+            "description": "<p>complaint.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n                \"complaint\":\n                  {\n                  \"__type\": \"Complaint:#Tasko.Model\",\n                  \"OrderId\": \"TASKO1000\",\n                  \"Title\": \"Test\",\n                  \"ComplaintChats\": [\n                                      {\n                                        \"__type\": \"ComplaintChat:#Tasko.Model\",\n                                        \"ChatContent\": \"testing\"\n                                      }\n                                  ]\n                 }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": \"Complaint#1001\",\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "ERROR_ADDING_COMPLAINT",
+            "description": "<p>Error Adding Complaint.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Error Adding Complaint\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
+    "url": "c1/AddComplaintChat",
+    "title": "Add Complaint Chat",
+    "name": "AddComplaintChat",
+    "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "complaint",
+            "description": "<p>complaint.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n      \"complaintChat\":\n                      {\n                      \"__type\": \"ComplaintChat:#Tasko.Model\",\n                      \"ComplaintId\": \"Complaint#1004\",\n                      \"ChatContent\": \"test data\"\n                     }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid Token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid Token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
     "url": "c1/AddCustomerAddress",
     "title": "Add Customer Address",
     "name": "AddCustomerAddress",
@@ -3450,6 +4074,98 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Customer Addresses not found\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
+    "url": "c1/GetCustomerComplaints",
+    "title": "Get Customer Complaints",
+    "name": "GetCustomerComplaints",
+    "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "customerId",
+            "description": "<p>customer Id.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n      {\n                  \"customerId\": \"D519EDD9B0713B4699E75C0D24F54370\"\n                }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"Complaint:#Tasko.Model\",\n              \"ComplaintChats\": null,\n              \"ComplaintId\": \"Complaint#1000\",\n              \"ComplaintStatus\": 0,\n              \"DueDate\": null,\n              \"LoggedDate\": \"2016-07-16 07:16:28\",\n              \"OrderId\": null,\n              \"Title\": \"Test\"\n            }\n          ],\n          \"Error\": false,\n          \"Message\": \"Success\",\n          \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "COMPLAINT_NOT_FOUND",
+            "description": "<p>Complaints not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Complaints not found\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
