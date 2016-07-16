@@ -499,7 +499,84 @@ namespace Tasko.Interfaces
         Response GetServiceOverview(string serviceId);
 
         #endregion
-
+        /**
+         * @api {post} a1/AddVendor Add Vendor
+         * @apiName AddVendor
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *  
+         *  @apiParam {string} vendor Vendor .
+         *
+         * @apiParamExample {json} Param-Example:
+         * { 
+         *   "vendor": {
+                        "AddressDetails": {
+                          "Address": "plot no 404, BaghyaNagar",
+                          "AddressId": null,
+                          "City": "Hyderabad",
+                          "Country": "India",
+                          "Lattitude": "40",
+                          "Locality": "HMT HILLS",
+                          "Longitude": "600",
+                          "Pincode": "500072",
+                          "State": "Hyderabad"
+                        },
+                        "BaseRate": 100,
+                        "DateOfBirth": "7/7/2016 2:12:55 PM",
+                        "EmailAddress": "sree@gmail.com",
+                        "Gender": 0,
+                        "IsVendorLive": false,
+                        "IsVendorVerified": true,
+                        "MobileNumber": "9985466195",
+                        "Name": "srikanth3",
+                        "NoOfEmployees": 10,
+                        "Password": "123456",
+                        "Photo": "test photo",
+                        "UserName": "srikanth3",
+                        "VendorDetails": {
+                          "MonthlyCharge": "1000",
+                          "IsBlocked": "false",
+                          "IsPowerSeller": "true",
+                          "AreOrdersBlocked": "false"
+                        },
+                        "VendorServices": [
+                                    {
+                                      "ServiceId": "226AC0D8D240344294A5D1FC4DC96273"
+                                    },
+                                    {
+                                     "ServiceId": "B42A577C337BEB4988E8E02200F28965"  
+                                    }
+                                 ]
+                      }
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+           "Data":"D519EDD9B0713B4699E75C0D24F54370" ,
+                  "Error": false,
+                  "Message": "Success",
+                  "Status": 200
+         }
+         * @apiError ADD_VENDOR_FAILED Error adding vendor.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Error adding vendor.",
+            "Status": 400
+          }        
+         */
         #region Vendors
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
@@ -2085,6 +2162,64 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response UpdateComplaint(Complaint complaint);
+
+        /**
+         * @api {post} a1/GetAllComplaints Get All Complaints
+         * @apiName GetAllComplaints
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
+         * @apiParam {string} complaintStatus Complaint status where 0 refers to all complaints.
+         *
+         * @apiParamExample {json} Param-Example:
+         * {
+         *       {
+                  "complaintStatus": 1
+                }
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": [
+                    {
+                      "__type": "Complaint:#Tasko.Model",
+                      "ComplaintChats": null,
+                      "ComplaintId": "Complaint#1000",
+                      "ComplaintStatus": 0,
+                      "DueDate": null,
+                      "LoggedDate": "2016-07-16 07:16:28",
+                      "OrderId": null,
+                      "Title": "Test"
+                    }
+                  ],
+                  "Error": false,
+                  "Message": "Success",
+                  "Status": 200
+        }
+         * @apiError COMPLAINT_NOT_FOUND Complaints not found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Complaints not found",
+          "Status": 400
+        }
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetAllComplaints(int complaintStatus);
         #endregion
     }
 }

@@ -1522,6 +1522,45 @@ namespace Tasko.Services
 
             return r;
         }
+
+        public Response GetAllComplaints(int complaintStatus)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    List<Complaint> complaints = AdminData.GetAllComplaints(complaintStatus);
+                    if(complaints != null && complaints.Count >0)
+                    {
+                        r.Error = false;
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Status = 200;
+                        r.Data = complaints;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Message = CommonMessages.COMPLAINT_NOT_FOUND;
+                        r.Status = 400;
+                    }
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                    r.Error = true;
+                    r.Status = 400;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
         #endregion
 
         #region Private Methods

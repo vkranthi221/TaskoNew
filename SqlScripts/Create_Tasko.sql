@@ -2375,7 +2375,7 @@ SET NOCOUNT ON;
   DECLARE @ComplaintId Varchar(50)
   SET  @ComplaintId = dbo.GenerateComplaintID()
 
-  INSERT INTO [dbo].[COMPLAINT] VALUES(@ComplaintId,@pTitle,NULL,GetDate(),GETDATE(),0,@pOrderId)
+  INSERT INTO [dbo].[COMPLAINT] VALUES(@ComplaintId,@pTitle,NULL,GetDate(),GETDATE(),1,@pOrderId)
 
   SELECT @ComplaintId as COMPLAINT_ID
 END
@@ -2398,3 +2398,45 @@ SET NOCOUNT ON;
 END
 
 GO
+
+
+CREATE PROCEDURE [dbo].[usp_GetCustomerComplaints]
+(
+	@pCustomerId Binary(16)
+)
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+SELECT Complaint_Id, Complaint_Status,Logged_On_Date,Title
+FROM [dbo].[Complaint] 
+ INNER JOIN [ORDER] ORD ON ORD.CUSTOMER_ID = @pCustomerId 
+
+END
+
+GO
+
+
+CREATE PROCEDURE [dbo].[usp_GetComplaints]
+(
+	@pCustomerStatus int
+)
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+IF @pCustomerStatus <> 0	
+SELECT Complaint_Id, Complaint_Status,Logged_On_Date,Title
+FROM [dbo].[Complaint]  WHERE Complaint_Status = @pCustomerStatus
+
+ELSE
+SELECT Complaint_Id, Complaint_Status,Logged_On_Date,Title
+FROM [dbo].[Complaint]
+END
+
+GO
+
+
+

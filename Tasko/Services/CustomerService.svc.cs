@@ -1010,27 +1010,28 @@ namespace Tasko.Services
             try
             {
                 bool isTokenValid = ValidateToken();
-                Order objOrder = null;
                 if (isTokenValid)
                 {
+                   List<Complaint> complaints = CustomerData.GetCustomerComplaints(customerId);
+                    if(complaints != null && complaints.Count >0)
+                    {
+                        r.Error = false;
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Status = 200;
+                        r.Data = complaints;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Message = CommonMessages.COMPLAINT_NOT_FOUND;
+                        r.Status = 400;
+                    }
                 }
                 else
                 {
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
-                }
-
-                if (objOrder != null)
-                {
-                    r.Error = false;
-                    r.Message = CommonMessages.SUCCESS;
-                    r.Status = 200;
-                    r.Data = objOrder;
-                }
-                else
-                {
-                    ////r.Error = true;
-                    ////r.Message = CommonMessages.ORDER_NOT_FOUND;
-                    ////r.Status = 400;
+                    r.Error = true;
+                    r.Status = 400;
                 }
             }
             catch (Exception ex)

@@ -992,8 +992,27 @@ namespace Tasko.Repository
 
         #region Complaint
 
-        public static void AddComplaint(Complaint complaint)
+        public static List<Complaint> GetAllComplaints(int customerStatus)
         {
+            List<Complaint> complaints = null;
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerStatus", DbType.Int32, customerStatus));
+            DataTable datatable = SqlHelper.GetDataTable("dbo.usp_GetComplaints", objParameters.ToArray());
+            if (datatable != null && datatable.Rows.Count > 0)
+            {
+                complaints = new List<Complaint>();
+                foreach (DataRow row in datatable.Rows)
+                {
+                    Complaint complaint = new Complaint();
+                    complaint.ComplaintId = row["Complaint_Id"].ToString();
+                    complaint.ComplaintStatus = Convert.ToInt32(row["Complaint_Status"]);
+                    complaint.LoggedDate = Convert.ToDateTime(row["Logged_On_Date"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+                    complaint.Title = row["Title"].ToString();
+                    complaints.Add(complaint);
+                }
+            }
+
+            return complaints;
         }
         #endregion
     }

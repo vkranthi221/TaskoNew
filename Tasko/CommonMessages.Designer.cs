@@ -88,6 +88,15 @@ namespace Tasko {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Complaints not found.
+        /// </summary>
+        internal static string COMPLAINT_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("COMPLAINT_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customer Address Invalid.
         /// </summary>
         internal static string CUSTOMER_ADDRESS_INVALID {

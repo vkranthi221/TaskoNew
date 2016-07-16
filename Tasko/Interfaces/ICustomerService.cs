@@ -1218,20 +1218,175 @@ namespace Tasko.Interfaces
           "Status": 400
         }
          */
+        [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response DeleteFavoriteVendor(string customerId, string vendorId);
 
         #region Complaints
+        /**
+         * @api {post} c1/AddComplaint Add Complaint
+         * @apiName AddComplaint
+         * @apiGroup Customer
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
+         * @apiParam {string} complaint complaint.
+         *
+         * @apiParamExample {json} Param-Example:
+         * {
+                "complaint":
+         *                   {
+         *                   "__type": "Complaint:#Tasko.Model",
+         *                   "OrderId": "TASKO1000",
+         *                   "Title": "Test",
+         *                   "ComplaintChats": [
+         *                                       {
+         *                                         "__type": "ComplaintChat:#Tasko.Model",
+         *                                         "ChatContent": "testing"
+         *                                       }
+         *                                   ]
+         *                  }
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": "Complaint#1001",
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError ERROR_ADDING_COMPLAINT Error Adding Complaint.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Error Adding Complaint",
+          "Status": 400
+        }
+         */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response AddComplaint(Complaint complaint);
 
+        /**
+         * @api {post} c1/AddComplaintChat Add Complaint Chat
+         * @apiName AddComplaintChat
+         * @apiGroup Customer
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
+         * @apiParam {string} complaint complaint.
+         *
+         * @apiParamExample {json} Param-Example:
+         * {
+         *       "complaintChat":
+         *                       {
+         *                       "__type": "ComplaintChat:#Tasko.Model",
+         *                       "ComplaintId": "Complaint#1004",
+         *                       "ChatContent": "test data"
+         *                      }
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError INVALID_TOKEN_CODE Invalid Token code.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Invalid Token code",
+          "Status": 400
+        }
+         */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response AddComplaintChat(ComplaintChat complaintChat);
+
+        /**
+         * @api {post} c1/GetCustomerComplaints Get Customer Complaints
+         * @apiName GetCustomerComplaints
+         * @apiGroup Customer
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
+         * @apiParam {string} customerId customer Id.
+         *
+         * @apiParamExample {json} Param-Example:
+         * {
+         *       {
+                  "customerId": "D519EDD9B0713B4699E75C0D24F54370"
+                }
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": [
+                    {
+                      "__type": "Complaint:#Tasko.Model",
+                      "ComplaintChats": null,
+                      "ComplaintId": "Complaint#1000",
+                      "ComplaintStatus": 0,
+                      "DueDate": null,
+                      "LoggedDate": "2016-07-16 07:16:28",
+                      "OrderId": null,
+                      "Title": "Test"
+                    }
+                  ],
+                  "Error": false,
+                  "Message": "Success",
+                  "Status": 200
+        }
+         * @apiError COMPLAINT_NOT_FOUND Complaints not found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Complaints not found",
+          "Status": 400
+        }
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetCustomerComplaints(string customerId);
         #endregion
     }
 }

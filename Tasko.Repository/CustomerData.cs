@@ -638,6 +638,30 @@ namespace Tasko.Repository
                 SqlHelper.ExecuteNonQuery("dbo.usp_AddComplaintChat", objParameters.ToArray());
             }
         }
+
+        public static List<Complaint> GetCustomerComplaints(string customerId)
+        {
+            List<Complaint> complaints = null;
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
+            DataTable datatable = SqlHelper.GetDataTable("dbo.usp_GetCustomerComplaints", objParameters.ToArray());
+            if (datatable != null && datatable.Rows.Count > 0)
+            {
+                complaints = new List<Complaint>();
+                foreach (DataRow row in datatable.Rows)
+                {
+                    Complaint complaint = new Complaint();
+                    complaint.ComplaintId = row["Complaint_Id"].ToString();
+                    complaint.ComplaintStatus = Convert.ToInt32(row["Complaint_Status"]);
+                    complaint.LoggedDate =  Convert.ToDateTime(row["Logged_On_Date"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+                    complaint.Title = row["Title"].ToString();
+                    complaints.Add(complaint);
+                }
+            }
+
+            return complaints;
+        }
+      
         #endregion
     }
 }
