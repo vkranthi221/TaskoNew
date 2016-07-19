@@ -1014,5 +1014,56 @@ namespace Tasko.Repository
             return complaints;
         }
         #endregion
+
+        #region Notifications
+        public static string StoreUser(string name, string emailAddress, string gcmRedId)
+        {
+            string userId = string.Empty;
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.String, name));
+            objParameters.Add(SqlHelper.CreateParameter("@pEmailAddress", DbType.String, emailAddress));
+            objParameters.Add(SqlHelper.CreateParameter("@pgcmRedId", DbType.String, gcmRedId));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_StoreUser", objParameters.ToArray());
+            while (reader.Read())
+            {
+                if (reader["User_Id"] is System.DBNull)
+                {
+                    userId = string.Empty;
+                }
+                else
+                {
+                    userId = BinaryConverter.ConvertByteToString((byte[])reader["User_ID"]);
+                }
+            }
+
+            reader.Close();
+            return userId;
+        }
+
+        public static List<GcmUser> GetAllGCMUsers()
+        {
+            List<GcmUser> gcmUsers = null;
+
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            DataTable datatable = SqlHelper.GetDataTable("dbo.usp_GetAllGCMUsers", objParameters.ToArray());
+            if (datatable != null && datatable.Rows.Count > 0)
+            {
+                gcmUsers = new List<GcmUser>();
+                foreach (DataRow row in datatable.Rows)
+                {
+                    GcmUser gcmUser = new GcmUser();
+                    gcmUser.GcmId = BinaryConverter.ConvertByteToString((byte[])row["GCMID"]);
+                    gcmUser.Name = row["NAME"].ToString();
+                    gcmUser.GcmRegId = row["GCMREGID"].ToString();
+                    gcmUser.EmailAddress = row["EMAILADDRESS"].ToString();
+                    gcmUsers.Add(gcmUser);
+                }
+            }
+
+            return gcmUsers;
+        }
+
+        #endregion
+
     }
 }

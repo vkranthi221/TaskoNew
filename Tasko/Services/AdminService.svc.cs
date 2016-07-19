@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
@@ -1563,6 +1564,115 @@ namespace Tasko.Services
         }
         #endregion
 
+        #region Notifications
+        public Response StoreUser(string name, string emailAddress, string gcmRedId)
+        {
+            Response r = new Response();
+            string userId = string.Empty;
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    userId = AdminData.StoreUser(name, emailAddress, gcmRedId);
+                    if (string.IsNullOrEmpty(userId))
+                    {
+                        r.Data = userId;
+                        r.Error = true;
+                        r.Status = 400;
+                        r.Message = CommonMessages.USER_NAME_EXISTS;
+
+                    }
+                    else
+                    {
+                        r.Error = false;
+                        r.Status = 200;
+                        r.Message = CommonMessages.SUCCESS;
+                    }
+                    r.Data = userId;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+        public Response GetAllGCMUsers()
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                List<GcmUser> objUsers = null;
+                if (isTokenValid)
+                {
+                    objUsers = AdminData.GetAllGCMUsers();
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+
+                if (objUsers != null)
+                {
+                    r.Error = false;
+                    r.Message = CommonMessages.SUCCESS;
+                    r.Status = 200;
+                    r.Data = objUsers;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Message = CommonMessages.USERS_NOT_FOUND;
+                    r.Status = 400;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        public Response SendNotification(string apiKey, string postData)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    InternalSendNotification(apiKey, postData);
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                    r.Error = true;
+                    r.Status = 400;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        #endregion
+
         #region Private Methods
         /// <summary>
         /// Validates the token.
@@ -1583,6 +1693,56 @@ namespace Tasko.Services
             return false;
 
             //return true;
+        }
+
+        private static string InternalSendNotification(string apiKey, string postData)
+        {
+            postData = "collapse_key=score_update&time_to_live=108&delay_while_idle=1&data.message=" + postData + "&data.time=" + System.DateTime.Now.ToString() + "&registration_id=" + "APA91bEvA_MLQBs27lR24U_dEXkBoxL5K5VL5l2BkkVoi_6axHy8tEQvEBLRZ-Vlo4FY9u6S0I5PI5EhshJ-jJ5JjgjYBhExk2kuCVa7cFC1KxNgi6QMpzu6IsClEGbbV2ZvG_-H6DC6";
+            // MESSAGE CONTENT
+            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+
+            // CREATE REQUEST
+            HttpWebRequest Request = (HttpWebRequest)WebRequest.Create("https://android.googleapis.com/gcm/send");
+            Request.Method = "POST";
+            Request.KeepAlive = false;
+            Request.ContentType = " application/x-www-form-urlencoded;charset=UTF-8";
+            Request.Headers.Add(string.Format("Authorization: key={0}", apiKey));
+            //Request.Headers.Add(string.Format("Sender: id={0}", "APA91bEvA_MLQBs27lR24U_dEXkBoxL5K5VL5l2BkkVoi_6axHy8tEQvEBLRZ-Vlo4FY9u6S0I5PI5EhshJ-jJ5JjgjYBhExk2kuCVa7cFC1KxNgi6QMpzu6IsClEGbbV2ZvG_-H6DC6"));
+
+            Request.ContentLength = byteArray.Length;
+
+            Stream dataStream = Request.GetRequestStream();
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            dataStream.Close();
+
+            // SEND MESSAGE
+            try
+            {
+                WebResponse Response = Request.GetResponse();
+                HttpStatusCode ResponseCode = ((HttpWebResponse)Response).StatusCode;
+                string message = string.Empty;
+                if (ResponseCode.Equals(HttpStatusCode.Unauthorized) || ResponseCode.Equals(HttpStatusCode.Forbidden))
+                {
+                    message = "Unauthorized - need new token";
+                }
+                else if (!ResponseCode.Equals(HttpStatusCode.OK))
+                {
+                    message = "Response from web service isn't OK";
+                }
+                else
+                {
+                    StreamReader Reader = new StreamReader(Response.GetResponseStream());
+                    message = Reader.ReadToEnd();
+                    Reader.Close();
+                }
+
+                return message;
+            }
+            catch (Exception e)
+            {
+            }
+
+            return "error";
         }
         #endregion
     }

@@ -264,4 +264,7 @@
   <data name="COMPLAINT_NOT_FOUND" xml:space="preserve">
     <value>Complaints not found</value>
   </data>
+  <data name="USERS_NOT_FOUND" xml:space="preserve">
+    <value>Users not found</value>
+  </data>
 </root>

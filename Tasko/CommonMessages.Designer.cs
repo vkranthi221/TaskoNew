@@ -475,6 +475,15 @@ namespace Tasko {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Users not found.
+        /// </summary>
+        internal static string USERS_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("USERS_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vendor not found.
         /// </summary>
         internal static string VENDOR_NOT_FOUND {

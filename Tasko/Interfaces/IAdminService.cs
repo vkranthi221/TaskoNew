@@ -2221,5 +2221,20 @@ namespace Tasko.Interfaces
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetAllComplaints(int complaintStatus);
         #endregion
+
+        #region Notifications
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+           BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response StoreUser(string name, string emailAddress, string gcmRedId);
+
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+           BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetAllGCMUsers();
+
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+           BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response SendNotification(string apiKey, string postData);
+
+        #endregion
     }
 }

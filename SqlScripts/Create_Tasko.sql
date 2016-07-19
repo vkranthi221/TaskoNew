@@ -507,6 +507,23 @@ GO
 SET ANSI_PADDING OFF
 GO
 
+CREATE TABLE [dbo].[GCM_USERS](
+	[GCMID] [binary](16) NOT NULL,
+	[GCMREGID] [varchar](max) NOT NULL,
+	[NAME] [varchar](max) NOT NULL,
+	[EMAILADDRESS] [varchar](max) NOT NULL,
+	[CREATEDDATE] [datetime] NOT NULL,
+ CONSTRAINT [PK_GCM_USERS] PRIMARY KEY CLUSTERED 
+(
+	[GCMID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
 /*********** Stored Procedures **************************/
 GO
 CREATE PROCEDURE [dbo].[usp_GetVendorDetails]
@@ -2438,5 +2455,44 @@ END
 
 GO
 
+CREATE PROCEDURE [dbo].[usp_StoreUser]
+(
+  @pName varchar(MAX),
+  @pEmailAddress varchar(50),
+  @pgcmRedId nvarchar(max)
+)
+
+AS
+BEGIN
+
+declare @UserId BINARY(16)
 
 
+declare @count smallint
+select  @count= count(1) from dbo.[GCM_USERS] where NAME = @pName
+if(@count =0)
+BEGIN
+set @UserId = NEWID()
+insert into dbo.[GCM_USERS] values(@UserId,@pgcmRedId, @pName, @pEmailAddress, GetDate())
+END
+
+select @UserId as user_id
+
+END
+
+GO
+
+CREATE PROCEDURE [dbo].[usp_GetAllGCMUsers]
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+SELECT [GCMID]
+      ,[GCMREGID]
+      ,[NAME]
+      ,[EMAILADDRESS]
+  FROM [dbo].[GCM_USERS]
+END
+GO

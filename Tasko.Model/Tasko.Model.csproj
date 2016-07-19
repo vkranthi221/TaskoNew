@@ -47,6 +47,7 @@
     <Compile Include="Customer.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GcmUser.cs" />
     <Compile Include="ServiceOverview.cs" />
     <Compile Include="DashboardMeter.cs" />
     <Compile Include="FavoriteVendor.cs" />
