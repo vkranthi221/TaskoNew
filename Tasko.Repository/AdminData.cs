@@ -738,7 +738,6 @@ namespace Tasko.Repository
                 payment.PaidDate = Convert.ToDateTime(reader["PAID_DATE"]).ToString("yyyy'-'MM'-'dd");
                 payment.Amount = Convert.ToDouble(reader["AMOUNT"]);
 
-                //payment.Amount = Convert.ToDateTime(reader["REQUESTED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
                 payment.Status = reader["STATUS"].ToString();
                 payment.Description = reader["DESCRIPTION"].ToString();
                 payment.PayForMonth = reader["MONTH"].ToString();

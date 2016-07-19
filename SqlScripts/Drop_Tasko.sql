@@ -3,7 +3,10 @@
 USE [Tasko]
 GO
 ----------------------------------------------------------------------------------------------------------
-
+DROP TABLE [dbo].[COMPLAINTCHAT]
+GO
+DROP TABLE [dbo].[COMPLAINT]
+GO
 DROP TABLE [dbo].[CUSTOMER_RATING]
 Go
 DROP TABLE [dbo].[VENDOR_ISSUES]
@@ -156,8 +159,6 @@ DROP PROCEDURE [dbo].[usp_GetServicesForVendor]
 GO
 DROP PROCEDURE [dbo].[usp_GetVendorOverview]
 GO
-DROP TABLE [dbo].[COMPLAINT]
-GO
 DROP PROCEDURE [dbo].[usp_DeactivateVendorServices]
 GO
 DROP PROCEDURE [dbo].[usp_GetVendorsByStatus]
@@ -195,4 +196,15 @@ GO
 DROP PROCEDURE [dbo].[usp_LoginAdminUser]
 GO
 DROP TABLE [dbo].[USER]
-
+GO
+DROP PROCEDURE [DBO].[usp_GetAllVendorsSummary]
+GO
+DROP FUNCTION [dbo].[GenerateComplaintID]
+GO
+DROP PROCEDURE [dbo].[usp_AddComplaint]
+GO
+DROP PROCEDURE [dbo].[usp_AddComplaintChat]
+GO
+DROP PROCEDURE [dbo].[usp_GetCustomerComplaints]
+GO
+DROP PROCEDURE [dbo].[usp_GetComplaints]
