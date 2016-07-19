@@ -2496,3 +2496,22 @@ SELECT [GCMID]
   FROM [dbo].[GCM_USERS]
 END
 GO
+
+CREATE PROCEDURE [dbo].[usp_GetGCMUserDetails]
+(
+  @pEmailAddress VARCHAR(max)
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+SELECT [GCMID]
+      ,[GCMREGID]
+      ,[NAME]
+      ,[EMAILADDRESS]
+  FROM [dbo].[GCM_USERS] where EMAILADDRESS=@pEmailAddress
+END
+
+GO
