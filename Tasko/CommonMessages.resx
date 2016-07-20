@@ -267,4 +267,7 @@
   <data name="USERS_NOT_FOUND" xml:space="preserve">
     <value>Users not found</value>
   </data>
+  <data name="PHONE_NUMEBR_EXITS" xml:space="preserve">
+    <value>Phone number alreday exits.</value>
+  </data>
 </root>

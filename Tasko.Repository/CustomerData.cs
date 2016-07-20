@@ -560,8 +560,15 @@ namespace Tasko.Repository
             if (reader.Read())
             {
                 logininfo = new LoginInfo();
-                logininfo.TokenId = BinaryConverter.ConvertByteToString((byte[])reader["AUTH_CODE"]);
-                logininfo.UserId = BinaryConverter.ConvertByteToString((byte[])reader["USERID"]);
+                if (!(reader["Auth_Code"] is System.DBNull))
+                {
+                    logininfo.TokenId = BinaryConverter.ConvertByteToString((byte[])reader["AUTH_CODE"]);
+                }
+
+                if (!(reader["USERID"] is System.DBNull))
+                {
+                    logininfo.UserId = BinaryConverter.ConvertByteToString((byte[])reader["USERID"]);
+                }
                 return logininfo;
             }
 

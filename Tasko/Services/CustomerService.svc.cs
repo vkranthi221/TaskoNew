@@ -798,19 +798,23 @@ namespace Tasko.Services
                 {
                     LoginInfo loginInfo = CustomerData.AddCustomer(name, emailId, phoneNumber);
                     r.Data = loginInfo;
-                    r.Message = CommonMessages.SUCCESS;
+                    if (loginInfo != null && !string.IsNullOrEmpty(loginInfo.UserId))
+                    {
+                        r.Error = false;
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Status = 200;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Message = CommonMessages.PHONE_NUMEBR_EXITS;
+                        r.Status = 400;
+                    }
                 }
                 else
                 {
                     r.Message = CommonMessages.INVALID_AUTHCODE;
                 }
-
-                r.Error = false;
-                r.Status = 200;
-            }
-            catch (UserException userException)
-            {
-                r.Message = userException.Message;
             }
             catch (Exception ex)
             {

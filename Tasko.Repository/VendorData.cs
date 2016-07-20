@@ -282,15 +282,12 @@ namespace Tasko.Repository
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <param name="authCode">The authentication code.</param>
-        public static void Logout(string userId, string authCode)
+        public static void Logout(string userId, string tokenCode)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
-            BinaryConverter.IsValidGuid(userId, TaskoEnum.IdType.UserId);
             objParameters.Add(SqlHelper.CreateParameter("@pUserId", DbType.Binary, BinaryConverter.ConvertStringToByte(userId)));
-
-            BinaryConverter.IsValidGuid(authCode, TaskoEnum.IdType.AuthCode);
-            objParameters.Add(SqlHelper.CreateParameter("@pAuthCode", DbType.Binary, BinaryConverter.ConvertStringToByte(authCode)));
+            objParameters.Add(SqlHelper.CreateParameter("@pTokenCode", DbType.Binary, BinaryConverter.ConvertStringToByte(tokenCode)));
 
             SqlHelper.ExecuteNonQuery("dbo.usp_Logout", objParameters.ToArray());
         }

@@ -862,7 +862,7 @@ GO
 CREATE PROCEDURE [dbo].[usp_Logout]
 (
 	@pUserId binary(16),
-	@pAuthCode binary(16)
+	@pTokenCode binary(16)
 )
 AS
 BEGIN
@@ -870,8 +870,10 @@ BEGIN
 
 SET NOCOUNT ON;
 
-delete from Loggedon_user where user_id = @pUserId and AUTH_code = @pAuthCode
+delete from Loggedon_user where user_id = @pUserId and AUTH_code = @pTokenCode
 END
+
+
 
 GO
 
@@ -1433,21 +1435,27 @@ BEGIN
 SET NOCOUNT ON;
 DECLARE @customerId Binary(16)
 DECLARE @authCode Binary(16)
-SET @customerId = NEWID()
-SET @authCode = NEWID()
+declare @count int
+SELECT @count= count(1) FROM CUSTOMER WHERE MOBILE_NUMBER = @pPhoneNumber
+if (@count =0)
+BEGIN
+	SET @customerId = NEWID()
+	SET @authCode = NEWID()
 
-   INSERT INTO CUSTOMER (CUSTOMER_ID, NAME, EMAIL_ADDRESS, MOBILE_NUMBER, [STATUS]) VALUES (@customerId, @pName, @pEmailId, @pPhoneNumber, 1)
-   INSERT INTO LOGGEDON_USER VALUES(@customerId, @authCode)
+	   INSERT INTO CUSTOMER (CUSTOMER_ID, NAME, EMAIL_ADDRESS, MOBILE_NUMBER) VALUES (@customerId, @pName, @pEmailId, @pPhoneNumber)
+	   INSERT INTO LOGGEDON_USER VALUES(@customerId, @authCode)
 
-	IF EXISTS (Select CUSTOMER_ID FROM dbo.CUSTOMER WHERE CUSTOMER_ID = @customerId)
-	  BEGIN   
-	    DECLARE @pComment nvarchar(max)
-		SET @pComment = CONCAT('Customer ', @pName, ' registered.')
-		EXEC [dbo].[usp_AddActivity] 'CUSTOMER', @customerId, null, null, @pComment
-      END
+		IF EXISTS (Select CUSTOMER_ID FROM dbo.CUSTOMER WHERE CUSTOMER_ID = @customerId)
+		  BEGIN   
+			DECLARE @pComment nvarchar(max)
+			SET @pComment = CONCAT('Customer ', @pName, ' registered.')
+			EXEC [dbo].[usp_AddActivity] 'CUSTOMER', @customerId, null, null, @pComment
+		  END
+END
    SELECT @customerId as USERID, @authCode as AUTH_CODE
 
 END
+
 GO
 
 CREATE PROCEDURE [dbo].[usp_CustomerLoginValidateOTP]

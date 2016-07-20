@@ -430,6 +430,15 @@ namespace Tasko {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Phone number alreday exits..
+        /// </summary>
+        internal static string PHONE_NUMEBR_EXITS {
+            get {
+                return ResourceManager.GetString("PHONE_NUMEBR_EXITS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to delete the selected service, as this service is in use..
         /// </summary>
         internal static string SERVICE_IN_USE {
