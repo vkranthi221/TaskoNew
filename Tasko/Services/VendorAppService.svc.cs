@@ -632,7 +632,7 @@ namespace Tasko.Services
             return r;
         }
 
-        public Response UpdateVendorLocation(string latitude, string longitude)
+        public Response UpdateVendorLocation(string latitude, string longitude, string vendorId)
         {
             Response r = new Response();
             try
@@ -640,7 +640,7 @@ namespace Tasko.Services
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                    VendorData.UpdateVendorLocation(latitude, longitude);
+                    VendorData.UpdateVendorLocation(latitude, longitude, vendorId);
 
                     r.Error = false;
                     r.Message = CommonMessages.SUCCESS;

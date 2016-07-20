@@ -2515,3 +2515,21 @@ SELECT [GCMID]
 END
 
 GO
+
+CREATE PROCEDURE [dbo].[usp_UpdateVendorLocation]
+(
+	@pLatitude nvarchar(max),
+	@pLongitude nvarchar(max),
+	@pVendorId nvarchar(max)
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+UPDATE A1 SET LONGITUDE= @pLongitude, LATITIUDE = @pLatitude FROM [ADDRESS] AS A1
+INNER JOIN VENDOR ON VENDOR_ID = @pVendorId
+
+END
+
+GO

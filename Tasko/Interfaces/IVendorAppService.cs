@@ -806,6 +806,6 @@ namespace Tasko.Interfaces
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response UpdateVendorLocation(string latitude, string longitude);
+        Response UpdateVendorLocation(string latitude, string longitude, string vendorId);
     }
 }
