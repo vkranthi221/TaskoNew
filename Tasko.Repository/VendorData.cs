@@ -484,5 +484,9 @@ namespace Tasko.Repository
 
             return gcmUser;
         }
+
+        public static void UpdateVendorLocation(string latitude, string longitude)
+        {
+        }
     }
 }
