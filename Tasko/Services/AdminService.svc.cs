@@ -31,10 +31,10 @@ namespace Tasko.Services
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                    AdminData.AddService(service);
-                    r.Error = false;
-                    r.Status = 200;
-                    r.Message = CommonMessages.SUCCESS;
+                   AdminData.AddService(service);
+                   r.Error = false;
+                   r.Status = 200;
+                   r.Message = CommonMessages.SUCCESS;
                 }
                 else
                 {
@@ -50,7 +50,7 @@ namespace Tasko.Services
                 r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
             }
 
-            return r;
+            return r;           
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Tasko.Services
                     r.Message = CommonMessages.SUCCESS;
                 }
                 else
-                {  
+                {
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
@@ -117,7 +117,7 @@ namespace Tasko.Services
                 r.Message = userException.Message;
             }
             catch (Exception ex)
-            {                
+            {
                 r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
             }
 
@@ -159,7 +159,7 @@ namespace Tasko.Services
                 r.Message = userException.Message;
             }
             catch (Exception ex)
-            {   
+            {
                 r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
             }
 
@@ -1779,9 +1779,9 @@ namespace Tasko.Services
                 return isTokenValid;
             }
 
-            //return false;
+            return false;
 
-            return true;
+            //return true;
         }
 
         private static string InternalSendNotification(string emailAddress)

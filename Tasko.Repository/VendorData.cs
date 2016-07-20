@@ -463,5 +463,30 @@ namespace Tasko.Repository
 
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendor", objParameters.ToArray());
         }
+
+        public static GcmUser GetGCMUserDetails(string emailAddress)
+        {
+            GcmUser gcmUser = null;
+            
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            objParameters.Add(SqlHelper.CreateParameter("@pEmailAddress", DbType.String, emailAddress));
+
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetGCMUserDetails", objParameters.ToArray());
+            if (reader.Read())
+            {
+                gcmUser = new GcmUser();
+                gcmUser.GcmId = BinaryConverter.ConvertByteToString((byte[])reader["GCMID"]);
+                gcmUser.GcmRegId = reader["GCMREGID"].ToString();
+                gcmUser.Name = reader["NAME"].ToString();
+                gcmUser.EmailAddress = reader["EMAILADDRESS"].ToString(); ;
+            }
+
+            return gcmUser;
+        }
+
+        public static void UpdateVendorLocation(string latitude, string longitude)
+        {
+        }
     }
 }

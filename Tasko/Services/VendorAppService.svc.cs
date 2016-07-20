@@ -632,6 +632,34 @@ namespace Tasko.Services
             return r;
         }
 
+        public Response UpdateVendorLocation(string latitude, string longitude)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    VendorData.UpdateVendorLocation(latitude, longitude);
+
+                    r.Error = false;
+                    r.Message = CommonMessages.SUCCESS;
+                    r.Status = 200;
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
         /// <summary>
         /// Validates the token.
         /// </summary>
