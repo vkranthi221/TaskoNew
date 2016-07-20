@@ -1084,7 +1084,7 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "status",
-            "description": "<p>Status {Pending, Completed}.</p>"
+            "description": "<p>Status {Pending, Completed, ALL}.</p>"
           }
         ]
       },

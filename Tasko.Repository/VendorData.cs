@@ -40,6 +40,7 @@ namespace Tasko.Repository
         public static bool ValidateAuthCode(string authCode, bool isDeleteRequired)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
+            BinaryConverter.IsValidGuid(authCode, TaskoEnum.IdType.AuthCode);
             objParameters.Add(SqlHelper.CreateParameter("@pAuthCode", DbType.Binary, BinaryConverter.ConvertStringToByte(authCode)));
             objParameters.Add(SqlHelper.CreateParameter("@pIsDeleteRequired", DbType.Boolean, isDeleteRequired));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_ValidateAuthCode", objParameters.ToArray());
@@ -61,7 +62,10 @@ namespace Tasko.Repository
         public static bool ValidateTokenCode(string tokenCode, string userId)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
+            BinaryConverter.IsValidGuid(tokenCode, TaskoEnum.IdType.TokenCode);
             objParameters.Add(SqlHelper.CreateParameter("@pTokenCode", DbType.Binary, BinaryConverter.ConvertStringToByte(tokenCode)));
+
+            BinaryConverter.IsValidGuid(userId, TaskoEnum.IdType.UserId);
             objParameters.Add(SqlHelper.CreateParameter("@pUserId", DbType.Binary, BinaryConverter.ConvertStringToByte(userId)));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_ValidateTokenCode", objParameters.ToArray());
 
@@ -84,6 +88,7 @@ namespace Tasko.Repository
             
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
+            BinaryConverter.IsValidGuid(vendorId, TaskoEnum.IdType.VendorId);
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
 
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorDetails", objParameters.ToArray());
@@ -167,6 +172,7 @@ namespace Tasko.Repository
             {
                 List<SqlParameter> objParameters = new List<SqlParameter>();
 
+                BinaryConverter.IsValidGuid(vendorService.Id, TaskoEnum.IdType.VendorServiceId);
                 objParameters.Add(SqlHelper.CreateParameter("@pVendorServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorService.Id)));
                 objParameters.Add(SqlHelper.CreateParameter("@pActivateService", DbType.Boolean, vendorService.IsActive));
                 SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendorServices", objParameters.ToArray());
@@ -183,6 +189,8 @@ namespace Tasko.Repository
             List<VendorService> vendorServices = new List<VendorService>();
 
             List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            BinaryConverter.IsValidGuid(vendorId, TaskoEnum.IdType.VendorId);
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
             DataTable datatable = SqlHelper.GetDataTable("dbo.usp_GetVendorServices", objParameters.ToArray());
             if (datatable != null && datatable.Rows.Count > 0)
@@ -215,6 +223,7 @@ namespace Tasko.Repository
             List<VendorService> vendorServices = new List<VendorService>();
 
             List<SqlParameter> objParameters = new List<SqlParameter>();
+            BinaryConverter.IsValidGuid(vendorServiceId, TaskoEnum.IdType.VendorServiceId);
             objParameters.Add(SqlHelper.CreateParameter("@pVendorServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorServiceId)));
             DataTable datatable = SqlHelper.GetDataTable("dbo.usp_GetVendorSubServices", objParameters.ToArray());
             if (datatable != null && datatable.Rows.Count > 0)
@@ -262,6 +271,7 @@ namespace Tasko.Repository
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
+            BinaryConverter.IsValidGuid(vendorId, TaskoEnum.IdType.VendorId);
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
             objParameters.Add(SqlHelper.CreateParameter("@pBaseRate", DbType.Decimal, baseRate));
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateBaseRate", objParameters.ToArray());
@@ -276,8 +286,11 @@ namespace Tasko.Repository
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
+            BinaryConverter.IsValidGuid(userId, TaskoEnum.IdType.UserId);
             objParameters.Add(SqlHelper.CreateParameter("@pUserId", DbType.Binary, BinaryConverter.ConvertStringToByte(userId)));
-            objParameters.Add(SqlHelper.CreateParameter("@pAuthCode", DbType.Binary, BinaryConverter.ConvertStringToByte(userId)));
+
+            BinaryConverter.IsValidGuid(authCode, TaskoEnum.IdType.AuthCode);
+            objParameters.Add(SqlHelper.CreateParameter("@pAuthCode", DbType.Binary, BinaryConverter.ConvertStringToByte(authCode)));
 
             SqlHelper.ExecuteNonQuery("dbo.usp_Logout", objParameters.ToArray());
         }
@@ -292,6 +305,7 @@ namespace Tasko.Repository
             List<VendorRating> vendorRatings = new List<VendorRating>();
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
+            BinaryConverter.IsValidGuid(vendorId, TaskoEnum.IdType.VendorId);
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorRatings", objParameters.ToArray());
             while (reader.Read())
@@ -322,6 +336,7 @@ namespace Tasko.Repository
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
+            BinaryConverter.IsValidGuid(vendorId, TaskoEnum.IdType.VendorId);
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorOverallRating", objParameters.ToArray());
             VendorOverallRating rating = new VendorOverallRating();
@@ -352,6 +367,7 @@ namespace Tasko.Repository
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
+            BinaryConverter.IsValidGuid(vendorId, TaskoEnum.IdType.VendorId);
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
             objParameters.Add(SqlHelper.CreateParameter("@pORDERSTATUSID", DbType.Int32, orderStatusId));
             objParameters.Add(SqlHelper.CreateParameter("@pRECORDSPERPAGE", DbType.Int32, recordsPerPage));
@@ -387,6 +403,7 @@ namespace Tasko.Repository
             List<SqlParameter> objParameters = new List<SqlParameter>();
             bool isValidOldPassword = false;
 
+            BinaryConverter.IsValidGuid(vendorId, TaskoEnum.IdType.VendorId);
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
             objParameters.Add(SqlHelper.CreateParameter("@pPassword", DbType.String, password));
             objParameters.Add(SqlHelper.CreateParameter("@pOldPassword", DbType.String, oldPassword));
@@ -409,6 +426,7 @@ namespace Tasko.Repository
                 CustomerData.UpdateAddress(vendor.AddressDetails);
             }
 
+            BinaryConverter.IsValidGuid(vendor.Id, TaskoEnum.IdType.VendorId);
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendor.Id)));
             if (!string.IsNullOrEmpty(vendor.Name))
             {

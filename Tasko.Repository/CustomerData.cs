@@ -19,8 +19,8 @@ namespace Tasko.Repository
         /// Gets the order details.
         /// </summary>
         /// <param name="orderId">The order identifier.</param>
-        /// <returns>Order details</returns>
-        public static Order GetOrderDetails(string orderId)
+        /// <returns>Order details</returns>        
+        public static Order GetOrderDetails(string orderId)               
         {
             Order objOrder = null;
             List<SqlParameter> objParameters = new List<SqlParameter>();
@@ -243,6 +243,7 @@ namespace Tasko.Repository
         public static void UpdateCustomer(Customer customer)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
+            BinaryConverter.IsValidGuid(customer.Id, TaskoEnum.IdType.CustomerId);
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customer.Id)));
             objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.String, customer.Name));
             objParameters.Add(SqlHelper.CreateParameter("@pEmailAddress", DbType.String, customer.EmailAddress));
@@ -265,6 +266,7 @@ namespace Tasko.Repository
             List<OrderSummary> customerOrders = null;
 
             List<SqlParameter> objParameters = new List<SqlParameter>();
+            BinaryConverter.IsValidGuid(customerId, TaskoEnum.IdType.CustomerId);
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
             objParameters.Add(SqlHelper.CreateParameter("@pOrderstatusId", DbType.Int16, orderStatus));
             objParameters.Add(SqlHelper.CreateParameter("@pPageNo", DbType.Int16, pageNumber));
@@ -299,6 +301,7 @@ namespace Tasko.Repository
             string addressId = AddAddress(addressInfo);
 
             List<SqlParameter> objParameters = new List<SqlParameter>();
+            BinaryConverter.IsValidGuid(customerId, TaskoEnum.IdType.CustomerId);
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
             objParameters.Add(SqlHelper.CreateParameter("@pAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(addressId)));
             SqlHelper.ExecuteNonQuery("dbo.usp_AddCustomerAddress", objParameters.ToArray());
@@ -320,6 +323,7 @@ namespace Tasko.Repository
         public static void UpdateAddress(AddressInfo addressInfo)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
+            BinaryConverter.IsValidGuid(addressInfo.AddressId, TaskoEnum.IdType.AddressId);
             objParameters.Add(SqlHelper.CreateParameter("@pAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(addressInfo.AddressId)));
             objParameters.Add(SqlHelper.CreateParameter("@pCountry", DbType.String, addressInfo.Country));
             objParameters.Add(SqlHelper.CreateParameter("@pState", DbType.String, addressInfo.State));
@@ -341,7 +345,10 @@ namespace Tasko.Repository
         public static void DeleteCustomerAddress(string customerId, string addressId)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
+            BinaryConverter.IsValidGuid(customerId, TaskoEnum.IdType.CustomerId);
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
+
+            BinaryConverter.IsValidGuid(addressId, TaskoEnum.IdType.AddressId);
             objParameters.Add(SqlHelper.CreateParameter("@pAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(addressId)));
             SqlHelper.ExecuteNonQuery("dbo.usp_DeleteCustomerAddress", objParameters.ToArray());
         }
@@ -355,6 +362,7 @@ namespace Tasko.Repository
         {
             List<AddressInfo> customerAddresses = null;
             List<SqlParameter> objParameters = new List<SqlParameter>();
+            BinaryConverter.IsValidGuid(customerId, TaskoEnum.IdType.CustomerId);
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
 
             DataTable datatable = SqlHelper.GetDataTable("dbo.usp_GetCustomerAddresses", objParameters.ToArray());
@@ -380,8 +388,13 @@ namespace Tasko.Repository
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
             objParameters.Add(SqlHelper.CreateParameter("@pOrderId", DbType.String, orderId));
+
+            BinaryConverter.IsValidGuid(vendorRating.CustomerId, TaskoEnum.IdType.CustomerId);
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorRating.CustomerId)));
+
+            BinaryConverter.IsValidGuid(vendorRating.VendorId, TaskoEnum.IdType.VendorId);
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorRating.VendorId)));
+
             objParameters.Add(SqlHelper.CreateParameter("@pServiceQuality", DbType.Decimal, vendorRating.ServiceQuality));
             objParameters.Add(SqlHelper.CreateParameter("@pPunctuality", DbType.Decimal, vendorRating.Punctuality));
             objParameters.Add(SqlHelper.CreateParameter("@pCourtesy", DbType.Decimal, vendorRating.Courtesy));
@@ -402,7 +415,10 @@ namespace Tasko.Repository
             List<SqlParameter> objParameters = new List<SqlParameter>();
             bool isFavouriteVendorAlreadySet = false;
 
+            BinaryConverter.IsValidGuid(customerId, TaskoEnum.IdType.CustomerId);
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
+
+            BinaryConverter.IsValidGuid(vendorId, TaskoEnum.IdType.VendorId);
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
             isFavouriteVendorAlreadySet = (bool)SqlHelper.ExecuteScalar("dbo.usp_SetFavoriteVendor", objParameters.ToArray());
 
@@ -419,6 +435,7 @@ namespace Tasko.Repository
             List<FavoriteVendor> favoriteVendors = null;
 
             List<SqlParameter> objParameters = new List<SqlParameter>();
+            BinaryConverter.IsValidGuid(customerId, TaskoEnum.IdType.CustomerId);
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
             DataTable datatable = SqlHelper.GetDataTable("dbo.usp_GetFavoriteVendors", objParameters.ToArray());
             if (datatable != null && datatable.Rows.Count > 0)
@@ -591,6 +608,7 @@ namespace Tasko.Repository
             Customer objCustomer = new Customer();
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
+            BinaryConverter.IsValidGuid(customerId, TaskoEnum.IdType.CustomerId);
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
 
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetCustomerDetails", objParameters.ToArray());
@@ -615,7 +633,10 @@ namespace Tasko.Repository
         public static void DeleteFavoriteVendor(string customerId, string vendorId)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
+            BinaryConverter.IsValidGuid(customerId, TaskoEnum.IdType.CustomerId);
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
+
+            BinaryConverter.IsValidGuid(vendorId, TaskoEnum.IdType.VendorId);
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
             SqlHelper.ExecuteNonQuery("dbo.usp_DeleteFavoriteVendor", objParameters.ToArray());
         }
@@ -654,6 +675,8 @@ namespace Tasko.Repository
         {
             List<Complaint> complaints = null;
             List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            BinaryConverter.IsValidGuid(customerId, TaskoEnum.IdType.CustomerId);
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
             DataTable datatable = SqlHelper.GetDataTable("dbo.usp_GetCustomerComplaints", objParameters.ToArray());
             if (datatable != null && datatable.Rows.Count > 0)

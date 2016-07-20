@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using Tasko.Common;
 using Tasko.Interfaces;
 using Tasko.Model;
 using Tasko.Repository;
@@ -53,6 +54,10 @@ namespace Tasko.Services
                     r.Status = 400;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -97,6 +102,10 @@ namespace Tasko.Services
                     r.Status = 400;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -132,6 +141,10 @@ namespace Tasko.Services
                     r.Message = CommonMessages.SERVICES_NOT_FOUND;
                     r.Status = 400;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -175,6 +188,10 @@ namespace Tasko.Services
                     r.Message = CommonMessages.VENDORS_NOT_FOUND;
                     r.Status = 400;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -222,6 +239,10 @@ namespace Tasko.Services
                     r.Status = 400;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -256,6 +277,10 @@ namespace Tasko.Services
                 {
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -306,6 +331,10 @@ namespace Tasko.Services
                     r.Status = 400;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -349,6 +378,10 @@ namespace Tasko.Services
                     r.Message = CommonMessages.CUSTOMER_DETAILS_INVALID;
                     r.Status = 400;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -396,6 +429,10 @@ namespace Tasko.Services
                     r.Status = 400;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -441,6 +478,10 @@ namespace Tasko.Services
                     r.Error = true;
                     r.Status = 400;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -488,6 +529,10 @@ namespace Tasko.Services
                 r.Error = false;
                 r.Status = 200;
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -523,6 +568,10 @@ namespace Tasko.Services
                     r.Error = true;
                     r.Status = 400;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -572,6 +621,10 @@ namespace Tasko.Services
                     r.Status = 400;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -609,6 +662,10 @@ namespace Tasko.Services
 
                 r.Error = false;
                 r.Status = 200;
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -658,6 +715,10 @@ namespace Tasko.Services
                     r.Status = 400;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -702,6 +763,10 @@ namespace Tasko.Services
                 r.Error = false;
                 r.Status = 200;
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -742,6 +807,10 @@ namespace Tasko.Services
 
                 r.Error = false;
                 r.Status = 200;
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -791,6 +860,10 @@ namespace Tasko.Services
                 r.Error = false;
                 r.Status = 200;
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -829,6 +902,10 @@ namespace Tasko.Services
                     r.Message = CommonMessages.AUTHENTICATION_FAILED;
                     r.Error = true;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -874,7 +951,10 @@ namespace Tasko.Services
                     r.Message = string.IsNullOrEmpty(r.Message) ? CommonMessages.CUSTOMER_NOT_FOUND : r.Message;
                     r.Status = 400;
                 }
-
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -919,6 +999,10 @@ namespace Tasko.Services
                     r.Status = 400;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -962,6 +1046,10 @@ namespace Tasko.Services
                 }
 
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -993,6 +1081,10 @@ namespace Tasko.Services
                     r.Error = true;
                     r.Status = 400;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -1033,6 +1125,10 @@ namespace Tasko.Services
                     r.Error = true;
                     r.Status = 400;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -1076,7 +1172,10 @@ namespace Tasko.Services
                     r.Message = string.IsNullOrEmpty(r.Message) ? CommonMessages.CUSTOMER_NOT_FOUND : r.Message;
                     r.Status = 400;
                 }
-
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
