@@ -135,5 +135,69 @@ namespace Tasko.Common
 
             return isValidGuid;
         }
+
+        /// <summary>
+        /// Determines whether [is valid unique identifier] [the specified identifier].
+        /// </summary>
+        /// <param name="Id">The identifier.</param>
+        /// <param name="IdType">Type of the identifier.</param>
+        /// <returns>
+        /// <c>true</c> if [is valid GUID] [the specified string value]; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsValidGuid(string Id, TaskoEnum.IdType IdType)
+        {
+            bool isValidGuid = true;
+            try
+            {
+                ConvertStringToByte(Id);
+            }
+            catch (Exception)
+            {
+                isValidGuid = false;
+
+                switch (IdType)
+                {
+                    case TaskoEnum.IdType.CustomerId:
+                        throw new UserException("Invalid Customer Id");
+
+                    case TaskoEnum.IdType.VendorId:
+                        throw new UserException("Invalid Vendor Id");
+
+                    case TaskoEnum.IdType.UserId:
+                        throw new UserException("Invalid User Id");
+                    
+                    case TaskoEnum.IdType.ServiceId:
+                        throw new UserException("Invalid Service Id");
+                    
+                    case TaskoEnum.IdType.ParentServiceId:
+                        throw new UserException("Invalid Parent Service Id");
+                    
+                    case TaskoEnum.IdType.VendorServiceId:
+                        throw new UserException("Invalid Vendor Service Id");
+                    
+                    case TaskoEnum.IdType.VendorAddressId:
+                        throw new UserException("Invalid Vendor Address Id");
+                    
+                    case TaskoEnum.IdType.AuthCode:
+                        throw new UserException("Invalid Auth Code");
+                    
+                    case TaskoEnum.IdType.SourceAddressId:
+                        throw new UserException("Invalid Source Address Id");
+                    
+                    case TaskoEnum.IdType.DestinationAddressId:
+                        throw new UserException("Invalid Destination Address Id");
+                    
+                    case TaskoEnum.IdType.AddressId:
+                        throw new UserException("Invalid Address Id");
+                    
+                    case TaskoEnum.IdType.TokenCode:
+                        throw new UserException("Invalid Token Code");
+                    default:
+                        break;
+                }
+            }
+
+            return isValidGuid;
+        }
     }
 }

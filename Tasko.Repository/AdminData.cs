@@ -34,15 +34,8 @@ namespace Tasko.Repository
             }
             else
             {
-                try
-                {
-                    BinaryConverter.IsValidGuid(service.ParentServiceId);
-                    objParameters.Add(SqlHelper.CreateParameter("@pParentServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(service.ParentServiceId)));
-                }
-                catch (Exception)
-                {
-                    throw new UserException("Invalid Parent Service Id");
-                }
+                BinaryConverter.IsValidGuid(service.ParentServiceId, TaskoEnum.IdType.ParentServiceId);
+                objParameters.Add(SqlHelper.CreateParameter("@pParentServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(service.ParentServiceId)));
             }
 
             objParameters.Add(SqlHelper.CreateParameter("@pStatus", DbType.Int16, service.Status));
@@ -57,16 +50,8 @@ namespace Tasko.Repository
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
-            try
-            {
-                BinaryConverter.IsValidGuid(service.Id);
-                objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(service.Id)));
-            }
-            catch (Exception)
-            {
-                throw new UserException("Invalid Service Id");
-            }
-            
+            BinaryConverter.IsValidGuid(service.Id, TaskoEnum.IdType.ServiceId);
+            objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(service.Id)));
             objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.String, service.Name));
             objParameters.Add(SqlHelper.CreateParameter("@pImageUrl", DbType.String, service.ImageURL));
             objParameters.Add(SqlHelper.CreateParameter("@pStatus", DbType.Int16, service.Status));
@@ -81,16 +66,9 @@ namespace Tasko.Repository
         public static void DisableService(string serviceId, short status)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
-            try
-            {
-                BinaryConverter.IsValidGuid(serviceId);
-                objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(serviceId)));
-            }
-            catch (Exception)
-            {
-                throw new UserException("Invalid Service Id");
-            }
             
+            BinaryConverter.IsValidGuid(serviceId, TaskoEnum.IdType.ServiceId);
+            objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(serviceId)));
             objParameters.Add(SqlHelper.CreateParameter("@pStatus", DbType.Int16, status));
             SqlHelper.ExecuteNonQuery("dbo.usp_DisableService", objParameters.ToArray());
         }
@@ -105,16 +83,9 @@ namespace Tasko.Repository
             bool isServiceInUse = false;
 
             List<SqlParameter> objParameters = new List<SqlParameter>();
-            try
-            {
-                BinaryConverter.IsValidGuid(serviceId);
-                objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(serviceId)));
-            }
-            catch (Exception)
-            {
-                throw new UserException("Invalid Service Id");
-            }
             
+            BinaryConverter.IsValidGuid(serviceId, TaskoEnum.IdType.ServiceId);
+            objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(serviceId)));            
             isServiceInUse = (bool)SqlHelper.ExecuteScalar("dbo.usp_DeleteService", objParameters.ToArray());
             return isServiceInUse;
         }
@@ -161,16 +132,8 @@ namespace Tasko.Repository
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
-            try
-            {
-                BinaryConverter.IsValidGuid(serviceId);
-                objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(serviceId)));
-            }
-            catch (Exception)
-            {
-                throw new UserException("Invalid Service Id");
-            }
-            
+            BinaryConverter.IsValidGuid(serviceId, TaskoEnum.IdType.ServiceId);
+            objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(serviceId)));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetOrdersByService", objParameters.ToArray());
             List<OrderSummary> orders = new List<OrderSummary>();
 
@@ -201,16 +164,9 @@ namespace Tasko.Repository
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
-            try
-            {
-                BinaryConverter.IsValidGuid(serviceId);
-                objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(serviceId)));
-            }
-            catch (Exception)
-            {
-                throw new UserException("Invalid Service Id");
-            }
-            
+            BinaryConverter.IsValidGuid(serviceId, TaskoEnum.IdType.ServiceId);
+            objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(serviceId)));
+
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorsByService", objParameters.ToArray());
             List<VendorSummary> vendors = new List<VendorSummary>();
 
@@ -241,16 +197,9 @@ namespace Tasko.Repository
         {
             ServiceOverview serviceOverview = null;
             List<SqlParameter> objParameters = new List<SqlParameter>();
-            try
-            {
-                BinaryConverter.IsValidGuid(serviceId);
-                objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.String, BinaryConverter.ConvertStringToByte(serviceId)));
-            }
-            catch (Exception)
-            {
-                throw new UserException("Invalid Service Id");
-            }
             
+            BinaryConverter.IsValidGuid(serviceId, TaskoEnum.IdType.ServiceId);
+            objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.String, BinaryConverter.ConvertStringToByte(serviceId)));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetServiceOverview", objParameters.ToArray());
             while (reader.Read())
             {
@@ -322,16 +271,9 @@ namespace Tasko.Repository
         {
             List<ServicesForVendor> services = new List<ServicesForVendor>();
             List<SqlParameter> objParameters = new List<SqlParameter>();
-            try
-            {
-                BinaryConverter.IsValidGuid(vendorId);
-                objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.String, BinaryConverter.ConvertStringToByte(vendorId)));
-            }
-            catch (Exception)
-            {
-                throw new UserException("Invalid Vendor Id");
-            }
             
+            BinaryConverter.IsValidGuid(vendorId, TaskoEnum.IdType.VendorId);
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.String, BinaryConverter.ConvertStringToByte(vendorId)));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetServicesForVendor", objParameters.ToArray());
             while (reader.Read())
             {
@@ -356,16 +298,9 @@ namespace Tasko.Repository
             foreach (ServicesForVendor vendorService in services)
             {
                 List<SqlParameter> objParameters = new List<SqlParameter>();
-                try
-                {
-                    BinaryConverter.IsValidGuid(vendorService.ServiceId);
-                    objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorService.ServiceId)));
-                }
-                catch (Exception)
-                {
-                    throw new UserException("Invalid Service Id");
-                }
                 
+                BinaryConverter.IsValidGuid(vendorService.ServiceId, TaskoEnum.IdType.ServiceId);
+                objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorService.ServiceId)));
                 objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
                 SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendorService", objParameters.ToArray());
             }
@@ -379,16 +314,9 @@ namespace Tasko.Repository
         public static void DeactivateAllVendorServices(string vendorId)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
-            try
-            {
-                BinaryConverter.IsValidGuid(vendorId);
-                objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
-            }
-            catch (Exception)
-            {
-                throw new UserException("Invalid Vendor Id");
-            }
             
+            BinaryConverter.IsValidGuid(vendorId, TaskoEnum.IdType.VendorId);
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
             SqlHelper.ExecuteNonQuery("dbo.usp_DeactivateVendorServices", objParameters.ToArray());
         }
 
@@ -448,17 +376,10 @@ namespace Tasko.Repository
             {
                 CustomerData.UpdateAddress(vendor.AddressDetails);
             }
-
-            try
-            {
-                BinaryConverter.IsValidGuid(vendor.Id);
-                objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendor.Id)));
-            }
-            catch (Exception)
-            {
-                throw new UserException("Invalid Vendor Id");
-            }
             
+            BinaryConverter.IsValidGuid(vendor.Id, TaskoEnum.IdType.VendorId);
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendor.Id)));
+
             if (!string.IsNullOrEmpty(vendor.Name))
             {
                 objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.String, vendor.Name));
@@ -556,16 +477,9 @@ namespace Tasko.Repository
         {
             CustomerOverview customerOverview = null;
             List<SqlParameter> objParameters = new List<SqlParameter>();
-            try
-            {
-                BinaryConverter.IsValidGuid(customerId);
-                objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.String, BinaryConverter.ConvertStringToByte(customerId)));
-            }
-            catch (Exception)
-            {
-                throw new UserException("Invalid Customer Id");
-            }
             
+            BinaryConverter.IsValidGuid(customerId, TaskoEnum.IdType.CustomerId);
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.String, BinaryConverter.ConvertStringToByte(customerId)));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetCustomerOverview", objParameters.ToArray());
             while (reader.Read())
             {
@@ -595,16 +509,8 @@ namespace Tasko.Repository
             List<CustomerRating> customerRatings = new List<CustomerRating>();
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
-            try
-            {
-                BinaryConverter.IsValidGuid(customerId);
-                objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
-            }
-            catch (Exception)
-            {
-                throw new UserException("Invalid Customer Id");
-            }
-            
+            BinaryConverter.IsValidGuid(customerId, TaskoEnum.IdType.CustomerId);
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
             objParameters.Add(SqlHelper.CreateParameter("@pNoOfRecords", DbType.Int32, noOfRecords));
             IDataReader reader = SqlHelper.GetDataReader("dbo.[usp_GetCustomerRatingForOrders]", objParameters.ToArray());
             while (reader.Read())
@@ -639,16 +545,10 @@ namespace Tasko.Repository
         public static bool ValidateAuthCode(string authCode, bool isDeleteRequired)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
-            try
-            {
-                BinaryConverter.IsValidGuid(authCode);
-                objParameters.Add(SqlHelper.CreateParameter("@pAuthCode", DbType.Binary, BinaryConverter.ConvertStringToByte(authCode)));
-            }
-            catch (Exception)
-            {
-                throw new UserException("Invalid Auth Code");
-            }
             
+            BinaryConverter.IsValidGuid(authCode, TaskoEnum.IdType.AuthCode);
+            objParameters.Add(SqlHelper.CreateParameter("@pAuthCode", DbType.Binary, BinaryConverter.ConvertStringToByte(authCode)));
+
             objParameters.Add(SqlHelper.CreateParameter("@pIsDeleteRequired", DbType.Boolean, isDeleteRequired));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_ValidateAuthCode", objParameters.ToArray());
 
@@ -673,28 +573,13 @@ namespace Tasko.Repository
             foreach (ServicesForVendor vendorService in vendorServices)
             {
                 List<SqlParameter> objParameters = new List<SqlParameter>();
-                try
-                {
-                    BinaryConverter.IsValidGuid(vendorService.ServiceId);
-                    objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorService.ServiceId)));
-                }
-                catch (Exception)
-                {
-                    throw new UserException("Invalid Service Id");
-                }
                 
+                BinaryConverter.IsValidGuid(vendorService.ServiceId, TaskoEnum.IdType.ServiceId);
+                objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorService.ServiceId)));
                 objParameters.Add(SqlHelper.CreateParameter("@pIsActive", DbType.Boolean, vendorService.IsActive));
 
-                try
-                {
-                    BinaryConverter.IsValidGuid(vendorId);
-                    objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
-                }
-                catch (Exception)
-                {
-                    throw new UserException("Invalid Vendor Id");
-                }
-                
+                BinaryConverter.IsValidGuid(vendorId, TaskoEnum.IdType.VendorId);
+                objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
                 SqlHelper.ExecuteNonQuery("dbo.usp_AddVendorService", objParameters.ToArray());
             }
         }
@@ -706,16 +591,9 @@ namespace Tasko.Repository
         private static void DeleteVendorServices(string vendorId)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
-            try
-            {
-                BinaryConverter.IsValidGuid(vendorId);
-                objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
-            }
-            catch (Exception)
-            {
-                throw new UserException("Invalid Vendor Id");
-            }
             
+            BinaryConverter.IsValidGuid(vendorId, TaskoEnum.IdType.VendorId);
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
             SqlHelper.ExecuteNonQuery("dbo.usp_DeleteVendorServices", objParameters.ToArray());
         }
         #endregion
@@ -860,16 +738,9 @@ namespace Tasko.Repository
         public static void AddPayment(Payment payment)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
-            try
-            {
-                BinaryConverter.IsValidGuid(payment.VendorId);
-                objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(payment.VendorId)));
-            }
-            catch (Exception)
-            {
-                throw new UserException("Invalid Vendor Id");
-            }
             
+            BinaryConverter.IsValidGuid(payment.VendorId, TaskoEnum.IdType.VendorId);
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(payment.VendorId)));
             objParameters.Add(SqlHelper.CreateParameter("@pDueDate", DbType.Date, Convert.ToDateTime(payment.DueDate)));
             objParameters.Add(SqlHelper.CreateParameter("@pPaidDate", DbType.Date, Convert.ToDateTime(payment.PaidDate)));
             objParameters.Add(SqlHelper.CreateParameter("@pPaidAmount", DbType.Decimal, payment.Amount));
@@ -887,16 +758,9 @@ namespace Tasko.Repository
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
             objParameters.Add(SqlHelper.CreateParameter("@pPaymentId", DbType.String, payment.PaymentId));
-            try
-            {
-                BinaryConverter.IsValidGuid(payment.VendorId);
-                objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(payment.VendorId)));
-            }
-            catch (Exception)
-            {
-                throw new UserException("Invalid Vendor Id");
-            }
             
+            BinaryConverter.IsValidGuid(payment.VendorId, TaskoEnum.IdType.VendorId);
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(payment.VendorId)));
             objParameters.Add(SqlHelper.CreateParameter("@pDueDate", DbType.Date, Convert.ToDateTime(payment.DueDate)));
             objParameters.Add(SqlHelper.CreateParameter("@pPaidDate", DbType.Date, Convert.ToDateTime(payment.PaidDate)));
             objParameters.Add(SqlHelper.CreateParameter("@pPaidAmount", DbType.Decimal, payment.Amount));
@@ -1002,16 +866,9 @@ namespace Tasko.Repository
         {
             AddressInfo vendorAddress = null;
             List<SqlParameter> objParameters = new List<SqlParameter>();
-            try
-            {
-                BinaryConverter.IsValidGuid(vendorId);
-                objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
-            }
-            catch (Exception)
-            {
-                throw new UserException("Invalid Vendor Id");
-            }
-            
+
+            BinaryConverter.IsValidGuid(vendorId, TaskoEnum.IdType.VendorId);
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorAddress", objParameters.ToArray());
 
             while (reader.Read())
@@ -1131,18 +988,9 @@ namespace Tasko.Repository
             User user = null;
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
-            try
-            {
-                BinaryConverter.IsValidGuid(userId);
-                objParameters.Add(SqlHelper.CreateParameter("@pUserId", DbType.Binary, BinaryConverter.ConvertStringToByte(userId)));
-            }
-            catch (Exception)
-            {
-                throw new UserException("Invalid User Id");
-            }            
-
+            BinaryConverter.IsValidGuid(userId, TaskoEnum.IdType.UserId);
+            objParameters.Add(SqlHelper.CreateParameter("@pUserId", DbType.Binary, BinaryConverter.ConvertStringToByte(userId)));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetUserDetails", objParameters.ToArray());
-
 
             if (reader.Read())
             {
@@ -1168,16 +1016,9 @@ namespace Tasko.Repository
         public static void DeleteUser(string userId)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
-            try
-            {
-                BinaryConverter.IsValidGuid(userId);
-                objParameters.Add(SqlHelper.CreateParameter("@pUserId", DbType.Binary, BinaryConverter.ConvertStringToByte(userId)));
-            }
-            catch (Exception)
-            {
-                throw new UserException("Invalid User Id");
-            }
             
+            BinaryConverter.IsValidGuid(userId, TaskoEnum.IdType.UserId);
+            objParameters.Add(SqlHelper.CreateParameter("@pUserId", DbType.Binary, BinaryConverter.ConvertStringToByte(userId)));
             SqlHelper.ExecuteNonQuery("dbo.usp_DeleteUser", objParameters.ToArray());
         }
 

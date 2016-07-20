@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tasko.Model
+namespace Tasko.Common
 {
     /// <summary>
     /// user exception class

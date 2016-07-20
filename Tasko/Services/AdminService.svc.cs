@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using Tasko.Common;
 using Tasko.Interfaces;
 using Tasko.Model;
 using Tasko.Repository;
@@ -1787,7 +1788,9 @@ namespace Tasko.Services
         private static string InternalSendNotification(string emailAddress)
         {
             GcmUser gcmUser = VendorData.GetGCMUserDetails("srikanth.penmetsa@gmail.com");
-            string postData = "collapse_key=score_update&time_to_live=108&delay_while_idle=1&data.message=" + "Hello" + "&data.time=" + System.DateTime.Now.ToString() + "&registration_id=" + gcmUser.GcmRegId;
+            string postData = "collapse_key=score_update&time_to_live=108&delay_while_idle=1&data.message=" + "Hello" + 
+                              "&data.time=" + System.DateTime.Now.ToString() + 
+                              "&registration_id=" + gcmUser.GcmRegId;
             // MESSAGE CONTENT
             byte[] byteArray = Encoding.UTF8.GetBytes(postData);
 

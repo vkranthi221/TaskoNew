@@ -41,7 +41,9 @@
   <ItemGroup>
     <Compile Include="BinaryConverter.cs" />
     <Compile Include="DateHelper.cs" />
+    <Compile Include="Enum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

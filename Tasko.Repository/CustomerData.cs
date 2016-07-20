@@ -82,6 +82,7 @@ namespace Tasko.Repository
             Order objOrder = null;
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
+            BinaryConverter.IsValidGuid(customerId, TaskoEnum.IdType.CustomerId);
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
             DataSet dataSet = SqlHelper.GetDataSet("dbo.usp_GetRecentOrder", objParameters.ToArray());
 
@@ -171,8 +172,13 @@ namespace Tasko.Repository
             List<ServiceVendor> serviceVendors = null;
 
             List<SqlParameter> objParameters = new List<SqlParameter>();
-            objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(serviceId)));
+            
+            BinaryConverter.IsValidGuid(customerId, TaskoEnum.IdType.CustomerId);
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
+
+            BinaryConverter.IsValidGuid(serviceId, TaskoEnum.IdType.ServiceId);
+            objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(serviceId)));
+
             DataTable datatable = SqlHelper.GetDataTable("dbo.usp_GetServiceVendors", objParameters.ToArray());
             if (datatable != null && datatable.Rows.Count > 0)
             {
@@ -216,8 +222,13 @@ namespace Tasko.Repository
             string destinationAddressId = AddAddress(order.DestinationAddress);
 
             List<SqlParameter> objParameters = new List<SqlParameter>();
+            
+            BinaryConverter.IsValidGuid(order.VendorServiceId, TaskoEnum.IdType.VendorServiceId);
             objParameters.Add(SqlHelper.CreateParameter("@pVendorServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(order.VendorServiceId)));
+            
+            BinaryConverter.IsValidGuid(order.CustomerId, TaskoEnum.IdType.CustomerId);
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(order.CustomerId)));
+            
             objParameters.Add(SqlHelper.CreateParameter("@pSourceAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(sourceAddressId)));
             objParameters.Add(SqlHelper.CreateParameter("@pDestinationAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(destinationAddressId)));
             orderId = (string)SqlHelper.ExecuteScalar("dbo.usp_ConfirmOrder", objParameters.ToArray());
