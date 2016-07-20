@@ -1044,6 +1044,50 @@ namespace Tasko.Services
         }
         #endregion
 
+        #region Maps
+        public Response GetNearbyVendors(string latitude, string longitude, string customerId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                List<Vendor> vendors = null;
+                if (isTokenValid)
+                {
+                    // write an sp to get all vendors with addressses
+                    //"https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver+BC|Seattle&destinations=San+Francisco|Victoria+BC&mode=bicycling&key=YOUR_API_KEY"
+                    //objCustomer = CustomerData.GetCustomer(customerId);
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+
+                if (vendors != null)
+                {
+                    r.Error = false;
+                    r.Message = CommonMessages.SUCCESS;
+                    r.Status = 200;
+                    r.Data = vendors;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Message = string.IsNullOrEmpty(r.Message) ? CommonMessages.CUSTOMER_NOT_FOUND : r.Message;
+                    r.Status = 400;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+        #endregion
+
         #region Private Methods
         /// <summary>
         /// Internals the get otp.
