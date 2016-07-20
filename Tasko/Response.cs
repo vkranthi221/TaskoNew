@@ -66,6 +66,7 @@ namespace Tasko
         public Response()
         {
             this.Status = 400;
+            this.Error = true;
         }
 
         /// <summary>

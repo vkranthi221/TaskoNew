@@ -1575,7 +1575,7 @@ namespace Tasko.Interfaces
          *    "Content-Type": "application/json"
          *  }
          *
-         * @apiParam {String} status Status {Pending, Completed}.
+         * @apiParam {String} status Status {Pending, Completed, ALL}.
          * 
          *
          * @apiParamExample {json} Param-Example1:
@@ -2233,7 +2233,7 @@ namespace Tasko.Interfaces
 
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response SendNotification(string apiKey, string postData);
+        Response SendNotification(string emailAddress);
 
         #endregion
     }

@@ -65,6 +65,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="User.cs" />
+    <Compile Include="UserException.cs" />
     <Compile Include="VendorDetails.cs" />
     <Compile Include="CustomerOverview.cs" />
     <Compile Include="VendorOverview.cs" />

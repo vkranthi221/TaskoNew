@@ -31,25 +31,26 @@ namespace Tasko.Services
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                   AdminData.AddService(service);
-                   r.Error = false;
-                   r.Status = 200;
-                   r.Message = CommonMessages.SUCCESS;
+                    AdminData.AddService(service);
+                    r.Error = false;
+                    r.Status = 200;
+                    r.Message = CommonMessages.SUCCESS;
                 }
                 else
                 {
-                    r.Error = true;
-                    r.Status = 400;
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
-                r.Error = true;
                 r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
             }
 
-            return r;           
+            return r;
         }
 
         /// <summary>
@@ -72,14 +73,15 @@ namespace Tasko.Services
                 }
                 else
                 {
-                    r.Error = true;
-                    r.Status = 400;
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
-                r.Error = true;
                 r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
             }
 
@@ -106,15 +108,16 @@ namespace Tasko.Services
                     r.Message = CommonMessages.SUCCESS;
                 }
                 else
-                {
-                    r.Error = true;
-                    r.Status = 400;
+                {  
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
-            catch (Exception ex)
+            catch (UserException userException)
             {
-                r.Error = true;
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {                
                 r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
             }
 
@@ -137,8 +140,6 @@ namespace Tasko.Services
                    bool isServiceInUse = AdminData.DeleteService(serviceId);
                    if (isServiceInUse)
                    {
-                       r.Error = true;
-                       r.Status = 400;
                        r.Message = CommonMessages.SERVICE_IN_USE;
                    }
                    else
@@ -150,14 +151,15 @@ namespace Tasko.Services
                 }
                 else
                 {
-                    r.Error = true;
-                    r.Status = 400;
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
-            catch (Exception ex)
+            catch (UserException userException)
             {
-                r.Error = true;
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {   
                 r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
             }
 
@@ -198,6 +200,10 @@ namespace Tasko.Services
                     r.Status = 400;
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -244,6 +250,10 @@ namespace Tasko.Services
                      r.Message = CommonMessages.INVALID_TOKEN_CODE;
                  }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -289,6 +299,10 @@ namespace Tasko.Services
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -298,64 +312,7 @@ namespace Tasko.Services
             return r;
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="serviceId"></param>
-        /// <returns></returns>
-        /// * @api {post} a1/GetServiceOverview Get Service Overview
-        /// * @apiName GetServiceOverview
-        /// * @apiGroup Admin
-        /// *
-        /// * @apiHeader {string} Token_Code Token Code
-        /// * @apiHeader {string} User_Id User Id
-        /// * @apiHeader {string} Content-Type application/json
-        /// *
-        /// * @apiHeaderExample {json} Header-Example:
-        /// *  {
-        /// *    "Token_Code": "Unique Token code that is generated after login" ,
-        /// *    "User_Id": "Logged in User ID",
-        /// *    "Content-Type": "application/json"
-        /// *  }
-        /// * @apiParam {string} serviceId Service Id.
-        /// *
-        /// * @apiParamExample {json} Param-Example:
-        /// * {
-        /// *   "serviceId":"6786E5D449D6B74396E8ADAEA1C17E37"
-        /// * }
-        /// *
-        /// * @apiSuccessExample Success-Response:
-        /// {
-        /// "Data": {
-        /// "__type": "ServiceOverview:#Tasko.Model",
-        /// "BiggestPayment": 600,
-        /// "MonthlyPayments": 3750,
-        /// "ServiceId": "43FFEE168D9E3C4B9FC28B263AA403F7",
-        /// "ServiceName": "Microwave Service",
-        /// "TotalPayments": 3750,
-        /// "WeeklyPayments": 3750
-        /// },
-        /// "Error": false,
-        /// "Message": "Success",
-        /// "Status": 200
-        /// }
-        /// * @apiError INVALID_TOKEN_CODE Invalid token code.
-        /// *
-        /// * @apiErrorExample Error-Response:
-        /// {
-        /// "Data": null,
-        /// "Error": true,
-        /// "Message": "Invalid token code",
-        /// "Status": 400
-        /// }
-        /// * @apiError NO_SERVICES_EXIST No Payments found for the selected service.
-        /// *
-        /// * @apiErrorExample Error-Response:
-        /// {
-        /// "Data": null,
-        /// "Error": true,
-        /// "Message": "No Payments found for the selected service",
-        /// "Status": 400
-        /// }
+        
         public Response GetServiceOverview(string serviceId)
         {
             Response r = new Response();
@@ -385,6 +342,10 @@ namespace Tasko.Services
                     r.Status = 400;
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -433,6 +394,10 @@ namespace Tasko.Services
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -478,6 +443,10 @@ namespace Tasko.Services
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -511,6 +480,10 @@ namespace Tasko.Services
                     r.Status = 400;
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -556,6 +529,10 @@ namespace Tasko.Services
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -596,6 +573,10 @@ namespace Tasko.Services
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -625,6 +606,10 @@ namespace Tasko.Services
                     r.Status = 400;
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -658,6 +643,10 @@ namespace Tasko.Services
                     r.Message = CommonMessages.NO_CUSTOMERS;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -687,6 +676,10 @@ namespace Tasko.Services
                     r.Status = 400;
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -726,6 +719,10 @@ namespace Tasko.Services
                 r.Error = false;
                 r.Status = 200;
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -764,6 +761,10 @@ namespace Tasko.Services
                     r.Status = 400;
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -811,6 +812,10 @@ namespace Tasko.Services
                     r.Status = 400;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -854,6 +859,10 @@ namespace Tasko.Services
                     r.Message = CommonMessages.ORDER_NOT_FOUND;
                     r.Status = 400;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -903,6 +912,10 @@ namespace Tasko.Services
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -940,6 +953,10 @@ namespace Tasko.Services
                     r.Status = 400;
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -985,6 +1002,10 @@ namespace Tasko.Services
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -1022,6 +1043,10 @@ namespace Tasko.Services
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -1055,6 +1080,10 @@ namespace Tasko.Services
                     r.Status = 400;
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -1100,6 +1129,10 @@ namespace Tasko.Services
                     r.Status = 400;
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -1148,6 +1181,10 @@ namespace Tasko.Services
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -1193,6 +1230,10 @@ namespace Tasko.Services
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -1236,6 +1277,10 @@ namespace Tasko.Services
                     r.Status = 400;
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -1282,6 +1327,10 @@ namespace Tasko.Services
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -1322,6 +1371,10 @@ namespace Tasko.Services
                     r.Status = 400;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -1361,6 +1414,10 @@ namespace Tasko.Services
                     r.Status = 400;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -1390,6 +1447,10 @@ namespace Tasko.Services
                     r.Status = 400;
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -1434,6 +1495,10 @@ namespace Tasko.Services
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -1477,6 +1542,10 @@ namespace Tasko.Services
                     ////r.Status = 400;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -1514,6 +1583,10 @@ namespace Tasko.Services
                     ////r.Message = CommonMessages.ORDER_NOT_FOUND;
                     ////r.Status = 400;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -1553,6 +1626,10 @@ namespace Tasko.Services
                     r.Error = true;
                     r.Status = 400;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -1598,6 +1675,10 @@ namespace Tasko.Services
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -1636,6 +1717,10 @@ namespace Tasko.Services
                     r.Status = 400;
                 }
             }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
             catch (Exception ex)
             {
                 r.Error = true;
@@ -1645,7 +1730,7 @@ namespace Tasko.Services
             return r;
         }
 
-        public Response SendNotification(string apiKey, string postData)
+        public Response SendNotification(string emailAddress)
         {
             Response r = new Response();
             try
@@ -1653,7 +1738,7 @@ namespace Tasko.Services
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                    InternalSendNotification(apiKey, postData);
+                    InternalSendNotification(emailAddress);
                 }
                 else
                 {
@@ -1661,6 +1746,10 @@ namespace Tasko.Services
                     r.Error = true;
                     r.Status = 400;
                 }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
             }
             catch (Exception ex)
             {
@@ -1690,14 +1779,15 @@ namespace Tasko.Services
                 return isTokenValid;
             }
 
-            return false;
+            //return false;
 
-            //return true;
+            return true;
         }
 
-        private static string InternalSendNotification(string apiKey, string postData)
+        private static string InternalSendNotification(string emailAddress)
         {
-            postData = "collapse_key=score_update&time_to_live=108&delay_while_idle=1&data.message=" + postData + "&data.time=" + System.DateTime.Now.ToString() + "&registration_id=" + "APA91bEvA_MLQBs27lR24U_dEXkBoxL5K5VL5l2BkkVoi_6axHy8tEQvEBLRZ-Vlo4FY9u6S0I5PI5EhshJ-jJ5JjgjYBhExk2kuCVa7cFC1KxNgi6QMpzu6IsClEGbbV2ZvG_-H6DC6";
+            GcmUser gcmUser = VendorData.GetGCMUserDetails("srikanth.penmetsa@gmail.com");
+            string postData = "collapse_key=score_update&time_to_live=108&delay_while_idle=1&data.message=" + "Hello" + "&data.time=" + System.DateTime.Now.ToString() + "&registration_id=" + gcmUser.GcmRegId;
             // MESSAGE CONTENT
             byte[] byteArray = Encoding.UTF8.GetBytes(postData);
 
@@ -1706,8 +1796,8 @@ namespace Tasko.Services
             Request.Method = "POST";
             Request.KeepAlive = false;
             Request.ContentType = " application/x-www-form-urlencoded;charset=UTF-8";
-            Request.Headers.Add(string.Format("Authorization: key={0}", apiKey));
-            //Request.Headers.Add(string.Format("Sender: id={0}", "APA91bEvA_MLQBs27lR24U_dEXkBoxL5K5VL5l2BkkVoi_6axHy8tEQvEBLRZ-Vlo4FY9u6S0I5PI5EhshJ-jJ5JjgjYBhExk2kuCVa7cFC1KxNgi6QMpzu6IsClEGbbV2ZvG_-H6DC6"));
+            Request.Headers.Add(string.Format("Authorization: key={0}", "AIzaSyCV5RcNvGMalszD5AF0huUK6aiL4r2JkhQ"));
+            Request.Headers.Add(string.Format("Sender: id={0}", "264970905704"));
 
             Request.ContentLength = byteArray.Length;
 
