@@ -485,8 +485,14 @@ namespace Tasko.Repository
             return gcmUser;
         }
 
-        public static void UpdateVendorLocation(string latitude, string longitude)
+        public static void UpdateVendorLocation(string latitude, string longitude, string vendorId)
         {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            objParameters.Add(SqlHelper.CreateParameter("@pLatitude", DbType.String, latitude));
+            objParameters.Add(SqlHelper.CreateParameter("@pLongitude", DbType.String, longitude));
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.String, vendorId));
+            SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendorLocation", objParameters.ToArray());
         }
     }
 }
