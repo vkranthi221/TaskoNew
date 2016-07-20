@@ -1645,7 +1645,7 @@ namespace Tasko.Services
             return r;
         }
 
-        public Response SendNotification(string apiKey, string postData)
+        public Response SendNotification(string emailAddress)
         {
             Response r = new Response();
             try
@@ -1653,7 +1653,7 @@ namespace Tasko.Services
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                    InternalSendNotification(apiKey, postData);
+                    InternalSendNotification(emailAddress);
                 }
                 else
                 {
@@ -1695,9 +1695,10 @@ namespace Tasko.Services
             //return true;
         }
 
-        private static string InternalSendNotification(string apiKey, string postData)
+        private static string InternalSendNotification(string emailAddress)
         {
-            postData = "collapse_key=score_update&time_to_live=108&delay_while_idle=1&data.message=" + postData + "&data.time=" + System.DateTime.Now.ToString() + "&registration_id=" + "APA91bEvA_MLQBs27lR24U_dEXkBoxL5K5VL5l2BkkVoi_6axHy8tEQvEBLRZ-Vlo4FY9u6S0I5PI5EhshJ-jJ5JjgjYBhExk2kuCVa7cFC1KxNgi6QMpzu6IsClEGbbV2ZvG_-H6DC6";
+            GcmUser gcmUser = VendorData.GetGCMUserDetails("srikanth.penmetsa@gmail.com");
+            string postData = "collapse_key=score_update&time_to_live=108&delay_while_idle=1&data.message=" + "Hello" + "&data.time=" + System.DateTime.Now.ToString() + "&registration_id=" + gcmUser.GcmRegId;
             // MESSAGE CONTENT
             byte[] byteArray = Encoding.UTF8.GetBytes(postData);
 
@@ -1706,8 +1707,8 @@ namespace Tasko.Services
             Request.Method = "POST";
             Request.KeepAlive = false;
             Request.ContentType = " application/x-www-form-urlencoded;charset=UTF-8";
-            Request.Headers.Add(string.Format("Authorization: key={0}", apiKey));
-            //Request.Headers.Add(string.Format("Sender: id={0}", "APA91bEvA_MLQBs27lR24U_dEXkBoxL5K5VL5l2BkkVoi_6axHy8tEQvEBLRZ-Vlo4FY9u6S0I5PI5EhshJ-jJ5JjgjYBhExk2kuCVa7cFC1KxNgi6QMpzu6IsClEGbbV2ZvG_-H6DC6"));
+            Request.Headers.Add(string.Format("Authorization: key={0}", "AIzaSyCV5RcNvGMalszD5AF0huUK6aiL4r2JkhQ"));
+            Request.Headers.Add(string.Format("Sender: id={0}", "264970905704"));
 
             Request.ContentLength = byteArray.Length;
 

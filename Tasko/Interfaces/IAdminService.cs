@@ -2233,7 +2233,7 @@ namespace Tasko.Interfaces
 
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response SendNotification(string apiKey, string postData);
+        Response SendNotification(string emailAddress);
 
         #endregion
     }
