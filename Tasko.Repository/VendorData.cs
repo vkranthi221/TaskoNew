@@ -85,7 +85,7 @@ namespace Tasko.Repository
         public static Vendor GetVendor(string vendorId)
         {
             Vendor objVendor = null;
-            
+
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
             BinaryConverter.IsValidGuid(vendorId, TaskoEnum.IdType.VendorId);
@@ -114,7 +114,7 @@ namespace Tasko.Repository
                 objVendor.IsVendorVerified = Convert.ToBoolean(reader["IS_VENDOR_VERIFIED"]);
                 objVendor.VenorRefId = Convert.ToInt32(reader["VENDOR_REF_ID"]);
                 objVendor.RegisteredDate = Convert.ToDateTime(reader["REGISTERED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
-                if(reader["DATE_OF_BIRTH"] != null)
+                if (reader["DATE_OF_BIRTH"] != null)
                 {
                     objVendor.DateOfBirth = Convert.ToDateTime(reader["DATE_OF_BIRTH"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
                 }
@@ -454,7 +454,7 @@ namespace Tasko.Repository
                 objParameters.Add(SqlHelper.CreateParameter("@pEmailAddress", DbType.String, DBNull.Value));
             }
 
-            if (vendor.Gender <=1)
+            if (vendor.Gender <= 1)
             {
                 objParameters.Add(SqlHelper.CreateParameter("@pGender", DbType.String, vendor.Gender));
             }
@@ -482,7 +482,7 @@ namespace Tasko.Repository
         public static GcmUser GetGCMUserDetails(string emailAddress)
         {
             GcmUser gcmUser = null;
-            
+
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
             objParameters.Add(SqlHelper.CreateParameter("@pEmailAddress", DbType.String, emailAddress));
@@ -508,6 +508,29 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pLongitude", DbType.String, longitude));
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.String, vendorId));
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendorLocation", objParameters.ToArray());
+        }
+
+        public static List<VendorSummary> GetActiveVendorLocations()
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetActiveVendorLocations", objParameters.ToArray());
+            List<VendorSummary> vendors = new List<VendorSummary>();
+
+            while (reader.Read())
+            {
+                VendorSummary objVendor = new VendorSummary();
+                objVendor.VendorId = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
+                objVendor.UserName = reader["USERNAME"].ToString();
+                objVendor.Name = reader["NAME"].ToString();
+                objVendor.Latitude = Convert.ToDecimal(reader["LATITIUDE"]);
+                objVendor.Longitude = Convert.ToDecimal(reader["LONGITUDE"]);
+                vendors.Add(objVendor);
+            }
+
+            reader.Close();
+
+            return vendors.Count > 0 ? vendors : null;
         }
     }
 }

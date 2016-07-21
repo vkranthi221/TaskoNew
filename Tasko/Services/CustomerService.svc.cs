@@ -8,6 +8,8 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using System.Xml;
+using System.Xml.Linq;
 using Tasko.Common;
 using Tasko.Interfaces;
 using Tasko.Model;
@@ -1145,36 +1147,61 @@ namespace Tasko.Services
         #endregion
 
         #region Maps
-        public Response GetNearbyVendors(string latitude, string longitude, string customerId)
+        public Response GetNearbyVendors(string latitude, string longitude)
         {
             Response r = new Response();
             try
             {
                 bool isTokenValid = ValidateToken();
-                List<Vendor> vendors = null;
+                List<VendorSummary> vendors = null;
                 if (isTokenValid)
                 {
-                    // write an sp to get all vendors with addressses
-                    //"https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver+BC|Seattle&destinations=San+Francisco|Victoria+BC&mode=bicycling&key=YOUR_API_KEY"
-                    //objCustomer = CustomerData.GetCustomer(customerId);
+                    vendors = VendorData.GetActiveVendorLocations();
+                    if (vendors != null)
+                    {
+                        foreach (VendorSummary vendorSummary in vendors)
+                        {
+                            string requestUri = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + latitude + "," + longitude + "&destinations=" + vendorSummary.Latitude + "," + vendorSummary.Longitude;
+
+                            WebRequest request = HttpWebRequest.Create(requestUri);
+                            WebResponse response = request.GetResponse();
+                            StreamReader reader = new StreamReader(response.GetResponseStream());
+                            string responseStringData = reader.ReadToEnd();
+                            if (!string.IsNullOrEmpty(responseStringData))
+                            {
+                                XmlDocument xmlDoc = new XmlDocument();
+                                xmlDoc.LoadXml(responseStringData);
+                                string xpath = "DistanceMatrixResponse/row/element/distance/text";
+                                XmlNode distance = xmlDoc.SelectSingleNode(xpath);
+                                if (distance != null && !string.IsNullOrEmpty(distance.InnerText))
+                                {
+                                    string actualDistance = distance.InnerText.Remove(distance.InnerText.IndexOf(" "));
+                                    if (!string.IsNullOrEmpty(actualDistance))
+                                    {
+                                        vendorSummary.Distance = Convert.ToDecimal(actualDistance);
+                                    }
+                                }
+                            }
+                        }
+
+                        r.Error = false;
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Status = 200;
+                        IncomingWebRequestContext webRequest = WebOperationContext.Current.IncomingRequest;
+                        WebHeaderCollection headers = webRequest.Headers;
+                        int distanceCovered = Convert.ToInt32(headers["DistanceCovered"]);
+                        r.Data = vendors.Where(i => i.Distance < distanceCovered).ToList();
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Message = string.IsNullOrEmpty(r.Message) ? CommonMessages.VENDORS_NOT_FOUND : r.Message;
+                        r.Status = 400;
+                    }
                 }
                 else
                 {
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
-                }
-
-                if (vendors != null)
-                {
-                    r.Error = false;
-                    r.Message = CommonMessages.SUCCESS;
-                    r.Status = 200;
-                    r.Data = vendors;
-                }
-                else
-                {
-                    r.Error = true;
-                    r.Message = string.IsNullOrEmpty(r.Message) ? CommonMessages.CUSTOMER_NOT_FOUND : r.Message;
-                    r.Status = 400;
                 }
             }
             catch (UserException userException)

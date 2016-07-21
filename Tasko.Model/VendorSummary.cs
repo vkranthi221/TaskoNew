@@ -94,5 +94,14 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public double MonthlyCharge { get; set; }
+
+        [DataMember]
+        public decimal Longitude { get; set; }
+
+        [DataMember]
+        public decimal Latitude { get; set; }
+
+        [DataMember]
+        public decimal Distance { get; set; }
     }
 }

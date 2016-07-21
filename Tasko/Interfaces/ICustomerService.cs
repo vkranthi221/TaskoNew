@@ -1391,7 +1391,7 @@ namespace Tasko.Interfaces
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response GetNearbyVendors(string latitude, string longitude, string customerId);
+        Response GetNearbyVendors(string latitude, string longitude);
         #endregion
     }
 }
