@@ -1074,30 +1074,7 @@ namespace Tasko.Repository
         #endregion
 
         #region Notifications
-        public static string StoreUser(string name, string emailAddress, string gcmRedId)
-        {
-            string userId = string.Empty;
-            List<SqlParameter> objParameters = new List<SqlParameter>();
-            objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.String, name));
-            objParameters.Add(SqlHelper.CreateParameter("@pEmailAddress", DbType.String, emailAddress));
-            objParameters.Add(SqlHelper.CreateParameter("@pgcmRedId", DbType.String, gcmRedId));
-            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_StoreUser", objParameters.ToArray());
-            while (reader.Read())
-            {
-                if (reader["User_Id"] is System.DBNull)
-                {
-                    userId = string.Empty;
-                }
-                else
-                {
-                    userId = BinaryConverter.ConvertByteToString((byte[])reader["User_ID"]);
-                }
-            }
-
-            reader.Close();
-            return userId;
-        }
-
+        
         public static List<GcmUser> GetAllGCMUsers()
         {
             List<GcmUser> gcmUsers = null;
@@ -1113,7 +1090,16 @@ namespace Tasko.Repository
                     gcmUser.GcmId = BinaryConverter.ConvertByteToString((byte[])row["GCMID"]);
                     gcmUser.Name = row["NAME"].ToString();
                     gcmUser.GcmRegId = row["GCMREGID"].ToString();
-                    gcmUser.EmailAddress = row["EMAILADDRESS"].ToString();
+                    //byte[] vendorId = null;
+                    //byte.TryParse(row["VENDOR_ID"].ToString(), out vendorId);
+                    if (row["VENDOR_ID"] != null && !string.IsNullOrEmpty(row["VENDOR_ID"].ToString()))
+                    {
+                        gcmUser.VendorId = BinaryConverter.ConvertByteToString((byte[])row["VENDOR_ID"]);
+                    }
+                    else
+                    {
+                        gcmUser.CustomerId = BinaryConverter.ConvertByteToString((byte[])row["CUSTOMER_ID"]);
+                    }
                     gcmUsers.Add(gcmUser);
                 }
             }

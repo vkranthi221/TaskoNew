@@ -1643,51 +1643,7 @@ namespace Tasko.Services
         #endregion
 
         #region Notifications
-        public Response StoreUser(string name, string emailAddress, string gcmRedId)
-        {
-            Response r = new Response();
-            string userId = string.Empty;
-            try
-            {
-                bool isTokenValid = ValidateToken();
-                if (isTokenValid)
-                {
-                    userId = AdminData.StoreUser(name, emailAddress, gcmRedId);
-                    if (string.IsNullOrEmpty(userId))
-                    {
-                        r.Data = userId;
-                        r.Error = true;
-                        r.Status = 400;
-                        r.Message = CommonMessages.USER_NAME_EXISTS;
-
-                    }
-                    else
-                    {
-                        r.Error = false;
-                        r.Status = 200;
-                        r.Message = CommonMessages.SUCCESS;
-                    }
-                    r.Data = userId;
-                }
-                else
-                {
-                    r.Error = true;
-                    r.Status = 400;
-                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
-                }
-            }
-            catch (UserException userException)
-            {
-                r.Message = userException.Message;
-            }
-            catch (Exception ex)
-            {
-                r.Error = true;
-                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
-            }
-
-            return r;
-        }
+        
         public Response GetAllGCMUsers()
         {
             Response r = new Response();
@@ -1731,36 +1687,6 @@ namespace Tasko.Services
             return r;
         }
 
-        public Response SendNotification(string emailAddress)
-        {
-            Response r = new Response();
-            try
-            {
-                bool isTokenValid = ValidateToken();
-                if (isTokenValid)
-                {
-                    InternalSendNotification(emailAddress);
-                }
-                else
-                {
-                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
-                    r.Error = true;
-                    r.Status = 400;
-                }
-            }
-            catch (UserException userException)
-            {
-                r.Message = userException.Message;
-            }
-            catch (Exception ex)
-            {
-                r.Error = true;
-                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
-            }
-
-            return r;
-        }
-
         #endregion
 
         #region Private Methods
@@ -1785,58 +1711,6 @@ namespace Tasko.Services
             //return true;
         }
 
-        private static string InternalSendNotification(string emailAddress)
-        {
-            GcmUser gcmUser = VendorData.GetGCMUserDetails("srikanth.penmetsa@gmail.com");
-            string postData = "collapse_key=score_update&time_to_live=108&delay_while_idle=1&data.message=" + "Hello" + 
-                              "&data.time=" + System.DateTime.Now.ToString() + 
-                              "&registration_id=" + gcmUser.GcmRegId;
-            // MESSAGE CONTENT
-            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
-
-            // CREATE REQUEST
-            HttpWebRequest Request = (HttpWebRequest)WebRequest.Create("https://android.googleapis.com/gcm/send");
-            Request.Method = "POST";
-            Request.KeepAlive = false;
-            Request.ContentType = " application/x-www-form-urlencoded;charset=UTF-8";
-            Request.Headers.Add(string.Format("Authorization: key={0}", "AIzaSyCV5RcNvGMalszD5AF0huUK6aiL4r2JkhQ"));
-            Request.Headers.Add(string.Format("Sender: id={0}", "264970905704"));
-
-            Request.ContentLength = byteArray.Length;
-
-            Stream dataStream = Request.GetRequestStream();
-            dataStream.Write(byteArray, 0, byteArray.Length);
-            dataStream.Close();
-
-            // SEND MESSAGE
-            try
-            {
-                WebResponse Response = Request.GetResponse();
-                HttpStatusCode ResponseCode = ((HttpWebResponse)Response).StatusCode;
-                string message = string.Empty;
-                if (ResponseCode.Equals(HttpStatusCode.Unauthorized) || ResponseCode.Equals(HttpStatusCode.Forbidden))
-                {
-                    message = "Unauthorized - need new token";
-                }
-                else if (!ResponseCode.Equals(HttpStatusCode.OK))
-                {
-                    message = "Response from web service isn't OK";
-                }
-                else
-                {
-                    StreamReader Reader = new StreamReader(Response.GetResponseStream());
-                    message = Reader.ReadToEnd();
-                    Reader.Close();
-                }
-
-                return message;
-            }
-            catch (Exception e)
-            {
-            }
-
-            return "error";
-        }
         #endregion
     }
 }

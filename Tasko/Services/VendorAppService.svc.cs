@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Net;
 using System.ServiceModel.Web;
+using System.Text;
 using Tasko.Common;
 using Tasko.Interfaces;
 using Tasko.Model;
@@ -721,6 +723,84 @@ namespace Tasko.Services
             return r;
         }
 
+        #region Notifications
+        public Response StoreVendorGCMUser(string name, string vendorId, string gcmRedId)
+        {
+            Response r = new Response();
+            string userId = string.Empty;
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    userId = VendorData.StoreUser(name, vendorId, gcmRedId, string.Empty);
+                    if (string.IsNullOrEmpty(userId))
+                    {
+                        r.Data = userId;
+                        r.Error = true;
+                        r.Status = 400;
+                        r.Message = CommonMessages.USER_NAME_EXISTS;
+
+                    }
+                    else
+                    {
+                        r.Error = false;
+                        r.Status = 200;
+                        r.Message = CommonMessages.SUCCESS;
+                    }
+                    r.Data = userId;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        public Response SendVendorNotification(string vendorId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    r = InternalSendNotification(vendorId);
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                    r.Error = true;
+                    r.Status = 400;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+        #endregion
+
         /// <summary>
         /// Validates the token.
         /// </summary>
@@ -738,6 +818,69 @@ namespace Tasko.Services
             }
 
             return true;
+        }
+
+        private static Response InternalSendNotification(string vendorId)
+        {
+            Response r = new Response();
+            GcmUser gcmUser = VendorData.GetGCMUserDetails(vendorId, string.Empty);
+            string postData = "collapse_key=score_update&time_to_live=108&delay_while_idle=1&data.message=" + "Hello" +
+                              "&data.time=" + System.DateTime.Now.ToString() +
+                              "&registration_id=" + gcmUser.GcmRegId;
+            // MESSAGE CONTENT
+            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+
+            // CREATE REQUEST
+            HttpWebRequest Request = (HttpWebRequest)WebRequest.Create("https://android.googleapis.com/gcm/send");
+            Request.Method = "POST";
+            Request.KeepAlive = false;
+            Request.ContentType = " application/x-www-form-urlencoded;charset=UTF-8";
+            Request.Headers.Add(string.Format("Authorization: key={0}", "AIzaSyCV5RcNvGMalszD5AF0huUK6aiL4r2JkhQ"));
+            Request.Headers.Add(string.Format("Sender: id={0}", "264970905704"));
+
+            Request.ContentLength = byteArray.Length;
+
+            Stream dataStream = Request.GetRequestStream();
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            dataStream.Close();
+
+            // SEND MESSAGE
+            try
+            {
+                WebResponse Response = Request.GetResponse();
+                HttpStatusCode ResponseCode = ((HttpWebResponse)Response).StatusCode;
+                if (ResponseCode.Equals(HttpStatusCode.Unauthorized) || ResponseCode.Equals(HttpStatusCode.Forbidden))
+                {
+                    r.Message = "Unauthorized - need new token";
+                    r.Error = true;
+                    r.Status = 400;
+                }
+                else if (!ResponseCode.Equals(HttpStatusCode.OK))
+                {
+                    r.Message = CommonMessages.RESPONSE_WRONG;
+                    r.Error = true;
+                    r.Status = 400;
+                }
+                else
+                {
+                    StreamReader Reader = new StreamReader(Response.GetResponseStream());
+                    r.Message = CommonMessages.SUCCESS;
+                    r.Error = false;
+                    r.Status = 200;
+                    r.Data = Reader.ReadToEnd();
+                    Reader.Close();
+                }
+
+                return r;
+            }
+            catch (Exception e)
+            {
+                r.Message = "Error";
+                r.Error = true;
+                r.Status = 400;
+            }
+
+            return r;
         }
     }
 }

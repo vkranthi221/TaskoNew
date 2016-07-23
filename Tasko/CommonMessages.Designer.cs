@@ -304,6 +304,15 @@ namespace Tasko {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Nearby Vendors.
+        /// </summary>
+        internal static string NO_NEARBY_VENDORS {
+            get {
+                return ResourceManager.GetString("NO_NEARBY_VENDORS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Orders.
         /// </summary>
         internal static string NO_ORDERS {
@@ -435,6 +444,15 @@ namespace Tasko {
         internal static string PHONE_NUMEBR_EXITS {
             get {
                 return ResourceManager.GetString("PHONE_NUMEBR_EXITS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Response from web service isn&apos;t OK.
+        /// </summary>
+        internal static string RESPONSE_WRONG {
+            get {
+                return ResourceManager.GetString("RESPONSE_WRONG", resourceCulture);
             }
         }
         

@@ -499,6 +499,8 @@ namespace Tasko.Interfaces
         Response GetServiceOverview(string serviceId);
 
         #endregion
+        
+        #region Vendors
         /**
          * @api {post} a1/AddVendor Add Vendor
          * @apiName AddVendor
@@ -577,7 +579,6 @@ namespace Tasko.Interfaces
             "Status": 400
           }        
          */
-        #region Vendors
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
@@ -2223,17 +2224,52 @@ namespace Tasko.Interfaces
         #endregion
 
         #region Notifications
-        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
-           BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response StoreUser(string name, string emailAddress, string gcmRedId);
 
+        /**
+         * @api {post} a1/GetAllComplaints Get All Complaints
+         * @apiName GetAllComplaints
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": [
+                    {
+                      "__type": "GcmUser:#Tasko.Model",
+                      "CustomerId": "F3E6D9CBF8EF6A4289E1FC3509076D54",
+                      "GcmId": "995FB41FF15F374398985802AF9E0CD5",
+                      "GcmRegId": "APA91bEvA_MLQBs27lR24U_dEXkBoxL5K5VL5l2BkkVoi_6axHy8tEQvEBLRZ-Vlo4FY9u6S0I5PI5EhshJ-jJ5JjgjYBhExk2kuCVa7cFC1KxNgi6QMpzu6IsClEGbbV2ZvG_-H6DC6",
+                      "Name": "srikanth",
+                      "VendorId": null
+                    }
+                  ],
+                  "Error": false,
+                  "Message": "Success",
+                  "Status": 200
+        }
+         * @apiError USERS_NOT_FOUND Users not found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Users not found",
+          "Status": 400
+        }
+         */
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetAllGCMUsers();
-
-        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
-           BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response SendNotification(string emailAddress);
 
         #endregion
     }

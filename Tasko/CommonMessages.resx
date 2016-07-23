@@ -270,4 +270,10 @@
   <data name="PHONE_NUMEBR_EXITS" xml:space="preserve">
     <value>Phone number alreday exits.</value>
   </data>
+  <data name="NO_NEARBY_VENDORS" xml:space="preserve">
+    <value>No Nearby Vendors</value>
+  </data>
+  <data name="RESPONSE_WRONG" xml:space="preserve">
+    <value>Response from web service isn't OK</value>
+  </data>
 </root>

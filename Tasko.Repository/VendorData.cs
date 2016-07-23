@@ -479,13 +479,19 @@ namespace Tasko.Repository
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendor", objParameters.ToArray());
         }
 
-        public static GcmUser GetGCMUserDetails(string emailAddress)
+        public static GcmUser GetGCMUserDetails(string vendorId, string customerId)
         {
             GcmUser gcmUser = null;
 
             List<SqlParameter> objParameters = new List<SqlParameter>();
-
-            objParameters.Add(SqlHelper.CreateParameter("@pEmailAddress", DbType.String, emailAddress));
+            if (!string.IsNullOrEmpty(customerId))
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
+            }
 
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetGCMUserDetails", objParameters.ToArray());
             if (reader.Read())
@@ -494,7 +500,14 @@ namespace Tasko.Repository
                 gcmUser.GcmId = BinaryConverter.ConvertByteToString((byte[])reader["GCMID"]);
                 gcmUser.GcmRegId = reader["GCMREGID"].ToString();
                 gcmUser.Name = reader["NAME"].ToString();
-                gcmUser.EmailAddress = reader["EMAILADDRESS"].ToString(); ;
+                if (reader["VENDOR_ID"] != null && !string.IsNullOrEmpty(reader["VENDOR_ID"].ToString()))
+                {
+                    gcmUser.VendorId = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
+                }
+                else
+                {
+                    gcmUser.CustomerId = BinaryConverter.ConvertByteToString((byte[])reader["CUSTOMER_ID"]);
+                }
             }
 
             return gcmUser;
@@ -506,7 +519,7 @@ namespace Tasko.Repository
 
             objParameters.Add(SqlHelper.CreateParameter("@pLatitude", DbType.String, latitude));
             objParameters.Add(SqlHelper.CreateParameter("@pLongitude", DbType.String, longitude));
-            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.String, vendorId));
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.String, BinaryConverter.ConvertStringToByte(vendorId)));
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendorLocation", objParameters.ToArray());
         }
 
@@ -532,5 +545,41 @@ namespace Tasko.Repository
 
             return vendors.Count > 0 ? vendors : null;
         }
+
+        #region Notifications
+        public static string StoreUser(string name, string vendorId, string gcmRedId, string customerId)
+        {
+            string userId = string.Empty;
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            if(!string.IsNullOrEmpty(vendorId))
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pIsVendor", DbType.Boolean, true));
+                 
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pIsVendor", DbType.Boolean, false));
+            }
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.String, BinaryConverter.ConvertStringToByte(vendorId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.String, name));
+            objParameters.Add(SqlHelper.CreateParameter("@pgcmRedId", DbType.String, gcmRedId));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_StoreUser", objParameters.ToArray());
+            while (reader.Read())
+            {
+                if (reader["User_Id"] is System.DBNull)
+                {
+                    userId = string.Empty;
+                }
+                else
+                {
+                    userId = BinaryConverter.ConvertByteToString((byte[])reader["User_ID"]);
+                }
+            }
+
+            reader.Close();
+            return userId;
+        }
+        #endregion
     }
 }

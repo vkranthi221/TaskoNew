@@ -23,6 +23,9 @@ namespace Tasko.Model
         public string Name { get; set; }
 
         [DataMember]
-        public string EmailAddress { get; set; }
+        public string VendorId { get; set; }
+
+        [DataMember]
+        public string CustomerId { get; set; }
     }
 }

@@ -1388,10 +1388,170 @@ namespace Tasko.Interfaces
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetCustomerComplaints(string customerId);
 
+        #endregion
+
+        #region Maps
+
+        /**
+        * @api {post} c1/GetNearbyVendors Get Nearby Vendors
+        * @apiName GetNearbyVendors
+        * @apiGroup Customer
+        *
+        * @apiHeader {string} Token_Code Token Code
+        * @apiHeader {string} Content-Type application/json
+        * @apiHeader {string} User_Id User Id
+        * 
+        * @apiHeaderExample {json} Header-Example:
+        *  {
+        *    "Token_Code": "Unique Token code that is generated after login" ,
+        *    "Content-Type": "application/json"
+        *    "User_Id": "Logged in User ID",
+        *  }
+        *  
+        *
+        * @apiParam {string} longitude Longitude of Vendor.
+        *
+        * @apiParam {string} latitude Latitude of Vendor.
+        * 
+        * @apiParamExample {json} Param-Example:
+        *  {
+        *     "latitude": "17.3850440",
+              "longitude": "78.4866710"
+        *  }
+        *
+        * @apiSuccessExample Success-Response:
+        {
+        *  "Data": [
+        *            {
+        *              "__type": "VendorSummary:#Tasko.Model",
+        *              "Distance": 4,
+        *              "DueDate": null,
+        *              "EmailAddress": null,
+        *              "IsVendorLive": false,
+        *              "Latitude": 17.385,
+        *              "Longitude": 78.4867,
+        *              "MobileNumber": null,
+        *              "MonthlyCharge": 0,
+        *              "Name": "Srikanth",
+        *              "UniqueId": 0,
+        *              "UserName": "srikanth",
+        *              "VendorId": "F3E6D9CBF8EF6A4289E1FC3509076D54"
+        *            }
+        *          ],
+        *  "Error": false,
+        * "Message": "Success",
+        * "Status": 200
+       }
+        * @apiError NO_NEARBY_VENDORS No Nearby Vendors
+        *
+        * @apiErrorExample Error-Response:
+        {
+         "Data": null,
+         "Error": true,
+         "Message": "No Nearby Vendors",
+         "Status": 400
+       }
+        */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetNearbyVendors(string latitude, string longitude);
+        #endregion
+
+        #region Notifications
+        /**
+        * @api {post} c1/StoreCustomerGCMUser Store Vendor GCM User
+        * @apiName StoreCustomerGCMUser
+        * @apiGroup Customer
+        *
+        * @apiHeader {string} Token_Code Token Code
+        * @apiHeader {string} Content-Type application/json
+        * @apiHeader {string} User_Id User Id
+        * 
+        * @apiHeaderExample {json} Header-Example:
+        *  {
+        *    "Token_Code": "Unique Token code that is generated after login" ,
+        *    "Content-Type": "application/json"
+        *    "User_Id": "Logged in User ID",
+        *  }
+        *  
+        * @apiParam {string} customerId Customer Id. 
+        * 
+        * @apiParam {string} name GCM User Name . 
+        * 
+        * @apiParam {string} gcmRedId GCMREDID. 
+        * 
+        * @apiParamExample {json} Param-Example:
+        *  {
+        *    "customerId":"Customer Id",
+             "name": "srikanth",
+             "gcmRedId": "gcm reg Id
+        *  }
+        *
+        * @apiSuccessExample Success-Response:
+        {
+         "Data": "0C12E1E9EF74CD499EAAEDB8FFDCE74A",
+         "Error": false,
+         "Message": "Success",
+         "Status": 200
+       }
+        * @apiError USER_NAME_EXISTS User Name Exists
+        *
+        * @apiErrorExample Error-Response:
+        {
+         "Data": null,
+         "Error": true,
+         "Message": "User Name Exists",
+         "Status": 400
+       }
+        */
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+           BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response StoreCustomerGCMUser(string name, string customerId, string gcmRedId);
+
+        /**
+        * @api {post} c1/SendCustomerNotification Send Customer Notification
+        * @apiName SendCustomerNotification
+        * @apiGroup Vendor
+        *
+        * @apiHeader {string} Token_Code Token Code
+        * @apiHeader {string} Content-Type application/json
+        * @apiHeader {string} User_Id User Id
+        * 
+        * @apiHeaderExample {json} Header-Example:
+        *  {
+        *    "Token_Code": "Unique Token code that is generated after login" ,
+        *    "Content-Type": "application/json"
+        *    "User_Id": "Logged in User ID",
+        *  }
+        *  
+        * @apiParam {string} customerId Customer Id. 
+        * 
+        * @apiParamExample {json} Param-Example:
+        *  {
+        *    "customerId":"Customer Id",
+        *  }
+        *
+        * @apiSuccessExample Success-Response:
+        {
+         "Data": "",
+         "Error": false,
+         "Message": "Success",
+         "Status": 200
+       }
+        * @apiError RESPONSE_WRONG Response from web service isn't OK
+        *
+        * @apiErrorExample Error-Response:
+        {
+         "Data": null,
+         "Error": true,
+         "Message": "Response from web service isn't OK",
+         "Status": 400
+       }
+        */
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+           BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response SendCustomerNotification(string customerId);
         #endregion
     }
 }

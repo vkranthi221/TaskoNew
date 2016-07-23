@@ -1159,6 +1159,7 @@ namespace Tasko.Services
                     vendors = VendorData.GetActiveVendorLocations();
                     if (vendors != null)
                     {
+                        bool nearVendorFound = false;
                         foreach (VendorSummary vendorSummary in vendors)
                         {
                             string requestUri = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + latitude + "," + longitude + "&destinations=" + vendorSummary.Latitude + "," + vendorSummary.Longitude;
@@ -1178,19 +1179,28 @@ namespace Tasko.Services
                                     string actualDistance = distance.InnerText.Remove(distance.InnerText.IndexOf(" "));
                                     if (!string.IsNullOrEmpty(actualDistance))
                                     {
+                                        nearVendorFound = true;
                                         vendorSummary.Distance = Convert.ToDecimal(actualDistance);
                                     }
                                 }
                             }
                         }
 
-                        r.Error = false;
-                        r.Message = CommonMessages.SUCCESS;
-                        r.Status = 200;
-                        IncomingWebRequestContext webRequest = WebOperationContext.Current.IncomingRequest;
-                        WebHeaderCollection headers = webRequest.Headers;
-                        int distanceCovered = Convert.ToInt32(headers["DistanceCovered"]);
-                        r.Data = vendors.Where(i => i.Distance < distanceCovered).ToList();
+                        if (nearVendorFound)
+                        {
+                            r.Error = false;
+                            r.Message = CommonMessages.SUCCESS;
+                            r.Status = 200;
+
+                            decimal distanceCovered = Convert.ToDecimal(ConfigurationManager.AppSettings["DistanceCovered"]);
+                            r.Data = vendors.Where(i => i.Distance <= distanceCovered).ToList();
+                        }
+                        else
+                        {
+                            r.Error = true;
+                            r.Message = CommonMessages.NO_NEARBY_VENDORS;
+                            r.Status = 400;
+                        }
                     }
                     else
                     {
@@ -1202,6 +1212,82 @@ namespace Tasko.Services
                 else
                 {
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+        #endregion
+        #region Notifications
+        public Response StoreCustomerGCMUser(string name, string customerId, string gcmRedId)
+        {
+            Response r = new Response();
+            string userId = string.Empty;
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    userId = VendorData.StoreUser(name, string.Empty, gcmRedId, customerId);
+                    if (string.IsNullOrEmpty(userId))
+                    {
+                        r.Data = userId;
+                        r.Error = true;
+                        r.Status = 400;
+                        r.Message = CommonMessages.USER_NAME_EXISTS;
+
+                    }
+                    else
+                    {
+                        r.Error = false;
+                        r.Status = 200;
+                        r.Message = CommonMessages.SUCCESS;
+                    }
+                    r.Data = userId;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+        public Response SendCustomerNotification(string customerId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    r = InternalSendNotification(customerId);
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                    r.Error = true;
+                    r.Status = 400;
                 }
             }
             catch (UserException userException)
@@ -1290,6 +1376,68 @@ namespace Tasko.Services
             }
 
             return false;
+        }
+        private static Response InternalSendNotification(string customerId)
+        {
+            Response r = new Response();
+            GcmUser gcmUser = VendorData.GetGCMUserDetails(string.Empty, customerId);
+            string postData = "collapse_key=score_update&time_to_live=108&delay_while_idle=1&data.message=" + "Hello" +
+                              "&data.time=" + System.DateTime.Now.ToString() +
+                              "&registration_id=" + gcmUser.GcmRegId;
+            // MESSAGE CONTENT
+            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+
+            // CREATE REQUEST
+            HttpWebRequest Request = (HttpWebRequest)WebRequest.Create("https://android.googleapis.com/gcm/send");
+            Request.Method = "POST";
+            Request.KeepAlive = false;
+            Request.ContentType = " application/x-www-form-urlencoded;charset=UTF-8";
+            Request.Headers.Add(string.Format("Authorization: key={0}", "AIzaSyCV5RcNvGMalszD5AF0huUK6aiL4r2JkhQ"));
+            Request.Headers.Add(string.Format("Sender: id={0}", "264970905704"));
+
+            Request.ContentLength = byteArray.Length;
+
+            Stream dataStream = Request.GetRequestStream();
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            dataStream.Close();
+
+            // SEND MESSAGE
+            try
+            {
+                WebResponse Response = Request.GetResponse();
+                HttpStatusCode ResponseCode = ((HttpWebResponse)Response).StatusCode;
+                if (ResponseCode.Equals(HttpStatusCode.Unauthorized) || ResponseCode.Equals(HttpStatusCode.Forbidden))
+                {
+                    r.Message = "Unauthorized - need new token";
+                    r.Error = true;
+                    r.Status = 400;
+                }
+                else if (!ResponseCode.Equals(HttpStatusCode.OK))
+                {
+                    r.Message = CommonMessages.RESPONSE_WRONG;
+                    r.Error = true;
+                    r.Status = 400;
+                }
+                else
+                {
+                    StreamReader Reader = new StreamReader(Response.GetResponseStream());
+                    r.Message = CommonMessages.SUCCESS;
+                    r.Error = false;
+                    r.Status = 200;
+                    r.Data = Reader.ReadToEnd();
+                    Reader.Close();
+                }
+
+                return r;
+            }
+            catch (Exception e)
+            {
+                r.Message = "Error";
+                r.Error = true;
+                r.Status = 400;
+            }
+
+            return r;
         }
         #endregion
     }

@@ -507,12 +507,14 @@ GO
 SET ANSI_PADDING OFF
 GO
 
+
 CREATE TABLE [dbo].[GCM_USERS](
 	[GCMID] [binary](16) NOT NULL,
 	[GCMREGID] [varchar](max) NOT NULL,
 	[NAME] [varchar](max) NOT NULL,
-	[EMAILADDRESS] [varchar](max) NOT NULL,
+	[VENDOR_ID] [binary](16) NULL,
 	[CREATEDDATE] [datetime] NOT NULL,
+	[CUSTOMER_ID] [binary](16) NULL,
  CONSTRAINT [PK_GCM_USERS] PRIMARY KEY CLUSTERED 
 (
 	[GCMID] ASC
@@ -520,6 +522,12 @@ CREATE TABLE [dbo].[GCM_USERS](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
+
+SET ANSI_PADDING OFF
+GO
+
+
+
 
 SET ANSI_PADDING OFF
 GO
@@ -2465,9 +2473,11 @@ GO
 
 CREATE PROCEDURE [dbo].[usp_StoreUser]
 (
+  @pCustomerId binary(16),
+  @pVendorId binary(16),
   @pName varchar(MAX),
-  @pEmailAddress varchar(50),
-  @pgcmRedId nvarchar(max)
+  @pgcmRedId nvarchar(max),
+  @pIsVendor bit
 )
 
 AS
@@ -2475,13 +2485,15 @@ BEGIN
 
 declare @UserId BINARY(16)
 
-
 declare @count smallint
 select  @count= count(1) from dbo.[GCM_USERS] where NAME = @pName
 if(@count =0)
 BEGIN
 set @UserId = NEWID()
-insert into dbo.[GCM_USERS] values(@UserId,@pgcmRedId, @pName, @pEmailAddress, GetDate())
+if @pIsVendor = 1
+insert into dbo.[GCM_USERS] values(@UserId,@pgcmRedId, @pName,@pVendorId , GetDate(), null)
+else
+insert into dbo.[GCM_USERS] values(@UserId,@pgcmRedId, @pName,null , GetDate(), @pCustomerId)
 END
 
 select @UserId as user_id
@@ -2500,14 +2512,17 @@ SET NOCOUNT ON;
 SELECT [GCMID]
       ,[GCMREGID]
       ,[NAME]
-      ,[EMAILADDRESS]
+      ,[VENDOR_ID]
+	  ,[CUSTOMER_ID]
   FROM [dbo].[GCM_USERS]
 END
+
 GO
 
 CREATE PROCEDURE [dbo].[usp_GetGCMUserDetails]
 (
-  @pEmailAddress VARCHAR(max)
+  @pCustomerId binary(16) = Null,
+  @pVendorId binary(16)= Null
 )
 
 AS
@@ -2515,12 +2530,23 @@ BEGIN
 
 SET NOCOUNT ON;
 
+if @pCustomerId IS NOT Null
 SELECT [GCMID]
       ,[GCMREGID]
       ,[NAME]
-      ,[EMAILADDRESS]
-  FROM [dbo].[GCM_USERS] where EMAILADDRESS=@pEmailAddress
+      ,[CUSTOMER_ID]
+	  ,[VENDOR_ID]
+  FROM [dbo].[GCM_USERS] where CUSTOMER_ID=@pCustomerId
+
+ELSE
+SELECT [GCMID]
+      ,[GCMREGID]
+      ,[NAME]
+      ,[VENDOR_ID]
+	  ,[CUSTOMER_ID]
+  FROM [dbo].[GCM_USERS] where VENDOR_ID=@pVendorId
 END
+
 
 GO
 
@@ -2534,9 +2560,8 @@ CREATE PROCEDURE [dbo].[usp_UpdateVendorLocation]
 AS
 BEGIN
 
-SET NOCOUNT ON;
-UPDATE A1 SET LONGITUDE= @pLongitude, LATITIUDE = @pLatitude FROM [ADDRESS] AS A1
-INNER JOIN VENDOR ON VENDOR_ID = @pVendorId
+UPDATE A1 SET A1.LONGITUDE= @pLongitude, A1.LATITIUDE = @pLatitude FROM [ADDRESS] AS A1
+INNER JOIN VENDOR V ON V.ADDRESS_ID = A1.Address_ID WHERE V.VENDOR_ID = @pVendorId
 
 END
 
