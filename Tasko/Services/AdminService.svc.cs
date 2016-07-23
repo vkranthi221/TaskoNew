@@ -1471,8 +1471,8 @@ namespace Tasko.Services
                 IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
                 WebHeaderCollection headers = request.Headers;
                 string authCode = headers["Auth_Code"];
-                bool isTokenValid = AdminData.ValidateAuthCode(authCode, true);
-                if (isTokenValid)
+                bool isAuthCodeValid = AdminData.ValidateAuthCode(authCode, true);
+                if (isAuthCodeValid)
                 {
                     LoginInfo loginInfo = AdminData.LoginAdminUser(userName, password);
                     if (!string.IsNullOrEmpty(loginInfo.UserId))
@@ -1493,7 +1493,7 @@ namespace Tasko.Services
                 {
                     r.Error = true;
                     r.Status = 400;
-                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                    r.Message = CommonMessages.INVALID_AUTHCODE;
                 }
             }
             catch (UserException userException)

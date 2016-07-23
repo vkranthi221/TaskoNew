@@ -79,7 +79,7 @@ namespace Tasko.Services
                 if (!string.IsNullOrEmpty(authCode) && VendorData.ValidateAuthCode(authCode, true))
                 {
                     loginInfo = VendorData.Login(username, password, mobilenumber, userType); // 1 is vendor
-                    if (loginInfo == null)
+                    if (loginInfo.UserId == null)
                     {
                         r.Message = CommonMessages.INVALID_CREDENTIALS;
                     }
@@ -89,7 +89,7 @@ namespace Tasko.Services
                     r.Message = CommonMessages.INVALID_AUTHCODE;
                 }
 
-                if (loginInfo != null)
+                if (loginInfo != null && loginInfo.UserId != null)
                 {
                     r.Error = false;
                     r.Message = CommonMessages.LOGIN_SUCCESSFULL;
