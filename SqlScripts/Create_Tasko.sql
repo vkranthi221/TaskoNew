@@ -1450,7 +1450,7 @@ BEGIN
 	SET @customerId = NEWID()
 	SET @authCode = NEWID()
 
-	   INSERT INTO CUSTOMER (CUSTOMER_ID, NAME, EMAIL_ADDRESS, MOBILE_NUMBER) VALUES (@customerId, @pName, @pEmailId, @pPhoneNumber)
+	   INSERT INTO CUSTOMER (CUSTOMER_ID, NAME, EMAIL_ADDRESS, MOBILE_NUMBER, [STATUS]) VALUES (@customerId, @pName, @pEmailId, @pPhoneNumber, 1)
 	   INSERT INTO LOGGEDON_USER VALUES(@customerId, @authCode)
 
 		IF EXISTS (Select CUSTOMER_ID FROM dbo.CUSTOMER WHERE CUSTOMER_ID = @customerId)
