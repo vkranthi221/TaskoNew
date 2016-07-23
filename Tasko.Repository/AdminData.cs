@@ -1045,6 +1045,17 @@ namespace Tasko.Repository
             return loginInfo;
 
         }
+
+        public static void UpdateUserStatus(string userId, bool isActive)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            BinaryConverter.IsValidGuid(userId, TaskoEnum.IdType.UserId);
+            objParameters.Add(SqlHelper.CreateParameter("@pUserId", DbType.Binary, BinaryConverter.ConvertStringToByte(userId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pIsActive", DbType.Boolean, isActive));
+            SqlHelper.ExecuteNonQuery("dbo.usp_UpdateUserStatus", objParameters.ToArray());
+        }
+
         #endregion
 
         #region Complaint

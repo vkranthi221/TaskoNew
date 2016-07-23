@@ -2580,3 +2580,25 @@ END
 
 GO
 
+/****** Object:  StoredProcedure [dbo].[usp_UpdateUserStatus]    Script Date: 23-07-2016 23:20:44 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[usp_UpdateUserStatus]
+(
+	@pIsActive bit,
+	@pUserId Binary(16)
+
+)
+AS
+BEGIN
+SET NOCOUNT ON;
+   UPDATE [dbo].[USER] SET ISACTIVE = @pIsActive WHERE USER_ID =@pUserId
+
+END
+GO
+
+

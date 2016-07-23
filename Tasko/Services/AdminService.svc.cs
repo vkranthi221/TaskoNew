@@ -1510,6 +1510,38 @@ namespace Tasko.Services
         
         }
 
+        public Response UpdateUserStatus(string userId, bool isActive)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    AdminData.UpdateUserStatus(userId, isActive);
+                    r.Error = false;
+                    r.Status = 200;
+                    r.Message = CommonMessages.SUCCESS;
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+                r.Status = 400;
+                r.Error = true;
+                r.Message = CommonMessages.FAIL;
+            }
+
+            return r;
+        }
         #endregion
 
         #region Complaints

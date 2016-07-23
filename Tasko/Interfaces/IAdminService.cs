@@ -2153,6 +2153,57 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response DeleteUser(string userId);
+
+
+        /**
+        * @api {post} a1/UpdateUserStatus Updates user status
+        * @apiName UpdateUserStatus
+        * @apiGroup Admin
+        *
+        * @apiHeader {string} Token_Code Authntication code
+        * @apiHeader {string} User_Id user id
+        * @apiHeader {string} Content-Type application/json
+        * 
+        * @apiHeaderExample {json} Header-Example:
+        *  {
+        *    "Token_Code": "Token code got from login API" ,
+        *    "User_Id": "User id" ,
+        *    "Content-Type": "application/json"
+        *  }
+        *   
+        * @apiParam {String} userId user id of admin user.
+        * @apiParam {Bool} isActive whether user is active 
+        * 
+        *
+        * @apiParamExample {json} Param-Example:
+        * 
+          {
+            "userId":"EFB93DAEFECC0D409E2AC5FEB4441615",
+            "isActive":false
+          }   
+        *
+        * @apiSuccessExample Success-Response:
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+         }
+        * @apiError FAIL updating status failed
+        *
+        * @apiErrorExample Error-Response:
+        {
+         "Data": null,
+         "Error": true,
+         "Message": "Fail",
+         "Status": 400
+       }
+        */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response UpdateUserStatus(string userId, bool isActive);
+
         #endregion
 
         #region Complaints
