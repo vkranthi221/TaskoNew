@@ -879,7 +879,7 @@ namespace Tasko.Services
 
             return r;
         }
-       
+
         /// <summary>
         /// Gets the uthCode.
         /// </summary>
@@ -1018,7 +1018,7 @@ namespace Tasko.Services
 
             return r;
         }
-       
+
         #region Complaints
 
         public Response AddComplaint(Complaint complaint)
@@ -1029,8 +1029,8 @@ namespace Tasko.Services
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                   string complaintId = CustomerData.AddComplaint(complaint);
-                    if(!string.IsNullOrEmpty(complaintId))
+                    string complaintId = CustomerData.AddComplaint(complaint);
+                    if (!string.IsNullOrEmpty(complaintId))
                     {
                         r.Message = CommonMessages.SUCCESS;
                         r.Error = false;
@@ -1110,8 +1110,8 @@ namespace Tasko.Services
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                   List<Complaint> complaints = CustomerData.GetCustomerComplaints(customerId);
-                    if(complaints != null && complaints.Count >0)
+                    List<Complaint> complaints = CustomerData.GetCustomerComplaints(customerId);
+                    if (complaints != null && complaints.Count > 0)
                     {
                         r.Error = false;
                         r.Message = CommonMessages.SUCCESS;
@@ -1273,7 +1273,7 @@ namespace Tasko.Services
 
             return r;
         }
-        public Response SendCustomerNotification(string customerId)
+        public Response SendCustomerNotification(string customerId, string authKey, string senderId, string message)
         {
             Response r = new Response();
             try
@@ -1281,7 +1281,7 @@ namespace Tasko.Services
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                    r = InternalSendNotification(customerId);
+                    r = InternalSendNotification(customerId, authKey, senderId, message);
                 }
                 else
                 {
@@ -1314,7 +1314,7 @@ namespace Tasko.Services
         {
             string otp = InternalGenerateOTP(phoneNumber);
             string sURL = "http://www.metamorphsystems.com/index.php/api/bulk-sms?username=" + "taskoapp" + "&password=" + "Apple123" +
-                            "&from=" + "TTASKO" + "&to=" + phoneNumber + "&message=" + "Your OTP is "+ otp + "&sms_type=" + 2;
+                            "&from=" + "TTASKO" + "&to=" + phoneNumber + "&message=" + "Your OTP is " + otp + "&sms_type=" + 2;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(sURL);
             request.MaximumAutomaticRedirections = 4;
             request.Method = "POST";
@@ -1377,62 +1377,71 @@ namespace Tasko.Services
 
             return false;
         }
-        private static Response InternalSendNotification(string customerId)
+        private static Response InternalSendNotification(string customerId, string authKey, string senderId, string message)
         {
             Response r = new Response();
             GcmUser gcmUser = VendorData.GetGCMUserDetails(string.Empty, customerId);
-            string postData = "collapse_key=score_update&time_to_live=108&delay_while_idle=1&data.message=" + "Hello" +
-                              "&data.time=" + System.DateTime.Now.ToString() +
-                              "&registration_id=" + gcmUser.GcmRegId;
-            // MESSAGE CONTENT
-            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
-
-            // CREATE REQUEST
-            HttpWebRequest Request = (HttpWebRequest)WebRequest.Create("https://android.googleapis.com/gcm/send");
-            Request.Method = "POST";
-            Request.KeepAlive = false;
-            Request.ContentType = " application/x-www-form-urlencoded;charset=UTF-8";
-            Request.Headers.Add(string.Format("Authorization: key={0}", "AIzaSyCV5RcNvGMalszD5AF0huUK6aiL4r2JkhQ"));
-            Request.Headers.Add(string.Format("Sender: id={0}", "264970905704"));
-
-            Request.ContentLength = byteArray.Length;
-
-            Stream dataStream = Request.GetRequestStream();
-            dataStream.Write(byteArray, 0, byteArray.Length);
-            dataStream.Close();
-
-            // SEND MESSAGE
-            try
+            if (gcmUser != null)
             {
-                WebResponse Response = Request.GetResponse();
-                HttpStatusCode ResponseCode = ((HttpWebResponse)Response).StatusCode;
-                if (ResponseCode.Equals(HttpStatusCode.Unauthorized) || ResponseCode.Equals(HttpStatusCode.Forbidden))
-                {
-                    r.Message = "Unauthorized - need new token";
-                    r.Error = true;
-                    r.Status = 400;
-                }
-                else if (!ResponseCode.Equals(HttpStatusCode.OK))
-                {
-                    r.Message = CommonMessages.RESPONSE_WRONG;
-                    r.Error = true;
-                    r.Status = 400;
-                }
-                else
-                {
-                    StreamReader Reader = new StreamReader(Response.GetResponseStream());
-                    r.Message = CommonMessages.SUCCESS;
-                    r.Error = false;
-                    r.Status = 200;
-                    r.Data = Reader.ReadToEnd();
-                    Reader.Close();
-                }
+                string postData = "collapse_key=score_update&time_to_live=108&delay_while_idle=1&data.message=" + message +
+                                  "&data.time=" + System.DateTime.Now.ToString() +
+                                  "&registration_id=" + gcmUser.GcmRegId;
+                // MESSAGE CONTENT
+                byte[] byteArray = Encoding.UTF8.GetBytes(postData);
 
-                return r;
+                // CREATE REQUEST
+                HttpWebRequest Request = (HttpWebRequest)WebRequest.Create("https://android.googleapis.com/gcm/send");
+                Request.Method = "POST";
+                Request.KeepAlive = false;
+                Request.ContentType = " application/x-www-form-urlencoded;charset=UTF-8";
+                Request.Headers.Add(string.Format("Authorization: key={0}", authKey));
+                Request.Headers.Add(string.Format("Sender: id={0}", senderId));
+
+                Request.ContentLength = byteArray.Length;
+
+                Stream dataStream = Request.GetRequestStream();
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Close();
+
+                // SEND MESSAGE
+                try
+                {
+                    WebResponse Response = Request.GetResponse();
+                    HttpStatusCode ResponseCode = ((HttpWebResponse)Response).StatusCode;
+                    if (ResponseCode.Equals(HttpStatusCode.Unauthorized) || ResponseCode.Equals(HttpStatusCode.Forbidden))
+                    {
+                        r.Message = "Unauthorized - need new token";
+                        r.Error = true;
+                        r.Status = 400;
+                    }
+                    else if (!ResponseCode.Equals(HttpStatusCode.OK))
+                    {
+                        r.Message = CommonMessages.RESPONSE_WRONG;
+                        r.Error = true;
+                        r.Status = 400;
+                    }
+                    else
+                    {
+                        StreamReader Reader = new StreamReader(Response.GetResponseStream());
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Error = false;
+                        r.Status = 200;
+                        r.Data = Reader.ReadToEnd();
+                        Reader.Close();
+                    }
+
+                    return r;
+                }
+                catch (Exception e)
+                {
+                    r.Message = "Error";
+                    r.Error = true;
+                    r.Status = 400;
+                }
             }
-            catch (Exception e)
+            else
             {
-                r.Message = "Error";
+                r.Message = CommonMessages.USER_NOT_FOUND;
                 r.Error = true;
                 r.Status = 400;
             }

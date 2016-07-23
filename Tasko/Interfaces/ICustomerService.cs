@@ -1551,7 +1551,7 @@ namespace Tasko.Interfaces
         */
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response SendCustomerNotification(string customerId);
+        Response SendCustomerNotification(string customerId, string authKey, string senderId, string message);
         #endregion
     }
 }

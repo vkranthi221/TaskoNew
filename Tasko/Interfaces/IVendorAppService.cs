@@ -947,7 +947,7 @@ namespace Tasko.Interfaces
         */
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response SendVendorNotification(string vendorId);
+        Response SendVendorNotification(string vendorId, string authKey, string senderId, string message);
         #endregion
     }
 }
