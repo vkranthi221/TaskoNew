@@ -817,7 +817,7 @@ namespace Tasko.Services
                 return isTokenValid;
             }
 
-            return true;
+            return false;
         }
 
         private static Response InternalSendNotification(string vendorId, string authKey, string senderId, string message)
