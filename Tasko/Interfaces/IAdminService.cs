@@ -525,6 +525,7 @@ namespace Tasko.Interfaces
                         "AddressDetails": {
                           "Address": "plot no 404, BaghyaNagar",
                           "AddressId": null,
+                          "AddressType":"Home",
                           "City": "Hyderabad",
                           "Country": "India",
                           "Lattitude": "40",
@@ -1156,6 +1157,7 @@ namespace Tasko.Interfaces
             "DestinationAddress": {
               "Address": "plot no 404, BaghyaNagar",
               "AddressId": "8397A91B6E997F438A9D4D9D49D3E12A",
+              "AddressType":"Home",   
               "City": "Hyderabad",
               "Country": "India",
               "Lattitude": "40",
@@ -1174,6 +1176,7 @@ namespace Tasko.Interfaces
             "SourceAddress": {
               "Address": "plot no 101, vivekanandaNagar",
               "AddressId": "36F6A0E2C85F7D46AF68C4EB73148B2A",
+              "AddressType":"Home",
               "City": "Hyderabad",
               "Country": "India",
               "Lattitude": "10",
@@ -1757,6 +1760,7 @@ namespace Tasko.Interfaces
                 "VendorAddress": {
                   "Address": "plot no 404, BaghyaNagar",
                   "AddressId": "F3378ADDB47E164DB5A585CCC36FC5BA",
+                  "AddressType":"Home",
                   "City": "Hyderabad",
                   "Country": "India",
                   "Lattitude": "40",

@@ -23,6 +23,15 @@ namespace Tasko.Model
         public string AddressId { get; set; }
 
         /// <summary>
+        /// Gets or sets the type of the address.
+        /// </summary>
+        /// <value>
+        /// The type of the address.
+        /// </value>
+        [DataMember]
+        public string AddressType { get; set; }
+
+        /// <summary>
         /// Gets or sets the country.
         /// </summary>
         /// <value>

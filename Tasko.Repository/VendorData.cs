@@ -103,6 +103,7 @@ namespace Tasko.Repository
                 objVendor.AddressDetails = new AddressInfo();
                 objVendor.AddressDetails.Address = reader["VENDOR_ADDRESS"].ToString();
                 objVendor.AddressDetails.Country = reader["VENDOR_COUNTRY"].ToString();
+                objVendor.AddressDetails.AddressType = reader["VENDOR_ADDRESS_TYPE"].ToString();
                 objVendor.AddressDetails.City = reader["VENDOR_CITY"].ToString();
                 objVendor.AddressDetails.State = reader["VENDOR_STATE"].ToString();
                 objVendor.AddressDetails.Lattitude = reader["VENDOR_LATTITUDE"].ToString();

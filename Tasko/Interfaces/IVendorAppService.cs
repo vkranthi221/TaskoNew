@@ -663,6 +663,7 @@ namespace Tasko.Interfaces
             "AddressDetails": {
               "Address": "test",
               "AddressId": null,
+              "AddressType":"Home",
               "City": "Hyderabad",
               "Country": "India",
               "Lattitude": "1",

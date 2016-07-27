@@ -333,6 +333,8 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pCity", DbType.String, addressInfo.City));
             objParameters.Add(SqlHelper.CreateParameter("@pAddress", DbType.String, addressInfo.Address));
             objParameters.Add(SqlHelper.CreateParameter("@Pincode", DbType.String, addressInfo.Pincode));
+            addressInfo.AddressType = string.IsNullOrEmpty(addressInfo.AddressType) ? string.Empty : addressInfo.AddressType;
+            objParameters.Add(SqlHelper.CreateParameter("@pAddressType", DbType.String, addressInfo.AddressType));
 
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateCustomerAddress", objParameters.ToArray());
         }
@@ -466,6 +468,7 @@ namespace Tasko.Repository
         {
             AddressInfo addressInfo = new AddressInfo();
             addressInfo.AddressId = BinaryConverter.ConvertByteToString((byte[])dataRow["Address_ID"]);
+            addressInfo.AddressType = dataRow["ADDRESS_TYPE"].ToString();
             addressInfo.Country = dataRow["COUNTRY"].ToString();
             addressInfo.State = dataRow["STATE"].ToString();
             addressInfo.City = dataRow["CITY"].ToString();
@@ -496,6 +499,9 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pCity", DbType.String, addressInfo.City));
             objParameters.Add(SqlHelper.CreateParameter("@pAddress", DbType.String, addressInfo.Address));
             objParameters.Add(SqlHelper.CreateParameter("@Pincode", DbType.String, addressInfo.Pincode));
+            
+            addressInfo.AddressType = string.IsNullOrEmpty(addressInfo.AddressType) ? string.Empty : addressInfo.AddressType;
+            objParameters.Add(SqlHelper.CreateParameter("@pAddressType", DbType.String, addressInfo.AddressType));
             byte[] Address_Id = (byte[])SqlHelper.ExecuteScalar("dbo.usp_AddAddress", objParameters.ToArray());
 
             AddressId = BinaryConverter.ConvertByteToString(Address_Id);

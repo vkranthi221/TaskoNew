@@ -875,6 +875,7 @@ namespace Tasko.Repository
             {
                 vendorAddress = new AddressInfo();
                 vendorAddress.AddressId = BinaryConverter.ConvertByteToString((byte[])reader["Address_ID"]);
+                vendorAddress.AddressType = reader["ADDRESS_TYPE"].ToString();
                 vendorAddress.Country = reader["COUNTRY"].ToString();
                 vendorAddress.State = reader["STATE"].ToString();
                 vendorAddress.City = reader["CITY"].ToString();

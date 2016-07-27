@@ -41,7 +41,8 @@ namespace Tasko.Interfaces
             "DestinationAddress": {
               "Address": "plot no 404, BaghyaNagar",
               "AddressId": "8397A91B6E997F438A9D4D9D49D3E12A",
-              "City": "Hyderabad",
+              "AddressType":"Home",
+              "City": "Hyderabad",              
               "Country": "India",
               "Lattitude": "40",
               "Locality": "HMT HILLS",
@@ -59,6 +60,7 @@ namespace Tasko.Interfaces
             "SourceAddress": {
               "Address": "plot no 101, vivekanandaNagar",
               "AddressId": "36F6A0E2C85F7D46AF68C4EB73148B2A",
+              "AddressType":"Home",
               "City": "Hyderabad",
               "Country": "India",
               "Lattitude": "10",
@@ -123,6 +125,7 @@ namespace Tasko.Interfaces
                     "DestinationAddress": {
                       "Address": "plot no 404, BaghyaNagar",
                       "AddressId": "3E71FF52AF41AC448F11C6085D4BDC69",
+                      "AddressType":"Home",
                       "City": "Hyderabad",
                       "Country": "India",
                       "Lattitude": "40",
@@ -141,6 +144,7 @@ namespace Tasko.Interfaces
                     "SourceAddress": {
                       "Address": "plot no 101, vivekanandaNagar",
                       "AddressId": "97B42A2664F905489E9B2E4524EDB0E2",
+                      "AddressType":"Home",
                       "City": "Hyderabad",
                       "Country": "India",
                       "Lattitude": "10",
@@ -319,6 +323,7 @@ namespace Tasko.Interfaces
          *    "CustomerName": "srikanth test",
          *    "DestinationAddress": {
          *      "Address": "plot no 404, BaghyaNagar",
+         *      "AddressType":"Home",
          *      "City": "Hyderabad",
          *      "Country": "India",
          *      "Lattitude": "40",
@@ -335,6 +340,7 @@ namespace Tasko.Interfaces
          *    "ServiceName": "Microwave Service",
          *    "SourceAddress": {
          *      "Address": "plot no 101, vivekanandaNagar",
+         *      "AddressType":"Home",
          *      "City": "Hyderabad",
          *      "Country": "India",
          *      "Lattitude": "10",
@@ -518,6 +524,7 @@ namespace Tasko.Interfaces
          *  "addressInfo": 
          *    {
          *     "Address": "plot no 101, vivekanandaNagar",
+         *     "AddressType":"Home",
          *     "City": "Hyderabad",
          *     "Country": "India",
          *     "Lattitude": "10",
@@ -573,6 +580,7 @@ namespace Tasko.Interfaces
          *       {
          *         "Address": "plot no 101, vivekanandaNagar",
          *         "AddressId": "542875B7E7719942AA82B3EABCEE64BF",
+         *         "AddressType":"Home",
          *         "City": "Hyderabad",
          *         "Country": "India",
          *         "Lattitude": "10",
@@ -675,6 +683,8 @@ namespace Tasko.Interfaces
           * "addressInfo": 
           *  {
          *     "Address": "plot no 101, vivekanandaNagar",
+         *     "AddressId": "542875B7E7719942AA82B3EABCEE64BF",
+         *     "AddressType":"Home",
          *     "City": "Hyderabad",
          *     "Country": "India",
          *     "Lattitude": "10",
@@ -692,6 +702,7 @@ namespace Tasko.Interfaces
                       "__type": "AddressInfo:#Tasko.Model",
                       "Address": "plot no 101, vivekanandaNagar",
                       "AddressId": "B7DD393239CE854FA5596C67DBF12DD0",
+                      "AddressType":"Home",
                       "City": "Hyderabad",
                       "Country": "India",
                       "Lattitude": "10",
@@ -704,6 +715,7 @@ namespace Tasko.Interfaces
                       "__type": "AddressInfo:#Tasko.Model",
                       "Address": "plot no 101, vivekanandaNagar",
                       "AddressId": "4CDE7B6962CFEC4FB9722081E75DC21C",
+                      "AddressType":"Home",
                       "City": "Hyderabad",
                       "Country": "India",
                       "Lattitude": "10",
@@ -716,6 +728,7 @@ namespace Tasko.Interfaces
                       "__type": "AddressInfo:#Tasko.Model",
                       "Address": "plot no 101, vivekanandaNagar",
                       "AddressId": "BD0E478182ED4C4FB12CE7CD580C910A",
+                      "AddressType":"Home",
                       "City": "Hyderabad",
                       "Country": "India",
                       "Lattitude": "10",

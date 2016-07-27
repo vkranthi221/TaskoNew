@@ -44,6 +44,7 @@ CREATE TABLE [dbo].[ADDRESS](
 	[CITY] [nvarchar](max) NULL,
 	[ADDRESS] [nvarchar](max) NULL,
 	[PINCODE] [nvarchar](max) NULL,
+	[ADDRESS_TYPE] [nvarchar](max) NULL,
  CONSTRAINT [PK_ADDRESS] PRIMARY KEY CLUSTERED ([Address_ID]))
 
 GO
@@ -550,7 +551,8 @@ SELECT VD.VENDOR_ID
       ,AD.Address AS VENDOR_ADDRESS
 	  ,AD.COUNTRY AS VENDOR_COUNTRY
 	  ,AD.CITY AS VENDOR_CITY
-	  ,AD.CITY AS VENDOR_STATE
+	  ,AD.ADDRESS_TYPE AS VENDOR_ADDRESS_TYPE
+	  ,AD.[STATE] AS VENDOR_STATE
 	  ,AD.LATITIUDE AS VENDOR_LATTITUDE
 	  ,AD.LOCALITY AS VENDOR_LOCALITY
 	  ,AD.LONGITUDE AS VENDOR_LONGITUDE
@@ -598,18 +600,20 @@ SELECT ORD.ORDER_ID, Cust.CUSTOMER_ID, CUST.NAME AS CUSTOMER_NAME, VS.VENDOR_SER
 WHERE ORDER_ID = @pOrderId 
 
 ---- Source Address
- SELECT [Address_ID],[COUNTRY],[STATE],[LATITIUDE] ,[LONGITUDE] ,[LOCALITY],[CITY],[ADDRESS],[PINCODE]
+ SELECT [Address_ID],[ADDRESS_TYPE],[COUNTRY],[STATE],[LATITIUDE] ,[LONGITUDE] ,[LOCALITY],[CITY],[ADDRESS],[PINCODE]
  FROM dbo.[ADDRESS] Addr
  INNER JOIN dbo.[ORDER] ORD ON ORD.[SOURCE_ADDRESS_ID] = Addr.[Address_ID]
  WHERE ORDER_ID = @pOrderId 
 
  ---- Destination Address
- SELECT [Address_ID],[COUNTRY],[STATE],[LATITIUDE] ,[LONGITUDE] ,[LOCALITY],[CITY],[ADDRESS],[PINCODE]
+ SELECT [Address_ID],[ADDRESS_TYPE], [COUNTRY],[STATE],[LATITIUDE] ,[LONGITUDE] ,[LOCALITY],[CITY],[ADDRESS],[PINCODE]
  FROM dbo.[ADDRESS] Addr
  INNER JOIN dbo.[ORDER] ORD ON ORD.[DESTINATION_ADDRESS_ID] = Addr.[Address_ID]
  WHERE ORDER_ID = @pOrderId 
 END
+
 GO
+
 CREATE PROCEDURE [dbo].[usp_GetVendorServices]
 (
 	@pVendorId Binary(16)
@@ -970,6 +974,7 @@ SELECT [SERVICE_ID]
 END
 
 GO
+
 CREATE PROCEDURE [dbo].[usp_GetRecentOrder]
 (
 	@pCustomerId binary(16)
@@ -991,13 +996,13 @@ SELECT TOP 1 ORD.ORDER_ID, Cust.CUSTOMER_ID, CUST.NAME AS CUSTOMER_NAME, VS.VEND
 WHERE ORD.CUSTOMER_ID = @pCustomerId ORDER BY ORD.REQUESTED_DATE DESC
 
 ---- Source Address
- SELECT TOP 1 Address_ID,COUNTRY,STATE,LATITIUDE ,LONGITUDE ,LOCALITY,CITY,ADDRESS,PINCODE
+ SELECT TOP 1 Address_ID,ADDRESS_TYPE, COUNTRY,STATE,LATITIUDE ,LONGITUDE ,LOCALITY,CITY,ADDRESS,PINCODE
  FROM dbo.[ADDRESS] Addr
  INNER JOIN dbo.[ORDER] ORD ON ORD.[SOURCE_ADDRESS_ID] = Addr.[Address_ID]
  WHERE ORD.CUSTOMER_ID = @pCustomerId ORDER BY ORD.REQUESTED_DATE DESC
 
  ---- Destination Address
- SELECT TOP 1 Address_ID,COUNTRY,STATE,LATITIUDE ,LONGITUDE ,LOCALITY,CITY,ADDRESS,PINCODE
+ SELECT TOP 1 Address_ID, ADDRESS_TYPE, COUNTRY,STATE,LATITIUDE ,LONGITUDE ,LOCALITY,CITY,ADDRESS,PINCODE
  FROM dbo.[ADDRESS] Addr
  INNER JOIN dbo.[ORDER] ORD ON ORD.[DESTINATION_ADDRESS_ID] = Addr.[Address_ID]
  WHERE ORD.CUSTOMER_ID = @pCustomerId ORDER BY ORD.REQUESTED_DATE DESC
@@ -1082,7 +1087,8 @@ CREATE PROCEDURE [dbo].[usp_UpdateCustomerAddress]
   @pLocality nvarchar(max),
   @pCity nvarchar(max),
   @pAddress nvarchar(max),
-  @Pincode nvarchar(max)
+  @Pincode nvarchar(max),
+  @pAddressType nvarchar(max)
 )
 
 AS
@@ -1095,12 +1101,11 @@ SET NOCOUNT ON;
 
   UPDATE [dbo].[ADDRESS] SET COUNTRY = @pCountry, STATE= @pState, LATITIUDE = @pLatitude, 
                          LONGITUDE = @pLongitude,LOCALITY = @pLocality,CITY = @pCity,
-                         [ADDRESS]=@pAddress,PINCODE = @Pincode
+                         [ADDRESS]=@pAddress,PINCODE = @Pincode, ADDRESS_TYPE = @pAddressType
   WHERE Address_ID = @pAddressId
 
   SELECT @AddressId as ADDRESS_ID
 END
-
 
 GO
 
@@ -1132,7 +1137,7 @@ BEGIN
 
 SET NOCOUNT ON;
 
- SELECT Addr.Address_ID,COUNTRY,STATE,LATITIUDE ,LONGITUDE ,LOCALITY,CITY,ADDRESS,PINCODE
+ SELECT Addr.Address_ID,ADDRESS_TYPE, COUNTRY,STATE,LATITIUDE ,LONGITUDE ,LOCALITY,CITY,ADDRESS,PINCODE
  FROM dbo.[ADDRESS] Addr
  INNER JOIN dbo.CUSTOMER_ADDRESS CA ON CA.[ADDRESS_ID] = Addr.[Address_ID]
  WHERE CA.CUSTOMER_ID = @pCustomerId 
@@ -1149,7 +1154,8 @@ CREATE PROCEDURE [dbo].[usp_AddAddress]
   @pLocality nvarchar(max),
   @pCity nvarchar(max),
   @pAddress nvarchar(max),
-  @Pincode nvarchar(max)
+  @Pincode nvarchar(max),
+  @pAddressType nvarchar(max)
 )
 
 AS
@@ -1160,7 +1166,7 @@ SET NOCOUNT ON;
   DECLARE @AddressId binary(16)
   SET  @AddressId = newId()
 
-  INSERT INTO [dbo].[ADDRESS] VALUES(@AddressId,@pCountry,@pState,@pLatitude,@pLongitude,@pLocality,@pCity,@pAddress,@Pincode)
+  INSERT INTO [dbo].[ADDRESS] VALUES(@AddressId,@pCountry,@pState,@pLatitude,@pLongitude,@pLocality,@pCity,@pAddress,@Pincode,@pAddressType)
 
   SELECT @AddressId as ADDRESS_ID
 END
@@ -2272,11 +2278,12 @@ BEGIN
 
 SET NOCOUNT ON;
 
- SELECT Addr.ADDRESS_ID,COUNTRY,STATE,LATITIUDE ,LONGITUDE ,LOCALITY,CITY,ADDRESS,PINCODE
+ SELECT Addr.ADDRESS_ID, ADDRESS_TYPE, COUNTRY,STATE,LATITIUDE ,LONGITUDE ,LOCALITY,CITY,ADDRESS,PINCODE
  FROM dbo.[ADDRESS] Addr
  INNER JOIN dbo.VENDOR V ON V.[ADDRESS_ID] = Addr.[Address_ID]
  WHERE V.VENDOR_ID = @pVendorId 
 END
+
 GO
 
 CREATE PROCEDURE [dbo].[usp_GetAllUsers]

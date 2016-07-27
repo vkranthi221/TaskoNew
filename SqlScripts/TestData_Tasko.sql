@@ -11,9 +11,9 @@ GO
 SELECT * FROM [dbo].[ORDER_STATUS]
 GO
 
-INSERT INTO [dbo].[ADDRESS] VALUES(newId(),'India','Telangana','10','200','kphb','Hyderabad','plot no 101, vivekanandaNagar','500081')
-INSERT INTO [dbo].[ADDRESS] VALUES(newId(),'India','Telangana','40','600','HMT HILLS','Hyderabad','plot no 404, BaghyaNagar','500072')
-INSERT INTO [dbo].[ADDRESS] VALUES(newId(),'India','Telangana','80','90','DSNR','Hyderabad','plot no 202, DilsukhNagar','500068')
+INSERT INTO [dbo].[ADDRESS] VALUES(newId(),'India','Telangana','10','200','kphb','Hyderabad','plot no 101, vivekanandaNagar','500081', 'Home')
+INSERT INTO [dbo].[ADDRESS] VALUES(newId(),'India','Telangana','40','600','HMT HILLS','Hyderabad','plot no 404, BaghyaNagar','500072' , 'Home')
+INSERT INTO [dbo].[ADDRESS] VALUES(newId(),'India','Telangana','80','90','DSNR','Hyderabad','plot no 202, DilsukhNagar','500068' , 'Office')
 
 ------------ Vendor TestData -----------
 --  VendorId Should be binary not int,
