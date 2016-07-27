@@ -121,6 +121,9 @@ namespace Tasko.Repository
                 }
 
                 objVendor.Gender = (Int16)reader["GENDER"];
+                objVendor.VendorAlsoKnownAs = reader["VENDOR_ALSO_KNOWN_AS"].ToString();
+                objVendor.Experience = reader["EXPERIENCE"].ToString();
+
                 //objVendor.DataConsumption = Convert.ToInt32(reader["DATA_CONSUMPTION"]);
                 //objVendor.CallsToCustomerCare = Convert.ToInt32(reader["CALLS_TO_CUSTOMER_CARE"]);
             }
@@ -484,6 +487,25 @@ namespace Tasko.Repository
                 objParameters.Add(SqlHelper.CreateParameter("@pDOB", DbType.String, DBNull.Value));
             }
 
+            // Vendor also known as
+            if (!string.IsNullOrEmpty(vendor.VendorAlsoKnownAs))
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pVendorAlsoKnownAs", DbType.String, vendor.VendorAlsoKnownAs));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pVendorAlsoKnownAs", DbType.String, DBNull.Value));
+            }
+
+            // Experience
+            if (!string.IsNullOrEmpty(vendor.MobileNumber))
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pExperience", DbType.String, vendor.Experience));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pExperience", DbType.String, DBNull.Value));
+            }
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendor", objParameters.ToArray());
         }
 

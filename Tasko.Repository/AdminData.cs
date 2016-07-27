@@ -247,6 +247,8 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pIsBlocked", DbType.Boolean, vendor.IsBlocked));
             objParameters.Add(SqlHelper.CreateParameter("@pMonthlyCharge", DbType.Decimal, vendor.MonthlyCharge));
             objParameters.Add(SqlHelper.CreateParameter("@pIsPowerSeller", DbType.Boolean, vendor.IsPowerSeller));
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorAlsoKnownAs", DbType.String, vendor.VendorAlsoKnownAs));
+            objParameters.Add(SqlHelper.CreateParameter("@pExperience", DbType.String, vendor.Experience));
             //objParameters.Add(SqlHelper.CreateParameter("@pActiveTimePerDay", DbType.String, vendor.ActiveTimePerDay));
             //objParameters.Add(SqlHelper.CreateParameter("@pDataConsumption", DbType.Int32, vendor.DataConsumption));
             //objParameters.Add(SqlHelper.CreateParameter("@pCallsToCustomerCare", DbType.Int32, vendor.CallsToCustomerCare));

@@ -203,6 +203,12 @@ namespace Tasko.Model
         [DataMember]
         public string RegisteredDate { get; set; }
 
+        [DataMember]
+        public string VendorAlsoKnownAs { get; set; }
+
+        [DataMember]
+        public string Experience { get; set; }
+
         /// <summary>
         /// Vendor constructor
         /// </summary>

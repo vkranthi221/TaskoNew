@@ -93,6 +93,8 @@ CREATE TABLE [dbo].[VENDOR](
 	[VENDOR_REF_ID] [int] IDENTITY(1,1) NOT NULL,
 	[REGISTERED_DATE] [datetime] NOT NULL,
 	[DUE_DATE] [datetime] NULL,
+	[VENDOR_ALSO_KNOWN_AS] [nvarchar](50) NULL,
+	[EXPERIENCE] [nvarchar](50) NULL,
  CONSTRAINT [VENDOR_PK] PRIMARY KEY CLUSTERED 
 (
 	[VENDOR_ID] ASC
@@ -570,6 +572,8 @@ SELECT VD.VENDOR_ID
 	  ,VD.GENDER
 	  ,VD.REGISTERED_DATE
 	  ,VD.VENDOR_REF_ID
+	  ,VD.VENDOR_ALSO_KNOWN_AS
+	  ,VD.EXPERIENCE
 FROM [dbo].[VENDOR] VD (NOLOCK)
 INNER JOIN ADDRESS AD ON VD.ADDRESS_ID = AD.Address_ID
 WHERE VENDOR_ID = @pVendorId 
@@ -1332,7 +1336,9 @@ CREATE PROCEDURE [dbo].[usp_UpdateVendor]
 	@pMobileNumber nvarchar(max),  
 	@pEmailAddress nvarchar(max),
 	@pGender bit,
-	@pDOB datetime
+	@pDOB datetime,
+	@pVendorAlsoKnownAs nvarchar(50),
+	@pExperience nvarchar(50)
 )
 
 AS
@@ -1344,7 +1350,9 @@ UPDATE [dbo].VENDOR SET NAME = COALESCE(@pName,NAME),
 						MOBILE_NUMBER = COALESCE(@pMobileNumber,MOBILE_NUMBER),	
 						DATE_OF_BIRTH = COALESCE(@pDOB,DATE_OF_BIRTH),	
 						GENDER = COALESCE(@pGender, GENDER),
-						EMAIL_ADDRESS = COALESCE(@pEmailAddress, EMAIL_ADDRESS)
+						EMAIL_ADDRESS = COALESCE(@pEmailAddress, EMAIL_ADDRESS),
+                                                VENDOR_ALSO_KNOWN_AS = COALESCE(@pVendorAlsoKnownAs, VENDOR_ALSO_KNOWN_AS),
+						EXPERIENCE = COALESCE(@pExperience, EXPERIENCE)
 WHERE VENDOR_ID = @pVendorId
 
 END
@@ -1748,8 +1756,9 @@ CREATE PROCEDURE [dbo].[usp_AddVendor]
   @pAreOrdersBlocked bit,
   @pIsBlocked bit,
   @pIsPowerSeller bit,
-  @pMonthlyCharge decimal
-
+  @pMonthlyCharge decimal,
+  @pVendorAlsoKnownAs nvarchar(50),
+  @pExperience nvarchar(50)
   --@pActiveTimePerDay nvarchar(max),
   --@pDataConsumption int,
   --@pCallsToCustomerCare int
@@ -1766,8 +1775,8 @@ SET @vendorCount = (SELECT COUNT(*) FROM VENDOR WHERE [USER_NAME] = @PUSERNAME)
 
 if(@vendorCount = 0)
 BEGIN
-INSERT INTO VENDOR (VENDOR_ID, [USER_NAME], NAME, MOBILE_NUMBER, [PASSWORD], EMAIL_ADDRESS, ADDRESS_ID, EMPLOYEE_COUNT, BASE_RATE, IS_VENDOR_VERIFIED, IS_VENDOR_LIVE, DATE_OF_BIRTH, GENDER, PHOTO, ARE_ORDERS_BLOCKED, IS_BLOCKED,MONTHLY_CHARGE,IS_POWER_SELLER, REGISTERED_DATE) 
-    VALUES (@vendorId, @pUserName, @pName, @pMobileNumber, @pPassword, @pEmailAddress, @pAddressId, @pNoOfEmployees, @pBaseRate,   @pIsVendorVerified,@pIsVendorLive, @pDOB, @pGender, @pPhoto, @pAreOrdersBlocked,@pIsBlocked,@pMonthlyCharge,@pIsPowerSeller, GETDATE())
+INSERT INTO VENDOR (VENDOR_ID, [USER_NAME], NAME, MOBILE_NUMBER, [PASSWORD], EMAIL_ADDRESS, ADDRESS_ID, EMPLOYEE_COUNT, BASE_RATE, IS_VENDOR_VERIFIED, IS_VENDOR_LIVE, DATE_OF_BIRTH, GENDER, PHOTO, ARE_ORDERS_BLOCKED, IS_BLOCKED,MONTHLY_CHARGE,IS_POWER_SELLER, REGISTERED_DATE, VENDOR_ALSO_KNOWN_AS, EXPERIENCE) 
+    VALUES (@vendorId, @pUserName, @pName, @pMobileNumber, @pPassword, @pEmailAddress, @pAddressId, @pNoOfEmployees, @pBaseRate,   @pIsVendorVerified,@pIsVendorLive, @pDOB, @pGender, @pPhoto, @pAreOrdersBlocked,@pIsBlocked,@pMonthlyCharge,@pIsPowerSeller, GETDATE(), @pVendorAlsoKnownAs, @pExperience)
 
 	IF EXISTS (Select VENDOR_ID FROM dbo.VENDOR WHERE VENDOR_ID = @vendorId)
 	BEGIN   
