@@ -276,4 +276,7 @@
   <data name="RESPONSE_WRONG" xml:space="preserve">
     <value>Response from web service isn't OK</value>
   </data>
+  <data name="CUSTOMER_DOESNOT_EXISTS" xml:space="preserve">
+    <value>Customer does not exist</value>
+  </data>
 </root>

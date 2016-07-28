@@ -2618,3 +2618,28 @@ END
 GO
 
 
+CREATE PROCEDURE [dbo].[usp_IsCustomerExists]
+(
+@pPhoneNumber varchar(20)
+
+)
+AS
+BEGIN
+
+SET NOCOUNT ON;
+declare @count int
+declare @isValidCustomer bit
+select @count = count(1) from CUSTOMER where MOBILE_NUMBER = @pPhoneNumber
+
+if(@count >0)
+BEGIN
+set @isValidCustomer = 1
+END
+Else
+begin 
+	set @isValidCustomer =0
+end
+
+select @isValidCustomer as IsCustomerExists
+End
+

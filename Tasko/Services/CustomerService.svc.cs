@@ -685,9 +685,10 @@ namespace Tasko.Services
         /// <param name="emailId">The email identifier.</param>
         /// <param name="phoneNumber">The phone number.</param>
         /// <returns>Response Object</returns>
-        public Response GenerateOTP(string emailId, string phoneNumber)
+        public Response GenerateOTP(string emailId, string phoneNumber, bool checkUserExistence)
         {
             Response r = new Response();
+            bool isCustomerExists = false;
             try
             {
                 r.Message = CommonMessages.ERROR_GENERATING_OTP;
@@ -696,6 +697,22 @@ namespace Tasko.Services
                 string authCode = headers["Auth_Code"];
                 if (!string.IsNullOrEmpty(authCode) && VendorData.ValidateAuthCode(authCode, false))
                 {
+                    //checkuser existence
+                    if (checkUserExistence == true)
+                    {
+
+                     isCustomerExists = CustomerData.isCustomerPhoneNumberExits(phoneNumber);
+                    }
+
+                    if (checkUserExistence == true && isCustomerExists == false)
+                    {
+                        r.Message = CommonMessages.CUSTOMER_DOESNOT_EXISTS;
+                        r.Error = false;
+                        r.Status = 200;
+                        return r;
+                    }
+
+                    //if customer exists
                     string otp = InternalGetOTP(phoneNumber);
                     if (!string.IsNullOrEmpty(otp))
                     {

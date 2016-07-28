@@ -526,6 +526,25 @@ namespace Tasko.Repository
         }
 
         /// <summary>
+        /// return whether the customer phone number exists or not
+        /// </summary>
+        /// <param name="phoneNumber">phone number</param>
+        /// <returns>true or false</returns>
+        public static bool isCustomerPhoneNumberExits(string phoneNumber)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pPhoneNumber", DbType.String, phoneNumber));
+            
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_IsCustomerExists", objParameters.ToArray());
+
+            if (reader.Read())
+            {
+                return (bool)reader["IsCustomerExists"];
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Validates the otp.
         /// </summary>
         /// <param name="phoneNumber">The phone number.</param>

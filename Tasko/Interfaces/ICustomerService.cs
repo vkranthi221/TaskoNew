@@ -931,7 +931,8 @@ namespace Tasko.Interfaces
          * @apiParamExample {json} Param-Example:
          * {
          *  "emailId": "",
-         *  "phoneNumber": "9849345086"
+         *  "phoneNumber": "9849345086",
+         *  "checkUserExistence": true
          * }
          *
          * @apiSuccessExample Success-Response:
@@ -953,7 +954,7 @@ namespace Tasko.Interfaces
          */
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response GenerateOTP(string emailId, string phoneNumber);
+        Response GenerateOTP(string emailId, string phoneNumber, bool checkUserExistence);
 
         /**
          * @api {post} v1/ValidateOTP Validate OTP

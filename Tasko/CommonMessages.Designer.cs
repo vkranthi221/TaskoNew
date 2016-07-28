@@ -124,6 +124,15 @@ namespace Tasko {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customer does not exist.
+        /// </summary>
+        internal static string CUSTOMER_DOESNOT_EXISTS {
+            get {
+                return ResourceManager.GetString("CUSTOMER_DOESNOT_EXISTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customer not found.
         /// </summary>
         internal static string CUSTOMER_NOT_FOUND {
