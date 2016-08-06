@@ -224,7 +224,10 @@ namespace Tasko.Services
                 if (isTokenValid)
                 {
                     OrderId = CustomerData.ConfirmOrder(order);
-                    r = SendNotification(order, OrderId);
+                    if (!string.IsNullOrEmpty(OrderId))
+                    {
+                        r = SendNotification(order, OrderId);
+                    }
                 }
                 else
                 {
@@ -241,7 +244,11 @@ namespace Tasko.Services
                 else
                 {
                     r.Error = true;
-                    r.Message = CommonMessages.ORDER_NOT_CONFIRMED;
+                    // Added this temporarily as the error message is not shown correctly. Need to change this
+                    if (r.Message != CommonMessages.INVALID_TOKEN_CODE)
+                    {
+                        r.Message = CommonMessages.ORDER_NOT_CONFIRMED;
+                    }
                     r.Status = 400;
                 }
             }
