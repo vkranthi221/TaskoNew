@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -1460,6 +1461,49 @@ namespace Tasko.Services
                 r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
             }
 
+            return r;
+        }
+
+        /// <summary>
+        /// Gets the uthCode.
+        /// </summary>
+        /// <returns>
+        /// Response Object
+        /// </returns>
+        public Response GetAuthCode()
+        {
+            Response r = new Response();
+            try
+            {
+                IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
+                WebHeaderCollection headers = request.Headers;
+                string appId = headers["X-APIKey"];
+                if (appId == ConfigurationManager.AppSettings["AppId"])
+                {
+                    string authCode = string.Empty;
+                    authCode = VendorData.InsertAuthCode();
+                    r.Error = false;
+                    r.Message = CommonMessages.AUTHENTICATION_SUCCESSFULL;
+                    r.Status = 200;
+                    r.Data = authCode;
+                }
+                else
+                {
+                    r.Message = CommonMessages.AUTHENTICATION_FAILED;
+                    r.Error = true;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Message = CommonMessages.AUTHENTICATION_FAILED;
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+
+            }
             return r;
         }
 

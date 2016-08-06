@@ -11,8 +11,8 @@ namespace Tasko.Interfaces
     public interface IVendorAppService
     {
         /**
-         * @api {post} v1/GetAuthCode Get Auth Code
-         * @apiName GetAuthCode
+         * @api {post} v1/auth Get Auth Code
+         * @apiName auth
          * @apiGroup Vendor
          * 
          * @apiHeader {string} X-APIKey API Key

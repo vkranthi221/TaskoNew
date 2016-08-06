@@ -1102,8 +1102,8 @@ namespace Tasko.Interfaces
         Response Login(string phoneNumber, string OTP);
 
         /**
-         * @api {post} c1/GetAuthCode Get Auth Code
-         * @apiName GetAuthCode
+         * @api {post} c1/auth Get Auth Code
+         * @apiName auth
          * @apiGroup Customer
          *
          * @apiHeader {string} X-APIKey API key

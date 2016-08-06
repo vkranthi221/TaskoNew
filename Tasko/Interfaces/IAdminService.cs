@@ -867,7 +867,8 @@ namespace Tasko.Interfaces
 
         #region Customers
         /**
-        * @api {post} a1/GetAllCustomersByStatus Get all the customers for a specified status. 0 - All, 1- Online, 2- Offline, 3- Blocked
+        * @api {post} a1/GetAllCustomersByStatus Get All Customers By Status
+        * @apiDescription Get the customers details based on the given status. The possible statuses are 0 - All, 1- Online, 2- Offline, 3- Blocked
         * @apiName GetAllCustomersByStatus
         * @apiGroup Admin
         *
@@ -1872,6 +1873,44 @@ namespace Tasko.Interfaces
         #endregion
 
         #region Users
+
+        /**
+         * @api {post} a1/auth Get Auth Code
+         * @apiName auth
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} X-APIKey API key
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "X-APIKey": "API Key" ,
+         *    "Content-Type": "application/json"
+         *  }
+         *   
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": "API key comes here",
+          "Error": false,
+          "Message": "Authentication Successful",
+          "Status": 200
+        }
+         * @apiError Authentication failed.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Authentication failed",
+          "Status": 400
+        }
+         */
+        [OperationContract]
+        [FaultContract(typeof(ErrorDetails))]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate = "auth")]
+        Response GetAuthCode();
 
         /**
          * @api {post} a1/Login Login 

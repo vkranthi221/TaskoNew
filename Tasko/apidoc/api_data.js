@@ -185,98 +185,6 @@ define({ "api": [
   },
   {
     "type": "post",
-    "url": "a1/GetUserDetails",
-    "title": "Get user details",
-    "name": "AddUser",
-    "group": "Admin",
-    "header": {
-      "fields": {
-        "Header": [
-          {
-            "group": "Header",
-            "type": "string",
-            "optional": false,
-            "field": "Token_Code",
-            "description": "<p>Authntication code</p>"
-          },
-          {
-            "group": "Header",
-            "type": "string",
-            "optional": false,
-            "field": "User_Id",
-            "description": "<p>user id</p>"
-          },
-          {
-            "group": "Header",
-            "type": "string",
-            "optional": false,
-            "field": "Content-Type",
-            "description": "<p>application/json</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Header-Example:",
-          "content": "{\n  \"Token_Code\": \"Token code got from login API\" ,\n  \"User_Id\": \"User id\" ,\n  \"Content-Type\": \"application/json\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "userId",
-            "description": "<p>user id of admin user.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Param-Example:",
-          "content": "\n{\n  \"userId\": \"E51DF58EF04A1947BE85BB5B04AC94A9\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "{\n \"Data\": {\n   \"__type\": \"User:#Tasko.Model\",\n   \"EmailId\": \"kranthi@kr.com\",\n   \"Id\": \"E51DF58EF04A1947BE85BB5B04AC94A9\",\n   \"IsActive\": true,\n   \"IsAdmin\": true,\n   \"JoinedDate\": \"2016-07-13 15:13:01\",\n   \"MobileNumber\": \"9898987876\",\n   \"Name\": \"kranthi\",\n   \"PassWord\": \"kranthi\",\n   \"UserName\": \"kranthi\"\n },\n \"Error\": false,\n \"Message\": \"Success\",\n \"Status\": 200\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "fields": {
-        "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "INVALID_CREDENTIALS",
-            "description": "<p>Invalid credentials.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"User not found\",\n  \"Status\": 400\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "./Interfaces/IAdminService.cs",
-    "groupTitle": "Admin"
-  },
-  {
-    "type": "post",
     "url": "a1/AddUser",
     "title": "Add Admin User",
     "name": "AddUser",
@@ -366,6 +274,98 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": "{\n     \"Data\": \"\",\n     \"Error\": true,\n     \"Message\": \"User Name Exists\",\n     \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetUserDetails",
+    "title": "Get user details",
+    "name": "AddUser",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Authntication code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>user id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Token code got from login API\" ,\n  \"User_Id\": \"User id\" ,\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>user id of admin user.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "\n{\n  \"userId\": \"E51DF58EF04A1947BE85BB5B04AC94A9\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n \"Data\": {\n   \"__type\": \"User:#Tasko.Model\",\n   \"EmailId\": \"kranthi@kr.com\",\n   \"Id\": \"E51DF58EF04A1947BE85BB5B04AC94A9\",\n   \"IsActive\": true,\n   \"IsAdmin\": true,\n   \"JoinedDate\": \"2016-07-13 15:13:01\",\n   \"MobileNumber\": \"9898987876\",\n   \"Name\": \"kranthi\",\n   \"PassWord\": \"kranthi\",\n   \"UserName\": \"kranthi\"\n },\n \"Error\": false,\n \"Message\": \"Success\",\n \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_CREDENTIALS",
+            "description": "<p>Invalid credentials.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"User not found\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
@@ -927,6 +927,99 @@ define({ "api": [
   {
     "type": "post",
     "url": "a1/GetAllCustomersByStatus",
+    "title": "Get All Customers By Status",
+    "description": "<p>Get the customers details based on the given status. The possible statuses are 0 - All, 1- Online, 2- Offline, 3- Blocked</p>",
+    "name": "GetAllCustomersByStatus",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "customerStatus",
+            "optional": false,
+            "field": "customerStatus",
+            "description": "<p>0 - All, 1- Online, 2- Offline, 3- Blocked.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n           \"customerStatus\": 0\n          }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n  \"Data\": [\n    {\n      \"__type\": \"Customer:#Tasko.Model\",\n      \"EmailAddress\": \"shivaji@gmail.com\",\n      \"Id\": \"3B456AD997CC9046B4B8F45244B50A57\",\n      \"MobileNumber\": \"1234567890\",\n      \"Name\": \"Shivaji\"\n    },\n    {\n      \"__type\": \"Customer:#Tasko.Model\",\n      \"EmailAddress\": \"shivaji456@gmail.com\",\n      \"Id\": \"41F53C6CE848E843B75FA43A274FD18C\",\n      \"MobileNumber\": \"9876543210\",\n      \"Name\": \"Shivaji456\"\n    },\n  ],\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetAllCustomersByStatus",
     "title": "Get all the customers for a specified status. 0 - All, 1- Online, 2- Offline, 3- Blocked",
     "name": "GetAllCustomersByStatus",
     "group": "Admin",
@@ -1008,98 +1101,6 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": "{\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "./Interfaces/IAdminService.cs",
-    "groupTitle": "Admin"
-  },
-  {
-    "type": "post",
-    "url": "a1/GetAllCustomersByStatus",
-    "title": "Get all the customers for a specified status. 0 - All, 1- Online, 2- Offline, 3- Blocked",
-    "name": "GetAllCustomersByStatus",
-    "group": "Admin",
-    "header": {
-      "fields": {
-        "Header": [
-          {
-            "group": "Header",
-            "type": "string",
-            "optional": false,
-            "field": "Token_Code",
-            "description": "<p>Token Code</p>"
-          },
-          {
-            "group": "Header",
-            "type": "string",
-            "optional": false,
-            "field": "Content-Type",
-            "description": "<p>application/json</p>"
-          },
-          {
-            "group": "Header",
-            "type": "string",
-            "optional": false,
-            "field": "User_Id",
-            "description": "<p>User Id</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Header-Example:",
-          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "customerStatus",
-            "optional": false,
-            "field": "customerStatus",
-            "description": "<p>0 - All, 1- Online, 2- Offline, 3- Blocked.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Param-Example:",
-          "content": "{\n           \"customerStatus\": 0\n          }",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "{\n  \"Data\": [\n    {\n      \"__type\": \"Customer:#Tasko.Model\",\n      \"EmailAddress\": \"shivaji@gmail.com\",\n      \"Id\": \"3B456AD997CC9046B4B8F45244B50A57\",\n      \"MobileNumber\": \"1234567890\",\n      \"Name\": \"Shivaji\"\n    },\n    {\n      \"__type\": \"Customer:#Tasko.Model\",\n      \"EmailAddress\": \"shivaji456@gmail.com\",\n      \"Id\": \"41F53C6CE848E843B75FA43A274FD18C\",\n      \"MobileNumber\": \"9876543210\",\n      \"Name\": \"Shivaji456\"\n    },\n  ],\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "fields": {
-        "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "INVALID_TOKEN_CODE",
-            "description": "<p>Invalid token code</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
@@ -3341,6 +3342,64 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "a1/auth",
+    "title": "Get Auth Code",
+    "name": "auth",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "X-APIKey",
+            "description": "<p>API key</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"X-APIKey\": \"API Key\" ,\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": \"API key comes here\",\n  \"Error\": false,\n  \"Message\": \"Authentication Successful\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Authentication",
+            "description": "<p>failed.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Authentication failed\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
     "url": "c1/AddComplaint",
     "title": "Add Complaint",
     "name": "AddComplaint",
@@ -4095,64 +4154,6 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Error Generating OTP\",\n  \"Status\": 400\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "./Interfaces/ICustomerService.cs",
-    "groupTitle": "Customer"
-  },
-  {
-    "type": "post",
-    "url": "c1/GetAuthCode",
-    "title": "Get Auth Code",
-    "name": "GetAuthCode",
-    "group": "Customer",
-    "header": {
-      "fields": {
-        "Header": [
-          {
-            "group": "Header",
-            "type": "string",
-            "optional": false,
-            "field": "X-APIKey",
-            "description": "<p>API key</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Header-Example:",
-          "content": "{\n  \"X-APIKey\": \"API Key\" ,\n  \"Content-Type\": \"application/json\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": " {\n  \"Data\": \"API key comes here\",\n  \"Error\": false,\n  \"Message\": \"Authentication Successful\",\n  \"Status\": 200\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "fields": {
-        "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "Authentication",
-            "description": "<p>failed.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Authentication failed\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
@@ -5781,6 +5782,64 @@ define({ "api": [
     "groupTitle": "Customer"
   },
   {
+    "type": "post",
+    "url": "c1/auth",
+    "title": "Get Auth Code",
+    "name": "auth",
+    "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "X-APIKey",
+            "description": "<p>API key</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"X-APIKey\": \"API Key\" ,\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": \"API key comes here\",\n  \"Error\": false,\n  \"Message\": \"Authentication Successful\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Authentication",
+            "description": "<p>failed.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Authentication failed\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
     "success": {
       "fields": {
         "Success 200": [
@@ -5906,64 +5965,6 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid old password\",\n  \"Status\": 400\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "./Interfaces/IVendorAppService.cs",
-    "groupTitle": "Vendor"
-  },
-  {
-    "type": "post",
-    "url": "v1/GetAuthCode",
-    "title": "Get Auth Code",
-    "name": "GetAuthCode",
-    "group": "Vendor",
-    "header": {
-      "fields": {
-        "Header": [
-          {
-            "group": "Header",
-            "type": "string",
-            "optional": false,
-            "field": "X-APIKey",
-            "description": "<p>API Key</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Header-Example:",
-          "content": "{\n  \"X-APIKey\": \"API Key\" ,\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": " {\n  \"Data\": \"API key comes here\",\n  \"Error\": false,\n  \"Message\": \"Authentication Successful\",\n  \"Status\": 200\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "fields": {
-        "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "Authentication",
-            "description": "<p>failed.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Authentication failed\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
@@ -7316,6 +7317,64 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Error while updating Vendor Services\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IVendorAppService.cs",
+    "groupTitle": "Vendor"
+  },
+  {
+    "type": "post",
+    "url": "v1/auth",
+    "title": "Get Auth Code",
+    "name": "auth",
+    "group": "Vendor",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "X-APIKey",
+            "description": "<p>API Key</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"X-APIKey\": \"API Key\" ,\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": \"API key comes here\",\n  \"Error\": false,\n  \"Message\": \"Authentication Successful\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Authentication",
+            "description": "<p>failed.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Authentication failed\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
