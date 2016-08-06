@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Tasko.Common;
@@ -20,7 +22,7 @@ namespace Tasko.Repository
         /// </summary>
         /// <param name="orderId">The order identifier.</param>
         /// <returns>Order details</returns>        
-        public static Order GetOrderDetails(string orderId)               
+        public static Order GetOrderDetails(string orderId)
         {
             Order objOrder = null;
             List<SqlParameter> objParameters = new List<SqlParameter>();
@@ -172,7 +174,7 @@ namespace Tasko.Repository
             List<ServiceVendor> serviceVendors = null;
 
             List<SqlParameter> objParameters = new List<SqlParameter>();
-            
+
             BinaryConverter.IsValidGuid(customerId, TaskoEnum.IdType.CustomerId);
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
 
@@ -222,13 +224,13 @@ namespace Tasko.Repository
             string destinationAddressId = AddAddress(order.DestinationAddress);
 
             List<SqlParameter> objParameters = new List<SqlParameter>();
-            
+
             BinaryConverter.IsValidGuid(order.VendorServiceId, TaskoEnum.IdType.VendorServiceId);
             objParameters.Add(SqlHelper.CreateParameter("@pVendorServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(order.VendorServiceId)));
-            
+
             BinaryConverter.IsValidGuid(order.CustomerId, TaskoEnum.IdType.CustomerId);
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(order.CustomerId)));
-            
+
             objParameters.Add(SqlHelper.CreateParameter("@pSourceAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(sourceAddressId)));
             objParameters.Add(SqlHelper.CreateParameter("@pDestinationAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(destinationAddressId)));
             orderId = (string)SqlHelper.ExecuteScalar("dbo.usp_ConfirmOrder", objParameters.ToArray());
@@ -499,7 +501,7 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pCity", DbType.String, addressInfo.City));
             objParameters.Add(SqlHelper.CreateParameter("@pAddress", DbType.String, addressInfo.Address));
             objParameters.Add(SqlHelper.CreateParameter("@Pincode", DbType.String, addressInfo.Pincode));
-            
+
             addressInfo.AddressType = string.IsNullOrEmpty(addressInfo.AddressType) ? string.Empty : addressInfo.AddressType;
             objParameters.Add(SqlHelper.CreateParameter("@pAddressType", DbType.String, addressInfo.AddressType));
             byte[] Address_Id = (byte[])SqlHelper.ExecuteScalar("dbo.usp_AddAddress", objParameters.ToArray());
@@ -534,7 +536,7 @@ namespace Tasko.Repository
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
             objParameters.Add(SqlHelper.CreateParameter("@pPhoneNumber", DbType.String, phoneNumber));
-            
+
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_IsCustomerExists", objParameters.ToArray());
 
             if (reader.Read())
@@ -719,7 +721,7 @@ namespace Tasko.Repository
                     Complaint complaint = new Complaint();
                     complaint.ComplaintId = row["Complaint_Id"].ToString();
                     complaint.ComplaintStatus = Convert.ToInt32(row["Complaint_Status"]);
-                    complaint.LoggedDate =  Convert.ToDateTime(row["Logged_On_Date"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+                    complaint.LoggedDate = Convert.ToDateTime(row["Logged_On_Date"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
                     complaint.Title = row["Title"].ToString();
                     complaints.Add(complaint);
                 }
@@ -727,7 +729,73 @@ namespace Tasko.Repository
 
             return complaints;
         }
-      
+
         #endregion
+
+        public static string GetCustomerPhone(string customerId)
+        {
+            string phone = string.Empty;
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            BinaryConverter.IsValidGuid(customerId, TaskoEnum.IdType.CustomerId);
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
+
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetCustomerPhone", objParameters.ToArray());
+            if (reader.Read())
+            {
+                phone = reader["MOBILE_NUMBER"].ToString();
+            }
+
+            reader.Close();
+
+            return phone;
+        }
+
+        //public static void SendNotification()
+        //{
+        //    GcmUser gcmUser = VendorData.GetGCMUserDetails(string.Empty, "F3E6D9CBF8EF6A4289E1FC3509076D54");
+        //    if (gcmUser != null)
+        //    {
+
+        //        ®istration_id
+
+        //        string postData = "collapse_key=score_update&time_to_live=108&delay_while_idle=0&data.message=" + "Last message " +
+        //                          "&data.time=" + System.DateTime.Now.ToString() +
+        //                          "&registration_id=" + "eDUXYMnIdHo:APA91bEZ6k6epVtL-BsWr4HP5XEq2446NieCC24sfiN4K_jdrJdMyLrQnrbin5aYjF49dnrqzhD01hDQxRBcvHADGvqUbWG9oiwh8HZa8jvKyOUTbnskgypqdx7Kl1cShPf0IeBPklfj";
+        //         MESSAGE CONTENT
+        //        byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+        //    https://android.googleapis.com/gcm/send
+        //         CREATE REQUEST
+        //        HttpWebRequest Request = (HttpWebRequest)WebRequest.Create("https://fcm.googleapis.com/fcm/send");
+        //        Request.Method = "post";
+        //        Request.KeepAlive = false;
+        //        Request.ContentType = " application/x-www-form-urlencoded;charset=UTF-8";
+        //        Request.Headers.Add(string.Format("Authorization: key={0}", "AIzaSyA4vEcZ8sxSVDKGCn9Xl0N4Wvm4rx9ZU-U"));
+        //        Request.Headers.Add(string.Format("Sender: id={0}", "264970905704"));
+
+        //        Request.ContentLength = byteArray.Length;
+
+        //        Stream dataStream = Request.GetRequestStream();
+        //        dataStream.Write(byteArray, 0, byteArray.Length);
+        //        dataStream.Close();
+                    
+        //         SEND MESSAGE
+        //        WebResponse Response = Request.GetResponse();
+        //        HttpStatusCode ResponseCode = ((HttpWebResponse)Response).StatusCode;
+        //        if (ResponseCode.Equals(HttpStatusCode.Unauthorized) || ResponseCode.Equals(HttpStatusCode.Forbidden))
+        //        {
+        //        }
+        //        else if (!ResponseCode.Equals(HttpStatusCode.OK))
+        //        {
+        //        }
+        //        else
+        //        {
+        //            StreamReader Reader = new StreamReader(Response.GetResponseStream());
+        //            string data = Reader.ReadToEnd();
+        //            Reader.Close();
+        //        }
+        //    }
+        //}
+
     }
 }

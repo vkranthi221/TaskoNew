@@ -905,50 +905,6 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response StoreVendorGCMUser(string name, string vendorId, string gcmRedId);
-
-        /**
-        * @api {post} v1/SendVendorNotification Send Vendor Notification
-        * @apiName SendVendorNotification
-        * @apiGroup Vendor
-        *
-        * @apiHeader {string} Token_Code Token Code
-        * @apiHeader {string} Content-Type application/json
-        * @apiHeader {string} User_Id User Id
-        * 
-        * @apiHeaderExample {json} Header-Example:
-        *  {
-        *    "Token_Code": "Unique Token code that is generated after login" ,
-        *    "Content-Type": "application/json"
-        *    "User_Id": "Logged in User ID",
-        *  }
-        *  
-        * @apiParam {string} vendorId Vendor Id. 
-        * 
-        * @apiParamExample {json} Param-Example:
-        *  {
-        *    "vendorId":"Vendor Id",
-        *  }
-        *
-        * @apiSuccessExample Success-Response:
-        {
-         "Data": "",
-         "Error": false,
-         "Message": "Success",
-         "Status": 200
-       }
-        * @apiError RESPONSE_WRONG Response from web service isn't OK
-        *
-        * @apiErrorExample Error-Response:
-        {
-         "Data": null,
-         "Error": true,
-         "Message": "Response from web service isn't OK",
-         "Status": 400
-       }
-        */
-        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
-           BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response SendVendorNotification(string vendorId, string authKey, string senderId, string message);
         #endregion
     }
 }

@@ -575,6 +575,24 @@ namespace Tasko.Repository
 
             return vendors.Count > 0 ? vendors : null;
         }
+        public static string GetVendorPhone(string vendorId)
+        {
+            string phone = string.Empty;
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            BinaryConverter.IsValidGuid(vendorId, TaskoEnum.IdType.VendorId);
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
+
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorPhone", objParameters.ToArray());
+            if (reader.Read())
+            {
+                phone = reader["MOBILE_NUMBER"].ToString();
+            }
+
+            reader.Close();
+
+            return phone;
+        }
 
         #region Notifications
         public static string StoreUser(string name, string vendorId, string gcmRedId, string customerId)

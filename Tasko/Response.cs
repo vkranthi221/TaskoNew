@@ -14,6 +14,7 @@ namespace Tasko
     /// </summary>
     [DataContract]
     [KnownType(typeof(Order))]
+    [KnownType(typeof(MessageDetail))]
     [KnownType(typeof(User))]
     [KnownType(typeof(Vendor))]
     [KnownType(typeof(VendorOverallRating))]

@@ -2642,4 +2642,38 @@ end
 
 select @isValidCustomer as IsCustomerExists
 End
+GO
 
+CREATE PROCEDURE [dbo].[usp_GetVendorPhone]
+(
+	@pVendorId Binary(16)
+)
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+SELECT MOBILE_NUMBER
+FROM [dbo].[VENDOR] (NOLOCK)
+WHERE VENDOR_ID = @pVendorId 
+
+END
+
+GO
+
+CREATE PROCEDURE [dbo].[usp_GetCustomerPhone]
+(
+	@pCustomerId Binary(16)
+)
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+SELECT MOBILE_NUMBER
+FROM [dbo].[CUSTOMER] (NOLOCK)
+WHERE CUSTOMER_ID = @pCustomerId 
+
+END
+
+GO

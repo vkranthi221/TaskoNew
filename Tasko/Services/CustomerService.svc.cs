@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using System.Web.Script.Serialization;
 using System.Xml;
 using System.Xml.Linq;
 using Tasko.Common;
@@ -218,9 +219,12 @@ namespace Tasko.Services
             {
                 bool isTokenValid = ValidateToken();
                 string OrderId = string.Empty;
+                string messageData = string.Empty;
+
                 if (isTokenValid)
                 {
                     OrderId = CustomerData.ConfirmOrder(order);
+                    r = SendNotification(order, OrderId);
                 }
                 else
                 {
@@ -252,6 +256,29 @@ namespace Tasko.Services
             }
 
             return r;
+        }
+
+        public string GetDistance(string latitude, string longitude, string customerLatitude, string customerLongitude)
+        {
+            string requestUri = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + latitude + "," + longitude + "&destinations=" + customerLatitude + "," + customerLongitude;
+            string actualDistance = string.Empty;
+            WebRequest request = HttpWebRequest.Create(requestUri);
+            WebResponse response = request.GetResponse();
+            StreamReader reader = new StreamReader(response.GetResponseStream());
+            string responseStringData = reader.ReadToEnd();
+            if (!string.IsNullOrEmpty(responseStringData))
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(responseStringData);
+                string xpath = "DistanceMatrixResponse/row/element/distance/text";
+                XmlNode distance = xmlDoc.SelectSingleNode(xpath);
+                if (distance != null && !string.IsNullOrEmpty(distance.InnerText))
+                {
+                     actualDistance = distance.InnerText.Remove(distance.InnerText.IndexOf(" "));
+                }
+            }
+
+            return actualDistance;
         }
 
         /// <summary>
@@ -1290,35 +1317,7 @@ namespace Tasko.Services
 
             return r;
         }
-        public Response SendCustomerNotification(string customerId, string authKey, string senderId, string message)
-        {
-            Response r = new Response();
-            try
-            {
-                bool isTokenValid = ValidateToken();
-                if (isTokenValid)
-                {
-                    r = InternalSendNotification(customerId, authKey, senderId, message);
-                }
-                else
-                {
-                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
-                    r.Error = true;
-                    r.Status = 400;
-                }
-            }
-            catch (UserException userException)
-            {
-                r.Message = userException.Message;
-            }
-            catch (Exception ex)
-            {
-                r.Error = true;
-                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
-            }
-
-            return r;
-        }
+        
         #endregion
 
         #region Private Methods
@@ -1394,25 +1393,34 @@ namespace Tasko.Services
 
             return false;
         }
-        private static Response InternalSendNotification(string customerId, string authKey, string senderId, string message)
+        private static Response InternalSendNotification(string customerId, string vendorId, string message)
         {
             Response r = new Response();
-            GcmUser gcmUser = VendorData.GetGCMUserDetails(string.Empty, customerId);
+            GcmUser gcmUser = null;
+            if (!string.IsNullOrEmpty(customerId))
+            {
+                gcmUser = VendorData.GetGCMUserDetails(string.Empty, customerId);
+            }
+            else
+            {
+                gcmUser = VendorData.GetGCMUserDetails(vendorId, string.Empty);
+            }
+
             if (gcmUser != null)
             {
-                string postData = "collapse_key=score_update&time_to_live=108&delay_while_idle=1&data.message=" + message +
+                string postData = "collapse_key=score_update&time_to_live=108&delay_while_idle=0&data.message=" + message +
                                   "&data.time=" + System.DateTime.Now.ToString() +
                                   "&registration_id=" + gcmUser.GcmRegId;
                 // MESSAGE CONTENT
                 byte[] byteArray = Encoding.UTF8.GetBytes(postData);
 
                 // CREATE REQUEST
-                HttpWebRequest Request = (HttpWebRequest)WebRequest.Create("https://android.googleapis.com/gcm/send");
-                Request.Method = "POST";
+                HttpWebRequest Request = (HttpWebRequest)WebRequest.Create("https://fcm.googleapis.com/fcm/send");
+                Request.Method = "post";
                 Request.KeepAlive = false;
                 Request.ContentType = " application/x-www-form-urlencoded;charset=UTF-8";
-                Request.Headers.Add(string.Format("Authorization: key={0}", authKey));
-                Request.Headers.Add(string.Format("Sender: id={0}", senderId));
+                Request.Headers.Add(string.Format("Authorization: key={0}", ConfigurationManager.AppSettings["AuthKey"].ToString()));
+                ////Request.Headers.Add(string.Format("Sender: id={0}", senderId));
 
                 Request.ContentLength = byteArray.Length;
 
@@ -1465,6 +1473,54 @@ namespace Tasko.Services
 
             return r;
         }
+        private Response SendNotification(Order order, string OrderId)
+        {
+            Response r = new Response();
+            MessageDetail message = new MessageDetail();
+            string messageData = string.Empty;
+            switch (order.OrderStatusId)
+            {
+                case (int)Tasko.Common.TaskoEnum.OrderStatus.CustomerRequested:
+                    message.CustomerAddress = order.DestinationAddress;
+                    message.CustomerLocation = order.Location;
+                    message.CustomerName = order.CustomerName;
+                    message.OrderId = OrderId;
+                    message.Orderstatus = order.OrderStatusId;
+                    message.CustomerDistance = GetDistance(order.SourceAddress.Lattitude, order.SourceAddress.Longitude, order.DestinationAddress.Lattitude, order.DestinationAddress.Longitude);
+                    message.CustomerETA = ConfigurationManager.AppSettings["CustomerETA"];
+                    messageData = new JavaScriptSerializer().Serialize(message);
+                    r = InternalSendNotification(string.Empty, order.VendorId, messageData);
+                    break;
+                case (int)Tasko.Common.TaskoEnum.OrderStatus.CustomerAccepted:
+                    message.CustomerLatitude = order.DestinationAddress.Lattitude;
+                    message.CustomerLongitude = order.DestinationAddress.Longitude;
+                    message.CustomerPhone = CustomerData.GetCustomerPhone(order.CustomerId);
+                    message.Orderstatus = order.OrderStatusId;
+                    messageData = new JavaScriptSerializer().Serialize(message);
+                    r = InternalSendNotification(string.Empty, order.VendorId, messageData);
+                    break;
+                case (int)Tasko.Common.TaskoEnum.OrderStatus.VendorAccepted:
+                    message.OrderId = OrderId;
+                    message.Orderstatus = order.OrderStatusId;
+                    message.VendorPhone = VendorData.GetVendorPhone(order.VendorId);
+                    messageData = new JavaScriptSerializer().Serialize(message);
+                    r = InternalSendNotification(order.CustomerId, string.Empty, messageData);
+                    break;
+                case (int)Tasko.Common.TaskoEnum.OrderStatus.OrderCompleted:
+                case (int)Tasko.Common.TaskoEnum.OrderStatus.CustomerCancelled:
+                case (int)Tasko.Common.TaskoEnum.OrderStatus.VendorRejected:
+                    message.OrderId = OrderId;
+                    message.Orderstatus = order.OrderStatusId;
+                    messageData = new JavaScriptSerializer().Serialize(message);
+                    r = InternalSendNotification(order.CustomerId, string.Empty, messageData);
+                    break;
+                default:
+                    break;
+                //1 requested, 
+            }
+            return r;
+        }
         #endregion
+
     }
 }
