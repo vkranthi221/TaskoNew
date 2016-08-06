@@ -988,7 +988,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\n  \"Data\": [\n    {\n      \"__type\": \"Customer:#Tasko.Model\",\n      \"EmailAddress\": \"shivaji@gmail.com\",\n      \"Id\": \"3B456AD997CC9046B4B8F45244B50A57\",\n      \"MobileNumber\": \"1234567890\",\n      \"Name\": \"Shivaji\"\n    },\n    {\n      \"__type\": \"Customer:#Tasko.Model\",\n      \"EmailAddress\": \"shivaji456@gmail.com\",\n      \"Id\": \"41F53C6CE848E843B75FA43A274FD18C\",\n      \"MobileNumber\": \"9876543210\",\n      \"Name\": \"Shivaji456\"\n    },\n  ],\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "content": "{\n    \"Data\": [\n        {\n            \"__type\": \"CustomerRating:#Tasko.Model\",\n            \"Comments\": null,\n            \"Courtesy\": 3,\n            \"CustomerId\": null,\n            \"CustomerName\": \"Shivaji\",\n            \"Id\": null,\n            \"OrderId\": \"TASKO1000\",\n            \"OverAllRating\": 2,\n            \"Price\": 1,\n            \"Punctuality\": 2,\n            \"ReviewDate\": null,\n            \"ServiceQuality\": 2,\n            \"VendorId\": null,\n            \"VendorName\": \"chandra\"\n        }\n    ],\n\"Error\": false,\n\"Message\": \"Success\",\n\"Status\": 200\n}",
           "type": "json"
         }
       ]
@@ -1007,7 +1007,7 @@
       "examples": [
         {
           "title": "Error-Response:",
-          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "content": "{\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
@@ -1080,7 +1080,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\n    \"Data\": [\n        {\n            \"__type\": \"CustomerRating:#Tasko.Model\",\n            \"Comments\": null,\n            \"Courtesy\": 3,\n            \"CustomerId\": null,\n            \"CustomerName\": \"Shivaji\",\n            \"Id\": null,\n            \"OrderId\": \"TASKO1000\",\n            \"OverAllRating\": 2,\n            \"Price\": 1,\n            \"Punctuality\": 2,\n            \"ReviewDate\": null,\n            \"ServiceQuality\": 2,\n            \"VendorId\": null,\n            \"VendorName\": \"chandra\"\n        }\n    ],\n\"Error\": false,\n\"Message\": \"Success\",\n\"Status\": 200\n}",
+          "content": "{\n  \"Data\": [\n    {\n      \"__type\": \"Customer:#Tasko.Model\",\n      \"EmailAddress\": \"shivaji@gmail.com\",\n      \"Id\": \"3B456AD997CC9046B4B8F45244B50A57\",\n      \"MobileNumber\": \"1234567890\",\n      \"Name\": \"Shivaji\"\n    },\n    {\n      \"__type\": \"Customer:#Tasko.Model\",\n      \"EmailAddress\": \"shivaji456@gmail.com\",\n      \"Id\": \"41F53C6CE848E843B75FA43A274FD18C\",\n      \"MobileNumber\": \"9876543210\",\n      \"Name\": \"Shivaji456\"\n    },\n  ],\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
           "type": "json"
         }
       ]
@@ -1099,7 +1099,7 @@
       "examples": [
         {
           "title": "Error-Response:",
-          "content": "{\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
@@ -4066,7 +4066,7 @@
       "examples": [
         {
           "title": "Param-Example:",
-          "content": "{\n \"emailId\": \"\",\n \"phoneNumber\": \"9849345086\"\n}",
+          "content": "{\n \"emailId\": \"\",\n \"phoneNumber\": \"9849345086\",\n \"checkUserExistence\": true\n}",
           "type": "json"
         }
       ]
@@ -5804,8 +5804,8 @@
     "url": "",
     "version": "0.0.0",
     "filename": "./apidoc/main.js",
-    "group": "D__Chandu_Projects_TaskoGitHub_Tasko_apidoc_main_js",
-    "groupTitle": "D__Chandu_Projects_TaskoGitHub_Tasko_apidoc_main_js",
+    "group": "D__Chandu_TaskoProjectGit_Tasko_apidoc_main_js",
+    "groupTitle": "D__Chandu_TaskoProjectGit_Tasko_apidoc_main_js",
     "name": ""
   },
   {
@@ -6715,190 +6715,6 @@
         {
           "title": "Error-Response:",
           "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Error logging out\",\n  \"Status\": 400\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "./Interfaces/IVendorAppService.cs",
-    "groupTitle": "Vendor"
-  },
-  {
-    "type": "post",
-    "url": "c1/SendCustomerNotification",
-    "title": "Send Customer Notification",
-    "name": "SendCustomerNotification",
-    "group": "Vendor",
-    "header": {
-      "fields": {
-        "Header": [
-          {
-            "group": "Header",
-            "type": "string",
-            "optional": false,
-            "field": "Token_Code",
-            "description": "<p>Token Code</p>"
-          },
-          {
-            "group": "Header",
-            "type": "string",
-            "optional": false,
-            "field": "Content-Type",
-            "description": "<p>application/json</p>"
-          },
-          {
-            "group": "Header",
-            "type": "string",
-            "optional": false,
-            "field": "User_Id",
-            "description": "<p>User Id</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Header-Example:",
-          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "customerId",
-            "description": "<p>Customer Id.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Param-Example:",
-          "content": "{\n  \"customerId\":\"Customer Id\",\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": " {\n  \"Data\": \"\",\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "fields": {
-        "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "RESPONSE_WRONG",
-            "description": "<p>Response from web service isn't OK</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Response from web service isn't OK\",\n  \"Status\": 400\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "./Interfaces/ICustomerService.cs",
-    "groupTitle": "Vendor"
-  },
-  {
-    "type": "post",
-    "url": "v1/SendVendorNotification",
-    "title": "Send Vendor Notification",
-    "name": "SendVendorNotification",
-    "group": "Vendor",
-    "header": {
-      "fields": {
-        "Header": [
-          {
-            "group": "Header",
-            "type": "string",
-            "optional": false,
-            "field": "Token_Code",
-            "description": "<p>Token Code</p>"
-          },
-          {
-            "group": "Header",
-            "type": "string",
-            "optional": false,
-            "field": "Content-Type",
-            "description": "<p>application/json</p>"
-          },
-          {
-            "group": "Header",
-            "type": "string",
-            "optional": false,
-            "field": "User_Id",
-            "description": "<p>User Id</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Header-Example:",
-          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "vendorId",
-            "description": "<p>Vendor Id.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Param-Example:",
-          "content": "{\n  \"vendorId\":\"Vendor Id\",\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": " {\n  \"Data\": \"\",\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "fields": {
-        "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "RESPONSE_WRONG",
-            "description": "<p>Response from web service isn't OK</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Response from web service isn't OK\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
