@@ -220,19 +220,19 @@ namespace Tasko.Services
                     }
                 }
 
-                if (services != null)
-                {
-                    r.Error = false;
-                    r.Message = CommonMessages.SUCCESS;
-                    r.Status = 200;
-                    r.Data = services;
-                }
-                else
-                {
-                    r.Error = true;
-                    r.Message = CommonMessages.VENDORS_NOT_FOUND;
-                    r.Status = 400;
-                }
+                ////if (services != null)
+                ////{
+                ////    r.Error = false;
+                ////    r.Message = CommonMessages.SUCCESS;
+                ////    r.Status = 200;
+                ////    r.Data = services;
+                ////}
+                ////else
+                ////{
+                ////    r.Error = true;
+                ////    r.Message = CommonMessages.VENDORS_NOT_FOUND;
+                ////    r.Status = 400;
+                ////}
             }
             catch (UserException userException)
             {

@@ -2490,6 +2490,7 @@ END
 
 GO
 
+
 CREATE PROCEDURE [dbo].[usp_StoreUser]
 (
   @pCustomerId binary(16),
@@ -2517,12 +2518,11 @@ END
 
 else
 update dbo.[GCM_USERS] set GCMREGID=@pgcmRedId where NAME = @pName
-
+select @UserId = GCMID from GCM_USERS where  NAME = @pName
 
 select @UserId as user_id
 
 END
-
 
 GO
 
