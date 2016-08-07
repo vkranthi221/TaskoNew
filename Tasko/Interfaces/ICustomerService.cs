@@ -260,7 +260,9 @@ namespace Tasko.Interfaces
          * @apiParamExample {json} Param-Example:
          *  {
          *    "serviceId": "47DAF7A1B95E8040BD9FA90252E72E17",
-         *    "customerId": "10E4394670195C4AA1E4B7130A514187"
+         *    "customerId": "10E4394670195C4AA1E4B7130A514187",
+         *    "latitude": "17.3850440",
+         *    "longitude": "78.4866710"
          *  }
          *
          * @apiSuccessExample Success-Response:
@@ -276,7 +278,8 @@ namespace Tasko.Interfaces
                       "TotalReviews": 10,
                       "VendorId": "FC73EC7242E28142ACCAFDF4703F0EBF",
                       "VendorName": "srikanth",
-                      "VendorServiceId": "CF9A27B3DA0D5E418B1A8E6CC79218AD"
+                      "VendorServiceId": "CF9A27B3DA0D5E418B1A8E6CC79218AD",
+                      "Distance": 4
                     }
                   ],
           "Error": false,
@@ -295,7 +298,7 @@ namespace Tasko.Interfaces
          */
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response GetServiceVendors(string serviceId, string customerId);
+        Response GetServiceVendors(string serviceId, string customerId, string latitude, string longitude);
 
         /**
          * @api {post} c1/ConfirmOrder Confirm Order

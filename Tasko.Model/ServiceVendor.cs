@@ -92,5 +92,14 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public int TotalReviews { get; set; }
+
+        [DataMember]
+        public decimal Longitude { get; set; }
+
+        [DataMember]
+        public decimal Latitude { get; set; }
+
+        [DataMember]
+        public decimal Distance { get; set; }
     }
 }

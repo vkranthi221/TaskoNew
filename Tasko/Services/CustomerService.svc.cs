@@ -166,7 +166,7 @@ namespace Tasko.Services
         /// <returns>
         /// Response Object
         /// </returns>
-        public Response GetServiceVendors(string serviceId, string customerId)
+        public Response GetServiceVendors(string serviceId, string customerId, string latitude, string longitude)
         {
             Response r = new Response();
             try
@@ -176,6 +176,48 @@ namespace Tasko.Services
                 if (isTokenValid)
                 {
                     services = CustomerData.GetServiceVendors(serviceId, customerId);
+                    bool nearVendorFound = false;
+                    foreach (ServiceVendor serviceVendor in services)
+                    {
+                        string requestUri = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + latitude + "," + longitude + "&destinations=" + serviceVendor.Latitude + "," + serviceVendor.Longitude;
+
+                        WebRequest request = HttpWebRequest.Create(requestUri);
+                        WebResponse response = request.GetResponse();
+                        StreamReader reader = new StreamReader(response.GetResponseStream());
+                        string responseStringData = reader.ReadToEnd();
+                        if (!string.IsNullOrEmpty(responseStringData))
+                        {
+                            XmlDocument xmlDoc = new XmlDocument();
+                            xmlDoc.LoadXml(responseStringData);
+                            string xpath = "DistanceMatrixResponse/row/element/distance/text";
+                            XmlNode distance = xmlDoc.SelectSingleNode(xpath);
+                            if (distance != null && !string.IsNullOrEmpty(distance.InnerText))
+                            {
+                                string actualDistance = distance.InnerText.Remove(distance.InnerText.IndexOf(" "));
+                                if (!string.IsNullOrEmpty(actualDistance))
+                                {
+                                    nearVendorFound = true;
+                                    serviceVendor.Distance = Convert.ToDecimal(actualDistance);
+                                }
+                            }
+                        }
+                    }
+
+                    if (nearVendorFound)
+                    {
+                        r.Error = false;
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Status = 200;
+
+                        decimal distanceCovered = Convert.ToDecimal(ConfigurationManager.AppSettings["DistanceCovered"]);
+                        r.Data = services.Where(i => i.Distance <= distanceCovered).ToList();
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Message = CommonMessages.NO_NEARBY_VENDORS;
+                        r.Status = 400;
+                    }
                 }
 
                 if (services != null)

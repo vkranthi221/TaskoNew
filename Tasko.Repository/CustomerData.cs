@@ -194,6 +194,8 @@ namespace Tasko.Repository
                     serviceVendor.VendorName = row["VENDOR_NAME"].ToString();
                     serviceVendor.VendorServiceId = BinaryConverter.ConvertByteToString((byte[])row["VENDOR_SERVICE_ID"]);
                     serviceVendor.BaseRate = Convert.ToDouble(row["BASE_RATE"]);
+                    serviceVendor.Latitude = Convert.ToDecimal(row["LATITIUDE"]);
+                    serviceVendor.Longitude = Convert.ToDecimal(row["LONGITUDE"]);
                     if (row["FAVORITE_ID"] != null)
                     {
                         serviceVendor.IsFavoriteVendor = true;
