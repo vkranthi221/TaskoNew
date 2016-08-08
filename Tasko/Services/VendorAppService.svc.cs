@@ -802,7 +802,7 @@ namespace Tasko.Services
                     message.Orderstatus = order.OrderStatusId;
                     message.VendorPhone = VendorData.GetVendorPhone(order.VendorId);
                     messageData = new JavaScriptSerializer().Serialize(message);
-                    r = InternalSendNotification(string.Empty, order.VendorId, messageData, ConfigurationManager.AppSettings["CustomerAPIKey"].ToString());
+                    r = InternalSendNotification(order.CustomerId, string.Empty, messageData, ConfigurationManager.AppSettings["CustomerAPIKey"].ToString());
                     break;
                 case (int)Tasko.Common.TaskoEnum.OrderStatus.OrderCompleted:
                 case (int)Tasko.Common.TaskoEnum.OrderStatus.CustomerCancelled:
@@ -810,7 +810,7 @@ namespace Tasko.Services
                     message.OrderId = OrderId;
                     message.Orderstatus = order.OrderStatusId;
                     messageData = new JavaScriptSerializer().Serialize(message);
-                    r = InternalSendNotification(string.Empty, order.VendorId, messageData, ConfigurationManager.AppSettings["CustomerAPIKey"].ToString());
+                    r = InternalSendNotification(order.CustomerId, string.Empty, messageData, ConfigurationManager.AppSettings["CustomerAPIKey"].ToString());
                     break;
                 default:
                     break;
