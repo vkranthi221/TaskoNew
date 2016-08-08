@@ -787,7 +787,7 @@ namespace Tasko.Services
                     message.CustomerDistance = GetDistance(order.SourceAddress.Lattitude, order.SourceAddress.Longitude, order.DestinationAddress.Lattitude, order.DestinationAddress.Longitude);
                     message.CustomerETA = ConfigurationManager.AppSettings["CustomerETA"];
                     messageData = new JavaScriptSerializer().Serialize(message);
-                    r = InternalSendNotification(string.Empty, order.VendorId, messageData);
+                    r = InternalSendNotification(string.Empty, order.VendorId, messageData, ConfigurationManager.AppSettings["VendorAPIKey"].ToString());
                     break;
                 case (int)Tasko.Common.TaskoEnum.OrderStatus.CustomerAccepted:
                     message.CustomerLatitude = order.DestinationAddress.Lattitude;
@@ -795,14 +795,14 @@ namespace Tasko.Services
                     message.CustomerPhone = CustomerData.GetCustomerPhone(order.CustomerId);
                     message.Orderstatus = order.OrderStatusId;
                     messageData = new JavaScriptSerializer().Serialize(message);
-                    r = InternalSendNotification(string.Empty, order.VendorId, messageData);
+                    r = InternalSendNotification(string.Empty, order.VendorId, messageData, ConfigurationManager.AppSettings["VendorAPIKey"].ToString());
                     break;
                 case (int)Tasko.Common.TaskoEnum.OrderStatus.VendorAccepted:
                     message.OrderId = OrderId;
                     message.Orderstatus = order.OrderStatusId;
                     message.VendorPhone = VendorData.GetVendorPhone(order.VendorId);
                     messageData = new JavaScriptSerializer().Serialize(message);
-                    r = InternalSendNotification(order.CustomerId, string.Empty, messageData);
+                    r = InternalSendNotification(string.Empty, order.VendorId, messageData, ConfigurationManager.AppSettings["CustomerAPIKey"].ToString());
                     break;
                 case (int)Tasko.Common.TaskoEnum.OrderStatus.OrderCompleted:
                 case (int)Tasko.Common.TaskoEnum.OrderStatus.CustomerCancelled:
@@ -810,7 +810,7 @@ namespace Tasko.Services
                     message.OrderId = OrderId;
                     message.Orderstatus = order.OrderStatusId;
                     messageData = new JavaScriptSerializer().Serialize(message);
-                    r = InternalSendNotification(order.CustomerId, string.Empty, messageData);
+                    r = InternalSendNotification(string.Empty, order.VendorId, messageData, ConfigurationManager.AppSettings["CustomerAPIKey"].ToString());
                     break;
                 default:
                     break;
@@ -841,7 +841,7 @@ namespace Tasko.Services
 
             return actualDistance;
         }
-        private static Response InternalSendNotification(string customerId, string vendorId, string message)
+        private static Response InternalSendNotification(string customerId, string vendorId, string message, string apiKey)
         {
             Response r = new Response();
             GcmUser gcmUser = null;
@@ -867,7 +867,7 @@ namespace Tasko.Services
                 Request.Method = "post";
                 Request.KeepAlive = false;
                 Request.ContentType = " application/x-www-form-urlencoded;charset=UTF-8";
-                Request.Headers.Add(string.Format("Authorization: key={0}", ConfigurationManager.AppSettings["AuthKey"].ToString()));
+                Request.Headers.Add(string.Format("Authorization: key={0}", apiKey));
                 ////Request.Headers.Add(string.Format("Sender: id={0}", senderId));
 
                 Request.ContentLength = byteArray.Length;
