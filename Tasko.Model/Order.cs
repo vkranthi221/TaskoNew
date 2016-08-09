@@ -143,5 +143,8 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public string Comments{get;set;}
+
+        [DataMember]
+        public string CustomerPhone { get; set; }
     }
 }

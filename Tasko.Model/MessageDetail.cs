@@ -42,5 +42,8 @@ namespace Tasko.Model
         
         [DataMember]
         public string VendorPhone { get; set; }
+
+        [DataMember]
+        public string ServiceName { get; set; }
     }
 }

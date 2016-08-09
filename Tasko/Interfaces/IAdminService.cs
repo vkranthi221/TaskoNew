@@ -542,6 +542,8 @@ namespace Tasko.Interfaces
                         "IsVendorVerified": true,
                         "MobileNumber": "9985466195",
                         "Name": "srikanth3",
+                        "Experience":"1",
+                        "VendorAlsoKnownAs":"srikanth",
                         "NoOfEmployees": 10,
                         "Password": "123456",
                         "Photo": "test photo",

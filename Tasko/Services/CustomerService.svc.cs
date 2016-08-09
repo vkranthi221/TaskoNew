@@ -1535,6 +1535,8 @@ namespace Tasko.Services
                     message.CustomerName = order.CustomerName;
                     message.OrderId = OrderId;
                     message.Orderstatus = order.OrderStatusId;
+                    message.ServiceName = order.ServiceName;
+                    message.CustomerPhone = order.CustomerPhone;
                     message.CustomerDistance = GetDistance(order.SourceAddress.Lattitude, order.SourceAddress.Longitude, order.DestinationAddress.Lattitude, order.DestinationAddress.Longitude);
                     message.CustomerETA = ConfigurationManager.AppSettings["CustomerETA"];
                     messageData = new JavaScriptSerializer().Serialize(message);
