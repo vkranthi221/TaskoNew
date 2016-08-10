@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -786,7 +787,8 @@ namespace Tasko.Services
                     message.Orderstatus = order.OrderStatusId;
                     message.CustomerDistance = GetDistance(order.SourceAddress.Lattitude, order.SourceAddress.Longitude, order.DestinationAddress.Lattitude, order.DestinationAddress.Longitude);
                     message.CustomerETA = ConfigurationManager.AppSettings["CustomerETA"];
-                    messageData = new JavaScriptSerializer().Serialize(message);
+                    //messageData = new JavaScriptSerializer().Serialize(message);
+                    messageData = JsonConvert.SerializeObject(message);
                     r = InternalSendNotification(string.Empty, order.VendorId, messageData, ConfigurationManager.AppSettings["VendorAPIKey"].ToString());
                     break;
                 case (int)Tasko.Common.TaskoEnum.OrderStatus.CustomerAccepted:
@@ -794,14 +796,16 @@ namespace Tasko.Services
                     message.CustomerLongitude = order.DestinationAddress.Longitude;
                     message.CustomerPhone = CustomerData.GetCustomerPhone(order.CustomerId);
                     message.Orderstatus = order.OrderStatusId;
-                    messageData = new JavaScriptSerializer().Serialize(message);
+                    //messageData = new JavaScriptSerializer().Serialize(message);
+                    messageData = JsonConvert.SerializeObject(message);
                     r = InternalSendNotification(string.Empty, order.VendorId, messageData, ConfigurationManager.AppSettings["VendorAPIKey"].ToString());
                     break;
                 case (int)Tasko.Common.TaskoEnum.OrderStatus.VendorAccepted:
                     message.OrderId = OrderId;
                     message.Orderstatus = order.OrderStatusId;
                     message.VendorPhone = VendorData.GetVendorPhone(order.VendorId);
-                    messageData = new JavaScriptSerializer().Serialize(message);
+                    //messageData = new JavaScriptSerializer().Serialize(message);
+                    messageData = JsonConvert.SerializeObject(message);
                     r = InternalSendNotification(order.CustomerId, string.Empty, messageData, ConfigurationManager.AppSettings["CustomerAPIKey"].ToString());
                     break;
                 case (int)Tasko.Common.TaskoEnum.OrderStatus.OrderCompleted:
@@ -809,7 +813,8 @@ namespace Tasko.Services
                 case (int)Tasko.Common.TaskoEnum.OrderStatus.VendorRejected:
                     message.OrderId = OrderId;
                     message.Orderstatus = order.OrderStatusId;
-                    messageData = new JavaScriptSerializer().Serialize(message);
+                    //messageData = new JavaScriptSerializer().Serialize(message);
+                    messageData = JsonConvert.SerializeObject(message);
                     r = InternalSendNotification(order.CustomerId, string.Empty, messageData, ConfigurationManager.AppSettings["CustomerAPIKey"].ToString());
                     break;
                 default:
