@@ -256,6 +256,8 @@ namespace Tasko.Interfaces
          *    
          * @apiParam {String} serviceId Service Id.
          * @apiParam {String} customerId Customer Id.
+         * @apiParam {String} latitude Latitude.
+         * @apiParam {String} longitude Longitude.
          *
          * @apiParamExample {json} Param-Example:
          *  {
