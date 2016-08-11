@@ -178,27 +178,30 @@ namespace Tasko.Services
                 {
                     services = CustomerData.GetServiceVendors(serviceId, customerId);
                     bool nearVendorFound = false;
-                    foreach (ServiceVendor serviceVendor in services)
+                    if (services != null)
                     {
-                        string requestUri = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + latitude + "," + longitude + "&destinations=" + serviceVendor.Latitude + "," + serviceVendor.Longitude;
-
-                        WebRequest request = HttpWebRequest.Create(requestUri);
-                        WebResponse response = request.GetResponse();
-                        StreamReader reader = new StreamReader(response.GetResponseStream());
-                        string responseStringData = reader.ReadToEnd();
-                        if (!string.IsNullOrEmpty(responseStringData))
+                        foreach (ServiceVendor serviceVendor in services)
                         {
-                            XmlDocument xmlDoc = new XmlDocument();
-                            xmlDoc.LoadXml(responseStringData);
-                            string xpath = "DistanceMatrixResponse/row/element/distance/text";
-                            XmlNode distance = xmlDoc.SelectSingleNode(xpath);
-                            if (distance != null && !string.IsNullOrEmpty(distance.InnerText))
+                            string requestUri = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + latitude + "," + longitude + "&destinations=" + serviceVendor.Latitude + "," + serviceVendor.Longitude;
+
+                            WebRequest request = HttpWebRequest.Create(requestUri);
+                            WebResponse response = request.GetResponse();
+                            StreamReader reader = new StreamReader(response.GetResponseStream());
+                            string responseStringData = reader.ReadToEnd();
+                            if (!string.IsNullOrEmpty(responseStringData))
                             {
-                                string actualDistance = distance.InnerText.Remove(distance.InnerText.IndexOf(" "));
-                                if (!string.IsNullOrEmpty(actualDistance))
+                                XmlDocument xmlDoc = new XmlDocument();
+                                xmlDoc.LoadXml(responseStringData);
+                                string xpath = "DistanceMatrixResponse/row/element/distance/text";
+                                XmlNode distance = xmlDoc.SelectSingleNode(xpath);
+                                if (distance != null && !string.IsNullOrEmpty(distance.InnerText))
                                 {
-                                    nearVendorFound = true;
-                                    serviceVendor.Distance = Convert.ToDecimal(actualDistance);
+                                    string actualDistance = distance.InnerText.Remove(distance.InnerText.IndexOf(" "));
+                                    if (!string.IsNullOrEmpty(actualDistance))
+                                    {
+                                        nearVendorFound = true;
+                                        serviceVendor.Distance = Convert.ToDecimal(actualDistance);
+                                    }
                                 }
                             }
                         }

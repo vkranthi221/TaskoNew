@@ -452,8 +452,16 @@ namespace Tasko.Repository
                     FavoriteVendor favoriteVendor = new FavoriteVendor();
                     favoriteVendor.VendorId = BinaryConverter.ConvertByteToString((byte[])row["VENDOR_ID"]);
                     favoriteVendor.VendorName = row["VENDOR_NAME"].ToString();
-                    favoriteVendor.TotalRatings = Convert.ToInt32(row["TOTAL_RATINGS"]);
-                    favoriteVendor.OverallRating = Convert.ToInt32(row["OVERALL_RATINGS"]);
+                    if (!(row["TOTAL_RATINGS"] is System.DBNull))
+                    {
+                        favoriteVendor.TotalRatings = Convert.ToInt32(row["TOTAL_RATINGS"]);
+                    }
+
+                    if (!(row["OVERALL_RATINGS"] is System.DBNull))
+                    {
+                        favoriteVendor.OverallRating = Convert.ToInt32(row["OVERALL_RATINGS"]);
+                    }
+
                     favoriteVendors.Add(favoriteVendor);
                 }
             }
