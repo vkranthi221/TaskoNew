@@ -861,9 +861,9 @@ namespace Tasko.Services
 
             if (gcmUser != null)
             {
-                string postData = "collapse_key:score_update&time_to_live:108&delay_while_idle:0&data.message:" + message +
-                                  "&data.time:" + System.DateTime.Now.ToString() +
-                                  "&registration_id:" + gcmUser.GcmRegId;
+                string postData = "collapse_key=score_update&time_to_live=108&delay_while_idle=0&data.message=" + message +
+                                  "&data.time=" + System.DateTime.Now.ToString() +
+                                  "&registration_id=" + gcmUser.GcmRegId;
                 // MESSAGE CONTENT
                 byte[] byteArray = Encoding.UTF8.GetBytes(postData);
 
