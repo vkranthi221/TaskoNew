@@ -800,6 +800,78 @@ define({ "api": [
         }
       ]
     },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"GcmUser:#Tasko.Model\",\n              \"CustomerId\": \"F3E6D9CBF8EF6A4289E1FC3509076D54\",\n              \"GcmId\": \"995FB41FF15F374398985802AF9E0CD5\",\n              \"GcmRegId\": \"APA91bEvA_MLQBs27lR24U_dEXkBoxL5K5VL5l2BkkVoi_6axHy8tEQvEBLRZ-Vlo4FY9u6S0I5PI5EhshJ-jJ5JjgjYBhExk2kuCVa7cFC1KxNgi6QMpzu6IsClEGbbV2ZvG_-H6DC6\",\n              \"Name\": \"srikanth\",\n              \"VendorId\": null\n            }\n          ],\n          \"Error\": false,\n          \"Message\": \"Success\",\n          \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "USERS_NOT_FOUND",
+            "description": "<p>Users not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Users not found\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetAllComplaints",
+    "title": "Get All Complaints",
+    "name": "GetAllComplaints",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -854,9 +926,9 @@ define({ "api": [
   },
   {
     "type": "post",
-    "url": "a1/GetAllComplaints",
-    "title": "Get All Complaints",
-    "name": "GetAllComplaints",
+    "url": "a1/GetOffileVendorRequests",
+    "title": "Gets offline vendor requests for the day",
+    "name": "GetAllCustomersByStatus",
     "group": "Admin",
     "header": {
       "fields": {
@@ -872,22 +944,22 @@ define({ "api": [
             "group": "Header",
             "type": "string",
             "optional": false,
-            "field": "User_Id",
-            "description": "<p>User Id</p>"
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
           },
           {
             "group": "Header",
             "type": "string",
             "optional": false,
-            "field": "Content-Type",
-            "description": "<p>application/json</p>"
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Header-Example:",
-          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
           "type": "json"
         }
       ]
@@ -896,7 +968,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"GcmUser:#Tasko.Model\",\n              \"CustomerId\": \"F3E6D9CBF8EF6A4289E1FC3509076D54\",\n              \"GcmId\": \"995FB41FF15F374398985802AF9E0CD5\",\n              \"GcmRegId\": \"APA91bEvA_MLQBs27lR24U_dEXkBoxL5K5VL5l2BkkVoi_6axHy8tEQvEBLRZ-Vlo4FY9u6S0I5PI5EhshJ-jJ5JjgjYBhExk2kuCVa7cFC1KxNgi6QMpzu6IsClEGbbV2ZvG_-H6DC6\",\n              \"Name\": \"srikanth\",\n              \"VendorId\": null\n            }\n          ],\n          \"Error\": false,\n          \"Message\": \"Success\",\n          \"Status\": 200\n}",
+          "content": "{\n   \"Data\": [\n            {\n              \"__type\": \"OfflineVendorRequest:#Tasko.Model\",\n              \"CustomerName\": \"srikanth test\",\n              \"CustomerPhone\": \"9849345086\",\n              \"Id\": \"4720EA1EEFDEE141AABE38A7E7D3831A\",\n              \"RequestedServiceId\": \"2D0D8369F97C7E4D9757F4F1BF39324C\",\n              \"RequestedServiceName\": \"AC Installation\"\n            },\n            {\n              \"__type\": \"OfflineVendorRequest:#Tasko.Model\",\n              \"CustomerName\": \"Shivaji\",\n              \"CustomerPhone\": \"1234567890\",\n              \"Id\": \"697413385619B943BE380ADFF78EA868\",\n              \"RequestedServiceId\": \"3CB1F934AEE59E4EA6E824B96752FE27\",\n              \"RequestedServiceName\": \"Semi-Automatic Washing Machine Service\"\n            }\n          ],\n          \"Error\": false,\n          \"Message\": \"Success\",\n          \"Status\": 200\n}",
           "type": "json"
         }
       ]
@@ -907,15 +979,107 @@ define({ "api": [
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "USERS_NOT_FOUND",
-            "description": "<p>Users not found.</p>"
+            "field": "REQUESTS_NOT_FOUND",
+            "description": "<p>No Offline Requests</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Error-Response:",
-          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Users not found\",\n  \"Status\": 400\n}",
+          "content": "{\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"No Offline Requests\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetAllCustomersByStatus",
+    "title": "Get all the customers for a specified status. 0 - All, 1- Online, 2- Offline, 3- Blocked",
+    "name": "GetAllCustomersByStatus",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "customerStatus",
+            "optional": false,
+            "field": "customerStatus",
+            "description": "<p>0 - All, 1- Online, 2- Offline, 3- Blocked.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n           \"customerStatus\": 0\n          }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"Data\": [\n        {\n            \"__type\": \"CustomerRating:#Tasko.Model\",\n            \"Comments\": null,\n            \"Courtesy\": 3,\n            \"CustomerId\": null,\n            \"CustomerName\": \"Shivaji\",\n            \"Id\": null,\n            \"OrderId\": \"TASKO1000\",\n            \"OverAllRating\": 2,\n            \"Price\": 1,\n            \"Punctuality\": 2,\n            \"ReviewDate\": null,\n            \"ServiceQuality\": 2,\n            \"VendorId\": null,\n            \"VendorName\": \"chandra\"\n        }\n    ],\n\"Error\": false,\n\"Message\": \"Success\",\n\"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
@@ -1009,98 +1173,6 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "./Interfaces/IAdminService.cs",
-    "groupTitle": "Admin"
-  },
-  {
-    "type": "post",
-    "url": "a1/GetAllCustomersByStatus",
-    "title": "Get all the customers for a specified status. 0 - All, 1- Online, 2- Offline, 3- Blocked",
-    "name": "GetAllCustomersByStatus",
-    "group": "Admin",
-    "header": {
-      "fields": {
-        "Header": [
-          {
-            "group": "Header",
-            "type": "string",
-            "optional": false,
-            "field": "Token_Code",
-            "description": "<p>Token Code</p>"
-          },
-          {
-            "group": "Header",
-            "type": "string",
-            "optional": false,
-            "field": "Content-Type",
-            "description": "<p>application/json</p>"
-          },
-          {
-            "group": "Header",
-            "type": "string",
-            "optional": false,
-            "field": "User_Id",
-            "description": "<p>User Id</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Header-Example:",
-          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "customerStatus",
-            "optional": false,
-            "field": "customerStatus",
-            "description": "<p>0 - All, 1- Online, 2- Offline, 3- Blocked.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Param-Example:",
-          "content": "{\n           \"customerStatus\": 0\n          }",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "{\n    \"Data\": [\n        {\n            \"__type\": \"CustomerRating:#Tasko.Model\",\n            \"Comments\": null,\n            \"Courtesy\": 3,\n            \"CustomerId\": null,\n            \"CustomerName\": \"Shivaji\",\n            \"Id\": null,\n            \"OrderId\": \"TASKO1000\",\n            \"OverAllRating\": 2,\n            \"Price\": 1,\n            \"Punctuality\": 2,\n            \"ReviewDate\": null,\n            \"ServiceQuality\": 2,\n            \"VendorId\": null,\n            \"VendorName\": \"chandra\"\n        }\n    ],\n\"Error\": false,\n\"Message\": \"Success\",\n\"Status\": 200\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "fields": {
-        "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "INVALID_TOKEN_CODE",
-            "description": "<p>Invalid token code</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": "{\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
@@ -4982,6 +5054,20 @@ define({ "api": [
             "optional": false,
             "field": "customerId",
             "description": "<p>Customer Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "latitude",
+            "description": "<p>Latitude.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "longitude",
+            "description": "<p>Longitude.</p>"
           }
         ]
       },
@@ -5193,6 +5279,112 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid Phone Number Or OTP\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
+    "url": "c1/SaveOfflineVendorRequest",
+    "title": "Save Offline Vendor Request",
+    "name": "SaveOfflineVendorRequest",
+    "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "customerId",
+            "description": "<p>Customer Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "serviceId",
+            "description": "<p>Service Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "area",
+            "description": "<p>area.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"customerId\": \"customer Id that you would like to remove association for the given vendor Id\" \n  \"serviceId\": \"Service Id that the customer wants\" \n  \"area\": \"Area where the customer wants service for\" \n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
