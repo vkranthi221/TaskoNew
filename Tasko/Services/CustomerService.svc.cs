@@ -1324,6 +1324,7 @@ namespace Tasko.Services
             return r;
         }
         #endregion
+
         #region Notifications
         public Response StoreCustomerGCMUser(string name, string customerId, string gcmRedId)
         {
@@ -1371,6 +1372,41 @@ namespace Tasko.Services
             return r;
         }
         
+        #endregion
+
+        #region Offline Vendors
+        public Response SaveOfflineVendorRequest(string customerId, string serviceId, string area)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    CustomerData.SaveOfflineVendorRequest(customerId, serviceId, area);
+                    r.Error = false;
+                    r.Message = CommonMessages.SUCCESS;
+                    r.Status = 200;
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                    r.Error = true;
+                    r.Status = 400;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
         #endregion
 
         #region Private Methods

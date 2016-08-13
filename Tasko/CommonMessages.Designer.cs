@@ -160,6 +160,15 @@ namespace Tasko {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error Adding Request.
+        /// </summary>
+        internal static string ERROR_ADDING_REQUEST {
+            get {
+                return ResourceManager.GetString("ERROR_ADDING_REQUEST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error Generating OTP.
         /// </summary>
         internal static string ERROR_GENERATING_OTP {
@@ -453,6 +462,15 @@ namespace Tasko {
         internal static string PHONE_NUMEBR_EXITS {
             get {
                 return ResourceManager.GetString("PHONE_NUMEBR_EXITS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Offline Requests.
+        /// </summary>
+        internal static string REQUESTS_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("REQUESTS_NOT_FOUND", resourceCulture);
             }
         }
         

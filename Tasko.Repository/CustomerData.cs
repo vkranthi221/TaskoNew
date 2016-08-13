@@ -761,35 +761,46 @@ namespace Tasko.Repository
             return phone;
         }
 
+        public static void SaveOfflineVendorRequest(string customerId, string serviceId, string area)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            BinaryConverter.IsValidGuid(customerId, TaskoEnum.IdType.CustomerId);
+            BinaryConverter.IsValidGuid(serviceId, TaskoEnum.IdType.ServiceId);
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(serviceId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pArea", DbType.String, area));
+            SqlHelper.ExecuteNonQuery("dbo.usp_SaveOfflineVendor", objParameters.ToArray());
+        }
+
         //public static void SendNotification()
         //{
-        //    GcmUser gcmUser = VendorData.GetGCMUserDetails(string.Empty, "F3E6D9CBF8EF6A4289E1FC3509076D54");
-        //    if (gcmUser != null)
-        //    {
+        //    //GcmUser gcmUser = VendorData.GetGCMUserDetails(string.Empty, "F3E6D9CBF8EF6A4289E1FC3509076D54");
+        //    //if (gcmUser != null)
+        //    //{
 
-        //        ®istration_id
+        //        //®istration_id
 
         //        string postData = "collapse_key=score_update&time_to_live=108&delay_while_idle=0&data.message=" + "Last message " +
         //                          "&data.time=" + System.DateTime.Now.ToString() +
-        //                          "&registration_id=" + "eDUXYMnIdHo:APA91bEZ6k6epVtL-BsWr4HP5XEq2446NieCC24sfiN4K_jdrJdMyLrQnrbin5aYjF49dnrqzhD01hDQxRBcvHADGvqUbWG9oiwh8HZa8jvKyOUTbnskgypqdx7Kl1cShPf0IeBPklfj";
-        //         MESSAGE CONTENT
+        //                          "&registration_id=" + "dJaZ8i-czc0:APA91bGVkigbB_cYwuljAfv-wKl_0Lfmk7jhk99N6fhVfTn0ZHxpcnm3NsQ7ZqG3ABqKJ1e5eZ7n2NSuZhKh31G3u1ceRnkiHDHopPaIzgPYl4cdOq5TvNQmt_fH32a12ggtayvJosGB";
+        //         //MESSAGE CONTENT
         //        byte[] byteArray = Encoding.UTF8.GetBytes(postData);
-        //    https://android.googleapis.com/gcm/send
-        //         CREATE REQUEST
+        //    //https://android.googleapis.com/gcm/send
+        //         //CREATE REQUEST
         //        HttpWebRequest Request = (HttpWebRequest)WebRequest.Create("https://fcm.googleapis.com/fcm/send");
         //        Request.Method = "post";
         //        Request.KeepAlive = false;
         //        Request.ContentType = " application/x-www-form-urlencoded;charset=UTF-8";
         //        Request.Headers.Add(string.Format("Authorization: key={0}", "AIzaSyA4vEcZ8sxSVDKGCn9Xl0N4Wvm4rx9ZU-U"));
-        //        Request.Headers.Add(string.Format("Sender: id={0}", "264970905704"));
+        //        //Request.Headers.Add(string.Format("Sender: id={0}", "264970905704"));
 
         //        Request.ContentLength = byteArray.Length;
 
         //        Stream dataStream = Request.GetRequestStream();
         //        dataStream.Write(byteArray, 0, byteArray.Length);
         //        dataStream.Close();
-                    
-        //         SEND MESSAGE
+
+        //         //SEND MESSAGE
         //        WebResponse Response = Request.GetResponse();
         //        HttpStatusCode ResponseCode = ((HttpWebResponse)Response).StatusCode;
         //        if (ResponseCode.Equals(HttpStatusCode.Unauthorized) || ResponseCode.Equals(HttpStatusCode.Forbidden))
@@ -804,7 +815,7 @@ namespace Tasko.Repository
         //            string data = Reader.ReadToEnd();
         //            Reader.Close();
         //        }
-        //    }
+        //    //}
         //}
 
     }

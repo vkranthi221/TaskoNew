@@ -279,4 +279,10 @@
   <data name="CUSTOMER_DOESNOT_EXISTS" xml:space="preserve">
     <value>Customer does not exist</value>
   </data>
+  <data name="ERROR_ADDING_REQUEST" xml:space="preserve">
+    <value>Error Adding Request</value>
+  </data>
+  <data name="REQUESTS_NOT_FOUND" xml:space="preserve">
+    <value>No Offline Requests</value>
+  </data>
 </root>

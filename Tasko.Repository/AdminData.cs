@@ -1123,5 +1123,29 @@ namespace Tasko.Repository
 
         #endregion
 
+        #region Offline Vendor Request
+        public static List<OfflineVendorRequest> GetOffileVendorRequests()
+        {
+            List<OfflineVendorRequest> requests = new List<OfflineVendorRequest>();
+
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            DataTable datatable = SqlHelper.GetDataTable("dbo.usp_GetOffileVendorRequests", objParameters.ToArray());
+            if (datatable != null && datatable.Rows.Count > 0)
+            {
+                foreach (DataRow row in datatable.Rows)
+                {
+                    OfflineVendorRequest request = new OfflineVendorRequest();
+                    request.Id = BinaryConverter.ConvertByteToString((byte[])row["Id"]);
+                    request.CustomerName = row["CustomerName"].ToString();
+                    request.CustomerPhone = row["CustomerPhone"].ToString();
+                    request.RequestedServiceId = BinaryConverter.ConvertByteToString((byte[])row["RequestedServiceId"]);
+                    request.RequestedServiceName = row["RequestedServiceName"].ToString();
+                    requests.Add(request);
+                }
+            }
+
+            return requests.Count > 0 ? requests : null;
+        }
+        #endregion
     }
 }

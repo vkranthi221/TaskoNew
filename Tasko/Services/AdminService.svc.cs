@@ -1765,6 +1765,51 @@ namespace Tasko.Services
 
         #endregion
 
+        #region Offline Vendor Request
+        public Response GetOffileVendorRequests()
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                List<OfflineVendorRequest> requests = null;
+                if (isTokenValid)
+                {
+                    requests = AdminData.GetOffileVendorRequests();
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+
+                if (requests != null)
+                {
+                    r.Error = false;
+                    r.Message = CommonMessages.SUCCESS;
+                    r.Status = 200;
+                    r.Data = requests;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Message = CommonMessages.REQUESTS_NOT_FOUND;
+                    r.Status = 400;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+        #endregion
+
         #region Private Methods
         /// <summary>
         /// Validates the token.

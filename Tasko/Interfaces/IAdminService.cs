@@ -499,7 +499,7 @@ namespace Tasko.Interfaces
         Response GetServiceOverview(string serviceId);
 
         #endregion
-        
+
         #region Vendors
         /**
          * @api {post} a1/AddVendor Add Vendor
@@ -2146,7 +2146,7 @@ namespace Tasko.Interfaces
           "Message": "User not found",
           "Status": 400
         }
-         */    
+         */
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
@@ -2367,6 +2367,63 @@ namespace Tasko.Interfaces
            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetAllGCMUsers();
 
+        #endregion
+
+        #region Offline Vendor Request
+        /**
+        * @api {post} a1/GetOffileVendorRequests Gets offline vendor requests for the day
+        * @apiName GetAllCustomersByStatus
+        * @apiGroup Admin
+        *
+        * @apiHeader {string} Token_Code Token Code
+        * @apiHeader {string} Content-Type application/json
+        * @apiHeader {string} User_Id User Id
+        * 
+        * @apiHeaderExample {json} Header-Example:
+        *  {
+        *    "Token_Code": "Unique Token code that is generated after login" ,
+        *    "Content-Type": "application/json"
+        *    "User_Id": "Logged in User ID",
+        *  }
+        *  
+        * @apiSuccessExample Success-Response:
+        {
+           "Data": [
+                    {
+                      "__type": "OfflineVendorRequest:#Tasko.Model",
+                      "CustomerName": "srikanth test",
+                      "CustomerPhone": "9849345086",
+                      "Id": "4720EA1EEFDEE141AABE38A7E7D3831A",
+                      "RequestedServiceId": "2D0D8369F97C7E4D9757F4F1BF39324C",
+                      "RequestedServiceName": "AC Installation"
+                    },
+                    {
+                      "__type": "OfflineVendorRequest:#Tasko.Model",
+                      "CustomerName": "Shivaji",
+                      "CustomerPhone": "1234567890",
+                      "Id": "697413385619B943BE380ADFF78EA868",
+                      "RequestedServiceId": "3CB1F934AEE59E4EA6E824B96752FE27",
+                      "RequestedServiceName": "Semi-Automatic Washing Machine Service"
+                    }
+                  ],
+                  "Error": false,
+                  "Message": "Success",
+                  "Status": 200
+        }
+        * @apiError REQUESTS_NOT_FOUND No Offline Requests
+        *
+        * @apiErrorExample Error-Response:
+        {
+          "Data": null,
+          "Error": true,
+          "Message": "No Offline Requests",
+          "Status": 400
+        }
+        */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetOffileVendorRequests();
         #endregion
     }
 }

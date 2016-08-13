@@ -526,14 +526,38 @@ CREATE TABLE [dbo].[GCM_USERS](
 
 GO
 
+CREATE TABLE [dbo].[OfflineRequest](
+	[Id] [binary](16) NOT NULL,
+	[CustomerId] [binary](16) NOT NULL,
+	[ServiceId] [binary](16) NOT NULL,
+	[Area] [varchar](max) NULL,
+	[Requested_Date] [datetime] NOT NULL,
+ CONSTRAINT [PK_OfflineRequest] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
 SET ANSI_PADDING OFF
 GO
 
-
-
-
-SET ANSI_PADDING OFF
+ALTER TABLE [dbo].[OfflineRequest]  WITH CHECK ADD  CONSTRAINT [FK_OfflineRequest_CUSTOMER] FOREIGN KEY([CustomerId])
+REFERENCES [dbo].[CUSTOMER] ([CUSTOMER_ID])
 GO
+
+ALTER TABLE [dbo].[OfflineRequest] CHECK CONSTRAINT [FK_OfflineRequest_CUSTOMER]
+GO
+
+ALTER TABLE [dbo].[OfflineRequest]  WITH CHECK ADD  CONSTRAINT [FK_OfflineRequest_SERVICES] FOREIGN KEY([ServiceId])
+REFERENCES [dbo].[SERVICES] ([SERVICE_ID])
+GO
+
+ALTER TABLE [dbo].[OfflineRequest] CHECK CONSTRAINT [FK_OfflineRequest_SERVICES]
+GO
+
+
 
 /*********** Stored Procedures **************************/
 GO
@@ -2685,3 +2709,32 @@ WHERE CUSTOMER_ID = @pCustomerId
 END
 
 GO
+
+CREATE PROCEDURE [dbo].[usp_SaveOfflineVendor]
+(
+  @pCustomerId Binary(16),
+  @pServiceId Binary(16),
+  @pArea varchar(MAX)
+)
+
+AS
+BEGIN
+
+   INSERT INTO [dbo].[OfflineRequest] VALUES (NEWID(), @pCustomerId, @pServiceId, @pArea, GETDATE())
+END
+GO
+
+CREATE PROCEDURE [dbo].[usp_GetOffileVendorRequests]
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+SELECT OFFL.Id, CUST.NAME AS CustomerName, CUST.MOBILE_NUMBER AS CustomerPhone, SERV.SERVICE_ID AS RequestedServiceId, SERV.NAME AS RequestedServiceName FROM OfflineRequest OFFL
+	    INNER JOIN [dbo].[CUSTOMER] CUST ON OFFL.CustomerId = CUST.CUSTOMER_ID
+		INNER JOIN [dbo].[SERVICES] SERV ON OFFL.ServiceId = SERV.SERVICE_ID
+  
+END
+GO
+

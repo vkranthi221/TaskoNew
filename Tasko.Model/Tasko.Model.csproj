@@ -49,6 +49,7 @@
     </Compile>
     <Compile Include="GcmUser.cs" />
     <Compile Include="MessageDetail.cs" />
+    <Compile Include="OfflineVendorRequest.cs" />
     <Compile Include="ServiceOverview.cs" />
     <Compile Include="DashboardMeter.cs" />
     <Compile Include="FavoriteVendor.cs" />

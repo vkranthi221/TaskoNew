@@ -1530,5 +1530,56 @@ namespace Tasko.Interfaces
         Response StoreCustomerGCMUser(string name, string customerId, string gcmRedId);
 
         #endregion
+
+        #region Offline Vendors
+        /**
+         * @api {post} c1/SaveOfflineVendorRequest Save Offline Vendor Request
+         * @apiName SaveOfflineVendorRequest
+         * @apiGroup Customer
+         * 
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *     
+         * @apiParam {string} customerId Customer Id.         
+         * @apiParam {string} serviceId Service Id.
+         * @apiParam {string} area area.
+         *
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *    "customerId": "customer Id that you would like to remove association for the given vendor Id" 
+         *    "serviceId": "Service Id that the customer wants" 
+         *    "area": "Area where the customer wants service for" 
+         *  }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError INVALID_TOKEN_CODE Invalid token code.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Invalid token code",
+          "Status": 400
+        }
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response SaveOfflineVendorRequest(string customerId, string serviceId, string area);
+        #endregion
     }
 }

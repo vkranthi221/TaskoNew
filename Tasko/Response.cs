@@ -59,6 +59,8 @@ namespace Tasko
     [KnownType(typeof(List<ComplaintChat>))]
     [KnownType(typeof(GcmUser))]
     [KnownType(typeof(List<GcmUser>))]
+    [KnownType(typeof(OfflineVendorRequest))]
+    [KnownType(typeof(List<OfflineVendorRequest>))]
     public class Response
     {
         /// <summary>
