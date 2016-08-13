@@ -292,8 +292,8 @@ namespace Tasko.Services
                     {
                         VendorData.UpdateOrderStatus(orderId, orderStatus, Comments);
                         Order order = CustomerData.GetOrderDetails(orderId);
-                        r.Data = order;
                         r = SendNotification(order, orderId);
+                        r.Data = order;
                     }
                     else
                     {
