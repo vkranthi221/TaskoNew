@@ -2733,8 +2733,11 @@ SET NOCOUNT ON;
 
 SELECT OFFL.Id, CUST.NAME AS CustomerName, CUST.MOBILE_NUMBER AS CustomerPhone, SERV.SERVICE_ID AS RequestedServiceId, SERV.NAME AS RequestedServiceName FROM OfflineRequest OFFL
 	    INNER JOIN [dbo].[CUSTOMER] CUST ON OFFL.CustomerId = CUST.CUSTOMER_ID
-		INNER JOIN [dbo].[SERVICES] SERV ON OFFL.ServiceId = SERV.SERVICE_ID
+		INNER JOIN [dbo].[SERVICES] SERV ON OFFL.ServiceId = SERV.SERVICE_ID where
+		CAST( OFFL.Requested_Date AS DATE) = CONVERT(date, getdate())
   
 END
+
+
 GO
 
