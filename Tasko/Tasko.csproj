@@ -65,10 +65,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ServiceImages\ac_services.png" />
+    <Content Include="ServiceImages\Bike_Service.png" />
     <Content Include="ServiceImages\carpenter.png" />
     <Content Include="ServiceImages\electrician.png" />
     <Content Include="ServiceImages\house_services.png" />
+    <Content Include="ServiceImages\Microwave_Service.png" />
+    <Content Include="ServiceImages\Mixer_Grinder_Repair.png" />
     <Content Include="ServiceImages\Plumber.png" />
+    <Content Include="ServiceImages\Refrigerator_Service.png" />
+    <Content Include="ServiceImages\Washing_Machine_Service.png" />
     <Content Include="Services\AdminService.svc" />
     <Content Include="Services\CustomerService.svc" />
     <Content Include="Global.asax" />

@@ -34,3 +34,13 @@ EXEC SP_EXECUTESQL @VSQL,N'@vCustomerId binary(16),@vOrderstatusId int, @vPAGENO
 END
 GO
 
+
+UPDATE SERVICES SET IMAGE_URL = 'http://api.tasko.in/serviceimages/Refrigerator_Service.png' where NAME = 'Refrigerator Service'
+UPDATE SERVICES SET IMAGE_URL = 'http://api.tasko.in/serviceimages/Microwave_Service.png' where NAME = 'Microwave Service'
+UPDATE SERVICES SET IMAGE_URL = 'http://api.tasko.in/serviceimages/Mixer_Grinder_Repair.png' where NAME = 'Mixer Grinder Repair'
+UPDATE SERVICES SET IMAGE_URL = 'http://api.tasko.in/serviceimages/Washing_Machine_Service.png' where NAME = 'Semi-Automatic Washing Machine Service'
+UPDATE SERVICES SET IMAGE_URL = 'http://api.tasko.in/serviceimages/Washing_Machine_Service.png' where NAME = 'Fully Automatic Washing Machine Service'
+UPDATE SERVICES SET IMAGE_URL = 'http://api.tasko.in/serviceimages/Bike_Service.png' where NAME = 'Bike Service'
+UPDATE SERVICES SET IMAGE_URL = 'http://api.tasko.in/serviceimages/ac_services.png' where NAME = 'AC Installation'
+
+GO
