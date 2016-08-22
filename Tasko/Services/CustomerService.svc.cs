@@ -311,10 +311,9 @@ namespace Tasko.Services
             return r;
         }
 
-        public string GetDistance(string latitude, string longitude, string customerLatitude, string customerLongitude)
+        public void GetDistance(string latitude, string longitude, string customerLatitude, string customerLongitude, MessageDetail message)
         {
             string requestUri = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + latitude + "," + longitude + "&destinations=" + customerLatitude + "," + customerLongitude;
-            string actualDistance = string.Empty;
             WebRequest request = HttpWebRequest.Create(requestUri);
             WebResponse response = request.GetResponse();
             StreamReader reader = new StreamReader(response.GetResponseStream());
@@ -323,15 +322,20 @@ namespace Tasko.Services
             {
                 XmlDocument xmlDoc = new XmlDocument();
                 xmlDoc.LoadXml(responseStringData);
-                string xpath = "DistanceMatrixResponse/row/element/distance/text";
-                XmlNode distance = xmlDoc.SelectSingleNode(xpath);
+                string distanceXpath = "DistanceMatrixResponse/row/element/distance/text";
+                XmlNode distance = xmlDoc.SelectSingleNode(distanceXpath);
                 if (distance != null && !string.IsNullOrEmpty(distance.InnerText))
                 {
-                     actualDistance = distance.InnerText.Remove(distance.InnerText.IndexOf(" "));
+                     message.CustomerDistance = distance.InnerText.Remove(distance.InnerText.IndexOf(" "));
+                }
+
+                string durationXpath = "DistanceMatrixResponse/row/element/duration/text";
+                XmlNode duration = xmlDoc.SelectSingleNode(durationXpath);
+                if (duration != null && !string.IsNullOrEmpty(duration.InnerText))
+                {
+                    message.CustomerETA = duration.InnerText;
                 }
             }
-
-            return actualDistance;
         }
 
         /// <summary>
@@ -1579,9 +1583,7 @@ namespace Tasko.Services
                     message.Orderstatus = order.OrderStatusId;
                     message.ServiceName = order.ServiceName;
                     message.CustomerPhone = order.CustomerPhone;
-                    message.CustomerDistance = GetDistance(order.SourceAddress.Lattitude, order.SourceAddress.Longitude, order.DestinationAddress.Lattitude, order.DestinationAddress.Longitude);
-                    message.CustomerETA = ConfigurationManager.AppSettings["CustomerETA"];
-                    //messageData = new JavaScriptSerializer().Serialize(message);
+                    GetDistance(order.SourceAddress.Lattitude, order.SourceAddress.Longitude, order.DestinationAddress.Lattitude, order.DestinationAddress.Longitude, message);
                     messageData = JsonConvert.SerializeObject(message);
                     r = InternalSendNotification(string.Empty, order.VendorId, messageData, ConfigurationManager.AppSettings["VendorAPIKey"].ToString());
                     break;
