@@ -196,7 +196,7 @@ namespace Tasko.Repository
                     serviceVendor.BaseRate = Convert.ToDouble(row["BASE_RATE"]);
                     serviceVendor.Latitude = Convert.ToDecimal(row["LATITIUDE"]);
                     serviceVendor.Longitude = Convert.ToDecimal(row["LONGITUDE"]);
-                    if (row["FAVORITE_ID"] != null)
+                    if (row["FAVORITE_ID"] != null && !row["FAVORITE_ID"].Equals(DBNull.Value))
                     {
                         serviceVendor.IsFavoriteVendor = true;
                     }
