@@ -277,12 +277,15 @@
     <value>Response from web service isn't OK</value>
   </data>
   <data name="CUSTOMER_DOESNOT_EXISTS" xml:space="preserve">
-    <value>Customer does not exist</value>
+    <value>You are not a member of tasko. Please sign up to login</value>
   </data>
   <data name="ERROR_ADDING_REQUEST" xml:space="preserve">
     <value>Error Adding Request</value>
   </data>
   <data name="REQUESTS_NOT_FOUND" xml:space="preserve">
     <value>No Offline Requests</value>
+  </data>
+  <data name="CUSTOMER_ALREADY_EXISTS" xml:space="preserve">
+    <value>You are already a member of tasko.Please login</value>
   </data>
 </root>

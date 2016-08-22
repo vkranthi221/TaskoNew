@@ -777,16 +777,18 @@ namespace Tasko.Services
                 string authCode = headers["Auth_Code"];
                 if (!string.IsNullOrEmpty(authCode) && VendorData.ValidateAuthCode(authCode, false))
                 {
-                    //checkuser existence
-                    if (checkUserExistence == true)
-                    {
-
-                     isCustomerExists = CustomerData.isCustomerPhoneNumberExits(phoneNumber);
-                    }
+                    isCustomerExists = CustomerData.isCustomerPhoneNumberExits(phoneNumber);
 
                     if (checkUserExistence == true && isCustomerExists == false)
                     {
                         r.Message = CommonMessages.CUSTOMER_DOESNOT_EXISTS;
+                        r.Error = false;
+                        r.Status = 200;
+                        return r;
+                    }
+                    else if (checkUserExistence == false && isCustomerExists == true)
+                    {
+                        r.Message = CommonMessages.CUSTOMER_ALREADY_EXISTS;
                         r.Error = false;
                         r.Status = 200;
                         return r;

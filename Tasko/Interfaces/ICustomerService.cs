@@ -933,6 +933,7 @@ namespace Tasko.Interfaces
          *    
          * @apiParam {String} emailId Email Id.
          * @apiParam {String} phoneNumber Phone number.
+         * @apiParam {String} checkUserExistence check User Existence.
          *
          * @apiParamExample {json} Param-Example:
          * {

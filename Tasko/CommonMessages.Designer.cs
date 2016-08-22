@@ -115,6 +115,15 @@ namespace Tasko {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are already a member of tasko.Please login.
+        /// </summary>
+        internal static string CUSTOMER_ALREADY_EXISTS {
+            get {
+                return ResourceManager.GetString("CUSTOMER_ALREADY_EXISTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customer Id and address are mandatory.
         /// </summary>
         internal static string CUSTOMER_DETAILS_INVALID {
@@ -124,7 +133,7 @@ namespace Tasko {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customer does not exist.
+        ///   Looks up a localized string similar to You are not a member of tasko. Please sign up to login.
         /// </summary>
         internal static string CUSTOMER_DOESNOT_EXISTS {
             get {
