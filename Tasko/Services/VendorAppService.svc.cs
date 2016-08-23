@@ -807,14 +807,20 @@ namespace Tasko.Services
                     messageData = JsonConvert.SerializeObject(message);
                     r = InternalSendNotification(order.CustomerId, string.Empty, messageData, ConfigurationManager.AppSettings["CustomerAPIKey"].ToString());
                     break;
-                case (int)Tasko.Common.TaskoEnum.OrderStatus.OrderCompleted:
-                case (int)Tasko.Common.TaskoEnum.OrderStatus.CustomerCancelled:
                 case (int)Tasko.Common.TaskoEnum.OrderStatus.VendorRejected:
                     message.OrderId = OrderId;
                     message.Orderstatus = order.OrderStatusId;
                     //messageData = new JavaScriptSerializer().Serialize(message);
                     messageData = JsonConvert.SerializeObject(message);
                     r = InternalSendNotification(order.CustomerId, string.Empty, messageData, ConfigurationManager.AppSettings["CustomerAPIKey"].ToString());
+                    break;
+                case (int)Tasko.Common.TaskoEnum.OrderStatus.OrderCompleted:
+                case (int)Tasko.Common.TaskoEnum.OrderStatus.CustomerCancelled:
+                    message.OrderId = OrderId;
+                    message.Orderstatus = order.OrderStatusId;
+                    //messageData = new JavaScriptSerializer().Serialize(message);
+                    messageData = JsonConvert.SerializeObject(message);
+                    r = InternalSendNotification(string.Empty, order.VendorId, messageData, ConfigurationManager.AppSettings["VendorAPIKey"].ToString());
                     break;
                 default:
                     break;
