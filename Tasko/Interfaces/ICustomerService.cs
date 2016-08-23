@@ -281,7 +281,8 @@ namespace Tasko.Interfaces
                       "VendorId": "FC73EC7242E28142ACCAFDF4703F0EBF",
                       "VendorName": "srikanth",
                       "VendorServiceId": "CF9A27B3DA0D5E418B1A8E6CC79218AD",
-                      "Distance": 4
+                      "Distance": 4,
+                      "ETA":"21 mins"
                     }
                   ],
           "Error": false,

@@ -203,6 +203,13 @@ namespace Tasko.Services
                                         serviceVendor.Distance = Convert.ToDecimal(actualDistance);
                                     }
                                 }
+
+                                string durationXpath = "DistanceMatrixResponse/row/element/duration/text";
+                                XmlNode duration = xmlDoc.SelectSingleNode(durationXpath);
+                                if (duration != null && !string.IsNullOrEmpty(duration.InnerText))
+                                {
+                                    serviceVendor.ETA = duration.InnerText;
+                                }
                             }
                         }
                     }

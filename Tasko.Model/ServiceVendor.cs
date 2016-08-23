@@ -101,5 +101,8 @@ namespace Tasko.Model
 
         [DataMember]
         public decimal Distance { get; set; }
+
+        [DataMember]
+        public string ETA { get; set; }
     }
 }
