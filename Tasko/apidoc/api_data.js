@@ -4191,6 +4191,13 @@ define({ "api": [
             "optional": false,
             "field": "phoneNumber",
             "description": "<p>Phone number.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "checkUserExistence",
+            "description": "<p>check User Existence.</p>"
           }
         ]
       },
@@ -4786,7 +4793,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "        {\n \"Data\": [\n           {\n             \"__type\": \"VendorSummary:#Tasko.Model\",\n             \"Distance\": 4,\n             \"DueDate\": null,\n             \"EmailAddress\": null,\n             \"IsVendorLive\": false,\n             \"Latitude\": 17.385,\n             \"Longitude\": 78.4867,\n             \"MobileNumber\": null,\n             \"MonthlyCharge\": 0,\n             \"Name\": \"Srikanth\",\n             \"UniqueId\": 0,\n             \"UserName\": \"srikanth\",\n             \"VendorId\": \"F3E6D9CBF8EF6A4289E1FC3509076D54\"\n           }\n         ],\n \"Error\": false,\n\"Message\": \"Success\",\n\"Status\": 200\n       }",
+          "content": "        {\n \"Data\": [\n           {\n             \"__type\": \"VendorSummary:#Tasko.Model\",\n             \"Distance\": 4,\n             \"DueDate\": null,\n             \"EmailAddress\": null,\n             \"IsVendorLive\": false,\n             \"Latitude\": 17.385,\n             \"Longitude\": 78.4867,\n             \"MobileNumber\": null,\n             \"MonthlyCharge\": 0,\n             \"Name\": \"Srikanth\",\n             \"UniqueId\": 0,\n             \"UserName\": \"srikanth\",\n             \"VendorId\": \"F3E6D9CBF8EF6A4289E1FC3509076D54\",\n             \"ETA\":\"21 mins\"\n           }\n         ],\n \"Error\": false,\n\"Message\": \"Success\",\n\"Status\": 200\n       }",
           "type": "json"
         }
       ]
@@ -5083,7 +5090,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"ServiceVendor:#Tasko.Model\",\n              \"BaseRate\": 82,\n              \"IsFavoriteVendor\": true,\n              \"OverAllRating\": 3,\n              \"ServiceId\": \"0AEAC4261E569C498A05ABBEEC84EA55\",\n              \"ServiceName\": \"Microwave Service\",\n              \"TotalReviews\": 10,\n              \"VendorId\": \"FC73EC7242E28142ACCAFDF4703F0EBF\",\n              \"VendorName\": \"srikanth\",\n              \"VendorServiceId\": \"CF9A27B3DA0D5E418B1A8E6CC79218AD\",\n              \"Distance\": 4\n            }\n          ],\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"ServiceVendor:#Tasko.Model\",\n              \"BaseRate\": 82,\n              \"IsFavoriteVendor\": true,\n              \"OverAllRating\": 3,\n              \"ServiceId\": \"0AEAC4261E569C498A05ABBEEC84EA55\",\n              \"ServiceName\": \"Microwave Service\",\n              \"TotalReviews\": 10,\n              \"VendorId\": \"FC73EC7242E28142ACCAFDF4703F0EBF\",\n              \"VendorName\": \"srikanth\",\n              \"VendorServiceId\": \"CF9A27B3DA0D5E418B1A8E6CC79218AD\",\n              \"Distance\": 4,\n              \"ETA\":\"21 mins\"\n            }\n          ],\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
           "type": "json"
         }
       ]
