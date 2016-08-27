@@ -31,14 +31,13 @@ INSERT INTO [dbo].[ID_PROOFS] values(NEWID(),'Voter Id')
 SELECT * FROM [dbo].[ID_PROOFS]
 
 ----- Order Status TestData-----
-INSERT INTO [dbo].[ORDER_STATUS] values(1, 'Requested')
-INSERT INTO [dbo].[ORDER_STATUS] values(2, 'Pending')
-INSERT INTO [dbo].[ORDER_STATUS] values(3, 'Accepted')
-INSERT INTO [dbo].[ORDER_STATUS] values(4, 'Confirmed')
-INSERT INTO [dbo].[ORDER_STATUS] values(5, 'Cancelled')
-INSERT INTO [dbo].[ORDER_STATUS] values(6, 'Completed')
-INSERT INTO [dbo].[ORDER_STATUS] values(7, 'Cancelled By Vendor')
-INSERT INTO [dbo].[ORDER_STATUS] values(8, 'Cancelled By Customer')
+INSERT INTO [dbo].[ORDER_STATUS] values(1, 'CustomerRequested')
+INSERT INTO [dbo].[ORDER_STATUS] values(2, 'VendorAccepted')
+INSERT INTO [dbo].[ORDER_STATUS] values(3, 'VendorRejected')
+INSERT INTO [dbo].[ORDER_STATUS] values(4, 'CustomerAccepted')
+INSERT INTO [dbo].[ORDER_STATUS] values(5, 'OrderCompleted')
+INSERT INTO [dbo].[ORDER_STATUS] values(6, 'CustomerCancelled')
+INSERT INTO [dbo].[ORDER_STATUS] values(7, 'VendorCancelled')
 SELECT * FROM [dbo].[ORDER_STATUS]
 
 
