@@ -40,7 +40,7 @@ INSERT INTO [dbo].[ORDER_STATUS] values(6, 'CustomerCancelled')
 INSERT INTO [dbo].[ORDER_STATUS] values(7, 'VendorCancelled')
 SELECT * FROM [dbo].[ORDER_STATUS]
 
-
+INSERT INTO [dbo].[USER] VALUES(NEWID(),'admin','Administrator', 'admin', 'admin@Tasko.in', 1234567890,1,getdate(),1)
 
 
   
