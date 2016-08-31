@@ -498,7 +498,7 @@ namespace Tasko.Repository
             }
 
             // Experience
-            if (!string.IsNullOrEmpty(vendor.MobileNumber))
+            if (!string.IsNullOrEmpty(vendor.Experience))
             {
                 objParameters.Add(SqlHelper.CreateParameter("@pExperience", DbType.String, vendor.Experience));
             }
