@@ -201,7 +201,10 @@ namespace Tasko.Repository
                         serviceVendor.IsFavoriteVendor = true;
                     }
 
-                    serviceVendor.OverAllRating = Convert.ToDecimal(row["OVERALL_RATINGS"]);
+                    if (row["OVERALL_RATINGS"] != null && !row["OVERALL_RATINGS"].Equals(DBNull.Value))
+                    {
+                        serviceVendor.OverAllRating = Convert.ToDecimal(row["OVERALL_RATINGS"]);
+                    }
                     serviceVendor.TotalReviews = Convert.ToInt32(row["TOTAL_REVIEWS"]);
                     serviceVendors.Add(serviceVendor);
                 }
@@ -778,7 +781,7 @@ namespace Tasko.Repository
         //    //if (gcmUser != null)
         //    //{
 
-        //        //®istration_id
+        //        //Â®istration_id
 
         //        string postData = "collapse_key=score_update&time_to_live=108&delay_while_idle=0&data.message=" + "Last message " +
         //                          "&data.time=" + System.DateTime.Now.ToString() +
