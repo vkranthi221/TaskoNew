@@ -124,5 +124,14 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public string CustomerId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the order price.
+        /// </summary>
+        /// <value>
+        /// The order price.
+        /// </value>
+        [DataMember]
+        public decimal OrderPrice { get; set; }
     }
 }

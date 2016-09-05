@@ -56,57 +56,57 @@ SELECT * FROM [dbo].[ORDER]
 INSERT INTO [dbo].VENDOR_RATING values(newid(),
 2,2,3,1,
 getdate(),
-'Service is good', 'TASKO1000', (select VENDOR_ID from [dbo].Vendor WHERE NAME='chandra'), (select CUSTOMER_ID from [dbo].CUSTOMER WHERE NAME='Shivaji'))
+'Service is good', 'TASKO1000', (select VENDOR_ID from [dbo].Vendor WHERE NAME='chandra'), (select CUSTOMER_ID from [dbo].CUSTOMER WHERE NAME='Shivaji'), 500)
 
 INSERT INTO [dbo].VENDOR_RATING values(newId(),
 1,1,1,1,
 getdate(),
-'Service is not provided in time', ('TASKO1001'),(select VENDOR_ID from [dbo].Vendor WHERE NAME='Srikanth'), (select CUSTOMER_ID from [dbo].CUSTOMER WHERE NAME='Shivaji123'))
+'Service is not provided in time', ('TASKO1001'),(select VENDOR_ID from [dbo].Vendor WHERE NAME='Srikanth'), (select CUSTOMER_ID from [dbo].CUSTOMER WHERE NAME='Shivaji123'), 500)
 
 INSERT INTO [dbo].VENDOR_RATING values(newId(),
 2,2,2,2,
 getdate(),
-'Service is not provided in time', ('TASKO1002'),(select VENDOR_ID from [dbo].Vendor WHERE NAME='Srikanth'), (select CUSTOMER_ID from [dbo].CUSTOMER WHERE NAME='Shivaji123'))
+'Service is not provided in time', ('TASKO1002'),(select VENDOR_ID from [dbo].Vendor WHERE NAME='Srikanth'), (select CUSTOMER_ID from [dbo].CUSTOMER WHERE NAME='Shivaji123'), 500)
 
 INSERT INTO [dbo].VENDOR_RATING values(newId(),
 1,1,1,1,
 getdate(),
-'Service is not provided in time', ('TASKO1003'),(select VENDOR_ID from [dbo].Vendor WHERE NAME='Srikanth'), (select CUSTOMER_ID from [dbo].CUSTOMER WHERE NAME='Shivaji123'))
+'Service is not provided in time', ('TASKO1003'),(select VENDOR_ID from [dbo].Vendor WHERE NAME='Srikanth'), (select CUSTOMER_ID from [dbo].CUSTOMER WHERE NAME='Shivaji123'), 500)
 
 INSERT INTO [dbo].VENDOR_RATING values(newId(),
 1,1,1,1,
 getdate(),
-'Service is not provided in time', ('TASKO1004'),(select VENDOR_ID from [dbo].Vendor WHERE NAME='Srikanth'), (select CUSTOMER_ID from [dbo].CUSTOMER WHERE NAME='Shivaji123'))
+'Service is not provided in time', ('TASKO1004'),(select VENDOR_ID from [dbo].Vendor WHERE NAME='Srikanth'), (select CUSTOMER_ID from [dbo].CUSTOMER WHERE NAME='Shivaji123'), 500)
 
 INSERT INTO [dbo].VENDOR_RATING values(newId(),
 3,3,3,3,
 getdate(),
-'Service is provided in time', ('TASKO1005'),(select VENDOR_ID from [dbo].Vendor WHERE NAME='Srikanth'), (select CUSTOMER_ID from [dbo].CUSTOMER WHERE NAME='Shivaji123'))
+'Service is provided in time', ('TASKO1005'),(select VENDOR_ID from [dbo].Vendor WHERE NAME='Srikanth'), (select CUSTOMER_ID from [dbo].CUSTOMER WHERE NAME='Shivaji123'), 500)
 
 INSERT INTO [dbo].VENDOR_RATING values(newId(),
 4,4,4,4,
 getdate(),
-'Service is provided in time', ('TASKO1006'),(select VENDOR_ID from [dbo].Vendor WHERE NAME='Srikanth'), (select CUSTOMER_ID from [dbo].CUSTOMER WHERE NAME='Shivaji123'))
+'Service is provided in time', ('TASKO1006'),(select VENDOR_ID from [dbo].Vendor WHERE NAME='Srikanth'), (select CUSTOMER_ID from [dbo].CUSTOMER WHERE NAME='Shivaji123'), 500)
 
 INSERT INTO [dbo].VENDOR_RATING values(newId(),
 5,5,5,5,
 getdate(),
-'Service is not provided in time', ('TASKO1007'),(select VENDOR_ID from [dbo].Vendor WHERE NAME='Srikanth'), (select CUSTOMER_ID from [dbo].CUSTOMER WHERE NAME='Shivaji123'))
+'Service is not provided in time', ('TASKO1007'),(select VENDOR_ID from [dbo].Vendor WHERE NAME='Srikanth'), (select CUSTOMER_ID from [dbo].CUSTOMER WHERE NAME='Shivaji123'), 500)
 
 INSERT INTO [dbo].VENDOR_RATING values(newId(),
 1,2,3,4,
 getdate(),
-'Service is not provided in time', ('TASKO1008'),(select VENDOR_ID from [dbo].Vendor WHERE NAME='Srikanth'), (select CUSTOMER_ID from [dbo].CUSTOMER WHERE NAME='Shivaji123'))
+'Service is not provided in time', ('TASKO1008'),(select VENDOR_ID from [dbo].Vendor WHERE NAME='Srikanth'), (select CUSTOMER_ID from [dbo].CUSTOMER WHERE NAME='Shivaji123'), 500)
 
 INSERT INTO [dbo].VENDOR_RATING values(newId(),
 2,2,3,4,
 getdate(),
-'Service is in time', ('TASKO1009'),(select VENDOR_ID from [dbo].Vendor WHERE NAME='Srikanth'), (select CUSTOMER_ID from [dbo].CUSTOMER WHERE NAME='Shivaji123'))
+'Service is in time', ('TASKO1009'),(select VENDOR_ID from [dbo].Vendor WHERE NAME='Srikanth'), (select CUSTOMER_ID from [dbo].CUSTOMER WHERE NAME='Shivaji123'), 500)
 
 INSERT INTO [dbo].VENDOR_RATING values(newId(),
 5,1,3,4,
 getdate(),
-'Service is Good', ('TASKO1010'),(select VENDOR_ID from [dbo].Vendor WHERE NAME='Srikanth'), (select CUSTOMER_ID from [dbo].CUSTOMER WHERE NAME='Shivaji123'))
+'Service is Good', ('TASKO1010'),(select VENDOR_ID from [dbo].Vendor WHERE NAME='Srikanth'), (select CUSTOMER_ID from [dbo].CUSTOMER WHERE NAME='Shivaji123'), 500)
 SELECT * FROM [dbo].VENDOR_RATING
 
 INSERT INTO [dbo].CUSTOMER_RATING VALUES((SELECT CUSTOMER_ID FROM [dbo].[ORDER] WHERE CUSTOMER_ID IN (SELECT CUSTOMER_ID FROM [dbo].Customer WHERE NAME='Shivaji')),(SELECT ORDER_ID FROM [dbo].[order] WHERE CUSTOMER_ID IN(SELECT CUSTOMER_ID FROM [dbo].CUSTOMER WHERE NAME='Shivaji')),4,'Good Customer')

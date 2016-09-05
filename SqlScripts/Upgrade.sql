@@ -75,3 +75,54 @@ SET NOCOUNT ON;
 END
 
 GO
+
+ALTER TABLE[dbo].[VENDOR_RATING] ADD [ORDER_PRICE] decimal(18, 2) NULL
+
+GO
+
+USE [Tasko]
+GO
+
+ALTER PROCEDURE [dbo].[usp_AddVendorRating]
+(
+  @pOrderId varchar(50),
+  @pCustomerId binary(16),
+  @pVendorId binary(16),
+  @pServiceQuality decimal(18,2),
+  @pPunctuality decimal(18,2),
+  @pCourtesy decimal(18,2),
+  @pPrice decimal(18,2),
+  @pComments nvarchar(max),
+  @pOrderPrice decimal(18,2)
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+  INSERT INTO [dbo].[VENDOR_RATING] VALUES(NewId(),@pServiceQuality,@pPunctuality,@pCourtesy,@pPrice,Getdate(),@pComments,@pOrderId,@pVendorId,@pCustomerId,@pOrderPrice)
+
+END
+
+GO
+
+ALTER PROCEDURE [dbo].[usp_GetVendorRatings]
+(
+	@pVendorId Binary(16)
+)
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+SELECT TOP 25 VR.VENDOR_RATING_ID, VR.SERVICE_QUALITY, VR.PUNCTUALITY, VR.COURTESY, VR.PRICE, VR.REVIEW_DATE, VR.COMMENTS, CUST.NAME, VR.ORDER_PRICE,
+  ROUND(SUM(VR.SERVICE_QUALITY + VR.PUNCTUALITY + VR.COURTESY + VR.PRICE)/4,0) AS TOTAL
+  FROM VENDOR_RATING VR
+  INNER JOIN CUSTOMER CUST ON VR.CUSTOMER_ID = CUST.CUSTOMER_ID
+  WHERE VR.VENDOR_ID= @pVendorId 
+  GROUP BY VR.VENDOR_RATING_ID, VR.SERVICE_QUALITY, VR.PUNCTUALITY, VR.COURTESY,VR.PRICE, VR.REVIEW_DATE, VR.COMMENTS, CUST.NAME, VR.ORDER_PRICE
+  ORDER BY REVIEW_DATE DESC
+END
+
+GO

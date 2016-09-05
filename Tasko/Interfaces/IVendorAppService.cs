@@ -534,7 +534,8 @@ namespace Tasko.Interfaces
                       "Punctuality": 1,
                       "ReviewDate": "2016-07-01 05:50:19",
                       "ServiceQuality": 5,
-                      "VendorId": null
+                      "VendorId": null,
+                      "OrderPrice":500
                     },
                     {
                       "__type": "VendorRating:#Tasko.Model",
@@ -548,7 +549,8 @@ namespace Tasko.Interfaces
                       "Punctuality": 2,
                       "ReviewDate": "2016-07-01 05:50:19",
                       "ServiceQuality": 2,
-                      "VendorId": null
+                      "VendorId": null,
+                      "OrderPrice":500
                     }
                   ],
   

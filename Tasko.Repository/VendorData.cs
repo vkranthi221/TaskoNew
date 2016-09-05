@@ -327,6 +327,7 @@ namespace Tasko.Repository
                 rating.ReviewDate = Convert.ToDateTime(reader["REVIEW_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
                 rating.Comments = reader["COMMENTS"].ToString();
                 rating.CustomerName = reader["NAME"].ToString();
+                rating.OrderPrice = Convert.ToDecimal(reader["ORDER_PRICE"]);
                 vendorRatings.Add(rating);
             }
 

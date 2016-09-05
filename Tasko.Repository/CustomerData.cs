@@ -409,6 +409,7 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pCourtesy", DbType.Decimal, vendorRating.Courtesy));
             objParameters.Add(SqlHelper.CreateParameter("@pPrice", DbType.Decimal, vendorRating.Price));
             objParameters.Add(SqlHelper.CreateParameter("@pComments", DbType.String, vendorRating.Comments));
+            objParameters.Add(SqlHelper.CreateParameter("@pOrderPrice", DbType.Decimal, vendorRating.OrderPrice));
 
             SqlHelper.ExecuteNonQuery("dbo.usp_AddVendorRating", objParameters.ToArray());
         }
