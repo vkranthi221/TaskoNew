@@ -18,7 +18,7 @@ INSERT INTO [dbo].[Services] values(NEWID(),'AC Service',null,'http://api.tasko.
 INSERT INTO [dbo].[Services] values(NEWID(),'Semi-Automatic Washing Machine Service',null,'http://api.tasko.in/serviceimages/Washing_Machine_Service.png',0)
 INSERT INTO [dbo].[Services] values(NEWID(),'Bike Service',null,'http://api.tasko.in/serviceimages/Bike_Service.png',0)
 INSERT INTO [dbo].[Services] values(NEWID(),'Mixer Grinder Repair',null,'http://api.tasko.in/serviceimages/Mixer_Grinder_Repair.png',0)
-INSERT INTO [dbo].[Services] values(NEWID(),'Water Purifier Service',null,null,0)
+INSERT INTO [dbo].[Services] values(NEWID(),'Water Purifier Service',null,'http://api.tasko.in/serviceimages/water-purifier.png',0)
 INSERT INTO [dbo].[Services] values(newid(), 'Plumber',null, 'http://api.tasko.in/serviceimages/plumber.png',0)
 
 SELECT * FROM [dbo].[Services]
