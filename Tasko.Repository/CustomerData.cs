@@ -555,8 +555,11 @@ namespace Tasko.Repository
 
             if (reader.Read())
             {
+                reader.Close();
                 return (bool)reader["IsCustomerExists"];
             }
+
+            reader.Close();
             return false;
         }
 
@@ -576,8 +579,11 @@ namespace Tasko.Repository
 
             if (reader.Read())
             {
+                reader.Close();
                 return (bool)reader["IsValid"];
             }
+
+            reader.Close();
             return false;
         }
 
@@ -610,9 +616,12 @@ namespace Tasko.Repository
                 {
                     logininfo.UserId = BinaryConverter.ConvertByteToString((byte[])reader["USERID"]);
                 }
+
+                reader.Close();
                 return logininfo;
             }
 
+            reader.Close();
             return logininfo;
         }
 
@@ -639,10 +648,12 @@ namespace Tasko.Repository
                     logininfo = new LoginInfo();
                     logininfo.TokenId = BinaryConverter.ConvertByteToString((byte[])reader["AUTH_CODE"]);
                     logininfo.UserId = BinaryConverter.ConvertByteToString((byte[])reader["USERID"]);
+                    reader.Close();
                     return logininfo;
                 }
             }
 
+            reader.Close();
             return logininfo;
         }
 

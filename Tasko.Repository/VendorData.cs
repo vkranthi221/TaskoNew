@@ -23,9 +23,11 @@ namespace Tasko.Repository
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_InsertAuthCode");
             if (reader.Read())
             {
+                reader.Close();
                 return BinaryConverter.ConvertByteToString((byte[])reader["Auth_Code"]);
             }
 
+            reader.Close();
             return string.Empty;
         }
 
@@ -47,10 +49,12 @@ namespace Tasko.Repository
 
             if (reader.Read())
             {
+                reader.Close();
                 return (bool)reader["IsValid"];
             }
-            return false;
 
+            reader.Close();
+            return false;
         }
 
         /// <summary>
@@ -71,9 +75,11 @@ namespace Tasko.Repository
 
             if (reader.Read())
             {
+                reader.Close();
                 return (bool)reader["IsValid"];
             }
 
+            reader.Close();
             return false;
         }
 
@@ -545,6 +551,7 @@ namespace Tasko.Repository
                 }
             }
 
+            reader.Close();
             return gcmUser;
         }
 

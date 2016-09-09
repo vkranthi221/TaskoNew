@@ -212,6 +212,7 @@ namespace Tasko.Repository
                 serviceOverview.ServiceId = serviceId;
             }
 
+            reader.Close();
             return serviceOverview;
         }
 
@@ -285,6 +286,7 @@ namespace Tasko.Repository
                 services.Add(vendorService);
             }
 
+            reader.Close();
             return services.Count > 0 ? services : null;
         }
 
@@ -341,6 +343,7 @@ namespace Tasko.Repository
                 vendorOverview.Name = reader["VENDOR_NAME"].ToString();
             }
 
+            reader.Close();
             return vendorOverview;
         }
 
@@ -497,6 +500,7 @@ namespace Tasko.Repository
                 customerOverview.Name = (reader["Name"]).ToString();
             }
 
+            reader.Close();
             return customerOverview;
         }
 
@@ -522,8 +526,7 @@ namespace Tasko.Repository
                 rating.VendorName = reader["vendor_name"].ToString();
                 rating.OrderId = reader["order_id"].ToString();
                 rating.OverAllRating = Convert.ToDecimal(reader["OVERALL_RATING"]);
-
-
+                
                 rating.ServiceQuality = Convert.ToDecimal(reader["SERVICE_QUALITY"]);
                 rating.Punctuality = Convert.ToDecimal(reader["PUNCTUALITY"]);
                 rating.Courtesy = Convert.ToDecimal(reader["COURTESY"]);
@@ -533,7 +536,6 @@ namespace Tasko.Repository
             }
 
             reader.Close();
-
             return customerRatings.Count > 0 ? customerRatings : null;
         }
 
@@ -556,9 +558,11 @@ namespace Tasko.Repository
 
             if (reader.Read())
             {
+                reader.Close();
                 return (bool)reader["IsValid"];
             }
 
+            reader.Close();
             return false;
         }
 
@@ -1033,8 +1037,7 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pUserName", DbType.String, userName));
             objParameters.Add(SqlHelper.CreateParameter("@pPassword", DbType.String, password));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_LoginAdminUser", objParameters.ToArray());
-
-
+            
             if (reader.Read())
             {
                 loginInfo.TokenId = BinaryConverter.ConvertByteToString((byte[])reader["Token_Code"]);
@@ -1042,11 +1045,10 @@ namespace Tasko.Repository
                 {
                     loginInfo.UserId = BinaryConverter.ConvertByteToString((byte[])reader["UserId"]);
                 }
-
             }
 
+            reader.Close();
             return loginInfo;
-
         }
 
         public static void UpdateUserStatus(string userId, bool isActive)
