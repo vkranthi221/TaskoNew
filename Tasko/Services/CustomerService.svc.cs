@@ -182,34 +182,42 @@ namespace Tasko.Services
                     {
                         foreach (ServiceVendor serviceVendor in services)
                         {
-                            string requestUri = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + latitude + "," + longitude + "&destinations=" + serviceVendor.Latitude + "," + serviceVendor.Longitude;
-
-                            WebRequest request = HttpWebRequest.Create(requestUri);
-                            WebResponse response = request.GetResponse();
-                            StreamReader reader = new StreamReader(response.GetResponseStream());
-                            string responseStringData = reader.ReadToEnd();
-                            if (!string.IsNullOrEmpty(responseStringData))
+                            // This means that vendor is logged out. So we are updating his distance to negative value.
+                            if (serviceVendor.Latitude != 0 && serviceVendor.Longitude != 0)
                             {
-                                XmlDocument xmlDoc = new XmlDocument();
-                                xmlDoc.LoadXml(responseStringData);
-                                string xpath = "DistanceMatrixResponse/row/element/distance/text";
-                                XmlNode distance = xmlDoc.SelectSingleNode(xpath);
-                                if (distance != null && !string.IsNullOrEmpty(distance.InnerText))
+                                string requestUri = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + latitude + "," + longitude + "&destinations=" + serviceVendor.Latitude + "," + serviceVendor.Longitude;
+
+                                WebRequest request = HttpWebRequest.Create(requestUri);
+                                WebResponse response = request.GetResponse();
+                                StreamReader reader = new StreamReader(response.GetResponseStream());
+                                string responseStringData = reader.ReadToEnd();
+                                if (!string.IsNullOrEmpty(responseStringData))
                                 {
-                                    string actualDistance = distance.InnerText.Remove(distance.InnerText.IndexOf(" "));
-                                    if (!string.IsNullOrEmpty(actualDistance))
+                                    XmlDocument xmlDoc = new XmlDocument();
+                                    xmlDoc.LoadXml(responseStringData);
+                                    string xpath = "DistanceMatrixResponse/row/element/distance/text";
+                                    XmlNode distance = xmlDoc.SelectSingleNode(xpath);
+                                    if (distance != null && !string.IsNullOrEmpty(distance.InnerText))
                                     {
-                                        nearVendorFound = true;
-                                        serviceVendor.Distance = Convert.ToDecimal(actualDistance);
+                                        string actualDistance = distance.InnerText.Remove(distance.InnerText.IndexOf(" "));
+                                        if (!string.IsNullOrEmpty(actualDistance))
+                                        {
+                                            nearVendorFound = true;
+                                            serviceVendor.Distance = Convert.ToDecimal(actualDistance);
+                                        }
+                                    }
+
+                                    string durationXpath = "DistanceMatrixResponse/row/element/duration/text";
+                                    XmlNode duration = xmlDoc.SelectSingleNode(durationXpath);
+                                    if (duration != null && !string.IsNullOrEmpty(duration.InnerText))
+                                    {
+                                        serviceVendor.ETA = duration.InnerText;
                                     }
                                 }
-
-                                string durationXpath = "DistanceMatrixResponse/row/element/duration/text";
-                                XmlNode duration = xmlDoc.SelectSingleNode(durationXpath);
-                                if (duration != null && !string.IsNullOrEmpty(duration.InnerText))
-                                {
-                                    serviceVendor.ETA = duration.InnerText;
-                                }
+                            }
+                            else
+                            {
+                                serviceVendor.Distance = -1;
                             }
                         }
                     }
@@ -221,7 +229,7 @@ namespace Tasko.Services
                         r.Status = 200;
 
                         decimal distanceCovered = Convert.ToDecimal(ConfigurationManager.AppSettings["DistanceCovered"]);
-                        r.Data = services.Where(i => i.Distance <= distanceCovered).ToList();
+                        r.Data = services.Where(i => i.Distance <= distanceCovered && i.Distance != -1).ToList();
                     }
                     else
                     {
