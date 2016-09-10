@@ -19,16 +19,15 @@ namespace Tasko.Repository
         public static string InsertAuthCode()
         {
             Vendor objVendor = new Vendor();
-
+            string authCode = string.Empty;
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_InsertAuthCode");
             if (reader.Read())
             {
-                reader.Close();
-                return BinaryConverter.ConvertByteToString((byte[])reader["Auth_Code"]);
+                authCode = BinaryConverter.ConvertByteToString((byte[])reader["Auth_Code"]);
             }
 
             reader.Close();
-            return string.Empty;
+            return authCode;
         }
 
         /// <summary>
@@ -46,15 +45,14 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pAuthCode", DbType.Binary, BinaryConverter.ConvertStringToByte(authCode)));
             objParameters.Add(SqlHelper.CreateParameter("@pIsDeleteRequired", DbType.Boolean, isDeleteRequired));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_ValidateAuthCode", objParameters.ToArray());
-
+            bool isValid = false;
             if (reader.Read())
             {
-                reader.Close();
-                return (bool)reader["IsValid"];
+                isValid = (bool)reader["IsValid"];
             }
 
             reader.Close();
-            return false;
+            return isValid;
         }
 
         /// <summary>
@@ -73,14 +71,14 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pUserId", DbType.Binary, BinaryConverter.ConvertStringToByte(userId)));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_ValidateTokenCode", objParameters.ToArray());
 
+            bool isvalid = false;
             if (reader.Read())
             {
-                reader.Close();
-                return (bool)reader["IsValid"];
+                isvalid = (bool)reader["IsValid"];
             }
 
             reader.Close();
-            return false;
+            return isvalid;
         }
 
         /// <summary>

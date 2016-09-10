@@ -552,15 +552,14 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pPhoneNumber", DbType.String, phoneNumber));
 
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_IsCustomerExists", objParameters.ToArray());
-
+            bool isCustomerExists = false;
             if (reader.Read())
             {
-                reader.Close();
-                return (bool)reader["IsCustomerExists"];
+                isCustomerExists = (bool)reader["IsCustomerExists"];
             }
 
             reader.Close();
-            return false;
+            return isCustomerExists;
         }
 
         /// <summary>
@@ -577,14 +576,14 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pOTP", DbType.String, OTP));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_ValidateOTP", objParameters.ToArray());
 
+            bool isvalid = false;
             if (reader.Read())
-            {
-                reader.Close();
-                return (bool)reader["IsValid"];
+            {   
+                isvalid = (bool)reader["IsValid"];
             }
 
             reader.Close();
-            return false;
+            return isvalid;
         }
 
         /// <summary>
@@ -616,9 +615,6 @@ namespace Tasko.Repository
                 {
                     logininfo.UserId = BinaryConverter.ConvertByteToString((byte[])reader["USERID"]);
                 }
-
-                reader.Close();
-                return logininfo;
             }
 
             reader.Close();
@@ -647,9 +643,7 @@ namespace Tasko.Repository
                 {
                     logininfo = new LoginInfo();
                     logininfo.TokenId = BinaryConverter.ConvertByteToString((byte[])reader["AUTH_CODE"]);
-                    logininfo.UserId = BinaryConverter.ConvertByteToString((byte[])reader["USERID"]);
-                    reader.Close();
-                    return logininfo;
+                    logininfo.UserId = BinaryConverter.ConvertByteToString((byte[])reader["USERID"]);                   
                 }
             }
 

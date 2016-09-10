@@ -555,15 +555,14 @@ namespace Tasko.Repository
 
             objParameters.Add(SqlHelper.CreateParameter("@pIsDeleteRequired", DbType.Boolean, isDeleteRequired));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_ValidateAuthCode", objParameters.ToArray());
-
+            bool isValid = false;
             if (reader.Read())
             {
-                reader.Close();
-                return (bool)reader["IsValid"];
+                isValid = (bool)reader["IsValid"];
             }
 
             reader.Close();
-            return false;
+            return isValid;
         }
 
         #endregion
