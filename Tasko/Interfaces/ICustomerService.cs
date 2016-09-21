@@ -280,6 +280,7 @@ namespace Tasko.Interfaces
                       "TotalReviews": 10,
                       "VendorId": "FC73EC7242E28142ACCAFDF4703F0EBF",
                       "VendorName": "srikanth",
+                      "FacebookUrl":"http://facebook.com/xyz",
                       "VendorServiceId": "CF9A27B3DA0D5E418B1A8E6CC79218AD",
                       "Distance": 4,
                       "ETA":"21 mins"

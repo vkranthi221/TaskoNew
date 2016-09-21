@@ -238,6 +238,12 @@ namespace Tasko.Services
                         r.Status = 400;
                     }
                 }
+                else
+                {
+                    r.Error = true;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                    r.Status = 400;
+                }
 
                 ////if (services != null)
                 ////{
@@ -246,12 +252,7 @@ namespace Tasko.Services
                 ////    r.Status = 200;
                 ////    r.Data = services;
                 ////}
-                ////else
-                ////{
-                ////    r.Error = true;
-                ////    r.Message = CommonMessages.VENDORS_NOT_FOUND;
-                ////    r.Status = 400;
-                ////}
+               
             }
             catch (UserException userException)
             {

@@ -180,6 +180,7 @@ namespace Tasko.Interfaces
             "IsVendorLive": false,
             "IsVendorVerified": true,
             "MobileNumber": "9848022669",
+            "FacebookUrl":"http://facebook.com/xyz",
             "Name": "Steve",
             "NoOfEmployees": 10,
             "UserName": "sree123"

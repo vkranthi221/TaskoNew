@@ -600,7 +600,7 @@ namespace Tasko.Services
                     r.Data = null;
                     r.Error = false;
                     r.Status = 200;
-                    r.Message = CommonMessages.NO_VENDORS;
+                    r.Message = CommonMessages.VENDOR_UPDATED;
                 }
                 else
                 {
@@ -1828,8 +1828,6 @@ namespace Tasko.Services
             }
 
             return false;
-
-            //return true;
         }
 
         #endregion

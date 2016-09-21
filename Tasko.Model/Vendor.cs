@@ -209,6 +209,9 @@ namespace Tasko.Model
         [DataMember]
         public string Experience { get; set; }
 
+        [DataMember]
+        public string FacebookUrl { get; set; }
+
         /// <summary>
         /// Vendor constructor
         /// </summary>

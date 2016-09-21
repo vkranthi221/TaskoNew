@@ -565,6 +565,15 @@ namespace Tasko {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vendor Updated Successfully..
+        /// </summary>
+        internal static string VENDOR_UPDATED {
+            get {
+                return ResourceManager.GetString("VENDOR_UPDATED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vendors are not found for the selected service.
         /// </summary>
         internal static string VENDORS_NOT_FOUND {

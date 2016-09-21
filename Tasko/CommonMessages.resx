@@ -288,4 +288,7 @@
   <data name="CUSTOMER_ALREADY_EXISTS" xml:space="preserve">
     <value>You are already a member of tasko.Please login</value>
   </data>
+  <data name="VENDOR_UPDATED" xml:space="preserve">
+    <value>Vendor Updated Successfully.</value>
+  </data>
 </root>

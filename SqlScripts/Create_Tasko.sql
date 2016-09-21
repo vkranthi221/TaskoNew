@@ -95,6 +95,7 @@ CREATE TABLE [dbo].[VENDOR](
 	[DUE_DATE] [datetime] NULL,
 	[VENDOR_ALSO_KNOWN_AS] [nvarchar](50) NULL,
 	[EXPERIENCE] [nvarchar](50) NULL,
+	[FACEBOOK_URL] NVARCHAR(MAX) NULL
  CONSTRAINT [VENDOR_PK] PRIMARY KEY CLUSTERED 
 (
 	[VENDOR_ID] ASC
@@ -599,14 +600,13 @@ SELECT VD.VENDOR_ID
 	  ,VD.VENDOR_REF_ID
 	  ,VD.VENDOR_ALSO_KNOWN_AS
 	  ,VD.EXPERIENCE
-FROM [dbo].[VENDOR] VD (NOLOCK)
-INNER JOIN ADDRESS AD ON VD.ADDRESS_ID = AD.Address_ID
-WHERE VENDOR_ID = @pVendorId 
-
+	  ,VD.FACEBOOK_URL
+   FROM [dbo].[VENDOR] VD (NOLOCK)
+   INNER JOIN ADDRESS AD ON VD.ADDRESS_ID = AD.Address_ID
+   WHERE VENDOR_ID = @pVendorId 
 END
 
 GO
-
 
 CREATE PROCEDURE [dbo].[usp_GetOrderDetails]
 (
@@ -1022,19 +1022,19 @@ SELECT TOP 1 ORD.ORDER_ID, Cust.CUSTOMER_ID, CUST.NAME AS CUSTOMER_NAME, VS.VEND
   INNER JOIN VENDOR VEN ON VS.VENDOR_ID= VEN.VENDOR_ID
   INNER JOIN dbo.[SERVICES] SVCS ON VS.SERVICE_ID = SVCS.SERVICE_ID 
   INNER JOIN ORDER_STATUS OS ON ORD.ORDER_STATUS_ID = OS.ORDER_STATUS_ID   
-WHERE ORD.CUSTOMER_ID = @pCustomerId ORDER BY ORD.REQUESTED_DATE DESC
+WHERE ORD.CUSTOMER_ID = @pCustomerId AND ORD.ORDER_STATUS_ID = 5 ORDER BY ORD.REQUESTED_DATE DESC
 
 ---- Source Address
  SELECT TOP 1 Address_ID,ADDRESS_TYPE, COUNTRY,STATE,LATITIUDE ,LONGITUDE ,LOCALITY,CITY,ADDRESS,PINCODE
  FROM dbo.[ADDRESS] Addr
  INNER JOIN dbo.[ORDER] ORD ON ORD.[SOURCE_ADDRESS_ID] = Addr.[Address_ID]
- WHERE ORD.CUSTOMER_ID = @pCustomerId ORDER BY ORD.REQUESTED_DATE DESC
+ WHERE ORD.CUSTOMER_ID = @pCustomerId AND ORD.ORDER_STATUS_ID = 5 ORDER BY ORD.REQUESTED_DATE DESC
 
  ---- Destination Address
  SELECT TOP 1 Address_ID, ADDRESS_TYPE, COUNTRY,STATE,LATITIUDE ,LONGITUDE ,LOCALITY,CITY,ADDRESS,PINCODE
  FROM dbo.[ADDRESS] Addr
  INNER JOIN dbo.[ORDER] ORD ON ORD.[DESTINATION_ADDRESS_ID] = Addr.[Address_ID]
- WHERE ORD.CUSTOMER_ID = @pCustomerId ORDER BY ORD.REQUESTED_DATE DESC
+ WHERE ORD.CUSTOMER_ID = @pCustomerId AND ORD.ORDER_STATUS_ID = 5 ORDER BY ORD.REQUESTED_DATE DESC
 END
 
 GO
@@ -1057,8 +1057,8 @@ SET NOCOUNT ON;
              CustomerCancelled = 6,
              VendorCancelled = 7 */
 
-	SELECT SVC.SERVICE_ID ,SVC.NAME AS SERVICE_NAME, V.VENDOR_ID, V.NAME AS VENDOR_NAME,VENDOR_SERVICE_ID, V.BASE_RATE, CV.FAVORITE_ID, A.LATITIUDE AS LATITIUDE, A.LONGITUDE AS LONGITUDE,
-	(SELECT COUNT(*) FROM VENDOR_RATING VR WHERE VR.VENDOR_ID = V.VENDOR_ID)AS TOTAL_REVIEWS, dbo.[GetVendorTotalRating](V.VENDOR_ID) AS OVERALL_RATINGS
+    SELECT SVC.SERVICE_ID ,SVC.NAME AS SERVICE_NAME, V.VENDOR_ID, V.NAME AS VENDOR_NAME,VENDOR_SERVICE_ID, V.BASE_RATE, CV.FAVORITE_ID, A.LATITIUDE AS LATITIUDE, A.LONGITUDE AS LONGITUDE,
+	(SELECT COUNT(*) FROM VENDOR_RATING VR WHERE VR.VENDOR_ID = V.VENDOR_ID)AS TOTAL_REVIEWS, dbo.[GetVendorTotalRating](V.VENDOR_ID) AS OVERALL_RATINGS,V.FACEBOOK_URL	
 	FROM [dbo].[SERVICES] SVC
 	INNER JOIN [dbo].[VENDOR_SERVICES] VS ON VS.SERVICE_ID = SVC.SERVICE_ID
 	INNER JOIN [dbo].[VENDOR] V ON V.VENDOR_ID = VS.VENDOR_ID
@@ -1357,13 +1357,6 @@ END
 
 GO
 
-
-/****** Object:  StoredProcedure [dbo].[usp_UpdateVendor]    Script Date: 01-06-2016 00:36:20 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
 CREATE PROCEDURE [dbo].[usp_UpdateVendor]
 (
 	@pVendorId binary(16),
@@ -1373,7 +1366,8 @@ CREATE PROCEDURE [dbo].[usp_UpdateVendor]
 	@pGender bit,
 	@pDOB datetime,
 	@pVendorAlsoKnownAs nvarchar(50),
-	@pExperience nvarchar(50)
+	@pExperience nvarchar(50),
+	@pFacebookUrl nvarchar(max) 
 )
 
 AS
@@ -1386,24 +1380,14 @@ UPDATE [dbo].VENDOR SET NAME = COALESCE(@pName,NAME),
 						DATE_OF_BIRTH = COALESCE(@pDOB,DATE_OF_BIRTH),	
 						GENDER = COALESCE(@pGender, GENDER),
 						EMAIL_ADDRESS = COALESCE(@pEmailAddress, EMAIL_ADDRESS),
-                                                VENDOR_ALSO_KNOWN_AS = COALESCE(@pVendorAlsoKnownAs, VENDOR_ALSO_KNOWN_AS),
-						EXPERIENCE = COALESCE(@pExperience, EXPERIENCE)
+						VENDOR_ALSO_KNOWN_AS = COALESCE(@pVendorAlsoKnownAs, VENDOR_ALSO_KNOWN_AS),
+						EXPERIENCE = COALESCE(@pExperience, EXPERIENCE),
+						FACEBOOK_URL = COALESCE(@pFacebookUrl, FACEBOOK_URL)
 WHERE VENDOR_ID = @pVendorId
 
 END
 
-
 GO
-
-
-
-/****** Object:  StoredProcedure [dbo].[usp_InsertOTPDetails]    Script Date: 07-06-2016 02:09:33 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 
 CREATE PROCEDURE [dbo].[usp_InsertOTPDetails]
 @pOtp varchar(20),
@@ -1793,7 +1777,9 @@ CREATE PROCEDURE [dbo].[usp_AddVendor]
   @pIsPowerSeller bit,
   @pMonthlyCharge decimal,
   @pVendorAlsoKnownAs nvarchar(50),
-  @pExperience nvarchar(50)
+  @pExperience nvarchar(50),
+  @pFacebookUrl nvarchar(max)
+
   --@pActiveTimePerDay nvarchar(max),
   --@pDataConsumption int,
   --@pCallsToCustomerCare int
@@ -1810,8 +1796,8 @@ SET @vendorCount = (SELECT COUNT(*) FROM VENDOR WHERE [USER_NAME] = @PUSERNAME)
 
 if(@vendorCount = 0)
 BEGIN
-INSERT INTO VENDOR (VENDOR_ID, [USER_NAME], NAME, MOBILE_NUMBER, [PASSWORD], EMAIL_ADDRESS, ADDRESS_ID, EMPLOYEE_COUNT, BASE_RATE, IS_VENDOR_VERIFIED, IS_VENDOR_LIVE, DATE_OF_BIRTH, GENDER, PHOTO, ARE_ORDERS_BLOCKED, IS_BLOCKED,MONTHLY_CHARGE,IS_POWER_SELLER, REGISTERED_DATE, VENDOR_ALSO_KNOWN_AS, EXPERIENCE) 
-    VALUES (@vendorId, @pUserName, @pName, @pMobileNumber, @pPassword, @pEmailAddress, @pAddressId, @pNoOfEmployees, @pBaseRate,   @pIsVendorVerified,@pIsVendorLive, @pDOB, @pGender, @pPhoto, @pAreOrdersBlocked,@pIsBlocked,@pMonthlyCharge,@pIsPowerSeller, GETDATE(), @pVendorAlsoKnownAs, @pExperience)
+INSERT INTO VENDOR (VENDOR_ID, [USER_NAME], NAME, MOBILE_NUMBER, [PASSWORD], EMAIL_ADDRESS, ADDRESS_ID, EMPLOYEE_COUNT, BASE_RATE, IS_VENDOR_VERIFIED, IS_VENDOR_LIVE, DATE_OF_BIRTH, GENDER, PHOTO, ARE_ORDERS_BLOCKED, IS_BLOCKED,MONTHLY_CHARGE,IS_POWER_SELLER, REGISTERED_DATE, VENDOR_ALSO_KNOWN_AS, EXPERIENCE, FACEBOOK_URL) 
+    VALUES (@vendorId, @pUserName, @pName, @pMobileNumber, @pPassword, @pEmailAddress, @pAddressId, @pNoOfEmployees, @pBaseRate,   @pIsVendorVerified,@pIsVendorLive, @pDOB, @pGender, @pPhoto, @pAreOrdersBlocked,@pIsBlocked,@pMonthlyCharge,@pIsPowerSeller, GETDATE(), @pVendorAlsoKnownAs, @pExperience, @pFacebookUrl)
 
 	IF EXISTS (Select VENDOR_ID FROM dbo.VENDOR WHERE VENDOR_ID = @vendorId)
 	BEGIN   
@@ -2242,7 +2228,8 @@ CREATE PROCEDURE [dbo].[usp_UpdateVendorDetails]
 	@pAreOrdersBlocked bit,
 	@pIsPowerSeller bit,
 	@pIsBlocked bit,
-	@pMonthlyCharge decimal
+	@pMonthlyCharge decimal,
+	@pFacebookUrl nvarchar(max)
 )
 
 AS
@@ -2259,11 +2246,11 @@ UPDATE [dbo].VENDOR SET NAME = COALESCE(@pName,NAME),
 						ARE_ORDERS_BLOCKED = @pAreOrdersBlocked,
 						IS_BLOCKED = @pIsBlocked,
 						MONTHLY_CHARGE = @pMonthlyCharge,
-						IS_POWER_SELLER = @pIsPowerSeller
+						IS_POWER_SELLER = @pIsPowerSeller,
+						FACEBOOK_URL = COALESCE(@pFacebookUrl, FACEBOOK_URL)
 WHERE VENDOR_ID = @pVendorId
 
 END
-
 GO
 
 CREATE PROCEDURE [dbo].[usp_GetCustomerOverview]

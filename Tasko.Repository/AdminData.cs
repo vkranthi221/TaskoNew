@@ -252,8 +252,8 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pExperience", DbType.String, vendor.Experience));
             //objParameters.Add(SqlHelper.CreateParameter("@pActiveTimePerDay", DbType.String, vendor.ActiveTimePerDay));
             //objParameters.Add(SqlHelper.CreateParameter("@pDataConsumption", DbType.Int32, vendor.DataConsumption));
-            //objParameters.Add(SqlHelper.CreateParameter("@pCallsToCustomerCare", DbType.Int32, vendor.CallsToCustomerCare));
-            //string result = SqlHelper.ExecuteScalar("dbo.usp_AddVendor", objParameters.ToArray()).ToString();
+            //objParameters.Add(SqlHelper.CreateParameter("@pCallsToCustomerCare", DbType.Int32, vendor.CallsToCustomerCare));            
+            objParameters.Add(SqlHelper.CreateParameter("@pFacebookUrl", DbType.String, vendor.FacebookUrl));
             byte[] vendorId = (byte[])SqlHelper.ExecuteScalar("dbo.usp_AddVendor", objParameters.ToArray());
 
             string id = string.Empty;
@@ -449,6 +449,7 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pIsBlocked", DbType.Boolean, vendor.IsBlocked));
             objParameters.Add(SqlHelper.CreateParameter("@pIsPowerSeller", DbType.Boolean, vendor.IsPowerSeller));
             objParameters.Add(SqlHelper.CreateParameter("@pMonthlyCharge ", DbType.Decimal, vendor.MonthlyCharge));
+            objParameters.Add(SqlHelper.CreateParameter("@pFacebookUrl", DbType.String, vendor.FacebookUrl));
 
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendorDetails", objParameters.ToArray());
         }

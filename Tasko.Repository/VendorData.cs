@@ -127,6 +127,7 @@ namespace Tasko.Repository
                 objVendor.Gender = (Int16)reader["GENDER"];
                 objVendor.VendorAlsoKnownAs = reader["VENDOR_ALSO_KNOWN_AS"].ToString();
                 objVendor.Experience = reader["EXPERIENCE"].ToString();
+                objVendor.FacebookUrl = Convert.ToString(reader["FACEBOOK_URL"]);
 
                 //objVendor.DataConsumption = Convert.ToInt32(reader["DATA_CONSUMPTION"]);
                 //objVendor.CallsToCustomerCare = Convert.ToInt32(reader["CALLS_TO_CUSTOMER_CARE"]);
@@ -515,6 +516,8 @@ namespace Tasko.Repository
             {
                 objParameters.Add(SqlHelper.CreateParameter("@pExperience", DbType.String, DBNull.Value));
             }
+
+            objParameters.Add(SqlHelper.CreateParameter("@pFacebookUrl", DbType.String, vendor.FacebookUrl));
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendor", objParameters.ToArray());
         }
 

@@ -543,6 +543,7 @@ namespace Tasko.Interfaces
                         "MobileNumber": "9985466195",
                         "Name": "srikanth3",
                         "Experience":"1",
+                        "FacebookUrl":"http://facebook.com/xyz",
                         "VendorAlsoKnownAs":"srikanth",
                         "NoOfEmployees": 10,
                         "Password": "123456",
@@ -810,7 +811,7 @@ namespace Tasko.Interfaces
         Response GetVendorsByStatus(int vendorStatus);
 
         /**
-        * @api {post} v1/UpdateVendorDetails Update Vendor Details
+        * @api {post} a1/UpdateVendorDetails Update Vendor Details
         * @apiName UpdateVendorDetails
         * @apiGroup Admin
         *
@@ -840,6 +841,7 @@ namespace Tasko.Interfaces
         *               "IsBlocked":"0",
         *               "IsPowerSeller":"1",
         *               "MonthlyCharge":"300",
+        *               "FacebookUrl":"http://facebook.com/xyz",
         *               
         *              } 
         *  }

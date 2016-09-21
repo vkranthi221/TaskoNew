@@ -22,9 +22,9 @@ INSERT INTO [dbo].[ADDRESS] VALUES(newId(),'India','Telangana','80','90','DSNR',
   
 
 INSERT INTO [dbo].[Vendor] values(NEWID(),'chandra','chandra','9985466195','12345','mchandu123@gmail.com',(select ADDRESS_ID from [dbo].[ADDRESS] WHERE LOCALITY='kphb'),null,10,50.00,1,1,Getdate(),Getdate(),10.00,123,
-GETDATE(), 0,0,0,300,1,GETDATE(), null,'chandu','10 years')
+GETDATE(), 0,0,0,300,1,GETDATE(), null,'chandu','10 years', null)
 INSERT INTO [dbo].[Vendor] values(NEWID(),'srikanth','Srikanth','1234567890','12345','sree@gmail.com',(select ADDRESS_ID from [dbo].[ADDRESS] WHERE LOCALITY='HMT HILLS'),null,10,100.00,1,1,Getdate(),Getdate(),10.00,123,
-GETDATE(), 0,0,0,300,1,GETDATE(), null,'sri','9 years')
+GETDATE(), 0,0,0,300,1,GETDATE(), null,'sri','9 years', null)
 SELECT * FROM [dbo].[Vendor]
 
 
