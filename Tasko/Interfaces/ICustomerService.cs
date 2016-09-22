@@ -141,6 +141,7 @@ namespace Tasko.Interfaces
                     "RequestedDate": "2016-06-08 07:33:17",
                     "ServiceId": "0AEAC4261E569C498A05ABBEEC84EA55",
                     "ServiceName": "Microwave Service",
+                     "IsOrderRated":
                     "SourceAddress": {
                       "Address": "plot no 101, vivekanandaNagar",
                       "AddressId": "97B42A2664F905489E9B2E4524EDB0E2",

@@ -146,5 +146,8 @@ namespace Tasko.Model
 
         [DataMember]
         public string CustomerPhone { get; set; }
+
+        [DataMember]
+        public bool IsOrderRated { get; set; }
     }
 }

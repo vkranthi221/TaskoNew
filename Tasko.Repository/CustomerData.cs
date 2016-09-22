@@ -114,6 +114,7 @@ namespace Tasko.Repository
                     objOrder.RequestedDate = Convert.ToDateTime(ObjOrderInfo.Rows[0]["REQUESTED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
                     objOrder.Location = ObjOrderInfo.Rows[0]["ORDER_LOCATION"].ToString();
                     objOrder.Comments = ObjOrderInfo.Rows[0]["COMMENTS"].ToString();
+                    objOrder.IsOrderRated = Convert.ToBoolean(ObjOrderInfo.Rows[0]["IS_ORDER_RATED"].ToString());
                 }
 
                 //// Get the source Address
