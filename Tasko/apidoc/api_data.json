@@ -4885,7 +4885,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n  \"Data\": {\n    \"__type\": \"Order:#Tasko.Model\",\n    \"Comments\": \"\",\n    \"CustomerId\": \"692BD435A5173E42916438F889F5DA08\",\n    \"CustomerName\": \"Shivaji\",\n    \"DestinationAddress\": {\n      \"Address\": \"plot no 404, BaghyaNagar\",\n      \"AddressId\": \"8397A91B6E997F438A9D4D9D49D3E12A\",\n      \"AddressType\":\"Home\",\n      \"City\": \"Hyderabad\",              \n      \"Country\": \"India\",\n      \"Lattitude\": \"40\",\n      \"Locality\": \"HMT HILLS\",\n      \"Longitude\": \"600\",\n      \"Pincode\": \"500072\",\n      \"State\": \"Telangana\"\n    },\n    \"Location\": \"kphb\",\n    \"OrderId\": \"TASKO1000\",\n    \"OrderStatus\": \"Requested\",\n    \"OrderStatusId\": 1,\n    \"RequestedDate\": \"2016-06-29 22:49:47\",\n    \"ServiceId\": \"9661D3C7E345B747BBE62DEA76F00B82\",\n    \"ServiceName\": \"Electrician\",\n    \"SourceAddress\": {\n      \"Address\": \"plot no 101, vivekanandaNagar\",\n      \"AddressId\": \"36F6A0E2C85F7D46AF68C4EB73148B2A\",\n      \"AddressType\":\"Home\",\n      \"City\": \"Hyderabad\",\n      \"Country\": \"India\",\n      \"Lattitude\": \"10\",\n      \"Locality\": \"kphb\",\n      \"Longitude\": \"200\",\n      \"Pincode\": \"500081\",\n      \"State\": \"Telangana\"\n    },\n    \"VendorId\": \"C3A4A364DA1DE542BA70FBAD2435D571\",\n    \"VendorName\": \"chandra\",\n    \"VendorServiceId\": \"CD2CA27D52CE5E4D8E897D53CC4379CB\"\n  },\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "content": " {\n  \"Data\": {\n    \"__type\": \"Order:#Tasko.Model\",\n    \"Comments\": \"\",\n    \"CustomerId\": \"692BD435A5173E42916438F889F5DA08\",\n    \"CustomerName\": \"Shivaji\",\n    \"DestinationAddress\": {\n      \"Address\": \"plot no 404, BaghyaNagar\",\n      \"AddressId\": \"8397A91B6E997F438A9D4D9D49D3E12A\",\n      \"AddressType\":\"Home\",\n      \"City\": \"Hyderabad\",              \n      \"Country\": \"India\",\n      \"Lattitude\": \"40\",\n      \"Locality\": \"HMT HILLS\",\n      \"Longitude\": \"600\",\n      \"Pincode\": \"500072\",\n      \"State\": \"Telangana\"\n    },\n    \"Location\": \"kphb\",\n    \"OrderId\": \"TASKO1000\",\n    \"OrderStatus\": \"Requested\",\n    \"OrderStatusId\": 1,\n    \"RequestedDate\": \"2016-06-29 22:49:47\",\n    \"ServiceId\": \"9661D3C7E345B747BBE62DEA76F00B82\",\n    \"ServiceName\": \"Electrician\",            \n    \"VendorId\": \"C3A4A364DA1DE542BA70FBAD2435D571\",\n    \"VendorName\": \"chandra\",\n    \"VendorServiceId\": \"CD2CA27D52CE5E4D8E897D53CC4379CB\",\n    \"AmountPaid\": \"300.00\"\n  },\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
           "type": "json"
         }
       ]
@@ -4977,7 +4977,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n  \"Data\": {\n            \"__type\": \"Order:#Tasko.Model\",\n            \"Comments\": \"\",\n            \"CustomerId\": \"F501CE6E98E3A549B024E1565561EC62\",\n            \"CustomerName\": \"srikanth test\",\n            \"DestinationAddress\": {\n              \"Address\": \"plot no 404, BaghyaNagar\",\n              \"AddressId\": \"3E71FF52AF41AC448F11C6085D4BDC69\",\n              \"AddressType\":\"Home\",\n              \"City\": \"Hyderabad\",\n              \"Country\": \"India\",\n              \"Lattitude\": \"40\",\n              \"Locality\": \"HMT HILLS\",\n              \"Longitude\": \"600\",\n              \"Pincode\": \"500072\",\n              \"State\": \"Telangana\"\n            },\n            \"Location\": \"\",\n            \"OrderId\": \"TASKO1011\",\n            \"OrderStatus\": \"Requested\",\n            \"OrderStatusId\": 1,\n            \"RequestedDate\": \"2016-06-08 07:33:17\",\n            \"ServiceId\": \"0AEAC4261E569C498A05ABBEEC84EA55\",\n            \"ServiceName\": \"Microwave Service\",\n             \"IsOrderRated\":false,\n            \"SourceAddress\": {\n              \"Address\": \"plot no 101, vivekanandaNagar\",\n              \"AddressId\": \"97B42A2664F905489E9B2E4524EDB0E2\",\n              \"AddressType\":\"Home\",\n              \"City\": \"Hyderabad\",\n              \"Country\": \"India\",\n              \"Lattitude\": \"10\",\n              \"Locality\": \"kphb\",\n              \"Longitude\": \"200\",\n              \"Pincode\": \"500081\",\n              \"State\": \"Telangana\"\n            },\n            \"VendorId\": \"FC73EC7242E28142ACCAFDF4703F0EBF\",\n            \"VendorName\": \"srikanth\",\n            \"VendorServiceId\": \"CF9A27B3DA0D5E418B1A8E6CC79218AD\"\n          },\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "content": " {\n  \"Data\": {\n            \"__type\": \"Order:#Tasko.Model\",\n            \"Comments\": \"\",\n            \"CustomerId\": \"F501CE6E98E3A549B024E1565561EC62\",\n            \"CustomerName\": \"srikanth test\",\n            \"DestinationAddress\": {\n              \"Address\": \"plot no 404, BaghyaNagar\",\n              \"AddressId\": \"3E71FF52AF41AC448F11C6085D4BDC69\",\n              \"AddressType\":\"Home\",\n              \"City\": \"Hyderabad\",\n              \"Country\": \"India\",\n              \"Lattitude\": \"40\",\n              \"Locality\": \"HMT HILLS\",\n              \"Longitude\": \"600\",\n              \"Pincode\": \"500072\",\n              \"State\": \"Telangana\"\n            },\n            \"Location\": \"\",\n            \"OrderId\": \"TASKO1011\",\n            \"OrderStatus\": \"Requested\",\n            \"OrderStatusId\": 1,\n            \"RequestedDate\": \"2016-06-08 07:33:17\",\n            \"ServiceId\": \"0AEAC4261E569C498A05ABBEEC84EA55\",\n            \"ServiceName\": \"Microwave Service\",\n             \"IsOrderRated\":\n            \"SourceAddress\": {\n              \"Address\": \"plot no 101, vivekanandaNagar\",\n              \"AddressId\": \"97B42A2664F905489E9B2E4524EDB0E2\",\n              \"AddressType\":\"Home\",\n              \"City\": \"Hyderabad\",\n              \"Country\": \"India\",\n              \"Lattitude\": \"10\",\n              \"Locality\": \"kphb\",\n              \"Longitude\": \"200\",\n              \"Pincode\": \"500081\",\n              \"State\": \"Telangana\"\n            },\n            \"VendorId\": \"FC73EC7242E28142ACCAFDF4703F0EBF\",\n            \"VendorName\": \"srikanth\",\n            \"VendorServiceId\": \"CF9A27B3DA0D5E418B1A8E6CC79218AD\"\n          },\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
           "type": "json"
         }
       ]
@@ -6062,8 +6062,8 @@
     "url": "",
     "version": "0.0.0",
     "filename": "./apidoc/main.js",
-    "group": "D__Chandu_Projects_TaskoGitHub_Tasko_apidoc_main_js",
-    "groupTitle": "D__Chandu_Projects_TaskoGitHub_Tasko_apidoc_main_js",
+    "group": "D__Chandu_TaskoProjectGit_Tasko_apidoc_main_js",
+    "groupTitle": "D__Chandu_TaskoProjectGit_Tasko_apidoc_main_js",
     "name": ""
   },
   {
@@ -7378,24 +7378,17 @@
           },
           {
             "group": "Parameter",
-            "type": "string",
+            "type": "AddressInfo",
             "optional": false,
-            "field": "longitude",
-            "description": "<p>Longitude of Vendor.</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "latitude",
-            "description": "<p>Latitude of Vendor.</p>"
+            "field": "addressInfo",
+            "description": "<p>Address Info.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Param-Example:",
-          "content": "{\n   \"latitude\": \"17.3850440\",\n             \"longitude\": \"78.4866710\",\n             \"vendorId\":\"F3E6D9CBF8EF6A4289E1FC3509076D54\"\n}",
+          "content": "{\n\"vendorId\":\"F3E6D9CBF8EF6A4289E1FC3509076D54\",\n\"addressInfo\": \n  {\n   \"Address\": \"plot no 101, vivekanandaNagar\",\n   \"AddressType\":\"Home\",\n   \"City\": \"Hyderabad\",\n   \"Country\": \"India\",\n   \"Lattitude\": \"10\",\n   \"Locality\": \"kphb\",\n   \"Longitude\": \"200\",\n   \"Pincode\": \"500081\",\n   \"State\": \"Telangana\"\n  }\n}",
           "type": "json"
         }
       ]

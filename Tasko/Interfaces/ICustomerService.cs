@@ -56,22 +56,11 @@ namespace Tasko.Interfaces
             "OrderStatusId": 1,
             "RequestedDate": "2016-06-29 22:49:47",
             "ServiceId": "9661D3C7E345B747BBE62DEA76F00B82",
-            "ServiceName": "Electrician",
-            "SourceAddress": {
-              "Address": "plot no 101, vivekanandaNagar",
-              "AddressId": "36F6A0E2C85F7D46AF68C4EB73148B2A",
-              "AddressType":"Home",
-              "City": "Hyderabad",
-              "Country": "India",
-              "Lattitude": "10",
-              "Locality": "kphb",
-              "Longitude": "200",
-              "Pincode": "500081",
-              "State": "Telangana"
-            },
+            "ServiceName": "Electrician",            
             "VendorId": "C3A4A364DA1DE542BA70FBAD2435D571",
             "VendorName": "chandra",
-            "VendorServiceId": "CD2CA27D52CE5E4D8E897D53CC4379CB"
+            "VendorServiceId": "CD2CA27D52CE5E4D8E897D53CC4379CB",
+            "AmountPaid": "300.00"
           },
           "Error": false,
           "Message": "Success",
