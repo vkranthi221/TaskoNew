@@ -254,6 +254,7 @@ namespace Tasko.Repository
             //objParameters.Add(SqlHelper.CreateParameter("@pDataConsumption", DbType.Int32, vendor.DataConsumption));
             //objParameters.Add(SqlHelper.CreateParameter("@pCallsToCustomerCare", DbType.Int32, vendor.CallsToCustomerCare));            
             objParameters.Add(SqlHelper.CreateParameter("@pFacebookUrl", DbType.String, vendor.FacebookUrl));
+            objParameters.Add(SqlHelper.CreateParameter("@pIsBackgroundVerified", DbType.Boolean, vendor.IsBackgroundVerified));
             byte[] vendorId = (byte[])SqlHelper.ExecuteScalar("dbo.usp_AddVendor", objParameters.ToArray());
 
             string id = string.Empty;
@@ -450,6 +451,7 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pIsPowerSeller", DbType.Boolean, vendor.IsPowerSeller));
             objParameters.Add(SqlHelper.CreateParameter("@pMonthlyCharge ", DbType.Decimal, vendor.MonthlyCharge));
             objParameters.Add(SqlHelper.CreateParameter("@pFacebookUrl", DbType.String, vendor.FacebookUrl));
+            objParameters.Add(SqlHelper.CreateParameter("@pIsBackgroundVerified", DbType.Boolean, vendor.IsBackgroundVerified));
 
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendorDetails", objParameters.ToArray());
         }

@@ -212,6 +212,9 @@ namespace Tasko.Model
         [DataMember]
         public string FacebookUrl { get; set; }
 
+        [DataMember]
+        public bool IsBackgroundVerified { get; set; }
+
         /// <summary>
         /// Vendor constructor
         /// </summary>

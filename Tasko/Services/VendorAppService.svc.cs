@@ -694,7 +694,7 @@ namespace Tasko.Services
             return r;
         }
 
-        public Response UpdateVendorLocation(string latitude, string longitude, string vendorId)
+        public Response UpdateVendorLocation(string vendorId, AddressInfo addressInfo)
         {
             Response r = new Response();
             try
@@ -702,11 +702,13 @@ namespace Tasko.Services
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                    VendorData.UpdateVendorLocation(latitude, longitude, vendorId);
-
-                    r.Error = false;
-                    r.Message = CommonMessages.SUCCESS;
-                    r.Status = 200;
+                    if (addressInfo != null)
+                    {
+                        VendorData.UpdateVendorLocation(addressInfo, vendorId);
+                        r.Error = false;
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Status = 200;
+                    }
                 }
                 else
                 {

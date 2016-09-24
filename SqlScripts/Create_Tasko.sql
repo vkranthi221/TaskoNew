@@ -95,7 +95,8 @@ CREATE TABLE [dbo].[VENDOR](
 	[DUE_DATE] [datetime] NULL,
 	[VENDOR_ALSO_KNOWN_AS] [nvarchar](50) NULL,
 	[EXPERIENCE] [nvarchar](50) NULL,
-	[FACEBOOK_URL] NVARCHAR(MAX) NULL
+	[FACEBOOK_URL] NVARCHAR(MAX) NULL,
+	[IS_BACKGROUND_VERIFIED] [bit] NULL
  CONSTRAINT [VENDOR_PK] PRIMARY KEY CLUSTERED 
 (
 	[VENDOR_ID] ASC
@@ -600,7 +601,8 @@ SELECT VD.VENDOR_ID
 	  ,VD.VENDOR_REF_ID
 	  ,VD.VENDOR_ALSO_KNOWN_AS
 	  ,VD.EXPERIENCE
-	  ,VD.FACEBOOK_URL
+	  ,VD.FACEBOOK_URL,
+	  VD.IS_BACKGROUND_VERIFIED
    FROM [dbo].[VENDOR] VD (NOLOCK)
    INNER JOIN ADDRESS AD ON VD.ADDRESS_ID = AD.Address_ID
    WHERE VENDOR_ID = @pVendorId 
@@ -897,6 +899,7 @@ End
 if(@UserID is not null)
 BEGIN
 	insert into loggedon_user values(@UserID, @AuthCode)
+	update vendor set IS_VENDOR_LIVE = 1 where VENDOR_ID = @UserID
 END
 SELECT @AuthCode as AUTH_CODE, @UserID as USERID
 END
@@ -1376,7 +1379,8 @@ CREATE PROCEDURE [dbo].[usp_UpdateVendor]
 	@pDOB datetime,
 	@pVendorAlsoKnownAs nvarchar(50),
 	@pExperience nvarchar(50),
-	@pFacebookUrl nvarchar(max) 
+	@pFacebookUrl nvarchar(max),
+	@pIsBackgroundVerified bit 
 )
 
 AS
@@ -1391,7 +1395,8 @@ UPDATE [dbo].VENDOR SET NAME = COALESCE(@pName,NAME),
 						EMAIL_ADDRESS = COALESCE(@pEmailAddress, EMAIL_ADDRESS),
 						VENDOR_ALSO_KNOWN_AS = COALESCE(@pVendorAlsoKnownAs, VENDOR_ALSO_KNOWN_AS),
 						EXPERIENCE = COALESCE(@pExperience, EXPERIENCE),
-						FACEBOOK_URL = COALESCE(@pFacebookUrl, FACEBOOK_URL)
+						FACEBOOK_URL = COALESCE(@pFacebookUrl, FACEBOOK_URL),
+						IS_BACKGROUND_VERIFIED = COALESCE(@pIsBackgroundVerified, IS_BACKGROUND_VERIFIED)
 WHERE VENDOR_ID = @pVendorId
 
 END
@@ -1787,7 +1792,8 @@ CREATE PROCEDURE [dbo].[usp_AddVendor]
   @pMonthlyCharge decimal,
   @pVendorAlsoKnownAs nvarchar(50),
   @pExperience nvarchar(50),
-  @pFacebookUrl nvarchar(max)
+  @pFacebookUrl nvarchar(max),
+  @pIsBackgroundVerified bit
 
   --@pActiveTimePerDay nvarchar(max),
   --@pDataConsumption int,
@@ -1805,8 +1811,8 @@ SET @vendorCount = (SELECT COUNT(*) FROM VENDOR WHERE [USER_NAME] = @PUSERNAME)
 
 if(@vendorCount = 0)
 BEGIN
-INSERT INTO VENDOR (VENDOR_ID, [USER_NAME], NAME, MOBILE_NUMBER, [PASSWORD], EMAIL_ADDRESS, ADDRESS_ID, EMPLOYEE_COUNT, BASE_RATE, IS_VENDOR_VERIFIED, IS_VENDOR_LIVE, DATE_OF_BIRTH, GENDER, PHOTO, ARE_ORDERS_BLOCKED, IS_BLOCKED,MONTHLY_CHARGE,IS_POWER_SELLER, REGISTERED_DATE, VENDOR_ALSO_KNOWN_AS, EXPERIENCE, FACEBOOK_URL) 
-    VALUES (@vendorId, @pUserName, @pName, @pMobileNumber, @pPassword, @pEmailAddress, @pAddressId, @pNoOfEmployees, @pBaseRate,   @pIsVendorVerified,@pIsVendorLive, @pDOB, @pGender, @pPhoto, @pAreOrdersBlocked,@pIsBlocked,@pMonthlyCharge,@pIsPowerSeller, GETDATE(), @pVendorAlsoKnownAs, @pExperience, @pFacebookUrl)
+INSERT INTO VENDOR (VENDOR_ID, [USER_NAME], NAME, MOBILE_NUMBER, [PASSWORD], EMAIL_ADDRESS, ADDRESS_ID, EMPLOYEE_COUNT, BASE_RATE, IS_VENDOR_VERIFIED, IS_VENDOR_LIVE, DATE_OF_BIRTH, GENDER, PHOTO, ARE_ORDERS_BLOCKED, IS_BLOCKED,MONTHLY_CHARGE,IS_POWER_SELLER, REGISTERED_DATE, VENDOR_ALSO_KNOWN_AS, EXPERIENCE, FACEBOOK_URL, IS_BACKGROUND_VERIFIED) 
+    VALUES (@vendorId, @pUserName, @pName, @pMobileNumber, @pPassword, @pEmailAddress, @pAddressId, @pNoOfEmployees, @pBaseRate,   @pIsVendorVerified,@pIsVendorLive, @pDOB, @pGender, @pPhoto, @pAreOrdersBlocked,@pIsBlocked,@pMonthlyCharge,@pIsPowerSeller, GETDATE(), @pVendorAlsoKnownAs, @pExperience, @pFacebookUrl, @pIsBackgroundVerified)
 
 	IF EXISTS (Select VENDOR_ID FROM dbo.VENDOR WHERE VENDOR_ID = @vendorId)
 	BEGIN   
@@ -2238,7 +2244,8 @@ CREATE PROCEDURE [dbo].[usp_UpdateVendorDetails]
 	@pIsPowerSeller bit,
 	@pIsBlocked bit,
 	@pMonthlyCharge decimal,
-	@pFacebookUrl nvarchar(max)
+	@pFacebookUrl nvarchar(max),
+	@pIsBackgroundVerified bit
 )
 
 AS
@@ -2256,7 +2263,8 @@ UPDATE [dbo].VENDOR SET NAME = COALESCE(@pName,NAME),
 						IS_BLOCKED = @pIsBlocked,
 						MONTHLY_CHARGE = @pMonthlyCharge,
 						IS_POWER_SELLER = @pIsPowerSeller,
-						FACEBOOK_URL = COALESCE(@pFacebookUrl, FACEBOOK_URL)
+						FACEBOOK_URL = COALESCE(@pFacebookUrl, FACEBOOK_URL),
+						IS_BACKGROUND_VERIFIED = COALESCE(@pIsBackgroundVerified, IS_BACKGROUND_VERIFIED)
 WHERE VENDOR_ID = @pVendorId
 
 END
@@ -2606,17 +2614,29 @@ CREATE PROCEDURE [dbo].[usp_UpdateVendorLocation]
 (
 	@pLatitude nvarchar(max),
 	@pLongitude nvarchar(max),
-	@pVendorId nvarchar(max)
+	@pVendorId nvarchar(max),
+	@pAddress nvarchar(max),
+	@pAddressType nvarchar(max),
+	@pCity nvarchar(max),
+	@pCountry nvarchar(max),
+	@pLocality nvarchar(max),
+	@pPincode nvarchar(max),
+	@pState nvarchar(max)
 )
 
 AS
 BEGIN
 
-UPDATE A1 SET A1.LONGITUDE= @pLongitude, A1.LATITIUDE = @pLatitude FROM [ADDRESS] AS A1
+UPDATE A1 SET A1.LONGITUDE= @pLongitude, A1.LATITIUDE = @pLatitude, A1.COUNTRY = @pCountry, A1.STATE = @pState, A1.LOCALITY = @pLocality, A1.CITY = @pCity, A1.ADDRESS = @pAddress,
+A1.PINCODE = @pPincode, A1.ADDRESS_TYPE = @pAddressType FROM [ADDRESS] AS A1
 INNER JOIN VENDOR V ON V.ADDRESS_ID = A1.Address_ID WHERE V.VENDOR_ID = @pVendorId
 
-END
+if @pLongitude = 0 and @pLatitude  = 0
+Begin
+update vendor set IS_VENDOR_LIVE = 0 where VENDOR_ID = @pVendorId
+END 
 
+END
 GO
 
 CREATE PROCEDURE [dbo].[usp_GetActiveVendorLocations]

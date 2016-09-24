@@ -824,16 +824,24 @@ namespace Tasko.Interfaces
         *  }
         *  
         * @apiParam {string} vendorId Vendor Id.
-        *
-        * @apiParam {string} longitude Longitude of Vendor.
-        *
-        * @apiParam {string} latitude Latitude of Vendor.
         * 
+        * @apiParam {AddressInfo} addressInfo Address Info.
+        *
         * @apiParamExample {json} Param-Example:
         *  {
-        *     "latitude": "17.3850440",
-              "longitude": "78.4866710",
-              "vendorId":"F3E6D9CBF8EF6A4289E1FC3509076D54"
+             *  "vendorId":"F3E6D9CBF8EF6A4289E1FC3509076D54",
+             *  "addressInfo": 
+             *    {
+             *     "Address": "plot no 101, vivekanandaNagar",
+             *     "AddressType":"Home",
+             *     "City": "Hyderabad",
+             *     "Country": "India",
+             *     "Lattitude": "10",
+             *     "Locality": "kphb",
+             *     "Longitude": "200",
+             *     "Pincode": "500081",
+             *     "State": "Telangana"
+             *    }
         *  }
         *
         * @apiSuccessExample Success-Response:
@@ -856,7 +864,7 @@ namespace Tasko.Interfaces
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response UpdateVendorLocation(string latitude, string longitude, string vendorId);
+        Response UpdateVendorLocation(string vendorId, AddressInfo addressInfo);
 
         #region Notifications
         /**

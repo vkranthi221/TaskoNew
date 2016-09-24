@@ -128,7 +128,7 @@ namespace Tasko.Repository
                 objVendor.VendorAlsoKnownAs = reader["VENDOR_ALSO_KNOWN_AS"].ToString();
                 objVendor.Experience = reader["EXPERIENCE"].ToString();
                 objVendor.FacebookUrl = Convert.ToString(reader["FACEBOOK_URL"]);
-
+                objVendor.IsBackgroundVerified = Convert.ToBoolean(reader["IS_BACKGROUND_VERIFIED"].ToString());
                 //objVendor.DataConsumption = Convert.ToInt32(reader["DATA_CONSUMPTION"]);
                 //objVendor.CallsToCustomerCare = Convert.ToInt32(reader["CALLS_TO_CUSTOMER_CARE"]);
             }
@@ -518,6 +518,7 @@ namespace Tasko.Repository
             }
 
             objParameters.Add(SqlHelper.CreateParameter("@pFacebookUrl", DbType.String, vendor.FacebookUrl));
+            objParameters.Add(SqlHelper.CreateParameter("@pIsBackgroundVerified", DbType.Boolean, vendor.IsBackgroundVerified));
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendor", objParameters.ToArray());
         }
 
@@ -556,12 +557,19 @@ namespace Tasko.Repository
             return gcmUser;
         }
 
-        public static void UpdateVendorLocation(string latitude, string longitude, string vendorId)
+        public static void UpdateVendorLocation(AddressInfo addressInfo, string vendorId)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
-            objParameters.Add(SqlHelper.CreateParameter("@pLatitude", DbType.String, latitude));
-            objParameters.Add(SqlHelper.CreateParameter("@pLongitude", DbType.String, longitude));
+            objParameters.Add(SqlHelper.CreateParameter("@pLatitude", DbType.String, addressInfo.Lattitude));
+            objParameters.Add(SqlHelper.CreateParameter("@pLongitude", DbType.String, addressInfo.Longitude));
+            objParameters.Add(SqlHelper.CreateParameter("@pAddress", DbType.String, addressInfo.Address));
+            objParameters.Add(SqlHelper.CreateParameter("@pAddressType", DbType.String, addressInfo.AddressType));
+            objParameters.Add(SqlHelper.CreateParameter("@pCity", DbType.String, addressInfo.City));
+            objParameters.Add(SqlHelper.CreateParameter("@pCountry", DbType.String, addressInfo.Country));
+            objParameters.Add(SqlHelper.CreateParameter("@pLocality", DbType.String, addressInfo.Locality));
+            objParameters.Add(SqlHelper.CreateParameter("@pPincode", DbType.String, addressInfo.Pincode));
+            objParameters.Add(SqlHelper.CreateParameter("@pState", DbType.String, addressInfo.State));
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.String, BinaryConverter.ConvertStringToByte(vendorId)));
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendorLocation", objParameters.ToArray());
         }
@@ -615,7 +623,6 @@ namespace Tasko.Repository
             if(!string.IsNullOrEmpty(vendorId))
             {
                 objParameters.Add(SqlHelper.CreateParameter("@pIsVendor", DbType.Boolean, true));
-                 
             }
             else
             {
