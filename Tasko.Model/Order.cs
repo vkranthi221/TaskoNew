@@ -149,5 +149,8 @@ namespace Tasko.Model
 
         [DataMember]
         public bool IsOrderRated { get; set; }
+
+        [DataMember]
+        public double AmountPaid { get; set; }
     }
 }

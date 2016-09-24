@@ -58,10 +58,13 @@ namespace Tasko.Repository
                     objOrder.Comments = ObjOrderInfo.Rows[0]["COMMENTS"].ToString();
                 }
 
-                //// Get the source Address
+                
                 if (dataSet.Tables[1] != null && dataSet.Tables[1].Rows.Count > 0)
                 {
-                    objOrder.SourceAddress = PopulateAddress(dataSet.Tables[1].Rows[0]);
+                    //// Get the source Address
+                    ////objOrder.SourceAddress = PopulateAddress(dataSet.Tables[1].Rows[0]);
+                    objOrder.AmountPaid = Convert.ToDouble(dataSet.Tables[1].Rows[0]["PRICE"]);
+
                 }
 
                 //// Get the Destination Address
