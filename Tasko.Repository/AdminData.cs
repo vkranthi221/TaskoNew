@@ -337,10 +337,22 @@ namespace Tasko.Repository
                 vendorOverview.OrdersToday = Convert.ToInt32(reader["ORDERS_TODAY"]);
                 vendorOverview.OrdersThisWeek = Convert.ToInt32(reader["ORDERS_THIS_WEEK"]);
                 vendorOverview.TotalOrders = Convert.ToInt32(reader["TOTAL_ORDERS"]);
-                vendorOverview.TotalOrderAmount = Convert.ToDecimal(reader["TOTAL_ORDER_AMOUNT"]);
-                vendorOverview.WeeklyOrderAmount = Convert.ToDecimal(reader["WEEK_ORDER_AMOUNT"]);
-                vendorOverview.HighestOrderAmount = Convert.ToDecimal(reader["BIGGEST_ORDER_AMOUNT"]);
-                vendorOverview.AverageMonthlyAmount = Convert.ToDecimal(reader["AVERAGE_MONTHLY"]);
+                if (reader["TOTAL_ORDER_AMOUNT"] != null && !reader["TOTAL_ORDER_AMOUNT"].Equals(DBNull.Value))
+                {
+                    vendorOverview.TotalOrderAmount = Convert.ToDecimal(reader["TOTAL_ORDER_AMOUNT"]);
+                }
+                if (reader["WEEK_ORDER_AMOUNT"] != null && !reader["WEEK_ORDER_AMOUNT"].Equals(DBNull.Value))
+                {
+                    vendorOverview.WeeklyOrderAmount = Convert.ToDecimal(reader["WEEK_ORDER_AMOUNT"]);
+                }
+                if (reader["BIGGEST_ORDER_AMOUNT"] != null && !reader["BIGGEST_ORDER_AMOUNT"].Equals(DBNull.Value))
+                {
+                    vendorOverview.HighestOrderAmount = Convert.ToDecimal(reader["BIGGEST_ORDER_AMOUNT"]);
+                }
+                if (reader["AVERAGE_MONTHLY"] != null && !reader["AVERAGE_MONTHLY"].Equals(DBNull.Value))
+                {
+                    vendorOverview.AverageMonthlyAmount = Convert.ToDecimal(reader["AVERAGE_MONTHLY"]);
+                }
                 vendorOverview.Name = reader["VENDOR_NAME"].ToString();
             }
 

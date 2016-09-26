@@ -314,7 +314,7 @@ UPDATE A1 SET A1.LONGITUDE= @pLongitude, A1.LATITIUDE = @pLatitude, A1.COUNTRY =
 A1.PINCODE = @pPincode, A1.ADDRESS_TYPE = @pAddressType FROM [ADDRESS] AS A1
 INNER JOIN VENDOR V ON V.ADDRESS_ID = A1.Address_ID WHERE V.VENDOR_ID = @pVendorId
 
-if @pLongitude = 0 and @pLatitude  = 0
+if @pLongitude = '0' and @pLatitude  = '0'
 Begin
 update vendor set IS_VENDOR_LIVE = 0 where VENDOR_ID = @pVendorId
 END 
