@@ -632,18 +632,26 @@ namespace Tasko.Services
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                   List<Customer> customers = AdminData.GetCustomersByStatus(customerStatus);
-                   r.Data = customers;
-                   r.Error = false;
-                   r.Status = 200;
-                   r.Message = CommonMessages.SUCCESS;
+                    List<Customer> customers = AdminData.GetCustomersByStatus(customerStatus);
+                    r.Error = false;
+                    r.Status = 200;
+
+                    if (customers != null && customers.Count > 0)
+                    {
+                        r.Data = customers;                     
+                        r.Message = CommonMessages.SUCCESS;
+                    }
+                    else
+                    {
+                        r.Message = CommonMessages.NO_CUSTOMERS;
+                    }
                 }
                 else
                 {
                     r.Error = true;
                     r.Status = 400;
-                    r.Message = CommonMessages.NO_CUSTOMERS;
-                }
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }                
             }
             catch (UserException userException)
             {
@@ -702,24 +710,24 @@ namespace Tasko.Services
                 if (isTokenValid)
                 {
                     customerAddresses = CustomerData.GetCustomerAddresses(customerId);
+                    r.Error = false;
+                    r.Status = 200;
+                    if (customerAddresses != null && customerAddresses.Count > 0)
+                    {
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Data = customerAddresses;
+                    }
+                    else
+                    {
+                        r.Message = CommonMessages.CUSTOMER_ADDRESS_NOT_FOUND;
+                    }
                 }
                 else
                 {
+                    r.Error = true;
+                    r.Status = 400;
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
                 }
-
-                if (customerAddresses != null && customerAddresses.Count > 0)
-                {
-                    r.Message = CommonMessages.SUCCESS;
-                    r.Data = customerAddresses;
-                }
-                else
-                {
-                    r.Message = CommonMessages.CUSTOMER_ADDRESS_NOT_FOUND;
-                }
-
-                r.Error = false;
-                r.Status = 200;
             }
             catch (UserException userException)
             {
@@ -802,9 +810,9 @@ namespace Tasko.Services
                     }
                     else
                     {
-                        r.Error = true;
+                        r.Error = false;
                         r.Message = CommonMessages.NO_ORDERS;
-                        r.Status = 400;
+                        r.Status = 200;
                     }
                 }
                 else
@@ -842,24 +850,22 @@ namespace Tasko.Services
                 if (isTokenValid)
                 {
                     objOrder = CustomerData.GetOrderDetails(orderId);
+                    r.Error = false;
+                    r.Status = 200;
+
+                    if (objOrder != null)
+                    {  
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Data = objOrder;
+                    }
+                    else
+                    {   
+                        r.Message = CommonMessages.ORDER_NOT_FOUND;
+                    }
                 }
                 else
                 {
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
-                }
-
-                if (objOrder != null)
-                {
-                    r.Error = false;
-                    r.Message = CommonMessages.SUCCESS;
-                    r.Status = 200;
-                    r.Data = objOrder;
-                }
-                else
-                {
-                    r.Error = true;
-                    r.Message = CommonMessages.ORDER_NOT_FOUND;
-                    r.Status = 400;
                 }
             }
             catch (UserException userException)
@@ -1396,24 +1402,21 @@ namespace Tasko.Services
                 if (isTokenValid)
                 {
                     objUser = AdminData.GetUserDetails(userId);
+                    r.Error = false;
+                    r.Status = 200;
+                    if (objUser != null)
+                    {  
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Data = objUser;
+                    }
+                    else
+                    {   
+                        r.Message = CommonMessages.USER_NOT_FOUND;
+                    }
                 }
                 else
                 {
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
-                }
-
-                if (objUser != null)
-                {
-                    r.Error = false;
-                    r.Message = CommonMessages.SUCCESS;
-                    r.Status = 200;
-                    r.Data = objUser;
-                }
-                else
-                {
-                    r.Error = true;
-                    r.Message = CommonMessages.USER_NOT_FOUND;
-                    r.Status = 400;
                 }
             }
             catch (UserException userException)
@@ -1730,25 +1733,23 @@ namespace Tasko.Services
                 if (isTokenValid)
                 {
                     objUsers = AdminData.GetAllGCMUsers();
+                    r.Status = 200;
+                    r.Error = false;
+
+                    if (objUsers != null)
+                    {
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Data = objUsers;
+                    }
+                    else
+                    {   
+                        r.Message = CommonMessages.USERS_NOT_FOUND;
+                    }
                 }
                 else
                 {
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
-                }
-
-                if (objUsers != null)
-                {
-                    r.Error = false;
-                    r.Message = CommonMessages.SUCCESS;
-                    r.Status = 200;
-                    r.Data = objUsers;
-                }
-                else
-                {
-                    r.Error = true;
-                    r.Message = CommonMessages.USERS_NOT_FOUND;
-                    r.Status = 400;
-                }
+                }                
             }
             catch (UserException userException)
             {
@@ -1776,24 +1777,21 @@ namespace Tasko.Services
                 if (isTokenValid)
                 {
                     requests = AdminData.GetOffileVendorRequests();
+                    r.Status = 200;
+                    r.Error = false;
+                    if (requests != null)
+                    {   
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Data = requests;
+                    }
+                    else
+                    {   
+                        r.Message = CommonMessages.REQUESTS_NOT_FOUND;
+                    }
                 }
                 else
                 {
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
-                }
-
-                if (requests != null)
-                {
-                    r.Error = false;
-                    r.Message = CommonMessages.SUCCESS;
-                    r.Status = 200;
-                    r.Data = requests;
-                }
-                else
-                {
-                    r.Error = true;
-                    r.Message = CommonMessages.REQUESTS_NOT_FOUND;
-                    r.Status = 400;
                 }
             }
             catch (UserException userException)

@@ -54,7 +54,7 @@ namespace Tasko.Services
                 else
                 {
                     r.Error = true;
-                    r.Message = CommonMessages.ORDER_NOT_FOUND;
+                    r.Message = string.IsNullOrEmpty(r.Message) ? CommonMessages.ORDER_NOT_FOUND : r.Message;
                     r.Status = 400;
                 }
             }
@@ -102,7 +102,7 @@ namespace Tasko.Services
                 else
                 {
                     r.Error = true;
-                    r.Message = CommonMessages.ORDER_NOT_FOUND;
+                    r.Message = string.IsNullOrEmpty(r.Message) ? CommonMessages.ORDER_NOT_FOUND : r.Message;
                     r.Status = 400;
                 }
             }
@@ -302,15 +302,11 @@ namespace Tasko.Services
                     r.Message = CommonMessages.SUCCESS;
                     r.Status = 200;
                     r.Data = "OrderId: " + OrderId;
-                }
+                }  
                 else
                 {
                     r.Error = true;
-                    // Added this temporarily as the error message is not shown correctly. Need to change this
-                    if (r.Message != CommonMessages.INVALID_TOKEN_CODE)
-                    {
-                        r.Message = CommonMessages.ORDER_NOT_CONFIRMED;
-                    }
+                    r.Message = string.IsNullOrEmpty(r.Message) ? CommonMessages.ORDER_NOT_CONFIRMED : r.Message;
                     r.Status = 400;
                 }
             }
@@ -429,7 +425,7 @@ namespace Tasko.Services
                 else
                 {
                     r.Error = true;
-                    r.Message = CommonMessages.ORDERS_NOT_FOUND;
+                    r.Message = string.IsNullOrEmpty(r.Message) ? CommonMessages.ORDERS_NOT_FOUND : r.Message;
                     r.Status = 400;
                 }
             }
@@ -471,6 +467,8 @@ namespace Tasko.Services
                     }
                     else
                     {
+                        r.Error = true;
+                        r.Status = 400;
                         r.Message = CommonMessages.INVALID_TOKEN_CODE;
                     }
                 }
@@ -565,14 +563,15 @@ namespace Tasko.Services
                     {
                         CustomerData.DeleteCustomerAddress(customerId, addressId);
                         r.Message = CommonMessages.SUCCESS;
+                        r.Error = false;
+                        r.Status = 200;
                     }
                     else
                     {
+                        r.Error = true;
+                        r.Status = 400;
                         r.Message = CommonMessages.INVALID_TOKEN_CODE;
                     }
-
-                    r.Error = false;
-                    r.Status = 200;
                 }
                 else
                 {
@@ -625,11 +624,18 @@ namespace Tasko.Services
                 }
                 else
                 {
-                    r.Message = CommonMessages.CUSTOMER_ADDRESS_NOT_FOUND;
+                    if (!string.IsNullOrEmpty(r.Message))
+                    {
+                        r.Error = true;
+                        r.Status = 400;
+                    }
+                    else
+                    {
+                        r.Error = false;
+                        r.Message = CommonMessages.CUSTOMER_ADDRESS_NOT_FOUND;
+                        r.Status = 200;
+                    }
                 }
-
-                r.Error = false;
-                r.Status = 200;
             }
             catch (UserException userException)
             {
@@ -756,14 +762,15 @@ namespace Tasko.Services
                     favoriteVendors = CustomerData.GetFavoriteVendors(customerId);
                     r.Message = CommonMessages.SUCCESS;
                     r.Data = favoriteVendors;
+                    r.Error = false;
+                    r.Status = 200;
                 }
                 else
                 {
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
-                }
-
-                r.Error = false;
-                r.Status = 200;
+                    r.Error = true;
+                    r.Status = 400;
+                }                
             }
             catch (UserException userException)
             {
@@ -1108,14 +1115,15 @@ namespace Tasko.Services
                     {
                         CustomerData.DeleteFavoriteVendor(customerId, vendorId);
                         r.Message = CommonMessages.SUCCESS;
+                        r.Error = false;
+                        r.Status = 200;
                     }
                     else
                     {
                         r.Message = CommonMessages.INVALID_TOKEN_CODE;
-                    }
-
-                    r.Error = false;
-                    r.Status = 200;
+                        r.Error = true;
+                        r.Status = 400;
+                    }                    
                 }
                 else
                 {
