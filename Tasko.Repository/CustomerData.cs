@@ -63,7 +63,7 @@ namespace Tasko.Repository
                 {
                     //// Get the source Address
                     ////objOrder.SourceAddress = PopulateAddress(dataSet.Tables[1].Rows[0]);
-                    objOrder.AmountPaid = Convert.ToDouble(dataSet.Tables[1].Rows[0]["PRICE"]);
+                    objOrder.AmountPaid = Convert.ToDouble(dataSet.Tables[1].Rows[0]["ORDER_PRICE"]);
 
                 }
 
@@ -117,7 +117,7 @@ namespace Tasko.Repository
                     objOrder.RequestedDate = Convert.ToDateTime(ObjOrderInfo.Rows[0]["REQUESTED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
                     objOrder.Location = ObjOrderInfo.Rows[0]["ORDER_LOCATION"].ToString();
                     objOrder.Comments = ObjOrderInfo.Rows[0]["COMMENTS"].ToString();
-                    objOrder.IsOrderRated = Convert.ToBoolean(ObjOrderInfo.Rows[0]["IS_ORDER_RATED"].ToString());
+                    objOrder.IsOrderRated = Convert.ToBoolean(ObjOrderInfo.Rows[0]["IS_ORDER_RATED"]);
                 }
 
                 //// Get the source Address

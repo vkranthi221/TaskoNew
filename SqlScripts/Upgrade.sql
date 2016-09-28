@@ -4,7 +4,9 @@
 ---------------------------------------------------------------------------------------------------------- 
 
 ALTER TABLE [dbo].[VENDOR] ADD [FACEBOOK_URL] NVARCHAR(MAX) NULL
+GO
 ALTER TABLE [dbo].[VENDOR] ADD [IS_BACKGROUND_VERIFIED] bit NULL
+GO
 UPDATE VENDOR SET IS_BACKGROUND_VERIFIED = 'FALSE'
 
 GO
@@ -283,7 +285,7 @@ WHERE ORDER_ID = @pOrderId
  --INNER JOIN dbo.[ORDER] ORD ON ORD.[SOURCE_ADDRESS_ID] = Addr.[Address_ID]
  --WHERE ORDER_ID = @pOrderId 
 
- SELECT PRICE FROM [dbo].[VENDOR_RATING] WHERE ORDER_ID =  @pOrderId 
+ SELECT ORDER_PRICE FROM [dbo].[VENDOR_RATING] WHERE ORDER_ID =  @pOrderId 
 
  ---- Destination Address
  SELECT [Address_ID],[ADDRESS_TYPE], [COUNTRY],[STATE],[LATITIUDE] ,[LONGITUDE] ,[LOCALITY],[CITY],[ADDRESS],[PINCODE]
