@@ -271,6 +271,7 @@ namespace Tasko.Interfaces
                       "VendorId": "FC73EC7242E28142ACCAFDF4703F0EBF",
                       "VendorName": "srikanth",
                       "FacebookUrl":"http://facebook.com/xyz",
+                      "Photo":""http://Tasko.in/Images/abc.jpg","
                       "VendorServiceId": "CF9A27B3DA0D5E418B1A8E6CC79218AD",
                       "Distance": 4,
                       "ETA":"21 mins"
@@ -355,7 +356,7 @@ namespace Tasko.Interfaces
          *
          * @apiSuccessExample Success-Response:
          {
-          "Data": "OrderId: TASKO1012",
+          "Data": "TASKO1012",
           "Error": false,
           "Message": "Success",
           "Status": 200

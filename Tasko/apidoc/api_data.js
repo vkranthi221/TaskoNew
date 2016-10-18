@@ -3916,7 +3916,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n  \"Data\": \"OrderId: TASKO1012\",\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "content": " {\n  \"Data\": \"TASKO1012\",\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
           "type": "json"
         }
       ]
@@ -5090,7 +5090,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"ServiceVendor:#Tasko.Model\",\n              \"BaseRate\": 82,\n              \"IsFavoriteVendor\": true,\n              \"OverAllRating\": 3,\n              \"ServiceId\": \"0AEAC4261E569C498A05ABBEEC84EA55\",\n              \"ServiceName\": \"Microwave Service\",\n              \"TotalReviews\": 10,\n              \"VendorId\": \"FC73EC7242E28142ACCAFDF4703F0EBF\",\n              \"VendorName\": \"srikanth\",\n              \"FacebookUrl\":\"http://facebook.com/xyz\",\n              \"VendorServiceId\": \"CF9A27B3DA0D5E418B1A8E6CC79218AD\",\n              \"Distance\": 4,\n              \"ETA\":\"21 mins\"\n            }\n          ],\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"ServiceVendor:#Tasko.Model\",\n              \"BaseRate\": 82,\n              \"IsFavoriteVendor\": true,\n              \"OverAllRating\": 3,\n              \"ServiceId\": \"0AEAC4261E569C498A05ABBEEC84EA55\",\n              \"ServiceName\": \"Microwave Service\",\n              \"TotalReviews\": 10,\n              \"VendorId\": \"FC73EC7242E28142ACCAFDF4703F0EBF\",\n              \"VendorName\": \"srikanth\",\n              \"FacebookUrl\":\"http://facebook.com/xyz\",\n              \"Photo\":\"\"http://Tasko.in/Images/abc.jpg\",\"\n              \"VendorServiceId\": \"CF9A27B3DA0D5E418B1A8E6CC79218AD\",\n              \"Distance\": 4,\n              \"ETA\":\"21 mins\"\n            }\n          ],\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
           "type": "json"
         }
       ]
@@ -6062,8 +6062,8 @@ define({ "api": [
     "url": "",
     "version": "0.0.0",
     "filename": "./apidoc/main.js",
-    "group": "D__Chandu_TaskoProjectGit_Tasko_apidoc_main_js",
-    "groupTitle": "D__Chandu_TaskoProjectGit_Tasko_apidoc_main_js",
+    "group": "D__Chandu_Projects_TaskoGitHub_Tasko_apidoc_main_js",
+    "groupTitle": "D__Chandu_Projects_TaskoGitHub_Tasko_apidoc_main_js",
     "name": ""
   },
   {
@@ -6236,7 +6236,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n  \"Data\": {\n    \"__type\": \"Vendor:#Tasko.Model\",\n    \"Address\": \"KPHB,HMT Hills\",\n    \"BaseRate\": 100,\n    \"CallsToCustomerCare\": 123,\n    \"DataConsumption\": 10,\n    \"EmailAddress\": \"sree@gmail.com\",\n    \"Id\": \"05B3274A2E6EC94D8C0292293823C122\",\n    \"IsVendorLive\": false,\n    \"IsVendorVerified\": true,\n    \"MobileNumber\": \"9848022669\",\n    \"FacebookUrl\":\"http://facebook.com/xyz\",\n    \"Name\": \"Steve\",\n    \"NoOfEmployees\": 10,\n    \"UserName\": \"sree123\"\n  },\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "content": " {\n  \"Data\": {\n    \"__type\": \"Vendor:#Tasko.Model\",\n    \"Address\": \"KPHB,HMT Hills\",\n    \"BaseRate\": 100,\n    \"CallsToCustomerCare\": 123,\n    \"DataConsumption\": 10,\n    \"EmailAddress\": \"sree@gmail.com\",\n    \"Id\": \"05B3274A2E6EC94D8C0292293823C122\",\n    \"IsVendorLive\": false,\n    \"IsVendorVerified\": true,\n    \"MobileNumber\": \"9848022669\",\n    \"FacebookUrl\":\"http://facebook.com/xyz\",\n    \"Photo\":\"\"http://Tasko.in/Images/abc.jpg\",\"\n    \"Name\": \"Steve\",\n    \"NoOfEmployees\": 10,\n    \"UserName\": \"sree123\"\n  },\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
           "type": "json"
         }
       ]

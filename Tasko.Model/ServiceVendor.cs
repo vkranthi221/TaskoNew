@@ -107,5 +107,8 @@ namespace Tasko.Model
 
         [DataMember]
         public string FacebookUrl { get; set; }
+
+        [DataMember]
+        public string Photo { get; set; }
     }
 }

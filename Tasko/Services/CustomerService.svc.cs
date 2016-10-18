@@ -301,7 +301,7 @@ namespace Tasko.Services
                     r.Error = false;
                     r.Message = CommonMessages.SUCCESS;
                     r.Status = 200;
-                    r.Data = "OrderId: " + OrderId;
+                    r.Data = OrderId;
                 }  
                 else
                 {

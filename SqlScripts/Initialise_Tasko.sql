@@ -31,13 +31,14 @@ INSERT INTO [dbo].[ID_PROOFS] values(NEWID(),'Voter Id')
 SELECT * FROM [dbo].[ID_PROOFS]
 
 ----- Order Status TestData-----
-INSERT INTO [dbo].[ORDER_STATUS] values(1, 'CustomerRequested')
-INSERT INTO [dbo].[ORDER_STATUS] values(2, 'VendorAccepted')
-INSERT INTO [dbo].[ORDER_STATUS] values(3, 'VendorRejected')
-INSERT INTO [dbo].[ORDER_STATUS] values(4, 'CustomerAccepted')
-INSERT INTO [dbo].[ORDER_STATUS] values(5, 'OrderCompleted')
-INSERT INTO [dbo].[ORDER_STATUS] values(6, 'CustomerCancelled')
-INSERT INTO [dbo].[ORDER_STATUS] values(7, 'VendorCancelled')
+INSERT INTO [dbo].[ORDER_STATUS] values(1, 'OrderPending')
+INSERT INTO [dbo].[ORDER_STATUS] values(2, 'OrderAccepted')
+INSERT INTO [dbo].[ORDER_STATUS] values(3, 'OrderConfirmed')
+INSERT INTO [dbo].[ORDER_STATUS] values(4, 'OrderCancelled')
+INSERT INTO [dbo].[ORDER_STATUS] values(5, 'OrderWorkCompleted')
+INSERT INTO [dbo].[ORDER_STATUS] values(6, 'OrderCompleted')
+INSERT INTO [dbo].[ORDER_STATUS] values(7, 'OrderMissed')
+INSERT INTO [dbo].[ORDER_STATUS] values(8, 'OrderRejected')
 SELECT * FROM [dbo].[ORDER_STATUS]
 
 INSERT INTO [dbo].[USER] VALUES(NEWID(),'admin','Administrator', 'admin', 'admin@Tasko.in', 1234567890,1,getdate(),1)

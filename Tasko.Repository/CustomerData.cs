@@ -209,9 +209,11 @@ namespace Tasko.Repository
                     {
                         serviceVendor.OverAllRating = Convert.ToDecimal(row["OVERALL_RATINGS"]);
                     }
+
                     serviceVendor.TotalReviews = Convert.ToInt32(row["TOTAL_REVIEWS"]);
 
                     serviceVendor.FacebookUrl = Convert.ToString(row["FACEBOOK_URL"]);
+                    serviceVendor.Photo = Convert.ToString(row["PHOTO"]);
                     serviceVendors.Add(serviceVendor);
                 }
             }

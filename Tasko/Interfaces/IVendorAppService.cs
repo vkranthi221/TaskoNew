@@ -181,6 +181,7 @@ namespace Tasko.Interfaces
             "IsVendorVerified": true,
             "MobileNumber": "9848022669",
             "FacebookUrl":"http://facebook.com/xyz",
+            "Photo":""http://Tasko.in/Images/abc.jpg","
             "Name": "Steve",
             "NoOfEmployees": 10,
             "UserName": "sree123"
