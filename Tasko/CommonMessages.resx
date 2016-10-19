@@ -291,4 +291,7 @@
   <data name="VENDOR_UPDATED" xml:space="preserve">
     <value>Vendor Updated Successfully.</value>
   </data>
+  <data name="VENDOR_ALREADY_EXISTS" xml:space="preserve">
+    <value>Vendor with the same username already exists.</value>
+  </data>
 </root>

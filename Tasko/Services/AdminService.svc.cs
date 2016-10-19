@@ -385,7 +385,7 @@ namespace Tasko.Services
                     {
                         r.Error = true;
                         r.Status = 400;
-                        r.Message = CommonMessages.ADD_VENDOR_FAILED;
+                        r.Message = CommonMessages.VENDOR_ALREADY_EXISTS;
 
                     }
                 }

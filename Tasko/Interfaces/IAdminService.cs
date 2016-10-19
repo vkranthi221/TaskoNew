@@ -40,7 +40,7 @@ namespace Tasko.Interfaces
          *   {   
          *     "Name": "AC Service",
          *     "ParentServiceId": "",
-         *     "ImageUrl": "http://api.tasko.in/serviceimages/ac_services.png",
+         *     "ImageURL": "http://api.tasko.in/serviceimages/ac_services.png",
          *     "Status": "0"
          *   }
          * }
@@ -93,7 +93,7 @@ namespace Tasko.Interfaces
          *     "Id":"054CFD4A388C27046918399822EAA7458",
          *     "Name": "AC Service",
          *     "ParentServiceId": "",
-         *     "ImageUrl": "http://api.tasko.in/serviceimages/ac_services.png",
+         *     "ImageURL": "http://api.tasko.in/serviceimages/ac_services.png",
          *     "Status": "1"
          *   }
          * }
