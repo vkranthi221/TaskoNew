@@ -127,8 +127,7 @@ namespace Tasko.Repository
                 objVendor.Gender = (Int16)reader["GENDER"];
                 objVendor.VendorAlsoKnownAs = reader["VENDOR_ALSO_KNOWN_AS"].ToString();
                 objVendor.Experience = reader["EXPERIENCE"].ToString();
-                objVendor.FacebookUrl = Convert.ToString(reader["FACEBOOK_URL"]);
-                objVendor.IsBackgroundVerified = Convert.ToBoolean(reader["IS_BACKGROUND_VERIFIED"].ToString());
+                objVendor.FacebookUrl = Convert.ToString(reader["FACEBOOK_URL"]);                
                 objVendor.Photo = Convert.ToString(reader["PHOTO"]);
                 objVendor.IsPowerSeller = Convert.ToBoolean(reader["IS_POWER_SELLER"]);
                 //objVendor.DataConsumption = Convert.ToInt32(reader["DATA_CONSUMPTION"]);
