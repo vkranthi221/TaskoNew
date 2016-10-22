@@ -1296,14 +1296,30 @@ CREATE PROCEDURE [dbo].[usp_ChangePassword]
 (
 	@pVendorId binary(16),
 	@pPassword nvarchar(max),
-	@pOldPassword nvarchar(max)
+	@pOldPassword nvarchar(max),
+	@chkOld bit
 )
 AS
 BEGIN
 
 DECLARE @IsOldPasswordCorrect bit
 SET NOCOUNT ON;
-
+IF (@chkOld = 0)
+BEGIN
+IF EXISTS (SELECT VENDOR_ID from [dbo].[VENDOR] WHERE VENDOR_ID = @pVendorId)
+  BEGIN
+     UPDATE [dbo].[VENDOR]  SET PASSWORD = @pPassword WHERE VENDOR_ID = @pVendorId
+	 SET @IsOldPasswordCorrect =1
+  END
+ELSE
+BEGIN
+  SET @IsOldPasswordCorrect = 0
+  END
+   
+ SELECT @IsOldPasswordCorrect 
+END
+ELSE
+BEGIN
 IF EXISTS (SELECT VENDOR_ID from [dbo].[VENDOR] WHERE VENDOR_ID = @pVendorId AND PASSWORD = @pOldPassword)
   BEGIN
      UPDATE [dbo].[VENDOR]  SET PASSWORD = @pPassword WHERE VENDOR_ID = @pVendorId
@@ -1316,6 +1332,8 @@ BEGIN
    
  SELECT @IsOldPasswordCorrect 
 END
+END
+
 GO
 
 CREATE PROCEDURE [dbo].[usp_SetFavoriteVendor]

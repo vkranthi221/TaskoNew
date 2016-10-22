@@ -613,7 +613,7 @@ namespace Tasko.Services
         /// <returns>
         /// Response Object
         /// </returns>
-        public Response ChangePassword(string vendorId, string password, string oldPassword)
+        public Response ChangePassword(string vendorId, string password, string oldPassword, bool chkOld)
         {
             Response r = new Response();
             try

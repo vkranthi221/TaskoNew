@@ -734,11 +734,14 @@ namespace Tasko.Interfaces
         *
         * @apiParam {string} oldPassword Old Password.
         * 
+        * @apiParam {bool} chkOld Check for old password.
+        * 
         * @apiParamExample {json} Param-Example:
         *  {
         *    "vendorId": "Vendor Id",
         *    "password": "New Password",
         *    "oldPassword": "Old Password"
+        *    "chkOld":true
         *  }
         *
         * @apiSuccessExample Success-Response:
@@ -761,7 +764,7 @@ namespace Tasko.Interfaces
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response ChangePassword(string vendorId, string password, string oldPassword);
+        Response ChangePassword(string vendorId, string password, string oldPassword, bool chkOld);
 
         /**
         * @api {post} v1/UpdateVendor Update Vendor
