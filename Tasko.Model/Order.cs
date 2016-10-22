@@ -71,6 +71,15 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public string ServiceId { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the service image URL.
+        /// </summary>
+        /// <value>
+        /// The service image URL.
+        /// </value>
+        [DataMember]
+        public string ServiceImageURL { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the service.
@@ -145,7 +154,10 @@ namespace Tasko.Model
         public string Comments{get;set;}
 
         [DataMember]
-        public string CustomerPhone { get; set; }
+        public string VendorMobileNumber { get; set; }
+
+        [DataMember]
+        public string CustomerMobileNumber { get; set; }
 
         [DataMember]
         public bool IsOrderRated { get; set; }

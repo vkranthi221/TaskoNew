@@ -1613,7 +1613,7 @@ namespace Tasko.Services
                     message.OrderId = OrderId;
                     message.Orderstatus = order.OrderStatusId;
                     message.ServiceName = order.ServiceName;
-                    message.CustomerPhone = order.CustomerPhone;
+                    message.CustomerPhone = order.CustomerMobileNumber;
                     GetDistance(order.SourceAddress.Lattitude, order.SourceAddress.Longitude, order.DestinationAddress.Lattitude, order.DestinationAddress.Longitude, message);
                     messageData = JsonConvert.SerializeObject(message);
                     r = InternalSendNotification(string.Empty, order.VendorId, messageData, ConfigurationManager.AppSettings["VendorAPIKey"].ToString());

@@ -42,13 +42,16 @@ namespace Tasko.Repository
 
                     objOrder.CustomerId = BinaryConverter.ConvertByteToString((byte[])ObjOrderInfo.Rows[0]["CUSTOMER_ID"]);
                     objOrder.CustomerName = ObjOrderInfo.Rows[0]["CUSTOMER_NAME"].ToString();
+                    objOrder.CustomerMobileNumber = Convert.ToString(ObjOrderInfo.Rows[0]["CUSTOMER_MOBILE_NUMBER"]);
 
                     objOrder.VendorServiceId = BinaryConverter.ConvertByteToString((byte[])ObjOrderInfo.Rows[0]["VENDOR_SERVICE_ID"]);
                     objOrder.VendorId = BinaryConverter.ConvertByteToString((byte[])ObjOrderInfo.Rows[0]["VENDOR_ID"]);
                     objOrder.VendorName = ObjOrderInfo.Rows[0]["VENDOR_NAME"].ToString();
+                    objOrder.VendorMobileNumber = Convert.ToString(ObjOrderInfo.Rows[0]["VENDOR_MOBILE_NUMBER"]);
 
                     objOrder.ServiceId = BinaryConverter.ConvertByteToString((byte[])ObjOrderInfo.Rows[0]["SERVICE_ID"]);
                     objOrder.ServiceName = ObjOrderInfo.Rows[0]["SERVICE_NAME"].ToString();
+                    objOrder.ServiceImageURL = Convert.ToString(ObjOrderInfo.Rows[0]["IMAGE_URL"]);
 
                     objOrder.OrderStatusId = Convert.ToInt16(ObjOrderInfo.Rows[0]["ORDER_STATUS_ID"]);
                     objOrder.OrderStatus = ObjOrderInfo.Rows[0]["ORDERSTATUS_NAME"].ToString();
@@ -64,7 +67,6 @@ namespace Tasko.Repository
                     //// Get the source Address
                     ////objOrder.SourceAddress = PopulateAddress(dataSet.Tables[1].Rows[0]);
                     objOrder.AmountPaid = Convert.ToDouble(dataSet.Tables[1].Rows[0]["ORDER_PRICE"]);
-
                 }
 
                 //// Get the Destination Address
@@ -103,13 +105,16 @@ namespace Tasko.Repository
 
                     objOrder.CustomerId = BinaryConverter.ConvertByteToString((byte[])ObjOrderInfo.Rows[0]["CUSTOMER_ID"]);
                     objOrder.CustomerName = ObjOrderInfo.Rows[0]["CUSTOMER_NAME"].ToString();
+                    objOrder.CustomerMobileNumber = Convert.ToString(ObjOrderInfo.Rows[0]["CUSTOMER_MOBILE_NUMBER"]);
 
                     objOrder.VendorServiceId = BinaryConverter.ConvertByteToString((byte[])ObjOrderInfo.Rows[0]["VENDOR_SERVICE_ID"]);
                     objOrder.VendorId = BinaryConverter.ConvertByteToString((byte[])ObjOrderInfo.Rows[0]["VENDOR_ID"]);
                     objOrder.VendorName = ObjOrderInfo.Rows[0]["VENDOR_NAME"].ToString();
+                    objOrder.VendorMobileNumber = Convert.ToString(ObjOrderInfo.Rows[0]["VENDOR_MOBILE_NUMBER"]);
 
                     objOrder.ServiceId = BinaryConverter.ConvertByteToString((byte[])ObjOrderInfo.Rows[0]["SERVICE_ID"]);
                     objOrder.ServiceName = ObjOrderInfo.Rows[0]["SERVICE_NAME"].ToString();
+                    objOrder.ServiceImageURL = Convert.ToString(ObjOrderInfo.Rows[0]["IMAGE_URL"]);
 
                     objOrder.OrderStatusId = Convert.ToInt16(ObjOrderInfo.Rows[0]["ORDER_STATUS_ID"]);
                     objOrder.OrderStatus = ObjOrderInfo.Rows[0]["ORDERSTATUS_NAME"].ToString();
