@@ -30,7 +30,7 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pImageUrl", DbType.String, service.ImageURL));
             if (string.IsNullOrWhiteSpace(service.ParentServiceId))
             {
-                objParameters.Add(SqlHelper.CreateParameter("@pParentServiceId", DbType.Binary, DBNull.Value));
+                objParameters.Add(SqlHelper.CreateParameter("@pParentServiceId", DbType.Binary, null));
             }
             else
             {
@@ -254,7 +254,6 @@ namespace Tasko.Repository
             //objParameters.Add(SqlHelper.CreateParameter("@pDataConsumption", DbType.Int32, vendor.DataConsumption));
             //objParameters.Add(SqlHelper.CreateParameter("@pCallsToCustomerCare", DbType.Int32, vendor.CallsToCustomerCare));            
             objParameters.Add(SqlHelper.CreateParameter("@pFacebookUrl", DbType.String, vendor.FacebookUrl));
-            objParameters.Add(SqlHelper.CreateParameter("@pIsBackgroundVerified", DbType.Boolean, vendor.IsBackgroundVerified));
             byte[] vendorId = (byte[])SqlHelper.ExecuteScalar("dbo.usp_AddVendor", objParameters.ToArray());
 
             string id = string.Empty;
@@ -463,7 +462,7 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pIsPowerSeller", DbType.Boolean, vendor.IsPowerSeller));
             objParameters.Add(SqlHelper.CreateParameter("@pMonthlyCharge ", DbType.Decimal, vendor.MonthlyCharge));
             objParameters.Add(SqlHelper.CreateParameter("@pFacebookUrl", DbType.String, vendor.FacebookUrl));
-            objParameters.Add(SqlHelper.CreateParameter("@pIsBackgroundVerified", DbType.Boolean, vendor.IsBackgroundVerified));
+            objParameters.Add(SqlHelper.CreateParameter("@pIsVendorVerified", DbType.Boolean, vendor.IsVendorVerified));
 
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendorDetails", objParameters.ToArray());
         }

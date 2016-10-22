@@ -547,6 +547,15 @@ namespace Tasko {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vendor with the same username already exists..
+        /// </summary>
+        internal static string VENDOR_ALREADY_EXISTS {
+            get {
+                return ResourceManager.GetString("VENDOR_ALREADY_EXISTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vendor not found.
         /// </summary>
         internal static string VENDOR_NOT_FOUND {
