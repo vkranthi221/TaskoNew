@@ -60,7 +60,12 @@ namespace Tasko.Interfaces
             "VendorId": "C3A4A364DA1DE542BA70FBAD2435D571",
             "VendorName": "chandra",
             "VendorServiceId": "CD2CA27D52CE5E4D8E897D53CC4379CB",
-            "AmountPaid": "300.00"
+            "AmountPaid": "300.00",
+            "CustomerETA":"10",
+            "CustomerDistance":"10",
+            "VisitingFee":"100",
+            "OverAllRating":"5",
+            
           },
           "Error": false,
           "Message": "Success",

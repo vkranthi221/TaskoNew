@@ -30,7 +30,7 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pOrderId", DbType.String, orderId));
             DataSet dataSet = SqlHelper.GetDataSet("dbo.usp_GetOrderDetails", objParameters.ToArray());
 
-            if (dataSet != null && dataSet.Tables.Count == 3)
+            if (dataSet != null && dataSet.Tables.Count == 4)
             {
                 //// Order Table Info
                 DataTable ObjOrderInfo = dataSet.Tables[0];
@@ -59,6 +59,13 @@ namespace Tasko.Repository
                     objOrder.RequestedDate = Convert.ToDateTime(ObjOrderInfo.Rows[0]["REQUESTED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
                     objOrder.Location = ObjOrderInfo.Rows[0]["ORDER_LOCATION"].ToString();
                     objOrder.Comments = ObjOrderInfo.Rows[0]["COMMENTS"].ToString();
+
+                    objOrder.CustomerETA = ObjOrderInfo.Rows[0]["CUSTOMER_ETA"].ToString();
+                    objOrder.CustomerDistance = ObjOrderInfo.Rows[0]["CUSTOMER_DISTANCE"].ToString();
+                    if (ObjOrderInfo.Rows[0]["VISITING_FEE"] != DBNull.Value)
+                    {
+                        objOrder.VisitingFee = Convert.ToDouble(ObjOrderInfo.Rows[0]["VISITING_FEE"]);
+                    }
                 }
 
                 
@@ -73,6 +80,12 @@ namespace Tasko.Repository
                 if (dataSet.Tables[2] != null && dataSet.Tables[2].Rows.Count > 0)
                 {
                     objOrder.DestinationAddress = PopulateAddress(dataSet.Tables[2].Rows[0]);
+                }
+
+                if (dataSet.Tables[3] != null && dataSet.Tables[3].Rows.Count > 0 && dataSet.Tables[3].Rows[0]["OVERALL_RATING"] != DBNull.Value)
+                {
+                    objOrder.OverAllRating = Convert.ToDouble(dataSet.Tables[3].Rows[0]["OVERALL_RATING"]);
+                    objOrder.IsOrderRated = true;
                 }
             }
 
@@ -794,51 +807,14 @@ namespace Tasko.Repository
             SqlHelper.ExecuteNonQuery("dbo.usp_SaveOfflineVendor", objParameters.ToArray());
         }
 
-        //public static void SendNotification()
-        //{
-        //    //GcmUser gcmUser = VendorData.GetGCMUserDetails(string.Empty, "F3E6D9CBF8EF6A4289E1FC3509076D54");
-        //    //if (gcmUser != null)
-        //    //{
-
-        //        //®istration_id
-
-        //        string postData = "collapse_key=score_update&time_to_live=108&delay_while_idle=0&data.message=" + "Last message " +
-        //                          "&data.time=" + System.DateTime.Now.ToString() +
-        //                          "&registration_id=" + "dJaZ8i-czc0:APA91bGVkigbB_cYwuljAfv-wKl_0Lfmk7jhk99N6fhVfTn0ZHxpcnm3NsQ7ZqG3ABqKJ1e5eZ7n2NSuZhKh31G3u1ceRnkiHDHopPaIzgPYl4cdOq5TvNQmt_fH32a12ggtayvJosGB";
-        //         //MESSAGE CONTENT
-        //        byte[] byteArray = Encoding.UTF8.GetBytes(postData);
-        //    //https://android.googleapis.com/gcm/send
-        //         //CREATE REQUEST
-        //        HttpWebRequest Request = (HttpWebRequest)WebRequest.Create("https://fcm.googleapis.com/fcm/send");
-        //        Request.Method = "post";
-        //        Request.KeepAlive = false;
-        //        Request.ContentType = " application/x-www-form-urlencoded;charset=UTF-8";
-        //        Request.Headers.Add(string.Format("Authorization: key={0}", "AIzaSyA4vEcZ8sxSVDKGCn9Xl0N4Wvm4rx9ZU-U"));
-        //        //Request.Headers.Add(string.Format("Sender: id={0}", "264970905704"));
-
-        //        Request.ContentLength = byteArray.Length;
-
-        //        Stream dataStream = Request.GetRequestStream();
-        //        dataStream.Write(byteArray, 0, byteArray.Length);
-        //        dataStream.Close();
-
-        //         //SEND MESSAGE
-        //        WebResponse Response = Request.GetResponse();
-        //        HttpStatusCode ResponseCode = ((HttpWebResponse)Response).StatusCode;
-        //        if (ResponseCode.Equals(HttpStatusCode.Unauthorized) || ResponseCode.Equals(HttpStatusCode.Forbidden))
-        //        {
-        //        }
-        //        else if (!ResponseCode.Equals(HttpStatusCode.OK))
-        //        {
-        //        }
-        //        else
-        //        {
-        //            StreamReader Reader = new StreamReader(Response.GetResponseStream());
-        //            string data = Reader.ReadToEnd();
-        //            Reader.Close();
-        //        }
-        //    //}
-        //}
-
+        public static void UpdateCustomerOrderDetails(string customerETA, string customerDistance, string orderId, string vendorId)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pOrderId", DbType.String, orderId));
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerDistance", DbType.String, customerDistance));
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerETA", DbType.String, customerETA));
+            SqlHelper.ExecuteNonQuery("dbo.usp_UpdateCustomerOrder", objParameters.ToArray());
+        }
     }
 }
