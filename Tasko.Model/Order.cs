@@ -54,6 +54,9 @@ namespace Tasko.Model
         [DataMember]
         public string VendorId { get; set; }
 
+        [DataMember]
+        public string Photo { get; set; }
+
         /// <summary>
         /// Gets or sets the name of the vendor.
         /// </summary>

@@ -48,6 +48,7 @@ namespace Tasko.Repository
                     objOrder.VendorId = BinaryConverter.ConvertByteToString((byte[])ObjOrderInfo.Rows[0]["VENDOR_ID"]);
                     objOrder.VendorName = ObjOrderInfo.Rows[0]["VENDOR_NAME"].ToString();
                     objOrder.VendorMobileNumber = Convert.ToString(ObjOrderInfo.Rows[0]["VENDOR_MOBILE_NUMBER"]);
+                    objOrder.Photo = ObjOrderInfo.Rows[0]["PHOTO"].ToString();
 
                     objOrder.ServiceId = BinaryConverter.ConvertByteToString((byte[])ObjOrderInfo.Rows[0]["SERVICE_ID"]);
                     objOrder.ServiceName = ObjOrderInfo.Rows[0]["SERVICE_NAME"].ToString();
