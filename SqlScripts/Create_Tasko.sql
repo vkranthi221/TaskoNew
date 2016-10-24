@@ -210,7 +210,7 @@ CREATE TABLE [dbo].[ORDER](
 SET ANSI_PADDING ON
 ALTER TABLE [dbo].[ORDER] ADD [CUSTOMER_DISTANCE] [varchar](max) NULL
 ALTER TABLE [dbo].[ORDER] ADD [CUSTOMER_ETA] [varchar](max) NULL
-ALTER TABLE [dbo].[ORDER] ADD [AMOUNT] [decimal](18, 0) NULL
+ALTER TABLE [dbo].[ORDER] ADD [VISITING_FEE] [varchar](max) NULL
  CONSTRAINT [ORDER_PK] PRIMARY KEY CLUSTERED 
 (
 	[ORDER_ID] ASC
@@ -1107,7 +1107,7 @@ SET NOCOUNT ON;
   DECLARE @OrderId Varchar(50)
   SET  @OrderId = dbo.GenerateOrderID()
 
-  INSERT INTO [dbo].[ORDER] VALUES(@OrderId,@pVendorServiceId,@pCustomerId,GetDate(),1,'',@pSourceAddressId,@pDestinationAddressId,null, null)
+  INSERT INTO [dbo].[ORDER] VALUES(@OrderId,@pVendorServiceId,@pCustomerId,GetDate(),1,'',@pSourceAddressId,@pDestinationAddressId,null, null,null,null,null)
 
   IF EXISTS (Select ORDER_ID FROM dbo.[ORDER] WHERE ORDER_ID = @OrderId)
   BEGIN
