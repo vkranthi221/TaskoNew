@@ -12,6 +12,7 @@ namespace TaskoTestClient
     {
         static void Main(string[] args)
         {
+            CustomerData.GetOrderDetails("TASKO1008");
             //AddressInfo addresss = new AddressInfo();
             //addresss.Address = "sdfsdf";
             //addresss.AddressType = "";

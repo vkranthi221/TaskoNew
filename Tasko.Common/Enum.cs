@@ -25,13 +25,14 @@ namespace Tasko.Common
         }
         public enum OrderStatus
         {
-            CustomerRequested = 1,
-            VendorAccepted = 2,
-            VendorRejected = 3,
-            CustomerAccepted = 4,
-            OrderCompleted = 5,
-            CustomerCancelled = 6,
-            VendorCancelled = 7,
+            OrderPending = 1,
+            OrderAccepted = 2,
+            OrderConfirmed = 3,
+            OrderCancelled = 4,
+            OrderWorkCompleted = 5,
+            OrderCompleted = 6,
+            OrderMissed = 7,
+            OrderRejected = 8
         }
     }
 }
