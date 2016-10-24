@@ -586,6 +586,7 @@ SELECT VD.VENDOR_ID
       ,VD.NAME
       ,VD.MOBILE_NUMBER
       ,VD.EMAIL_ADDRESS
+	  ,AD.Address_ID
       ,AD.Address AS VENDOR_ADDRESS
 	  ,AD.COUNTRY AS VENDOR_COUNTRY
 	  ,AD.CITY AS VENDOR_CITY
@@ -614,6 +615,7 @@ SELECT VD.VENDOR_ID
 	  ,VD.IS_VENDOR_VERIFIED
 	  ,VD.PHOTO
 	  ,VD.IS_POWER_SELLER
+	  ,VD.MONTHLY_CHARGE
    FROM [dbo].[VENDOR] VD (NOLOCK)
    INNER JOIN ADDRESS AD ON VD.ADDRESS_ID = AD.Address_ID
    WHERE VENDOR_ID = @pVendorId 
@@ -2271,7 +2273,11 @@ CREATE PROCEDURE [dbo].[usp_UpdateVendorDetails]
 	@pIsBlocked bit,
 	@pMonthlyCharge decimal,
 	@pFacebookUrl nvarchar(max),
-	@pIsVendorVerified bit
+	@pIsVendorVerified bit,
+	@pNoOfEmployees int,	
+    @pVendorAlsoKnownAs nvarchar(50),
+    @pExperience nvarchar(50),
+	@pBaseRate decimal
 )
 
 AS
@@ -2290,11 +2296,16 @@ UPDATE [dbo].VENDOR SET NAME = COALESCE(@pName,NAME),
 						MONTHLY_CHARGE = @pMonthlyCharge,
 						IS_POWER_SELLER = @pIsPowerSeller,
 						FACEBOOK_URL = COALESCE(@pFacebookUrl, FACEBOOK_URL),
-						IS_VENDOR_VERIFIED = COALESCE(@pIsVendorVerified, IS_VENDOR_VERIFIED)
+						IS_VENDOR_VERIFIED = COALESCE(@pIsVendorVerified, IS_VENDOR_VERIFIED),
+						[VENDOR_ALSO_KNOWN_AS]= COALESCE(@pVendorAlsoKnownAs, VENDOR_ALSO_KNOWN_AS),
+						[EXPERIENCE]= COALESCE(@pExperience, EXPERIENCE),
+						[BASE_RATE]= COALESCE(@pBaseRate, BASE_RATE),
+						[EMPLOYEE_COUNT]= COALESCE(@pNoOfEmployees, EMPLOYEE_COUNT)
 WHERE VENDOR_ID = @pVendorId
 
 END
 GO
+
 
 CREATE PROCEDURE [dbo].[usp_GetCustomerOverview]
 (
