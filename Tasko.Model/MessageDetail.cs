@@ -48,5 +48,8 @@ namespace Tasko.Model
 
         [DataMember]
         public string OrderMessage { get; set; }
+       
+        [DataMember]
+        public string Comments { get; set; }
     }
 }
