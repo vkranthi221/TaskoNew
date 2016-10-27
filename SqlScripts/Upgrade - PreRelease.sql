@@ -1,130 +1,3 @@
-
-ALTER PROCEDURE [dbo].[usp_AddService]
-(
-  @pName nvarchar(max),
-  @pImageUrl nvarchar(max),
-  @pParentServiceId Binary(16) = null,
-  @pStatus int
-)
-
-AS
-BEGIN
-
-SET NOCOUNT ON;
-DECLARE @IsServiceAlreadyExist bit
-
-IF NOT EXISTS (SELECT NAME from [dbo].[SERVICES] WHERE NAME = @pName)
- BEGIN
-   INSERT INTO [dbo].[SERVICES] VALUES (NEWID(), @pName, @pParentServiceId, @pImageUrl, @pStatus)
-   SET @IsServiceAlreadyExist =0
- END
- ELSE
- BEGIN
-   SET @IsServiceAlreadyExist =1
- END
-
- SELECT @IsServiceAlreadyExist
-END
-
-GO
-
-ALTER PROCEDURE [dbo].[usp_AddVendor]
-(
-  @pBaseRate float,
-  @pEmailAddress nvarchar(max),
-  @pIsVendorLive bit,
-  @pIsVendorVerified bit,
-  @pMobileNumber nvarchar(max),
-  @pName nvarchar(max),
-  @pNoOfEmployees int,
-  --@pTimeSpentOnApp nvarchar(max),
-  @pUserName nvarchar(max),
-  @pAddressId binary(16),
-  @pPassword nvarchar(max),
-  @pDOB datetime,
-  @pGender bit,
-  @pPhoto nvarchar(max),
-  @pAreOrdersBlocked bit,
-  @pIsBlocked bit,
-  @pIsPowerSeller bit,
-  @pMonthlyCharge decimal,
-  @pVendorAlsoKnownAs nvarchar(50),
-  @pExperience nvarchar(50),
-  @pFacebookUrl nvarchar(max)
-
-  --@pActiveTimePerDay nvarchar(max),
-  --@pDataConsumption int,
-  --@pCallsToCustomerCare int
-)
-
-AS
-BEGIN
-SET NOCOUNT ON;
-DECLARE @vendorId Binary(16),
-		@vendorCount int
-SET @vendorId = NEWID()
-
-SET @vendorCount = (SELECT COUNT(*) FROM VENDOR WHERE [USER_NAME] = @PUSERNAME)
-
-IF(@vendorCount = 0)
-BEGIN
-INSERT INTO VENDOR (VENDOR_ID, [USER_NAME], NAME, MOBILE_NUMBER, [PASSWORD], EMAIL_ADDRESS, ADDRESS_ID, EMPLOYEE_COUNT, BASE_RATE, IS_VENDOR_VERIFIED, IS_VENDOR_LIVE, DATE_OF_BIRTH, GENDER, PHOTO, ARE_ORDERS_BLOCKED, IS_BLOCKED,MONTHLY_CHARGE,IS_POWER_SELLER, REGISTERED_DATE, VENDOR_ALSO_KNOWN_AS, EXPERIENCE, FACEBOOK_URL) 
-    VALUES (@vendorId, @pUserName, @pName, @pMobileNumber, @pPassword, @pEmailAddress, @pAddressId, @pNoOfEmployees, @pBaseRate,   @pIsVendorVerified,@pIsVendorLive, @pDOB, @pGender, @pPhoto, @pAreOrdersBlocked,@pIsBlocked,@pMonthlyCharge,@pIsPowerSeller, GETDATE(), @pVendorAlsoKnownAs, @pExperience, @pFacebookUrl)
-
-	IF EXISTS (Select VENDOR_ID FROM dbo.VENDOR WHERE VENDOR_ID = @vendorId)
-	BEGIN   
-	-- If add Vendor success then only add the entry in Activity table
-		DECLARE @pComment nvarchar(max)
-		SET @pComment = CONCAT('Vendor ', @pName, ' registered.')
-		EXEC [dbo].[usp_AddActivity] 'VENDOR', null, @vendorId, null, @pComment
-	END
-
-	SELECT @vendorId as VENDOR_ID
-  END 
-END
-
-GO
-
-ALTER PROCEDURE [dbo].[usp_UpdateVendorDetails]
-(
-	@pVendorId binary(16),
-	@pName nvarchar(max),
-	@pMobileNumber nvarchar(max),  
-	@pEmailAddress nvarchar(max),
-	@pGender bit,
-	@pDOB datetime,
-	@pPhoto nvarchar(max),
-	@pAreOrdersBlocked bit,
-	@pIsPowerSeller bit,
-	@pIsBlocked bit,
-	@pMonthlyCharge decimal,
-	@pFacebookUrl nvarchar(max),
-	@pIsVendorVerified bit
-	)
-
-AS
-BEGIN
-
-SET NOCOUNT ON;
-
-UPDATE [dbo].VENDOR SET NAME = COALESCE(@pName,NAME),
-						MOBILE_NUMBER = COALESCE(@pMobileNumber,MOBILE_NUMBER),	
-						DATE_OF_BIRTH = COALESCE(@pDOB,DATE_OF_BIRTH),	
-						GENDER = COALESCE(@pGender, GENDER),
-						EMAIL_ADDRESS = COALESCE(@pEmailAddress, EMAIL_ADDRESS),
-						PHOTO =  COALESCE(@pPhoto, PHOTO),
-						ARE_ORDERS_BLOCKED = @pAreOrdersBlocked,
-						IS_BLOCKED = @pIsBlocked,
-						MONTHLY_CHARGE = @pMonthlyCharge,
-						IS_POWER_SELLER = @pIsPowerSeller,
-						FACEBOOK_URL = COALESCE(@pFacebookUrl, FACEBOOK_URL),
-						IS_VENDOR_VERIFIED = COALESCE(@pIsVendorVerified, IS_VENDOR_VERIFIED)
-WHERE VENDOR_ID = @pVendorId
-
-END
-
-GO
-
 ALTER PROCEDURE [dbo].[usp_GetVendorDetails]
 (
 	@pVendorId Binary(16)
@@ -138,6 +11,7 @@ SELECT VD.VENDOR_ID
       ,VD.NAME
       ,VD.MOBILE_NUMBER
       ,VD.EMAIL_ADDRESS
+	  ,AD.Address_ID
       ,AD.Address AS VENDOR_ADDRESS
 	  ,AD.COUNTRY AS VENDOR_COUNTRY
 	  ,AD.CITY AS VENDOR_CITY
@@ -163,14 +37,18 @@ SELECT VD.VENDOR_ID
 	  ,VD.VENDOR_ALSO_KNOWN_AS
 	  ,VD.EXPERIENCE
 	  ,VD.FACEBOOK_URL
-	  ,IS_VENDOR_VERIFIED
+	  ,VD.IS_VENDOR_VERIFIED
+	  ,VD.PHOTO
+	  ,VD.IS_POWER_SELLER
+	  ,VD.MONTHLY_CHARGE
    FROM [dbo].[VENDOR] VD (NOLOCK)
    INNER JOIN ADDRESS AD ON VD.ADDRESS_ID = AD.Address_ID
    WHERE VENDOR_ID = @pVendorId 
 END
+
 GO
 
-ALTER PROCEDURE [dbo].[usp_UpdateVendor]
+ALTER PROCEDURE [dbo].[usp_UpdateVendorDetails]
 (
 	@pVendorId binary(16),
 	@pName nvarchar(max),
@@ -178,11 +56,17 @@ ALTER PROCEDURE [dbo].[usp_UpdateVendor]
 	@pEmailAddress nvarchar(max),
 	@pGender bit,
 	@pDOB datetime,
-	@pVendorAlsoKnownAs nvarchar(50),
-	@pExperience nvarchar(50),
+	@pPhoto nvarchar(max),
+	@pAreOrdersBlocked bit,
+	@pIsPowerSeller bit,
+	@pIsBlocked bit,
+	@pMonthlyCharge decimal,
 	@pFacebookUrl nvarchar(max),
-	@pIsVendorVerified bit
-	
+	@pIsVendorVerified bit,
+	@pNoOfEmployees int,	
+    @pVendorAlsoKnownAs nvarchar(50),
+    @pExperience nvarchar(50),
+	@pBaseRate decimal
 )
 
 AS
@@ -195,54 +79,18 @@ UPDATE [dbo].VENDOR SET NAME = COALESCE(@pName,NAME),
 						DATE_OF_BIRTH = COALESCE(@pDOB,DATE_OF_BIRTH),	
 						GENDER = COALESCE(@pGender, GENDER),
 						EMAIL_ADDRESS = COALESCE(@pEmailAddress, EMAIL_ADDRESS),
-						VENDOR_ALSO_KNOWN_AS = COALESCE(@pVendorAlsoKnownAs, VENDOR_ALSO_KNOWN_AS),
-						EXPERIENCE = COALESCE(@pExperience, EXPERIENCE),
+						PHOTO =  COALESCE(@pPhoto, PHOTO),
+						ARE_ORDERS_BLOCKED = @pAreOrdersBlocked,
+						IS_BLOCKED = @pIsBlocked,
+						MONTHLY_CHARGE = @pMonthlyCharge,
+						IS_POWER_SELLER = @pIsPowerSeller,
 						FACEBOOK_URL = COALESCE(@pFacebookUrl, FACEBOOK_URL),
-						IS_VENDOR_VERIFIED = COALESCE(@pIsVendorVerified, IS_VENDOR_VERIFIED)
+						IS_VENDOR_VERIFIED = COALESCE(@pIsVendorVerified, IS_VENDOR_VERIFIED),
+						[VENDOR_ALSO_KNOWN_AS]= COALESCE(@pVendorAlsoKnownAs, VENDOR_ALSO_KNOWN_AS),
+						[EXPERIENCE]= COALESCE(@pExperience, EXPERIENCE),
+						[BASE_RATE]= COALESCE(@pBaseRate, BASE_RATE),
+						[EMPLOYEE_COUNT]= COALESCE(@pNoOfEmployees, EMPLOYEE_COUNT)
 WHERE VENDOR_ID = @pVendorId
 
-END
-
-GO
-ALTER PROCEDURE [dbo].[usp_ChangePassword]
-(
-	@pVendorId binary(16),
-	@pPassword nvarchar(max),
-	@pOldPassword nvarchar(max),
-	@chkOld bit
-)
-AS
-BEGIN
-
-DECLARE @IsOldPasswordCorrect bit
-SET NOCOUNT ON;
-IF (@chkOld = 0)
-BEGIN
-IF EXISTS (SELECT VENDOR_ID from [dbo].[VENDOR] WHERE VENDOR_ID = @pVendorId)
-  BEGIN
-     UPDATE [dbo].[VENDOR]  SET PASSWORD = @pPassword WHERE VENDOR_ID = @pVendorId
-	 SET @IsOldPasswordCorrect =1
-  END
-ELSE
-BEGIN
-  SET @IsOldPasswordCorrect = 0
-  END
-   
- SELECT @IsOldPasswordCorrect 
-END
-ELSE
-BEGIN
-IF EXISTS (SELECT VENDOR_ID from [dbo].[VENDOR] WHERE VENDOR_ID = @pVendorId AND PASSWORD = @pOldPassword)
-  BEGIN
-     UPDATE [dbo].[VENDOR]  SET PASSWORD = @pPassword WHERE VENDOR_ID = @pVendorId
-	 SET @IsOldPasswordCorrect =1
-  END
-ELSE
-BEGIN
-  SET @IsOldPasswordCorrect = 0
-  END
-   
- SELECT @IsOldPasswordCorrect 
-END
 END
 GO

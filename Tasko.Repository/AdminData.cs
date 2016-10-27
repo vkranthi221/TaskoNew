@@ -456,7 +456,7 @@ namespace Tasko.Repository
             {
                 objParameters.Add(SqlHelper.CreateParameter("@pPhoto", DbType.String, DBNull.Value));
             }
-
+                        
             objParameters.Add(SqlHelper.CreateParameter("@pAreOrdersBlocked", DbType.Boolean, vendor.AreOrdersBlocked));
             objParameters.Add(SqlHelper.CreateParameter("@pIsBlocked", DbType.Boolean, vendor.IsBlocked));
             objParameters.Add(SqlHelper.CreateParameter("@pIsPowerSeller", DbType.Boolean, vendor.IsPowerSeller));
@@ -464,6 +464,11 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pFacebookUrl", DbType.String, vendor.FacebookUrl));
             objParameters.Add(SqlHelper.CreateParameter("@pIsVendorVerified", DbType.Boolean, vendor.IsVendorVerified));
 
+            objParameters.Add(SqlHelper.CreateParameter("@pBaseRate", DbType.Double, vendor.BaseRate));
+            objParameters.Add(SqlHelper.CreateParameter("@pNoOfEmployees", DbType.Int32, vendor.NoOfEmployees));
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorAlsoKnownAs", DbType.String, vendor.VendorAlsoKnownAs));
+            objParameters.Add(SqlHelper.CreateParameter("@pExperience", DbType.String, vendor.Experience));
+            
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendorDetails", objParameters.ToArray());
         }
         #endregion

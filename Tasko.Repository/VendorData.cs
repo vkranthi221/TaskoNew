@@ -105,6 +105,7 @@ namespace Tasko.Repository
                 objVendor.MobileNumber = reader["MOBILE_NUMBER"].ToString();
                 objVendor.EmailAddress = Convert.ToString(reader["EMAIL_ADDRESS"]);
                 objVendor.AddressDetails = new AddressInfo();
+                objVendor.AddressDetails.AddressId = BinaryConverter.ConvertByteToString((byte[])reader["Address_ID"]);
                 objVendor.AddressDetails.Address = reader["VENDOR_ADDRESS"].ToString();
                 objVendor.AddressDetails.Country = reader["VENDOR_COUNTRY"].ToString();
                 objVendor.AddressDetails.AddressType = reader["VENDOR_ADDRESS_TYPE"].ToString();
@@ -116,6 +117,7 @@ namespace Tasko.Repository
                 objVendor.AddressDetails.Pincode = reader["VENDOR_PINCODE"].ToString();
                 objVendor.NoOfEmployees = Convert.ToInt32(reader["EMPLOYEE_COUNT"]);
                 objVendor.BaseRate = Convert.ToDouble(reader["BASE_RATE"]);
+                objVendor.MonthlyCharge = Convert.ToDecimal(reader["MONTHLY_CHARGE"]);
                 objVendor.IsVendorVerified = Convert.ToBoolean(reader["IS_VENDOR_VERIFIED"]);
                 objVendor.VenorRefId = Convert.ToInt32(reader["VENDOR_REF_ID"]);
                 objVendor.RegisteredDate = Convert.ToDateTime(reader["REGISTERED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");

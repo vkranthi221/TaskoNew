@@ -146,7 +146,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Param-Example:",
-          "content": "{ \n  \"service\":\n  {   \n    \"Name\": \"AC Service\",\n    \"ParentServiceId\": \"\",\n    \"ImageUrl\": \"http://api.tasko.in/serviceimages/ac_services.png\",\n    \"Status\": \"0\"\n  }\n}",
+          "content": "{ \n  \"service\":\n  {   \n    \"Name\": \"AC Service\",\n    \"ParentServiceId\": \"\",\n    \"ImageURL\": \"http://api.tasko.in/serviceimages/ac_services.png\",\n    \"Status\": \"0\"\n  }\n}",
           "type": "json"
         }
       ]
@@ -3085,7 +3085,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Param-Example:",
-          "content": "{ \n  \"service\":\n  {   \n    \"Id\":\"054CFD4A388C27046918399822EAA7458\",\n    \"Name\": \"AC Service\",\n    \"ParentServiceId\": \"\",\n    \"ImageUrl\": \"http://api.tasko.in/serviceimages/ac_services.png\",\n    \"Status\": \"1\"\n  }\n}",
+          "content": "{ \n  \"service\":\n  {   \n    \"Id\":\"054CFD4A388C27046918399822EAA7458\",\n    \"Name\": \"AC Service\",\n    \"ParentServiceId\": \"\",\n    \"ImageURL\": \"http://api.tasko.in/serviceimages/ac_services.png\",\n    \"Status\": \"1\"\n  }\n}",
           "type": "json"
         }
       ]
@@ -4885,7 +4885,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n  \"Data\": {\n    \"__type\": \"Order:#Tasko.Model\",\n    \"Comments\": \"\",\n    \"CustomerId\": \"692BD435A5173E42916438F889F5DA08\",\n    \"CustomerName\": \"Shivaji\",\n    \"DestinationAddress\": {\n      \"Address\": \"plot no 404, BaghyaNagar\",\n      \"AddressId\": \"8397A91B6E997F438A9D4D9D49D3E12A\",\n      \"AddressType\":\"Home\",\n      \"City\": \"Hyderabad\",              \n      \"Country\": \"India\",\n      \"Lattitude\": \"40\",\n      \"Locality\": \"HMT HILLS\",\n      \"Longitude\": \"600\",\n      \"Pincode\": \"500072\",\n      \"State\": \"Telangana\"\n    },\n    \"Location\": \"kphb\",\n    \"OrderId\": \"TASKO1000\",\n    \"OrderStatus\": \"Requested\",\n    \"OrderStatusId\": 1,\n    \"RequestedDate\": \"2016-06-29 22:49:47\",\n    \"ServiceId\": \"9661D3C7E345B747BBE62DEA76F00B82\",\n    \"ServiceName\": \"Electrician\",            \n    \"VendorId\": \"C3A4A364DA1DE542BA70FBAD2435D571\",\n    \"VendorName\": \"chandra\",\n    \"VendorServiceId\": \"CD2CA27D52CE5E4D8E897D53CC4379CB\",\n    \"AmountPaid\": \"300.00\"\n  },\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "content": " {\n  \"Data\": {\n    \"__type\": \"Order:#Tasko.Model\",\n    \"Comments\": \"\",\n    \"CustomerId\": \"692BD435A5173E42916438F889F5DA08\",\n    \"CustomerName\": \"Shivaji\",\n    \"CustomerMobileNumber\":9948636000,\n    \"DestinationAddress\": {\n      \"Address\": \"plot no 404, BaghyaNagar\",\n      \"AddressId\": \"8397A91B6E997F438A9D4D9D49D3E12A\",\n      \"AddressType\":\"Home\",\n      \"City\": \"Hyderabad\",              \n      \"Country\": \"India\",\n      \"Lattitude\": \"40\",\n      \"Locality\": \"HMT HILLS\",\n      \"Longitude\": \"600\",\n      \"Pincode\": \"500072\",\n      \"State\": \"Telangana\"\n    },\n    \"Location\": \"kphb\",\n    \"OrderId\": \"TASKO1000\",\n    \"OrderStatus\": \"Requested\",\n    \"OrderStatusId\": 1,\n    \"RequestedDate\": \"2016-06-29 22:49:47\",\n    \"ServiceId\": \"9661D3C7E345B747BBE62DEA76F00B82\",\n    \"ServiceName\": \"Electrician\",            \n    \"ServiceImageURL\":\"http://api.Tasko.in/ServiceImages/electrician.png\",\n    \"VendorId\": \"C3A4A364DA1DE542BA70FBAD2435D571\",\n    \"VendorName\": \"chandra\",\n    \"VendorMobileNumber\":9985466195,\n    \"VendorServiceId\": \"CD2CA27D52CE5E4D8E897D53CC4379CB\",\n    \"AmountPaid\": \"300.00\",\n    \"CustomerETA\":\"10\",\n    \"CustomerDistance\":\"10\",\n    \"VisitingFee\":\"100\",\n    \"OverAllRating\":\"5\",\n    \n  },\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
           "type": "json"
         }
       ]
@@ -5090,7 +5090,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"ServiceVendor:#Tasko.Model\",\n              \"BaseRate\": 82,\n              \"IsFavoriteVendor\": true,\n              \"OverAllRating\": 3,\n              \"ServiceId\": \"0AEAC4261E569C498A05ABBEEC84EA55\",\n              \"ServiceName\": \"Microwave Service\",\n              \"TotalReviews\": 10,\n              \"VendorId\": \"FC73EC7242E28142ACCAFDF4703F0EBF\",\n              \"VendorName\": \"srikanth\",\n              \"FacebookUrl\":\"http://facebook.com/xyz\",\n              \"Photo\":\"\"http://Tasko.in/Images/abc.jpg\",\"\n              \"VendorServiceId\": \"CF9A27B3DA0D5E418B1A8E6CC79218AD\",\n              \"Distance\": 4,\n              \"ETA\":\"21 mins\"\n            }\n          ],\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"ServiceVendor:#Tasko.Model\",\n              \"BaseRate\": 82,\n              \"IsFavoriteVendor\": true,\n              \"OverAllRating\": 3,\n              \"ServiceId\": \"0AEAC4261E569C498A05ABBEEC84EA55\",\n              \"ServiceName\": \"Microwave Service\",\n              \"TotalReviews\": 10,\n              \"VendorId\": \"FC73EC7242E28142ACCAFDF4703F0EBF\",\n              \"VendorName\": \"srikanth\",\n              \"FacebookUrl\":\"http://facebook.com/xyz\",\n              \"Photo\":\"http://Tasko.in/Images/abc.jpg\",\n              \"VendorServiceId\": \"CF9A27B3DA0D5E418B1A8E6CC79218AD\",\n              \"Distance\": 4,\n              \"ETA\":\"21 mins\"\n            }\n          ],\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
           "type": "json"
         }
       ]
@@ -6129,13 +6129,20 @@ define({ "api": [
             "optional": false,
             "field": "oldPassword",
             "description": "<p>Old Password.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "bool",
+            "optional": false,
+            "field": "chkOld",
+            "description": "<p>Check for old password.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Param-Example:",
-          "content": "{\n  \"vendorId\": \"Vendor Id\",\n  \"password\": \"New Password\",\n  \"oldPassword\": \"Old Password\"\n}",
+          "content": "{\n  \"vendorId\": \"Vendor Id\",\n  \"password\": \"New Password\",\n  \"oldPassword\": \"Old Password\"\n  \"chkOld\":true\n}",
           "type": "json"
         }
       ]
@@ -6236,7 +6243,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n  \"Data\": {\n    \"__type\": \"Vendor:#Tasko.Model\",\n    \"Address\": \"KPHB,HMT Hills\",\n    \"BaseRate\": 100,\n    \"CallsToCustomerCare\": 123,\n    \"DataConsumption\": 10,\n    \"EmailAddress\": \"sree@gmail.com\",\n    \"Id\": \"05B3274A2E6EC94D8C0292293823C122\",\n    \"IsVendorLive\": false,\n    \"IsVendorVerified\": true,\n    \"MobileNumber\": \"9848022669\",\n    \"FacebookUrl\":\"http://facebook.com/xyz\",\n    \"Photo\":\"\"http://Tasko.in/Images/abc.jpg\",\"\n    \"Name\": \"Steve\",\n    \"NoOfEmployees\": 10,\n    \"UserName\": \"sree123\"\n  },\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "content": " {\n  \"Data\": {\n    \"__type\": \"Vendor:#Tasko.Model\",\n    \"Address\": \"KPHB,HMT Hills\",\n    \"BaseRate\": 100,\n    \"CallsToCustomerCare\": 123,\n    \"DataConsumption\": 10,\n    \"EmailAddress\": \"sree@gmail.com\",\n    \"Id\": \"05B3274A2E6EC94D8C0292293823C122\",\n    \"IsVendorLive\": false,\n    \"IsVendorVerified\": true,\n    \"MobileNumber\": \"9848022669\",\n    \"FacebookUrl\":\"http://facebook.com/xyz\",\n    \"Photo\":\"http://Tasko.in/Images/abc.jpg\",\n    \"Name\": \"Steve\",\n    \"NoOfEmployees\": 10,\n    \"UserName\": \"sree123\",\n    \"IsPowerSeller\": true\n  },\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
           "type": "json"
         }
       ]
