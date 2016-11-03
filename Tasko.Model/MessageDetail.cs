@@ -51,5 +51,8 @@ namespace Tasko.Model
        
         [DataMember]
         public string Comments { get; set; }
+
+        [DataMember]
+        public string VendorName { get; set; }
     }
 }
