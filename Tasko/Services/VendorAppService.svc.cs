@@ -802,6 +802,7 @@ namespace Tasko.Services
                     message.Comments = order.Comments;
                      message.CustomerName = order.CustomerName;
                     message.VendorName = order.VendorName;
+                    message.OrderId = OrderId;
                     messageData = JsonConvert.SerializeObject(message);
                     r = InternalSendNotification(order.CustomerId, string.Empty, messageData, ConfigurationManager.AppSettings["CustomerAPIKey"].ToString());
                     break;

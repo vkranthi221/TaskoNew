@@ -229,7 +229,7 @@ namespace Tasko.Services
                         r.Status = 200;
 
                         decimal distanceCovered = Convert.ToDecimal(ConfigurationManager.AppSettings["DistanceCovered"]);
-                        r.Data = services.Where(i => i.Distance <= distanceCovered && i.Distance != -1).ToList();
+                        r.Data = services.Where(i => i.Distance <= distanceCovered && i.Distance != -1 && i.ETA != null && !string.IsNullOrEmpty(i.ETA)).ToList();
                     }
                     else
                     {
