@@ -292,6 +292,6 @@
     <value>Vendor Updated Successfully.</value>
   </data>
   <data name="VENDOR_ALREADY_EXISTS" xml:space="preserve">
-    <value>Vendor with the same username already exists.</value>
+    <value>Vendor with the same username/Mobile number/Email Address already exists.</value>
   </data>
 </root>

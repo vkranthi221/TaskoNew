@@ -932,8 +932,8 @@ namespace Tasko.Interfaces
         Response GetAllCustomersByStatus(int customerStatus);
 
         /**
-        * @api {post} a1/GetAllCustomersByStatus Get all the customers for a specified status. 0 - All, 1- Online, 2- Offline, 3- Blocked
-        * @apiName GetAllCustomersByStatus
+        * @api {post} a1/GetCustomerRatingsForOrders Get Customer Ratings for Orders
+        * @apiName GetCustomerRatingsForOrders
         * @apiGroup Admin
         *
         * @apiHeader {string} Token_Code Token Code
@@ -947,11 +947,13 @@ namespace Tasko.Interfaces
         *    "User_Id": "Logged in User ID",
         *  }
         *  
-        * @apiParam {customerStatus} customerStatus 0 - All, 1- Online, 2- Offline, 3- Blocked.
+        * @apiParam {string} customerId Customer Id.
+        * @apiParam {integer} noOfRecords No of records to retrieve
         * 
         * @apiParamExample {json} Param-Example:
         *  {
-            "customerStatus": 0
+            "customerId": "6786E5D449D6B74396E8ADAEA1C17E37",
+            "noOfRecords":2
            }
         *
         * @apiSuccessExample Success-Response:
@@ -1368,7 +1370,7 @@ namespace Tasko.Interfaces
         Response GetDashboardMeters();
 
         /**
-         * @api {post} a1/GetDashboardRecentActivities Get Recent Activities
+         * @api {post} a1/GetDashboardRecentActivities Get Dashboard Recent Activities
          * @apiName GetDashboardRecentActivities
          * @apiGroup Admin
          *
@@ -1569,7 +1571,7 @@ namespace Tasko.Interfaces
         Response UpdatePayment(Payment payment);
 
         /**
-         * @api {post} a1/GetAllPaymentsByStatus Get All Payments
+         * @api {post} a1/GetAllPaymentsByStatus Get All Payments ByStatus
          * @apiName GetAllPaymentsByStatus
          * @apiGroup Admin
          *
@@ -2034,7 +2036,7 @@ namespace Tasko.Interfaces
         Response AddUser(User user);
 
         /**
-         * @api {post} a1/GetAllUsers Get all the users
+         * @api {post} a1/GetAllUsers Get All Users
          * @apiName GetAllusers
          * @apiGroup Admin
          *
@@ -2097,8 +2099,8 @@ namespace Tasko.Interfaces
         Response GetAllUsers();
 
         /**
-         * @api {post} a1/GetUserDetails Get user details
-         * @apiName AddUser
+         * @api {post} a1/GetUserDetails Get User Details
+         * @apiName GetUserDetails
          * @apiGroup Admin
          *
          * @apiHeader {string} Token_Code Authntication code
@@ -2155,7 +2157,7 @@ namespace Tasko.Interfaces
         Response GetUserDetails(string userId);
 
         /**
-        * @api {post} a1/DeleteUser Delete user
+        * @api {post} a1/DeleteUser Delete User
         * @apiName DeleteUser
         * @apiGroup Admin
         *
@@ -2203,7 +2205,7 @@ namespace Tasko.Interfaces
 
 
         /**
-        * @api {post} a1/UpdateUserStatus Updates user status
+        * @api {post} a1/UpdateUserStatus Update User Status
         * @apiName UpdateUserStatus
         * @apiGroup Admin
         *
@@ -2374,7 +2376,7 @@ namespace Tasko.Interfaces
         #region Offline Vendor Request
         /**
         * @api {post} a1/GetOffileVendorRequests Gets offline vendor requests for the day
-        * @apiName GetAllCustomersByStatus
+        * @apiName GetOffileVendorRequests
         * @apiGroup Admin
         *
         * @apiHeader {string} Token_Code Token Code

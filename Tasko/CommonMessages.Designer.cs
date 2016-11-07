@@ -547,7 +547,7 @@ namespace Tasko {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vendor with the same username already exists..
+        ///   Looks up a localized string similar to Vendor with the same username/Mobile number/Email Address already exists..
         /// </summary>
         internal static string VENDOR_ALREADY_EXISTS {
             get {

@@ -226,44 +226,47 @@ namespace Tasko.Repository
         /// <param name="vendor">The Vendor to add</param>
         public static string AddVendor(Vendor vendor)
         {
-            List<SqlParameter> objParameters = new List<SqlParameter>();
-            //// add the vendor address 
-            string vendorAddressId = CustomerData.AddAddress(vendor.AddressDetails);
-
-            objParameters.Add(SqlHelper.CreateParameter("@pBaseRate", DbType.Double, vendor.BaseRate));
-            objParameters.Add(SqlHelper.CreateParameter("@pEmailAddress", DbType.String, vendor.EmailAddress));
-            objParameters.Add(SqlHelper.CreateParameter("@pIsVendorLive", DbType.Boolean, vendor.IsVendorLive));
-            objParameters.Add(SqlHelper.CreateParameter("@pIsVendorVerified", DbType.Boolean, vendor.IsVendorVerified));
-            objParameters.Add(SqlHelper.CreateParameter("@pMobileNumber", DbType.String, vendor.MobileNumber));
-            objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.String, vendor.Name));
-            objParameters.Add(SqlHelper.CreateParameter("@pNoOfEmployees", DbType.Int32, vendor.NoOfEmployees));
-            //objParameters.Add(SqlHelper.CreateParameter("@pTimeSpentOnApp", DbType.String, vendor.TimeSpentOnApp));
-            objParameters.Add(SqlHelper.CreateParameter("@pUserName", DbType.String, vendor.UserName));
-            objParameters.Add(SqlHelper.CreateParameter("@pAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorAddressId)));
-            objParameters.Add(SqlHelper.CreateParameter("@pPassword", DbType.String, vendor.Password));
-            objParameters.Add(SqlHelper.CreateParameter("@pDOB", DbType.DateTime, vendor.DateOfBirth));
-            objParameters.Add(SqlHelper.CreateParameter("@pGender", DbType.Int16, vendor.Gender));
-            objParameters.Add(SqlHelper.CreateParameter("@pPhoto", DbType.String, vendor.Photo));
-            objParameters.Add(SqlHelper.CreateParameter("@pAreOrdersBlocked", DbType.Boolean, vendor.AreOrdersBlocked));
-            objParameters.Add(SqlHelper.CreateParameter("@pIsBlocked", DbType.Boolean, vendor.IsBlocked));
-            objParameters.Add(SqlHelper.CreateParameter("@pMonthlyCharge", DbType.Decimal, vendor.MonthlyCharge));
-            objParameters.Add(SqlHelper.CreateParameter("@pIsPowerSeller", DbType.Boolean, vendor.IsPowerSeller));
-            objParameters.Add(SqlHelper.CreateParameter("@pVendorAlsoKnownAs", DbType.String, vendor.VendorAlsoKnownAs));
-            objParameters.Add(SqlHelper.CreateParameter("@pExperience", DbType.String, vendor.Experience));
-            //objParameters.Add(SqlHelper.CreateParameter("@pActiveTimePerDay", DbType.String, vendor.ActiveTimePerDay));
-            //objParameters.Add(SqlHelper.CreateParameter("@pDataConsumption", DbType.Int32, vendor.DataConsumption));
-            //objParameters.Add(SqlHelper.CreateParameter("@pCallsToCustomerCare", DbType.Int32, vendor.CallsToCustomerCare));            
-            objParameters.Add(SqlHelper.CreateParameter("@pFacebookUrl", DbType.String, vendor.FacebookUrl));
-            byte[] vendorId = (byte[])SqlHelper.ExecuteScalar("dbo.usp_AddVendor", objParameters.ToArray());
-
-            string id = string.Empty;
-            if (vendor.VendorServices != null && vendorId != null)
+            if (!IsVendorExists(vendor))
             {
-                id = BinaryConverter.ConvertByteToString(vendorId);
-                AddVendorServices(vendor.VendorServices, id);
-            }
+                List<SqlParameter> objParameters = new List<SqlParameter>();
+                //// add the vendor address 
+                string vendorAddressId = CustomerData.AddAddress(vendor.AddressDetails);
 
-            return id;
+                objParameters.Add(SqlHelper.CreateParameter("@pBaseRate", DbType.Double, vendor.BaseRate));
+                objParameters.Add(SqlHelper.CreateParameter("@pEmailAddress", DbType.String, vendor.EmailAddress));
+                objParameters.Add(SqlHelper.CreateParameter("@pIsVendorLive", DbType.Boolean, vendor.IsVendorLive));
+                objParameters.Add(SqlHelper.CreateParameter("@pIsVendorVerified", DbType.Boolean, vendor.IsVendorVerified));
+                objParameters.Add(SqlHelper.CreateParameter("@pMobileNumber", DbType.String, vendor.MobileNumber));
+                objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.String, vendor.Name));
+                objParameters.Add(SqlHelper.CreateParameter("@pNoOfEmployees", DbType.Int32, vendor.NoOfEmployees));
+                objParameters.Add(SqlHelper.CreateParameter("@pUserName", DbType.String, vendor.UserName));
+                objParameters.Add(SqlHelper.CreateParameter("@pAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorAddressId)));
+                objParameters.Add(SqlHelper.CreateParameter("@pPassword", DbType.String, vendor.Password));
+                objParameters.Add(SqlHelper.CreateParameter("@pDOB", DbType.DateTime, vendor.DateOfBirth));
+                objParameters.Add(SqlHelper.CreateParameter("@pGender", DbType.Int16, vendor.Gender));
+                objParameters.Add(SqlHelper.CreateParameter("@pPhoto", DbType.String, vendor.Photo));
+                objParameters.Add(SqlHelper.CreateParameter("@pAreOrdersBlocked", DbType.Boolean, vendor.AreOrdersBlocked));
+                objParameters.Add(SqlHelper.CreateParameter("@pIsBlocked", DbType.Boolean, vendor.IsBlocked));
+                objParameters.Add(SqlHelper.CreateParameter("@pMonthlyCharge", DbType.Decimal, vendor.MonthlyCharge));
+                objParameters.Add(SqlHelper.CreateParameter("@pIsPowerSeller", DbType.Boolean, vendor.IsPowerSeller));
+                objParameters.Add(SqlHelper.CreateParameter("@pVendorAlsoKnownAs", DbType.String, vendor.VendorAlsoKnownAs));
+                objParameters.Add(SqlHelper.CreateParameter("@pExperience", DbType.String, vendor.Experience));
+                objParameters.Add(SqlHelper.CreateParameter("@pFacebookUrl", DbType.String, vendor.FacebookUrl));
+                byte[] vendorId = (byte[])SqlHelper.ExecuteScalar("dbo.usp_AddVendor", objParameters.ToArray());
+
+                string id = string.Empty;
+                if (vendor.VendorServices != null && vendorId != null)
+                {
+                    id = BinaryConverter.ConvertByteToString(vendorId);
+                    AddVendorServices(vendor.VendorServices, id);
+                }
+
+                return id;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -950,6 +953,29 @@ namespace Tasko.Repository
             reader.Close();
 
             return vendors.Count > 0 ? vendors : null;
+        }
+
+        /// <summary>
+        /// Determines whether [is vendor exist] [the specified phone number].
+        /// </summary>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <returns>true/false</returns>
+        public static bool IsVendorExists(Vendor vendor)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pUsername", DbType.String, vendor.UserName));
+            objParameters.Add(SqlHelper.CreateParameter("@pMobileNumber", DbType.String, vendor.MobileNumber));
+            objParameters.Add(SqlHelper.CreateParameter("@pEmailAddress", DbType.String, vendor.EmailAddress));
+
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_IsVendorExists", objParameters.ToArray());
+            bool isVendorExists = false;
+            if (reader.Read())
+            {
+                isVendorExists = (bool)reader["IsVendorExists"];
+            }
+
+            reader.Close();
+            return isVendorExists;
         }
 
         #endregion
