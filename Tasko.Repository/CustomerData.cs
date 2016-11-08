@@ -289,36 +289,40 @@ namespace Tasko.Repository
         /// Gets the customer orders.
         /// </summary>
         /// <param name="customerId">The customer identifier.</param>
-        /// <param name="orderStatus">The order status.</param>
+        /// <param name="orderStatusIds">The order status Ids.</param>
         /// <param name="pageNumber">The page number.</param>
         /// <param name="recordsPerPage">The records per page.</param>
         /// <returns>
         /// List of Customer Orders
         /// </returns>
-        public static List<OrderSummary> GetCustomerOrders(string customerId, int orderStatus, int pageNumber, int recordsPerPage)
+        public static List<OrderSummary> GetCustomerOrders(string customerId, string orderStatusIds, int pageNumber, int recordsPerPage)
         {
             List<OrderSummary> customerOrders = null;
+            string[] listOfOrderstatusIds = orderStatusIds.Split(',');
 
-            List<SqlParameter> objParameters = new List<SqlParameter>();
-            BinaryConverter.IsValidGuid(customerId, TaskoEnum.IdType.CustomerId);
-            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
-            objParameters.Add(SqlHelper.CreateParameter("@pOrderstatusId", DbType.Int16, orderStatus));
-            objParameters.Add(SqlHelper.CreateParameter("@pPageNo", DbType.Int16, pageNumber));
-            objParameters.Add(SqlHelper.CreateParameter("@pRecordsPerPage", DbType.Int16, recordsPerPage));
-            DataTable datatable = SqlHelper.GetDataTable("dbo.usp_GetCustomerOrders", objParameters.ToArray());
-            if (datatable != null && datatable.Rows.Count > 0)
+            foreach (string statusId in listOfOrderstatusIds)
             {
-                customerOrders = new List<OrderSummary>();
-                foreach (DataRow row in datatable.Rows)
+                List<SqlParameter> objParameters = new List<SqlParameter>();
+                BinaryConverter.IsValidGuid(customerId, TaskoEnum.IdType.CustomerId);
+                objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
+                objParameters.Add(SqlHelper.CreateParameter("@pOrderstatusId", DbType.Int16, statusId));
+                objParameters.Add(SqlHelper.CreateParameter("@pPageNo", DbType.Int16, pageNumber));
+                objParameters.Add(SqlHelper.CreateParameter("@pRecordsPerPage", DbType.Int16, recordsPerPage));
+                DataTable datatable = SqlHelper.GetDataTable("dbo.usp_GetCustomerOrders", objParameters.ToArray());
+                if (datatable != null && datatable.Rows.Count > 0)
                 {
-                    OrderSummary orderSummary = new OrderSummary();
-                    orderSummary.OrderId = row["ORDER_ID"].ToString();
-                    orderSummary.OrderStatus = row["ORDERSTATUS_NAME"].ToString();
-                    orderSummary.ServiceId = BinaryConverter.ConvertByteToString((byte[])row["SERVICE_ID"]);
-                    orderSummary.ServiceName = row["SERVICE_NAME"].ToString();
-                    orderSummary.RequestedDate = Convert.ToDateTime(row["REQUESTED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
-                    orderSummary.Comments = row["COMMENTS"].ToString();
-                    customerOrders.Add(orderSummary);
+                    customerOrders = new List<OrderSummary>();
+                    foreach (DataRow row in datatable.Rows)
+                    {
+                        OrderSummary orderSummary = new OrderSummary();
+                        orderSummary.OrderId = row["ORDER_ID"].ToString();
+                        orderSummary.OrderStatus = row["ORDERSTATUS_NAME"].ToString();
+                        orderSummary.ServiceId = BinaryConverter.ConvertByteToString((byte[])row["SERVICE_ID"]);
+                        orderSummary.ServiceName = row["SERVICE_NAME"].ToString();
+                        orderSummary.RequestedDate = Convert.ToDateTime(row["REQUESTED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+                        orderSummary.Comments = row["COMMENTS"].ToString();
+                        customerOrders.Add(orderSummary);
+                    }
                 }
             }
 

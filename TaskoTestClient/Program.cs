@@ -12,6 +12,7 @@ namespace TaskoTestClient
     {
         static void Main(string[] args)
         {
+            List<OrderSummary> Ordersummary = VendorData.GetVendorOrders("2F68A29C01DCD243BF1EFF3918366939", "1,5", 1, 10);
             CustomerData.GetOrderDetails("TASKO1008");
             //AddressInfo addresss = new AddressInfo();
             //addresss.Address = "sdfsdf";

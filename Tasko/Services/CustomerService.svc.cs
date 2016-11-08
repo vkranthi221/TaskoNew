@@ -399,7 +399,7 @@ namespace Tasko.Services
         /// <returns>
         /// Response Object
         /// </returns>
-        public Response GetCustomerOrders(string customerId, int orderStatus, int pageNumber, int recordsPerPage)
+        public Response GetCustomerOrders(string customerId, string orderStatusIds, int pageNumber, int recordsPerPage)
         {
             Response r = new Response();
             try
@@ -408,7 +408,7 @@ namespace Tasko.Services
                 List<OrderSummary> orderSummary = null;
                 if (isTokenValid)
                 {
-                    orderSummary = CustomerData.GetCustomerOrders(customerId, orderStatus, pageNumber, recordsPerPage);
+                    orderSummary = CustomerData.GetCustomerOrders(customerId, orderStatusIds, pageNumber, recordsPerPage);
                 }
                 else
                 {

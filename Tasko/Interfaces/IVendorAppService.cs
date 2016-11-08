@@ -711,7 +711,7 @@ namespace Tasko.Interfaces
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response GetVendorOrders(string vendorId, int orderStatusId, int pageNumber, int recordsPerPage);
+        Response GetVendorOrders(string vendorId, string orderStatusIds, int pageNumber, int recordsPerPage);
 
         /**
         * @api {post} v1/ChangePassword Change password

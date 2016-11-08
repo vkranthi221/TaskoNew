@@ -381,34 +381,41 @@ namespace Tasko.Repository
         /// Gets the vendor orders.
         /// </summary>
         /// <param name="vendorId">The vendor identifier.</param>
-        /// <param name="orderStatusId">The order status identifier.</param>
+        /// <param name="orderStatusIds">The order status identifiers.</param>
         /// <param name="pageNumber">The page number.</param>
         /// <param name="recordsPerPage">Records per page.</param>
-        /// <returns>Vendor Orders</returns>
-        public static List<OrderSummary> GetVendorOrders(string vendorId, int orderStatusId, int pageNumber, int recordsPerPage)
-        {
-            List<SqlParameter> objParameters = new List<SqlParameter>();
-
-            BinaryConverter.IsValidGuid(vendorId, TaskoEnum.IdType.VendorId);
-            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
-            objParameters.Add(SqlHelper.CreateParameter("@pORDERSTATUSID", DbType.Int32, orderStatusId));
-            objParameters.Add(SqlHelper.CreateParameter("@pRECORDSPERPAGE", DbType.Int32, recordsPerPage));
-            objParameters.Add(SqlHelper.CreateParameter("@pPAGENO", DbType.Int32, pageNumber));
-            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorOrders", objParameters.ToArray());
+        /// <returns>
+        /// Vendor Orders
+        /// </returns>
+        public static List<OrderSummary> GetVendorOrders(string vendorId, string orderStatusIds, int pageNumber, int recordsPerPage)
+        {            
             List<OrderSummary> orders = new List<OrderSummary>();
 
-            while (reader.Read())
+            BinaryConverter.IsValidGuid(vendorId, TaskoEnum.IdType.VendorId);            
+            string[] listOfOrderstatusIds = orderStatusIds.Split(',');
+            
+            foreach (string statusId in listOfOrderstatusIds)
             {
-                OrderSummary order = new OrderSummary();
-                order.OrderId = reader["ORDER_ID"].ToString();
-                order.RequestedDate = Convert.ToDateTime(reader["REQUESTED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
-                order.ServiceName = reader["SERVICENAME"].ToString();
-                order.OrderStatus = reader["ORDERSTATUSNAME"].ToString();
-                order.Comments = reader["COMMENTS"].ToString();
-                orders.Add(order);
-            }
+                List<SqlParameter> objParameters = new List<SqlParameter>();
+                objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
+                objParameters.Add(SqlHelper.CreateParameter("@pORDERSTATUSID", DbType.Int32, Convert.ToInt32(statusId)));
+                objParameters.Add(SqlHelper.CreateParameter("@pRECORDSPERPAGE", DbType.Int32, recordsPerPage));
+                objParameters.Add(SqlHelper.CreateParameter("@pPAGENO", DbType.Int32, pageNumber));
+                IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorOrders", objParameters.ToArray());             
 
-            reader.Close();
+                while (reader.Read())
+                {
+                    OrderSummary order = new OrderSummary();
+                    order.OrderId = reader["ORDER_ID"].ToString();
+                    order.RequestedDate = Convert.ToDateTime(reader["REQUESTED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+                    order.ServiceName = reader["SERVICENAME"].ToString();
+                    order.OrderStatus = reader["ORDERSTATUSNAME"].ToString();
+                    order.Comments = reader["COMMENTS"].ToString();
+                    orders.Add(order);
+                }
+
+                reader.Close();
+            }
 
             return orders;
         }

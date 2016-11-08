@@ -503,7 +503,7 @@ namespace Tasko.Interfaces
          */
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response GetCustomerOrders(string customerId, int orderStatus, int pageNumber, int recordsPerPage);
+        Response GetCustomerOrders(string customerId, string orderStatusIds, int pageNumber, int recordsPerPage);
 
         /**
          * @api {post} c1/AddCustomerAddress Add Customer Address
