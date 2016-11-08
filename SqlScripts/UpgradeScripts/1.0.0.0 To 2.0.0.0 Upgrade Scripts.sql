@@ -27,3 +27,29 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE [dbo].[usp_UpdateVendorRating]
+(
+  @pVendorRatingId binary(16),
+  @pOrderId varchar(50),
+  @pCustomerId binary(16),
+  @pVendorId binary(16),
+  @pServiceQuality decimal(18,2),
+  @pPunctuality decimal(18,2),
+  @pCourtesy decimal(18,2),
+  @pPrice decimal(18,2),
+  @pComments nvarchar(max),
+  @pOrderPrice decimal(18,2)
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+  UPDATE [dbo].[VENDOR_RATING] 
+  SET SERVICE_QUALITY = @pServiceQuality, PUNCTUALITY = @pPunctuality, COURTESY = @pCourtesy,
+  PRICE = @pPrice, REVIEW_DATE = Getdate(), COMMENTS = @pComments, ORDER_ID = @pOrderId,
+  VENDOR_ID = @pVendorId, CUSTOMER_ID = @pCustomerId, ORDER_PRICE = @pOrderPrice 
+  WHERE  VENDOR_RATING_ID = @pVendorRatingId
+
+END
