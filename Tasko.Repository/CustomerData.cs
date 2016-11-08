@@ -446,6 +446,33 @@ namespace Tasko.Repository
         }
 
         /// <summary>
+        /// Updates the vendor rating.
+        /// </summary>
+        /// <param name="orderId">The order identifier.</param>
+        /// <param name="vendorRating">The vendor rating.</param>
+        public static void UpdateVendorRating(string orderId, VendorRating vendorRating)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pOrderId", DbType.String, orderId));
+
+            BinaryConverter.IsValidGuid(vendorRating.CustomerId, TaskoEnum.IdType.CustomerId);
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorRatingId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorRating.Id)));
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorRating.CustomerId)));
+
+            BinaryConverter.IsValidGuid(vendorRating.VendorId, TaskoEnum.IdType.VendorId);
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorRating.VendorId)));
+
+            objParameters.Add(SqlHelper.CreateParameter("@pServiceQuality", DbType.Decimal, vendorRating.ServiceQuality));
+            objParameters.Add(SqlHelper.CreateParameter("@pPunctuality", DbType.Decimal, vendorRating.Punctuality));
+            objParameters.Add(SqlHelper.CreateParameter("@pCourtesy", DbType.Decimal, vendorRating.Courtesy));
+            objParameters.Add(SqlHelper.CreateParameter("@pPrice", DbType.Decimal, vendorRating.Price));
+            objParameters.Add(SqlHelper.CreateParameter("@pComments", DbType.String, vendorRating.Comments));
+            objParameters.Add(SqlHelper.CreateParameter("@pOrderPrice", DbType.Decimal, vendorRating.OrderPrice));
+
+            SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendorRating", objParameters.ToArray());
+        }
+
+        /// <summary>
         /// Sets the vendor as favorite vendor for customer
         /// </summary>
         /// <param name="customerId">The customer identifier.</param>

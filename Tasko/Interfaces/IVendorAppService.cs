@@ -646,7 +646,7 @@ namespace Tasko.Interfaces
         *  
         * @apiParam {string} vendorId Vendor Id.
         *
-        * @apiParam {int} orderStatusId Order Status Id.
+        * @apiParam {string} orderStatusIds Order Status Id's. Accepts Comma separated values ex: "1,2" for multiple order statuses.
         *
         * @apiParam {int} pageNumber Page Number.
         *

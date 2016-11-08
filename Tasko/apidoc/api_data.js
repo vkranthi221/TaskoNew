@@ -708,31 +708,11 @@ define({ "api": [
         }
       ]
     },
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "complaintStatus",
-            "description": "<p>Complaint status where 0 refers to all complaints.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Param-Example:",
-          "content": "{\n      {\n                  \"complaintStatus\": 1\n                }\n}",
-          "type": "json"
-        }
-      ]
-    },
     "success": {
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"Complaint:#Tasko.Model\",\n              \"ComplaintChats\": null,\n              \"ComplaintId\": \"Complaint#1000\",\n              \"ComplaintStatus\": 0,\n              \"DueDate\": null,\n              \"LoggedDate\": \"2016-07-16 07:16:28\",\n              \"OrderId\": null,\n              \"Title\": \"Test\"\n            }\n          ],\n          \"Error\": false,\n          \"Message\": \"Success\",\n          \"Status\": 200\n}",
+          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"GcmUser:#Tasko.Model\",\n              \"CustomerId\": \"F3E6D9CBF8EF6A4289E1FC3509076D54\",\n              \"GcmId\": \"995FB41FF15F374398985802AF9E0CD5\",\n              \"GcmRegId\": \"APA91bEvA_MLQBs27lR24U_dEXkBoxL5K5VL5l2BkkVoi_6axHy8tEQvEBLRZ-Vlo4FY9u6S0I5PI5EhshJ-jJ5JjgjYBhExk2kuCVa7cFC1KxNgi6QMpzu6IsClEGbbV2ZvG_-H6DC6\",\n              \"Name\": \"srikanth\",\n              \"VendorId\": null\n            }\n          ],\n          \"Error\": false,\n          \"Message\": \"Success\",\n          \"Status\": 200\n}",
           "type": "json"
         }
       ]
@@ -743,15 +723,15 @@ define({ "api": [
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "COMPLAINT_NOT_FOUND",
-            "description": "<p>Complaints not found.</p>"
+            "field": "USERS_NOT_FOUND",
+            "description": "<p>Users not found.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Error-Response:",
-          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Complaints not found\",\n  \"Status\": 400\n}",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Users not found\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
@@ -800,11 +780,31 @@ define({ "api": [
         }
       ]
     },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "complaintStatus",
+            "description": "<p>Complaint status where 0 refers to all complaints.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n      {\n                  \"complaintStatus\": 1\n                }\n}",
+          "type": "json"
+        }
+      ]
+    },
     "success": {
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"GcmUser:#Tasko.Model\",\n              \"CustomerId\": \"F3E6D9CBF8EF6A4289E1FC3509076D54\",\n              \"GcmId\": \"995FB41FF15F374398985802AF9E0CD5\",\n              \"GcmRegId\": \"APA91bEvA_MLQBs27lR24U_dEXkBoxL5K5VL5l2BkkVoi_6axHy8tEQvEBLRZ-Vlo4FY9u6S0I5PI5EhshJ-jJ5JjgjYBhExk2kuCVa7cFC1KxNgi6QMpzu6IsClEGbbV2ZvG_-H6DC6\",\n              \"Name\": \"srikanth\",\n              \"VendorId\": null\n            }\n          ],\n          \"Error\": false,\n          \"Message\": \"Success\",\n          \"Status\": 200\n}",
+          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"Complaint:#Tasko.Model\",\n              \"ComplaintChats\": null,\n              \"ComplaintId\": \"Complaint#1000\",\n              \"ComplaintStatus\": 0,\n              \"DueDate\": null,\n              \"LoggedDate\": \"2016-07-16 07:16:28\",\n              \"OrderId\": null,\n              \"Title\": \"Test\"\n            }\n          ],\n          \"Error\": false,\n          \"Message\": \"Success\",\n          \"Status\": 200\n}",
           "type": "json"
         }
       ]
@@ -815,15 +815,15 @@ define({ "api": [
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "USERS_NOT_FOUND",
-            "description": "<p>Users not found.</p>"
+            "field": "COMPLAINT_NOT_FOUND",
+            "description": "<p>Complaints not found.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Error-Response:",
-          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Users not found\",\n  \"Status\": 400\n}",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Complaints not found\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
@@ -4576,10 +4576,10 @@ define({ "api": [
           },
           {
             "group": "Parameter",
-            "type": "int",
+            "type": "string",
             "optional": false,
-            "field": "orderStatus",
-            "description": "<p>Order Status.</p>"
+            "field": "orderStatusIds",
+            "description": "<p>Order Status Ids. Accepts Comma separated values ex: &quot;1,2&quot; for multiple order statuses.</p>"
           },
           {
             "group": "Parameter",
@@ -5897,6 +5897,105 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "c1/UpdateVendorRating",
+    "title": "Update Vendor Rating",
+    "name": "UpdateVendorRating",
+    "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "orderId",
+            "description": "<p>Order Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "VendorRating",
+            "optional": false,
+            "field": "vendorRating",
+            "description": "<p>Vendor Rating.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"orderId\":\"TASKO1012\",\n  \"vendorRating\":\n  {   \n    \"Id\":\"46304E4DDC4E3547BB68532F12850476\",\n    \"CustomerId\": \"10E4394670195C4AA1E4B7130A514187\",\n    \"VendorId\": \"B0269B0769CC8D48AEB92D2513EA14D6\",\n    \"ServiceQuality\": \"5\",\n    \"Punctuality\": \"5\",\n    \"Courtesy\": \"5\",\n    \"Price\": \"5\",\n    \"Comments\":\"Excellent\"\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
     "url": "v1/ValidateOTP",
     "title": "Validate OTP",
     "name": "ValidateOTP",
@@ -6330,10 +6429,10 @@ define({ "api": [
           },
           {
             "group": "Parameter",
-            "type": "int",
+            "type": "string",
             "optional": false,
-            "field": "orderStatusId",
-            "description": "<p>Order Status Id.</p>"
+            "field": "orderStatusIds",
+            "description": "<p>Order Status Id's. Accepts Comma separated values ex: &quot;1,2&quot; for multiple order statuses.</p>"
           },
           {
             "group": "Parameter",

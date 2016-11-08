@@ -451,7 +451,7 @@ namespace Tasko.Interfaces
          *    
          * @apiParam {string} customerId Customer Id.
          * 
-         * @apiParam {int} orderStatus Order Status.
+         * @apiParam {string} orderStatusIds Order Status Ids. Accepts Comma separated values ex: "1,2" for multiple order statuses.
          * 
          * @apiParam {int} pageNumber Page Number.
          * 
@@ -818,6 +818,61 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response AddVendorRating(string orderId, VendorRating vendorRating);
+
+        /**
+         * @api {post} c1/UpdateVendorRating Update Vendor Rating
+         * @apiName UpdateVendorRating
+         * @apiGroup Customer
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
+         * @apiParam {string} orderId Order Id.
+         * 
+         * @apiParam {VendorRating} vendorRating Vendor Rating.
+         *
+         * @apiParamExample {json} Param-Example:
+         * {
+         *   "orderId":"TASKO1012",
+         *   "vendorRating":
+         *   {   
+         *     "Id":"46304E4DDC4E3547BB68532F12850476",
+         *     "CustomerId": "10E4394670195C4AA1E4B7130A514187",
+         *     "VendorId": "B0269B0769CC8D48AEB92D2513EA14D6",
+         *     "ServiceQuality": "5",
+         *     "Punctuality": "5",
+         *     "Courtesy": "5",
+         *     "Price": "5",
+         *     "Comments":"Excellent"
+         *   }
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError INVALID_TOKEN_CODE Invalid token code.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Invalid token code",
+          "Status": 400
+        }
+         */
+        Response UpdateVendorRating(string orderId, VendorRating vendorRating);
 
         /**
          * @api {post} c1/SetFavoriteVendor Set Favorite Vendor

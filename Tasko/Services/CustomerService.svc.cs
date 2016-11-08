@@ -692,6 +692,46 @@ namespace Tasko.Services
         }
 
         /// <summary>
+        /// Update the vendor rating.
+        /// </summary>
+        /// <param name="orderId">The order identifier.</param>
+        /// <param name="vendorRating">The vendor rating.</param>
+        /// <returns>Response Object</returns>
+        public Response UpdateVendorRating(string orderId, VendorRating vendorRating)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = ValidateToken();
+                if (isTokenValid)
+                {
+                    CustomerData.UpdateVendorRating(orderId, vendorRating);
+                    r.Error = false;
+                    r.Message = CommonMessages.SUCCESS;
+                    r.Status = 200;
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                    r.Error = true;
+                    r.Status = 400;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Status = 400;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        /// <summary>
         /// Sets the vendor as favorite vendor for customer
         /// </summary>
         /// <param name="customerId">The customer identifier.</param>
