@@ -204,10 +204,26 @@ namespace Tasko.Repository
             while (reader.Read())
             {
                 serviceOverview = new ServiceOverview();
-                serviceOverview.TotalPayments = Convert.ToDecimal(reader["TOTAL_PAYMENTS"]);
-                serviceOverview.WeeklyPayments = Convert.ToDecimal(reader["WEEKLY_PAYMENTS"]);
-                serviceOverview.BiggestPayment = Convert.ToDecimal(reader["BIGGEST_PAYMENT"]);
-                serviceOverview.MonthlyPayments = Convert.ToDecimal(reader["MONTHLY_PAYMENTS"]);
+                if (!(reader["TOTAL_PAYMENTS"] is System.DBNull))
+                {
+                    serviceOverview.TotalPayments = Convert.ToDecimal(reader["TOTAL_PAYMENTS"]);
+                }
+
+                if (!(reader["WEEKLY_PAYMENTS"] is System.DBNull))
+                {
+                    serviceOverview.WeeklyPayments = Convert.ToDecimal(reader["WEEKLY_PAYMENTS"]);
+                }
+
+                if (!(reader["BIGGEST_PAYMENT"] is System.DBNull))
+                {
+                    serviceOverview.BiggestPayment = Convert.ToDecimal(reader["BIGGEST_PAYMENT"]);
+                }
+
+                if (!(reader["MONTHLY_PAYMENTS"] is System.DBNull))
+                {
+                    serviceOverview.MonthlyPayments = Convert.ToDecimal(reader["MONTHLY_PAYMENTS"]);
+                }
+
                 serviceOverview.ServiceName = (reader["SERVICE_NAME"]).ToString();
                 serviceOverview.ServiceId = serviceId;
             }
