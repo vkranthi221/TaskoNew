@@ -561,7 +561,7 @@ namespace Tasko.Services
         /// <returns>
         /// Response Object
         /// </returns>
-        public Response GetVendorOrders(string vendorId, string orderStatusIds, int pageNumber, int recordsPerPage)
+        public Response GetVendorOrders(string vendorId, string orderStatusId, int pageNumber, int recordsPerPage)
         {
             Response r = new Response();
             try
@@ -569,7 +569,7 @@ namespace Tasko.Services
                 bool isTokenValid = ValidateToken();
                 if (isTokenValid)
                 {
-                    List<OrderSummary> objOrders = VendorData.GetVendorOrders(vendorId, orderStatusIds, pageNumber, recordsPerPage);
+                    List<OrderSummary> objOrders = VendorData.GetVendorOrders(vendorId, orderStatusId, pageNumber, recordsPerPage);
 
                     if (objOrders != null && objOrders.Count > 0)
                     {

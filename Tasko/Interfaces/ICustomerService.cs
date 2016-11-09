@@ -451,7 +451,7 @@ namespace Tasko.Interfaces
          *    
          * @apiParam {string} customerId Customer Id.
          * 
-         * @apiParam {string} orderStatusIds Order Status Ids. Accepts Comma separated values ex: "1,2" for multiple order statuses.
+         * @apiParam {string} orderStatus Order Status Ids. Accepts Comma separated values ex: "1,2" for multiple order statuses.
          * 
          * @apiParam {int} pageNumber Page Number.
          * 
@@ -503,7 +503,7 @@ namespace Tasko.Interfaces
          */
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response GetCustomerOrders(string customerId, string orderStatusIds, int pageNumber, int recordsPerPage);
+        Response GetCustomerOrders(string customerId, string orderStatus, int pageNumber, int recordsPerPage);
 
         /**
          * @api {post} c1/AddCustomerAddress Add Customer Address

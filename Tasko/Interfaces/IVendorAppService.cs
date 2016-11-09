@@ -646,7 +646,7 @@ namespace Tasko.Interfaces
         *  
         * @apiParam {string} vendorId Vendor Id.
         *
-        * @apiParam {string} orderStatusIds Order Status Id's. Accepts Comma separated values ex: "1,2" for multiple order statuses.
+        * @apiParam {string} orderStatusId Order Status Id's. Accepts Comma separated values ex: "1,2" for multiple order statuses.
         *
         * @apiParam {int} pageNumber Page Number.
         *
@@ -711,7 +711,7 @@ namespace Tasko.Interfaces
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response GetVendorOrders(string vendorId, string orderStatusIds, int pageNumber, int recordsPerPage);
+        Response GetVendorOrders(string vendorId, string orderStatusId, int pageNumber, int recordsPerPage);
 
         /**
         * @api {post} v1/ChangePassword Change password

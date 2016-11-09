@@ -4578,7 +4578,7 @@ define({ "api": [
             "group": "Parameter",
             "type": "string",
             "optional": false,
-            "field": "orderStatusIds",
+            "field": "orderStatus",
             "description": "<p>Order Status Ids. Accepts Comma separated values ex: &quot;1,2&quot; for multiple order statuses.</p>"
           },
           {
@@ -6431,7 +6431,7 @@ define({ "api": [
             "group": "Parameter",
             "type": "string",
             "optional": false,
-            "field": "orderStatusIds",
+            "field": "orderStatusId",
             "description": "<p>Order Status Id's. Accepts Comma separated values ex: &quot;1,2&quot; for multiple order statuses.</p>"
           },
           {
