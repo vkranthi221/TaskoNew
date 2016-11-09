@@ -662,7 +662,7 @@ namespace Tasko.Interfaces
          * @apiParamExample {json} Param-Example:
          * { 
          *   "vendorId": "AFB2B50F2164804C8E6D26A6C4A32982",
-         *   "Data": [
+         *   "services": [
                     {
                       "ServiceId": "F4878463A2FF5043BF3763F8AA913DE1",
                     }
