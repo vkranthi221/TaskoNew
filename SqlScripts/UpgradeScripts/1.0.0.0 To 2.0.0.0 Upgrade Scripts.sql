@@ -3,7 +3,13 @@
 
 ---------------------------------------------------------------------------------------------------------- 
 
-CREATE PROCEDURE [dbo].[usp_IsVendorExists]
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[usp_IsVendorExists]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[usp_IsVendorExists] AS' 
+END
+GO
+
+ALTER PROCEDURE [dbo].[usp_IsVendorExists]
 (
 	@pUsername varchar(max),
 	@pMobileNumber varchar(50),
@@ -27,7 +33,13 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE [dbo].[usp_UpdateVendorRating]
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[usp_UpdateVendorRating]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[usp_UpdateVendorRating] AS' 
+END
+GO
+
+ALTER PROCEDURE [dbo].[usp_UpdateVendorRating]
 (
   @pVendorRatingId binary(16),
   @pOrderId varchar(50),
