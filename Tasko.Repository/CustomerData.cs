@@ -182,7 +182,7 @@ namespace Tasko.Repository
                 }
             }
 
-            return services;
+            return services.OrderBy(i=>i.Name).ToList();
         }
 
         /// <summary>

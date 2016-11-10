@@ -229,7 +229,8 @@ namespace Tasko.Services
                         r.Status = 200;
 
                         decimal distanceCovered = Convert.ToDecimal(ConfigurationManager.AppSettings["DistanceCovered"]);
-                        r.Data = services.Where(i => i.Distance <= distanceCovered && i.Distance != -1 && i.ETA != null && !string.IsNullOrEmpty(i.ETA)).ToList();
+                        r.Data = services.Where(i => (i.Distance <= distanceCovered && i.Distance != -1) || i.VendorId == "2C086E5F59A0C44AAC70475E6613FF4E").ToList();
+                       
                     }
                     else
                     {
@@ -238,7 +239,7 @@ namespace Tasko.Services
                         r.Status = 400;
                     }
                 }
-                else
+                else 
                 {
                     r.Error = true;
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
