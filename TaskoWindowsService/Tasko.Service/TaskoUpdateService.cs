@@ -59,7 +59,7 @@ namespace Tasko.Service
             using (SqlConnection connection = new SqlConnection(@"Data Source=WIN-P4AUDD5MBT2;Initial Catalog=Tasko_live;User ID=sa;password=Tasko@12345"))
             {
                 connection.Open();
-                SqlCommand command = new SqlCommand("UPDATE [ORDER] SET ORDER_STATUS_ID = 7 WHERE REQUESTED_DATE <=DateADD(minute, -5, Current_TimeStamp) AND ORDER_STATUS_ID = 1", connection);
+                SqlCommand command = new SqlCommand("UPDATE [ORDER] SET ORDER_STATUS_ID = 7 WHERE REQUESTED_DATE <=DateADD(minute, -2, Current_TimeStamp) AND ORDER_STATUS_ID = 1", connection);
                 command.ExecuteNonQuery();
             }
             eventLog1.WriteEntry("Order Status Updated to Missed(7)");
