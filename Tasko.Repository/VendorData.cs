@@ -336,6 +336,7 @@ namespace Tasko.Repository
                 rating.Comments = reader["COMMENTS"].ToString();
                 rating.OverAllRating = Convert.ToDecimal(reader["TOTAL"]);
                 rating.CustomerName = reader["NAME"].ToString();
+                rating.OrderId = reader["ORDER_ID"].ToString();
                 if (!(reader["ORDER_PRICE"] is System.DBNull))
                 {
                     rating.OrderPrice = Convert.ToDecimal(reader["ORDER_PRICE"]);
