@@ -248,9 +248,17 @@ namespace Tasko.Repository
         public static string ConfirmOrder(Order order)
         {
             string orderId = string.Empty;
-
-            //// add the source address and get the Source addressId
-            string sourceAddressId = AddAddress(order.SourceAddress);
+            string sourceAddressId = string.Empty;
+            if (!string.IsNullOrEmpty(order.VendorId))
+            {
+                order.SourceAddress = AdminData.GetVendorAddress(order.VendorId);
+                sourceAddressId = order.SourceAddress.AddressId;
+            }
+            else
+            {
+                //// add the source address and get the Source addressId
+                sourceAddressId = AddAddress(order.SourceAddress);
+            }
 
             //// add the destination address and get the destination addressId
             string destinationAddressId = AddAddress(order.DestinationAddress);
