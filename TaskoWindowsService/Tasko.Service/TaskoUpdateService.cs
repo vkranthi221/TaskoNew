@@ -44,25 +44,25 @@ namespace Tasko.Service
         }
         public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
         {
-            eventLog1.WriteEntry("Resetting the User Login's");
+            ////eventLog1.WriteEntry("Resetting the User Login's");
             using (SqlConnection connection = new SqlConnection(@"Data Source=WIN-P4AUDD5MBT2;Initial Catalog=Tasko_live;User ID=sa;password=Tasko@12345"))
             {
                 connection.Open();
-                SqlCommand command = new SqlCommand("UPDATE ADDRESS SET LATITIUDE = '0', LONGITUDE = '0'", connection);
+                SqlCommand command = new SqlCommand("UPDATE ADDRESS SET LATITIUDE = '0', LONGITUDE = '0' WHERE ADDRESS_ID !=0xFC32A83A7791074B8072B68B652088E6", connection);
                 command.ExecuteNonQuery();
             }
-            eventLog1.WriteEntry("User Login's reset");
+            ////eventLog1.WriteEntry("User Login's reset");
         }
         public void OnTimer2(object sender, System.Timers.ElapsedEventArgs args)
         {
-            eventLog1.WriteEntry("Check Started for order status");
+            ////eventLog1.WriteEntry("Check Started for order status");
             using (SqlConnection connection = new SqlConnection(@"Data Source=WIN-P4AUDD5MBT2;Initial Catalog=Tasko_live;User ID=sa;password=Tasko@12345"))
             {
                 connection.Open();
                 SqlCommand command = new SqlCommand("UPDATE [ORDER] SET ORDER_STATUS_ID = 7 WHERE REQUESTED_DATE <=DateADD(minute, -2, Current_TimeStamp) AND ORDER_STATUS_ID = 1", connection);
                 command.ExecuteNonQuery();
             }
-            eventLog1.WriteEntry("Order Status Updated to Missed(7)");
+            ////eventLog1.WriteEntry("Order Status Updated to Missed(7)");
         }
 
         protected override void OnStop()
