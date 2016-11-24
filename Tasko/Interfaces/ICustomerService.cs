@@ -33,47 +33,53 @@ namespace Tasko.Interfaces
          *
          * @apiSuccessExample Success-Response:
          {
-          "Data": {
-            "__type": "Order:#Tasko.Model",
-            "Comments": "",
-            "CustomerId": "692BD435A5173E42916438F889F5DA08",
-            "CustomerName": "Shivaji",
-            "CustomerMobileNumber":9948636000,
-            "DestinationAddress": {
-              "Address": "plot no 404, BaghyaNagar",
-              "AddressId": "8397A91B6E997F438A9D4D9D49D3E12A",
-              "AddressType":"Home",
-              "City": "Hyderabad",              
-              "Country": "India",
-              "Lattitude": "40",
-              "Locality": "HMT HILLS",
-              "Longitude": "600",
-              "Pincode": "500072",
-              "State": "Telangana"
-            },
-            "Location": "kphb",
-            "OrderId": "TASKO1000",
-            "OrderStatus": "Requested",
-            "OrderStatusId": 1,
-            "RequestedDate": "2016-06-29 22:49:47",
-            "ServiceId": "9661D3C7E345B747BBE62DEA76F00B82",
-            "ServiceName": "Electrician",            
-            "ServiceImageURL":"http://api.Tasko.in/ServiceImages/electrician.png",
-            "VendorId": "C3A4A364DA1DE542BA70FBAD2435D571",
-            "VendorName": "chandra",
-            "VendorMobileNumber":9985466195,
-            "VendorServiceId": "CD2CA27D52CE5E4D8E897D53CC4379CB",
-            "AmountPaid": "300.00",
-            "CustomerETA":"10",
-            "CustomerDistance":"10",
-            "VisitingFee":"100",
-            "OverAllRating":"5",
-            
-          },
-          "Error": false,
-          "Message": "Success",
-          "Status": 200
-        }
+              "Data": {
+                "__type": "Order:#Tasko.Model",
+                "AmountPaid": 390,
+                "Comments": "",
+                "Courtesy": 3,
+                "CustomerDistance": "1",
+                "CustomerETA": "1 min",
+                "CustomerId": "335CA2B4774CF349A921B3B54C585507",
+                "CustomerMobileNumber": "8374407070",
+                "CustomerName": "Rama Rao",
+                "DestinationAddress": {
+                  "Address": "Road Number 2",
+                  "AddressId": "60128F0A4F8BCF4BBDBB21D97348DCEF",
+                  "AddressType": "",
+                  "City": "Hyderabad",
+                  "Country": "India",
+                  "Lattitude": "17.452240280800343",
+                  "Locality": "Hyderabad",
+                  "Longitude": "78.32029368728399",
+                  "Pincode": "IN",
+                  "State": "Telangana"
+                },
+                "IsOrderRated": true,
+                "Location": "",
+                "OrderId": "TASKO1121",
+                "OrderStatus": "OrderCompleted",
+                "OrderStatusId": 6,
+                "OverAllRating": 3,
+                "Photo": "uploads/tasko_1478753008/144x144.png",
+                "Price": 2,
+                "Punctuality": 2,
+                "RequestedDate": "2016-11-11 12:00:49",
+                "ServiceId": "1AC39253066EE14EB9BD95AD4BD2DAF5",
+                "ServiceImageURL": "http://35.160.197.3/TaskoLive/serviceimages/hanger.png",
+                "ServiceName": "Dry Cleaning",
+                "ServiceQuality": 5,
+                "SourceAddress": null,
+                "VendorId": "2C086E5F59A0C44AAC70475E6613FF4E",
+                "VendorMobileNumber": "9000963211",
+                "VendorName": "Tasko Help",
+                "VendorServiceId": "6E533A43C957D048A2C4BEFEB9258E2D",
+                "VisitingFee": 30
+              },
+              "Error": false,
+              "Message": "Success",
+              "Status": 200
+            }
          * @apiError ORDER_NOT_FOUND The Order id was not found.
          *
          * @apiErrorExample Error-Response:

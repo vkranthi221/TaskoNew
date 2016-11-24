@@ -179,5 +179,17 @@ namespace Tasko.Model
 
         [DataMember]
         public double OverAllRating { get; set; }
+
+        [DataMember]
+        public double ServiceQuality { get; set; }
+
+        [DataMember]
+        public double Punctuality { get; set; }
+
+        [DataMember]
+        public double Courtesy { get; set; }
+
+        [DataMember]
+        public double Price { get; set; }
     }
 }

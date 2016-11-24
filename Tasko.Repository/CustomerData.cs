@@ -75,6 +75,11 @@ namespace Tasko.Repository
                     //// Get the source Address
                     ////objOrder.SourceAddress = PopulateAddress(dataSet.Tables[1].Rows[0]);
                     objOrder.AmountPaid = Convert.ToDouble(dataSet.Tables[1].Rows[0]["ORDER_PRICE"]);
+
+                    objOrder.ServiceQuality = Convert.ToDouble(dataSet.Tables[1].Rows[0]["SERVICE_QUALITY"]);
+                    objOrder.Punctuality = Convert.ToDouble(dataSet.Tables[1].Rows[0]["PUNCTUALITY"]);
+                    objOrder.Courtesy = Convert.ToDouble(dataSet.Tables[1].Rows[0]["COURTESY"]);
+                    objOrder.Price = Convert.ToDouble(dataSet.Tables[1].Rows[0]["PRICE"]);
                 }
 
                 //// Get the Destination Address

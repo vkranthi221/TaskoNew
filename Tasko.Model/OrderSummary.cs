@@ -77,6 +77,15 @@ namespace Tasko.Model
         public string CustomerName { get; set; }
 
         /// <summary>
+        /// Gets or sets the Customer identifier.
+        /// </summary>
+        /// <value>
+        /// The Customer identifier.
+        /// </value>
+        [DataMember]
+        public string CustomerId { get; set; }
+
+        /// <summary>
         /// Gets or sets the name of the vendor.
         /// </summary>
         /// <value>
@@ -84,5 +93,14 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public string VendorName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the vendor identifier.
+        /// </summary>
+        /// <value>
+        /// The vendor identifier.
+        /// </value>
+        [DataMember]
+        public string VendorId { get; set; }
     }
 }

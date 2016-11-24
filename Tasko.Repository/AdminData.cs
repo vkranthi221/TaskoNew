@@ -531,10 +531,27 @@ namespace Tasko.Repository
                 customerOverview.TotalOrders = Convert.ToInt32(reader["Total_Orders"]);
                 customerOverview.WeeklyOrders = Convert.ToInt32(reader["Weekly_Orders"]);
                 customerOverview.TodayOrders = Convert.ToInt32(reader["Today_Orders"]);
-                customerOverview.TotalPayments = Convert.ToDecimal(reader["Total_Payments"]);
-                customerOverview.WeeklyPayments = Convert.ToDecimal(reader["Weekly_Payments"]);
-                customerOverview.BiggestPayments = Convert.ToDecimal(reader["Biggest_Payments"]);
-                customerOverview.MonthlyPayments = Convert.ToDecimal(reader["Monthly_Payments"]);
+
+                if (!(reader["Total_Payments"] is System.DBNull))
+                {
+                    customerOverview.TotalPayments = Convert.ToDecimal(reader["Total_Payments"]);
+                }
+
+                if (!(reader["Weekly_Payments"] is System.DBNull))
+                {
+                    customerOverview.WeeklyPayments = Convert.ToDecimal(reader["Weekly_Payments"]);
+                }
+
+                if (!(reader["Biggest_Payments"] is System.DBNull))
+                {
+                    customerOverview.BiggestPayments = Convert.ToDecimal(reader["Biggest_Payments"]);
+                }
+
+                if (!(reader["Monthly_Payments"] is System.DBNull))
+                {
+                    customerOverview.MonthlyPayments = Convert.ToDecimal(reader["Monthly_Payments"]);
+                }
+
                 customerOverview.Name = (reader["Name"]).ToString();
             }
 
@@ -661,7 +678,18 @@ namespace Tasko.Repository
                 order.ServiceName = reader["SERVICENAME"].ToString();
                 order.OrderStatus = reader["ORDERSTATUSNAME"].ToString();
                 order.VendorName = reader["VENDOR_NAME"].ToString();
+
+                if (!(reader["VENDOR_ID"] is System.DBNull))
+                {
+                    order.VendorId = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
+                }
+                
                 order.CustomerName = reader["CUSTOMER_NAME"].ToString();
+                if (!(reader["CUSTOMER_ID"] is System.DBNull))
+                {
+                    order.CustomerId = BinaryConverter.ConvertByteToString((byte[])reader["CUSTOMER_ID"]);
+                }
+
                 orders.Add(order);
             }
 
