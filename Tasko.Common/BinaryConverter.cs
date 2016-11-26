@@ -189,6 +189,9 @@ namespace Tasko.Common
                     
                     case TaskoEnum.IdType.AddressId:
                         throw new UserException("Invalid Address Id");
+
+                    case TaskoEnum.IdType.VendorDocumentId:
+                        throw new UserException("Invalid Vendor Document Id");
                     
                     case TaskoEnum.IdType.TokenCode:
                         throw new UserException("Invalid Token Code");

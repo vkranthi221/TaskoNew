@@ -30,7 +30,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                    AdminData.AddService(service);
@@ -65,7 +65,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     AdminData.UpdateService(service);
@@ -101,7 +101,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     AdminData.DisableService(serviceId, status);
@@ -136,7 +136,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                    bool isServiceInUse = AdminData.DeleteService(serviceId);
@@ -177,7 +177,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     List<ServiceDetail> services = AdminData.GetAllServices();
@@ -226,7 +226,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                 bool isTokenValid = ValidateToken();
+                 bool isTokenValid = TokenHelper.ValidateToken();
                  if (isTokenValid)
                  {
                      List<OrderSummary> services = AdminData.GetOrdersByService(serviceId);
@@ -275,7 +275,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     List<VendorSummary> vendors = AdminData.GetVendorsByService(serviceId);
@@ -320,7 +320,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     ServiceOverview serviceOverview = AdminData.GetServiceOverview(serviceId);
@@ -371,7 +371,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     string vendorId = AdminData.AddVendor(vendor);
@@ -419,7 +419,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     List<ServicesForVendor> servicesForVendor = AdminData.GetServicesForVendor(vendorId);
@@ -468,7 +468,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     AdminData.UpdateServicesForVendor(vendorId, services);
@@ -506,7 +506,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     VendorOverview vendorOverview = AdminData.GetVendorOverview(vendorId);
@@ -549,7 +549,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     List<VendorSummary> vendors = AdminData.GetVendorsByStatus(vendorStatus);
@@ -593,7 +593,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     AdminData.UpdateVendorDetails(vendor);
@@ -621,6 +621,103 @@ namespace Tasko.Services
 
             return r;
         }
+
+        /// <summary>
+        /// Updates the vendor documents.
+        /// </summary>
+        /// <param name="vendorDocuments">The vendor documents.</param>
+        /// <returns>Response Object</returns>
+        public Response UpdateVendorDocuments(VendorDocuments vendorDocuments)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = TokenHelper.ValidateToken();
+                if (isTokenValid)
+                {
+                    if (vendorDocuments != null)
+                    {
+                        AdminData.UpdateVendorDocuments(vendorDocuments);
+                        r.Data = null;
+                        r.Error = false;
+                        r.Status = 200;
+                        r.Message = CommonMessages.VENDOR_DOCUMENTS_UPDATED;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Status = 400;
+                        r.Message = "Vendor Documents should not be null, Please check the parameter name as it is case sensitive";
+                    }
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;        
+        }
+
+        /// <summary>
+        /// Gets the vendor documents.
+        /// </summary>
+        /// <param name="vendorId">The vendor identifier.</param>
+        /// <returns>Response Object</returns>
+        public Response GetVendorDocuments(string vendorId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = TokenHelper.ValidateToken();
+                if (isTokenValid)
+                {
+                    VendorDocuments vendorDocuments = AdminData.GetVendorDocuments(vendorId);
+                    if (vendorDocuments != null)
+                    {
+                        r.Data = vendorDocuments;
+                        r.Error = false;
+                        r.Status = 200;
+                        r.Message = CommonMessages.SUCCESS;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Status = 400;
+                        r.Message = CommonMessages.VENDOR_DOCUMENTS_NOTFOUND;
+                    }
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
         #endregion
 
         # region Customers
@@ -629,7 +726,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     List<Customer> customers = AdminData.GetCustomersByStatus(customerStatus);
@@ -671,7 +768,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     List<CustomerRating> customerRatings = AdminData.CustomerRatingsForOrders(customerId, noOfRecords);
@@ -705,7 +802,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 List<AddressInfo> customerAddresses = null;
                 if (isTokenValid)
                 {
@@ -747,7 +844,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     CustomerOverview customerOverview = AdminData.GetCustomerOverview(customerId);
@@ -796,7 +893,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     List<OrderSummary> objOrders = AdminData.GetOrders(orderStatusId);
@@ -845,7 +942,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 Order objOrder = null;
                 if (isTokenValid)
                 {
@@ -894,7 +991,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     List<OrderSummary> recentOrders = AdminData.GetDashboardRecentOrdersByStatus(orderStatusId);
@@ -942,7 +1039,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     DashboardMeter dashboardMeter = AdminData.GetDashboardMeters();
@@ -984,7 +1081,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     List<RecentActivities> recentActivities = AdminData.GetDashboardRecentActivities();
@@ -1036,7 +1133,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     AdminData.AddPayment(payment);
@@ -1074,7 +1171,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     AdminData.UpdatePayment(payment);
@@ -1112,7 +1209,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     List<Payment> payments = AdminData.GetAllPaymentsByStatus(status);
@@ -1163,7 +1260,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     Payment payment = AdminData.GetPayment(paymentId);
@@ -1212,7 +1309,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     VendorPaymentInvoice paymentInvoice = AdminData.GetPaymentInvoice(paymentId);
@@ -1260,7 +1357,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     List<VendorSummary> vendors = AdminData.GetAllVendorsSummary();
@@ -1308,7 +1405,7 @@ namespace Tasko.Services
             string userId = string.Empty;
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     userId = AdminData.AddUser(user);
@@ -1353,7 +1450,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     List<User> users = AdminData.GetAllUsers();
@@ -1397,7 +1494,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 User objUser = null;
                 if (isTokenValid)
                 {
@@ -1437,7 +1534,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     AdminData.DeleteUser(userId);
@@ -1562,7 +1659,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     AdminData.UpdateUserStatus(userId, isActive);
@@ -1598,7 +1695,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 Order objOrder = null;
                 if (isTokenValid)
                 {
@@ -1640,7 +1737,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 Order objOrder = null;
                 if (isTokenValid)
                 {
@@ -1682,7 +1779,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     List<Complaint> complaints = AdminData.GetAllComplaints(complaintStatus);
@@ -1728,7 +1825,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 List<GcmUser> objUsers = null;
                 if (isTokenValid)
                 {
@@ -1772,7 +1869,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = ValidateToken();
+                bool isTokenValid = TokenHelper.ValidateToken();
                 List<OfflineVendorRequest> requests = null;
                 if (isTokenValid)
                 {
@@ -1809,25 +1906,6 @@ namespace Tasko.Services
         #endregion
 
         #region Private Methods
-        /// <summary>
-        /// Validates the token.
-        /// </summary>
-        /// <returns>bool value</returns>
-        private static bool ValidateToken()
-        {
-            IncomingWebRequestContext request = WebOperationContext.Current.IncomingRequest;
-            WebHeaderCollection headers = request.Headers;
-            string tokenCode = headers["Token_Code"];
-            string userId = headers["User_Id"];
-            if (!string.IsNullOrEmpty(tokenCode) && !string.IsNullOrEmpty(userId))
-            {
-                bool isTokenValid = VendorData.ValidateTokenCode(tokenCode, userId);
-                return isTokenValid;
-            }
-
-            return false;
-        }
-
         #endregion
     }
 }

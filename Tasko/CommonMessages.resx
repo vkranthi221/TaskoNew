@@ -294,4 +294,10 @@
   <data name="VENDOR_ALREADY_EXISTS" xml:space="preserve">
     <value>Vendor with the same username/Mobile number/Email Address already exists.</value>
   </data>
+ <data name="VENDOR_DOCUMENTS_UPDATED" xml:space="preserve">
+    <value>Vendor Documents Updated Successfully.</value>
+  </data>
+<data name="VENDOR_DOCUMENTS_NOTFOUND" xml:space="preserve">
+    <value>No Documents found for the given Vendor.</value>
+  </data>
 </root>

@@ -556,6 +556,24 @@ namespace Tasko {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Documents found for the given Vendor..
+        /// </summary>
+        internal static string VENDOR_DOCUMENTS_NOTFOUND {
+            get {
+                return ResourceManager.GetString("VENDOR_DOCUMENTS_NOTFOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vendor Documents Updated Successfully..
+        /// </summary>
+        internal static string VENDOR_DOCUMENTS_UPDATED {
+            get {
+                return ResourceManager.GetString("VENDOR_DOCUMENTS_UPDATED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vendor not found.
         /// </summary>
         internal static string VENDOR_NOT_FOUND {

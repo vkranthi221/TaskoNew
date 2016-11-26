@@ -61,6 +61,7 @@ namespace Tasko
     [KnownType(typeof(List<GcmUser>))]
     [KnownType(typeof(OfflineVendorRequest))]
     [KnownType(typeof(List<OfflineVendorRequest>))]
+    [KnownType(typeof(VendorDocuments))]
     public class Response
     {
         /// <summary>

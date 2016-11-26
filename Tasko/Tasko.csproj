@@ -86,6 +86,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CommonMessages.resx</DependentUpon>
     </Compile>
+    <Compile Include="Common\TokenHelper.cs" />
     <Compile Include="Services\AdminService.svc.cs">
       <DependentUpon>AdminService.svc</DependentUpon>
     </Compile>
@@ -142,7 +143,7 @@
   <ItemGroup>
     <EmbeddedResource Include="CommonMessages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>CommonMessages.Designer.cs</LastGenOutput>
+      <LastGenOutput>CommonMessages1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

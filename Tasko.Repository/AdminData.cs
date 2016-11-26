@@ -490,6 +490,60 @@ namespace Tasko.Repository
             
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendorDetails", objParameters.ToArray());
         }
+
+        public static void UpdateVendorDocuments(VendorDocuments vendorDocuments)
+        {
+            if (vendorDocuments != null)
+            {
+                List<SqlParameter> objParameters = new List<SqlParameter>();
+
+                BinaryConverter.IsValidGuid(vendorDocuments.VendorId, TaskoEnum.IdType.VendorId);
+                objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorDocuments.VendorId)));
+                objParameters.Add(SqlHelper.CreateParameter("@pPhotoDocTypeId", DbType.Int16, vendorDocuments.PhotoIdProofId));
+                objParameters.Add(SqlHelper.CreateParameter("@pPhotoDocTypeNumber", DbType.String, vendorDocuments.PhotoIdProofNumber));
+
+                objParameters.Add(SqlHelper.CreateParameter("@pAddressProofDocTypeId", DbType.Int16, vendorDocuments.AddressProofId));
+                objParameters.Add(SqlHelper.CreateParameter("@pAddressProofDocTypeNumber", DbType.String, vendorDocuments.AddressProofNumber));
+                objParameters.Add(SqlHelper.CreateParameter("@pPendingDocTypeId", DbType.Int16, vendorDocuments.PendingDocumentId));
+
+                objParameters.Add(SqlHelper.CreateParameter("@pIsPassportSizePhoto", DbType.Boolean, vendorDocuments.IsPassportSizePhoto));
+                objParameters.Add(SqlHelper.CreateParameter("@pIsRegistrationFeePaid", DbType.Boolean, vendorDocuments.IsRegistrationFeePaid));
+                objParameters.Add(SqlHelper.CreateParameter("@pIsBkgrndChkInitiated", DbType.Boolean, vendorDocuments.IsBackgroundVerificationInitiated));
+
+                SqlHelper.ExecuteNonQuery("dbo.usp_InsertUpdateVendorDocuments", objParameters.ToArray());
+            }
+        }
+
+        public static VendorDocuments GetVendorDocuments(string vendorId)
+        {
+            VendorDocuments vendorDocuments = null;
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            BinaryConverter.IsValidGuid(vendorId, TaskoEnum.IdType.VendorId);
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorDocuments", objParameters.ToArray());
+            while (reader.Read())
+            {
+                vendorDocuments = new VendorDocuments();
+                vendorDocuments.VendorId = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_ID"]);
+                vendorDocuments.VendorName = Convert.ToString(reader["VENDOR_NAME"]);
+                vendorDocuments.Id = BinaryConverter.ConvertByteToString((byte[])reader["VENDOR_DOCUMENT_ID"]);
+                vendorDocuments.PhotoIdProofId = Convert.ToInt16(reader["PHOTOIDPROOF_DOCUMENT_TYPE_ID"].ToString());
+                vendorDocuments.PhotoIdProofName = ((Tasko.Common.TaskoEnum.DocumentProofs)vendorDocuments.PhotoIdProofId).ToString();
+                vendorDocuments.PhotoIdProofNumber = Convert.ToString(reader["PHOTOIDPROOF_DOCUMENT_NUMBER"]);
+                vendorDocuments.AddressProofId = Convert.ToInt16(reader["ADDRESSPROOF_DOCUMENT_TYPE_ID"]);
+                vendorDocuments.AddressProofName = ((Tasko.Common.TaskoEnum.DocumentProofs)vendorDocuments.AddressProofId).ToString();
+                vendorDocuments.AddressProofNumber = Convert.ToString(reader["ADDRESSPROOF_DOCUMENT_NUMBER"]);
+                vendorDocuments.PendingDocumentId = Convert.ToInt16(reader["PENDING_DOCUMENT_TYPE_ID"]);
+                vendorDocuments.PendingDocumentName = ((Tasko.Common.TaskoEnum.DocumentProofs)vendorDocuments.PendingDocumentId).ToString();
+                vendorDocuments.IsPassportSizePhoto = Convert.ToBoolean(reader["PASSPORT_SIZE_PHOTO"]);
+                vendorDocuments.IsRegistrationFeePaid = Convert.ToBoolean(reader["REGISTRATION_FEE_PAID"]);
+                vendorDocuments.IsBackgroundVerificationInitiated = Convert.ToBoolean(reader["BACKGROUND_VERIFICATION_INITIATED"]);
+            }
+
+            return vendorDocuments;
+        }
+
         #endregion
 
         #region Customers

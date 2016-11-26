@@ -22,6 +22,7 @@ namespace Tasko.Common
             DestinationAddressId,
             AddressId,
             TokenCode,
+            VendorDocumentId
         }
         public enum OrderStatus
         {
@@ -33,6 +34,17 @@ namespace Tasko.Common
             OrderCompleted = 6,
             OrderMissed = 7,
             OrderRejected = 8
+        }
+
+        public enum DocumentProofs
+        {
+            None = 0,
+            AadharCard = 1,
+            DrivingLicense = 2,
+            VoterID = 3,
+            Passport = 4,
+            BankPassbook = 5,
+            PanCard = 6,
         }
     }
 }

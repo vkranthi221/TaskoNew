@@ -708,11 +708,31 @@ define({ "api": [
         }
       ]
     },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "complaintStatus",
+            "description": "<p>Complaint status where 0 refers to all complaints.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n      {\n                  \"complaintStatus\": 1\n                }\n}",
+          "type": "json"
+        }
+      ]
+    },
     "success": {
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"GcmUser:#Tasko.Model\",\n              \"CustomerId\": \"F3E6D9CBF8EF6A4289E1FC3509076D54\",\n              \"GcmId\": \"995FB41FF15F374398985802AF9E0CD5\",\n              \"GcmRegId\": \"APA91bEvA_MLQBs27lR24U_dEXkBoxL5K5VL5l2BkkVoi_6axHy8tEQvEBLRZ-Vlo4FY9u6S0I5PI5EhshJ-jJ5JjgjYBhExk2kuCVa7cFC1KxNgi6QMpzu6IsClEGbbV2ZvG_-H6DC6\",\n              \"Name\": \"srikanth\",\n              \"VendorId\": null\n            }\n          ],\n          \"Error\": false,\n          \"Message\": \"Success\",\n          \"Status\": 200\n}",
+          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"Complaint:#Tasko.Model\",\n              \"ComplaintChats\": null,\n              \"ComplaintId\": \"Complaint#1000\",\n              \"ComplaintStatus\": 0,\n              \"DueDate\": null,\n              \"LoggedDate\": \"2016-07-16 07:16:28\",\n              \"OrderId\": null,\n              \"Title\": \"Test\"\n            }\n          ],\n          \"Error\": false,\n          \"Message\": \"Success\",\n          \"Status\": 200\n}",
           "type": "json"
         }
       ]
@@ -723,15 +743,15 @@ define({ "api": [
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "USERS_NOT_FOUND",
-            "description": "<p>Users not found.</p>"
+            "field": "COMPLAINT_NOT_FOUND",
+            "description": "<p>Complaints not found.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Error-Response:",
-          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Users not found\",\n  \"Status\": 400\n}",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Complaints not found\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
@@ -780,31 +800,11 @@ define({ "api": [
         }
       ]
     },
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "complaintStatus",
-            "description": "<p>Complaint status where 0 refers to all complaints.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Param-Example:",
-          "content": "{\n      {\n                  \"complaintStatus\": 1\n                }\n}",
-          "type": "json"
-        }
-      ]
-    },
     "success": {
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"Complaint:#Tasko.Model\",\n              \"ComplaintChats\": null,\n              \"ComplaintId\": \"Complaint#1000\",\n              \"ComplaintStatus\": 0,\n              \"DueDate\": null,\n              \"LoggedDate\": \"2016-07-16 07:16:28\",\n              \"OrderId\": null,\n              \"Title\": \"Test\"\n            }\n          ],\n          \"Error\": false,\n          \"Message\": \"Success\",\n          \"Status\": 200\n}",
+          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"GcmUser:#Tasko.Model\",\n              \"CustomerId\": \"F3E6D9CBF8EF6A4289E1FC3509076D54\",\n              \"GcmId\": \"995FB41FF15F374398985802AF9E0CD5\",\n              \"GcmRegId\": \"APA91bEvA_MLQBs27lR24U_dEXkBoxL5K5VL5l2BkkVoi_6axHy8tEQvEBLRZ-Vlo4FY9u6S0I5PI5EhshJ-jJ5JjgjYBhExk2kuCVa7cFC1KxNgi6QMpzu6IsClEGbbV2ZvG_-H6DC6\",\n              \"Name\": \"srikanth\",\n              \"VendorId\": null\n            }\n          ],\n          \"Error\": false,\n          \"Message\": \"Success\",\n          \"Status\": 200\n}",
           "type": "json"
         }
       ]
@@ -815,15 +815,15 @@ define({ "api": [
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "COMPLAINT_NOT_FOUND",
-            "description": "<p>Complaints not found.</p>"
+            "field": "USERS_NOT_FOUND",
+            "description": "<p>Users not found.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Error-Response:",
-          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Complaints not found\",\n  \"Status\": 400\n}",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Users not found\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
@@ -2568,6 +2568,98 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "a1/GetVendorDocuments",
+    "title": "Get Vendor Documents",
+    "name": "GetVendorDocuments",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "vendorId",
+            "description": "<p>Vendor Id.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n  \"vendorId\": \"002C2D4D117B8845835BFB23C05C6391\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n    \"Data\": {\n       \"__type\": \"VendorDocuments:#Tasko.Model\",\n       \"AddressProofId\": 1,\n       \"AddressProofName\": \"AadharCard\",\n       \"AddressProofNumber\": \"789456123\",\n       \"Id\": \"0E35E27AB13C0744B652612255A3CEBC\",\n       \"IsBackgroundVerificationInitiated\": false,\n       \"IsPassportSizePhoto\": true,\n       \"IsRegistrationFeePaid\": false,\n       \"PendingDocumentId\": 0,\n       \"PendingDocumentName\": \"None\",\n       \"PhotoIdProofId\": 6,\n       \"PhotoIdProofName\": \"PanCard\",\n       \"PhotoIdProofNumber\": \"aoypm2096N\",\n       \"VendorId\": \"002C2D4D117B8845835BFB23C05C6391\",\n       \"VendorName\": \"Salamon Raju Bandari\"\n     },\n     \"Error\": false,\n     \"Message\": \"Success\",\n     \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "VENDOR_DOCUMENTS_NOTFOUND",
+            "description": "<p>No Documents found for the given Vendor.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"No Documents found for the given Vendor\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
     "url": "a1/GetVendorOverview",
     "title": "Get Vendor overview",
     "name": "GetVendorOverview",
@@ -3410,6 +3502,99 @@ define({ "api": [
       "examples": [
         {
           "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/UpdateVendorDocuments",
+    "title": "Update Vendor Documents",
+    "name": "UpdateVendorDocuments",
+    "description": "<p><b>The possible Document Type Ids for Photo and Address proof are : </b><br></p> <table>  <tr><td>0</td><td>None</td></tr> <tr><td>1</td><td>Aadhar Card</td></tr> <tr><td>2</td><td>Driving License</td></tr> <tr><td>3</td><td>Voter ID</td></tr> <tr><td>4</td><td>Passport</td></tr> <tr><td>5</td><td>Bank Passbook</td></tr> <tr><td>6</td><td>Pan Card</td></tr> </table>",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "VendorDocuments",
+            "optional": false,
+            "field": "vendorDocuments",
+            "description": "<p>VendorDocuments Object.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": " {\n            \"vendorDocuments\":{\n\t\t            \"VendorId\" : \"002C2D4D117B8845835BFB23C05C6391\",\n\t\t            \"PhotoIdProofId\":2,\n\t\t            \"PhotoIdProofNumber\" :\"aoypm2096N\",\n\t\t            \"AddressProofId\": 1,\n\t\t            \"AddressProofNumber\" : \"789456123\",\n\t\t            \"PendingDoucmentId\": 0,\n\t\t            \"IsPassportSizePhoto\" :true,\n\t\t            \"IsRegistrationFeePaid\" :false,\n\t\t            \"IsBackgroundVerificationInitiated\" : false\n\t            }\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Vendor Documents Updated Successfully.\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response 1:",
           "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
           "type": "json"
         }

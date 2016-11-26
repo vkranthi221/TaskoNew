@@ -867,6 +867,132 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response UpdateVendorDetails(Vendor vendor);
+
+        /**
+        * @api {post} a1/UpdateVendorDocuments Update Vendor Documents
+        * @apiName UpdateVendorDocuments
+        * @apiDescription <b>The possible Document Type Ids for Photo and Address proof are : </b><br>
+        * <table> 
+        * <tr><td>0</td><td>None</td></tr>
+        * <tr><td>1</td><td>Aadhar Card</td></tr>
+        * <tr><td>2</td><td>Driving License</td></tr>
+        * <tr><td>3</td><td>Voter ID</td></tr>
+        * <tr><td>4</td><td>Passport</td></tr>
+        * <tr><td>5</td><td>Bank Passbook</td></tr>
+        * <tr><td>6</td><td>Pan Card</td></tr>
+        * </table>
+        * @apiGroup Admin
+        *
+        * @apiHeader {string} Token_Code Token Code
+        * @apiHeader {string} Content-Type application/json
+        * @apiHeader {string} User_Id User Id
+        * 
+        * @apiHeaderExample {json} Header-Example:
+        *  {
+        *    "Token_Code": "Unique Token code that is generated after login" ,
+        *    "Content-Type": "application/json"
+        *    "User_Id": "Logged in User ID",
+        *  }
+        *  
+        * @apiParam {VendorDocuments} vendorDocuments VendorDocuments Object.
+        * 
+        * @apiParamExample {json} Param-Example:
+        *  {
+            "vendorDocuments":{
+		            "VendorId" : "002C2D4D117B8845835BFB23C05C6391",
+		            "PhotoIdProofId":2,
+		            "PhotoIdProofNumber" :"aoypm2096N",
+		            "AddressProofId": 1,
+		            "AddressProofNumber" : "789456123",
+		            "PendingDoucmentId": 0,
+		            "IsPassportSizePhoto" :true,
+		            "IsRegistrationFeePaid" :false,
+		            "IsBackgroundVerificationInitiated" : false
+	            }
+        *  }
+        *
+        * @apiSuccessExample Success-Response:
+        {
+         "Data": null,
+         "Error": false,
+         "Message": "Vendor Documents Updated Successfully.",
+         "Status": 200
+       }
+        * @apiError INVALID_TOKEN_CODE Invalid token code
+        *
+        * @apiErrorExample Error-Response 1:
+        {
+         "Data": null,
+         "Error": true,
+         "Message": "Invalid token code",
+         "Status": 400
+       }
+        */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response UpdateVendorDocuments(VendorDocuments vendorDocuments);
+
+        /**
+         * @api {post} a1/GetVendorDocuments Get Vendor Documents
+         * @apiName GetVendorDocuments
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *  
+         * @apiParam {string} vendorId Vendor Id.
+         *
+         * @apiParamExample {json} Param-Example:
+         * { 
+         *   "vendorId": "002C2D4D117B8845835BFB23C05C6391"
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+             "Data": {
+                "__type": "VendorDocuments:#Tasko.Model",
+                "AddressProofId": 1,
+                "AddressProofName": "AadharCard",
+                "AddressProofNumber": "789456123",
+                "Id": "0E35E27AB13C0744B652612255A3CEBC",
+                "IsBackgroundVerificationInitiated": false,
+                "IsPassportSizePhoto": true,
+                "IsRegistrationFeePaid": false,
+                "PendingDocumentId": 0,
+                "PendingDocumentName": "None",
+                "PhotoIdProofId": 6,
+                "PhotoIdProofName": "PanCard",
+                "PhotoIdProofNumber": "aoypm2096N",
+                "VendorId": "002C2D4D117B8845835BFB23C05C6391",
+                "VendorName": "Salamon Raju Bandari"
+              },
+              "Error": false,
+              "Message": "Success",
+              "Status": 200
+         }
+         * @apiError VENDOR_DOCUMENTS_NOTFOUND No Documents found for the given Vendor.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "No Documents found for the given Vendor",
+            "Status": 400
+          }        
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetVendorDocuments(string vendorId);
         #endregion
 
         #region Customers
