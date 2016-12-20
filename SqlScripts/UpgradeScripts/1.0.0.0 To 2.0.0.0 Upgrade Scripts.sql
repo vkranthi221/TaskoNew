@@ -284,3 +284,36 @@ SELECT VD.[VENDOR_ID], V.[NAME] AS [VENDOR_NAME], [VENDOR_DOCUMENT_ID], [PHOTOID
 WHERE VD.VENDOR_ID = @pVendorId 
 
 END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[usp_GetAllPendingOrders]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[usp_GetAllPendingOrders] AS' 
+END
+GO
+
+ALTER PROCEDURE [dbo].[usp_GetAllPendingOrders]
+AS
+BEGIN
+
+SET NOCOUNT ON;
+  SELECT ORD.ORDER_ID FROM dbo.[ORDER] ORD  
+  WHERE REQUESTED_DATE <=DATEADD(MINUTE, -2, CURRENT_TIMESTAMP) AND ORD.ORDER_STATUS_ID = 1  
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[usp_ResetAllLogins]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[usp_ResetAllLogins] AS' 
+END
+GO
+
+ALTER PROCEDURE [dbo].[usp_ResetAllLogins]
+AS
+BEGIN
+
+SET NOCOUNT ON;
+  UPDATE ADDRESS SET LATITIUDE = '0', LONGITUDE = '0' WHERE ADDRESS_ID != 0xFC32A83A7791074B8072B68B652088E6
+END
+GO
+

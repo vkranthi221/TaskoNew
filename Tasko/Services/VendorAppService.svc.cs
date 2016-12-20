@@ -280,12 +280,13 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                if (Comments == null)
-                {
-                    Comments = string.Empty;
-                }
+                bool isTokenValid = false;
 
-                bool isTokenValid = TokenHelper.ValidateToken();
+                Comments = Comments == null ? string.Empty : Comments;
+
+                //// if webOperationContext is null it means call made by TaskoService
+                isTokenValid = WebOperationContext.Current == null ? true : TokenHelper.ValidateToken();
+
                 try
                 {
                     if (isTokenValid)
@@ -774,6 +775,7 @@ namespace Tasko.Services
 
             return r;
         }
+
         private Response SendNotification(Order order, string OrderId)
         {
             Response r = new Response();

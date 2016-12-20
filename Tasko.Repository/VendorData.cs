@@ -611,6 +611,7 @@ namespace Tasko.Repository
 
             return vendors.Count > 0 ? vendors : null;
         }
+        
         public static string GetVendorPhone(string vendorId)
         {
             string phone = string.Empty;
@@ -628,6 +629,37 @@ namespace Tasko.Repository
             reader.Close();
 
             return phone;
+        }
+        
+        /// <summary>
+        /// Gets all pending orders.
+        /// </summary>
+        /// <returns>list of Pending Orders</returns>
+        public static List<OrderSummary> GetAllPendingOrders()
+        {
+            List<OrderSummary> pendingOrders = new List<OrderSummary>();
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetAllPendingOrders", objParameters.ToArray());
+
+            while (reader.Read())
+            {
+                OrderSummary order = new OrderSummary();
+                order.OrderId = reader["ORDER_ID"].ToString();                
+                pendingOrders.Add(order);
+            }
+
+            reader.Close();
+
+            return pendingOrders;
+        }
+
+        /// <summary>
+        /// Resets the logins.
+        /// </summary>
+        public static void ResetAllLogins()
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            SqlHelper.ExecuteNonQuery("dbo.usp_ResetAllLogins", objParameters.ToArray());
         }
 
         #region Notifications

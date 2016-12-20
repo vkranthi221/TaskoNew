@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTe
 		{C78127EA-72CA-4D36-AEF5-EB6B6F7DB13B} = {C78127EA-72CA-4D36-AEF5-EB6B6F7DB13B}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko.Service", "Tasko.Service\Tasko.Service.csproj", "{6E35A500-6EFB-47BC-9627-E430964BAFE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +56,10 @@ Global
 		{D6C660C0-679A-4BFE-A1E9-13921591E90F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6C660C0-679A-4BFE-A1E9-13921591E90F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6C660C0-679A-4BFE-A1E9-13921591E90F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E35A500-6EFB-47BC-9627-E430964BAFE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E35A500-6EFB-47BC-9627-E430964BAFE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E35A500-6EFB-47BC-9627-E430964BAFE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E35A500-6EFB-47BC-9627-E430964BAFE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
