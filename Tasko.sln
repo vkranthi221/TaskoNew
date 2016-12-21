@@ -5,8 +5,6 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko", "Tasko\Tasko.csproj", "{C78127EA-72CA-4D36-AEF5-EB6B6F7DB13B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko.BL", "Vendor.BL\Tasko.BL.csproj", "{55C2CA09-B1A5-4EE2-B984-D25CEC39FC67}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko.Common", "Tasko.Common\Tasko.Common.csproj", "{54C1D8AB-9901-42C4-B520-170ABB5B445D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasko.Model", "Tasko.Model\Tasko.Model.csproj", "{1C980A3C-571A-4770-A366-D8E69413E9FC}"
@@ -32,10 +30,6 @@ Global
 		{C78127EA-72CA-4D36-AEF5-EB6B6F7DB13B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C78127EA-72CA-4D36-AEF5-EB6B6F7DB13B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C78127EA-72CA-4D36-AEF5-EB6B6F7DB13B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{55C2CA09-B1A5-4EE2-B984-D25CEC39FC67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55C2CA09-B1A5-4EE2-B984-D25CEC39FC67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{55C2CA09-B1A5-4EE2-B984-D25CEC39FC67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{55C2CA09-B1A5-4EE2-B984-D25CEC39FC67}.Release|Any CPU.Build.0 = Release|Any CPU
 		{54C1D8AB-9901-42C4-B520-170ABB5B445D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{54C1D8AB-9901-42C4-B520-170ABB5B445D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54C1D8AB-9901-42C4-B520-170ABB5B445D}.Release|Any CPU.ActiveCfg = Release|Any CPU
