@@ -842,6 +842,7 @@ namespace Tasko.Services
                     r = InternalSendNotification(order.CustomerId, string.Empty, messageData, ConfigurationManager.AppSettings["CustomerAPIKey"].ToString());
                     break;
                 case (int)Tasko.Common.TaskoEnum.OrderStatus.OrderCompleted:
+                case (int)Tasko.Common.TaskoEnum.OrderStatus.OrderMissed:
                     message.OrderId = OrderId;
                     message.Orderstatus = order.OrderStatusId;
                     message.Comments = order.Comments;
