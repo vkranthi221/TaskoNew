@@ -5015,6 +5015,112 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "c1/GetOfflineServiceVendors",
+    "title": "Get Offline Service Vendors",
+    "name": "GetOfflineServiceVendors",
+    "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "serviceId",
+            "description": "<p>Service Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "customerId",
+            "description": "<p>Customer Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "pincode",
+            "description": "<p>Pincode.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"serviceId\": \"47DAF7A1B95E8040BD9FA90252E72E17\",\n  \"customerId\": \"10E4394670195C4AA1E4B7130A514187\",\n  \"pincode\":  \"500072\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"ServiceVendor:#Tasko.Model\",\n              \"BaseRate\": 82,\n              \"IsFavoriteVendor\": true,\n              \"OverAllRating\": 3,\n              \"ServiceId\": \"0AEAC4261E569C498A05ABBEEC84EA55\",\n              \"ServiceName\": \"Microwave Service\",\n              \"TotalReviews\": 10,\n              \"VendorId\": \"FC73EC7242E28142ACCAFDF4703F0EBF\",\n              \"VendorName\": \"srikanth\",\n              \"FacebookUrl\":\"http://facebook.com/xyz\",\n              \"Photo\":\"http://Tasko.in/Images/abc.jpg\",\n              \"VendorServiceId\": \"CF9A27B3DA0D5E418B1A8E6CC79218AD\",\n              \"Distance\": 4,\n              \"ETA\":\"21 mins\"\n            }\n          ],\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "VENDORS_NOT_FOUND",
+            "description": "<p>Vendors are not found for the selected service.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Vendors are not found for the selected service\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
     "url": "c1/GetOrderDetails",
     "title": "Get Order details",
     "name": "GetOrderDetails",

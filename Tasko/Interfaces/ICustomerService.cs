@@ -1644,6 +1644,73 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response SaveOfflineVendorRequest(string customerId, string serviceId, string area);
+
+        /**
+         * @api {post} c1/GetOfflineServiceVendors Get Offline Service Vendors
+         * @apiName GetOfflineServiceVendors
+         * @apiGroup Customer
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
+         * @apiParam {String} serviceId Service Id.
+         * @apiParam {String} customerId Customer Id.
+         * @apiParam {String} pincode Pincode.
+         *
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *    "serviceId": "47DAF7A1B95E8040BD9FA90252E72E17",
+         *    "customerId": "10E4394670195C4AA1E4B7130A514187",
+         *    "pincode":  "500072"
+         *  }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": [
+                    {
+                      "__type": "ServiceVendor:#Tasko.Model",
+                      "BaseRate": 82,
+                      "IsFavoriteVendor": true,
+                      "OverAllRating": 3,
+                      "ServiceId": "0AEAC4261E569C498A05ABBEEC84EA55",
+                      "ServiceName": "Microwave Service",
+                      "TotalReviews": 10,
+                      "VendorId": "FC73EC7242E28142ACCAFDF4703F0EBF",
+                      "VendorName": "srikanth",
+                      "FacebookUrl":"http://facebook.com/xyz",
+                      "Photo":"http://Tasko.in/Images/abc.jpg",
+                      "VendorServiceId": "CF9A27B3DA0D5E418B1A8E6CC79218AD",
+                      "Distance": 4,
+                      "ETA":"21 mins"
+                    }
+                  ],
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError VENDORS_NOT_FOUND Vendors are not found for the selected service.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Vendors are not found for the selected service",
+          "Status": 400
+        }
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetOfflineServiceVendors(string serviceId, string customerId, string pinCode);
+
         #endregion
     }
 }

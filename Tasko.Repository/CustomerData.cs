@@ -844,6 +844,56 @@ namespace Tasko.Repository
             return phone;
         }
 
+        public static List<ServiceVendor> GetOfflineServiceVendors(string serviceId, string customerId, string pinCode)
+        {
+            List<ServiceVendor> serviceVendors = null;
+
+            List<SqlParameter> objParameters = new List<SqlParameter>();           
+
+            BinaryConverter.IsValidGuid(serviceId, TaskoEnum.IdType.ServiceId);
+            objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(serviceId)));
+
+            BinaryConverter.IsValidGuid(customerId, TaskoEnum.IdType.CustomerId);
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
+
+            objParameters.Add(SqlHelper.CreateParameter("@pPinCode", DbType.String, pinCode));
+
+            DataTable datatable = SqlHelper.GetDataTable("dbo.usp_GetOfflineServiceVendors", objParameters.ToArray());
+            if (datatable != null && datatable.Rows.Count > 0)
+            {
+                serviceVendors = new List<ServiceVendor>();
+                foreach (DataRow row in datatable.Rows)
+                {
+                    ServiceVendor serviceVendor = new ServiceVendor();
+                    serviceVendor.ServiceId = BinaryConverter.ConvertByteToString((byte[])row["SERVICE_ID"]);
+                    serviceVendor.ServiceName = row["SERVICE_NAME"].ToString();
+                    serviceVendor.VendorId = BinaryConverter.ConvertByteToString((byte[])row["VENDOR_ID"]);
+                    serviceVendor.VendorName = row["VENDOR_NAME"].ToString();
+                    serviceVendor.VendorServiceId = BinaryConverter.ConvertByteToString((byte[])row["VENDOR_SERVICE_ID"]);
+                    serviceVendor.BaseRate = Convert.ToDouble(row["BASE_RATE"]);
+                    serviceVendor.Latitude = Convert.ToDecimal(row["LATITIUDE"]);
+                    serviceVendor.Longitude = Convert.ToDecimal(row["LONGITUDE"]);
+                    if (row["FAVORITE_ID"] != null && !row["FAVORITE_ID"].Equals(DBNull.Value))
+                    {
+                        serviceVendor.IsFavoriteVendor = true;
+                    }
+
+                    if (row["OVERALL_RATINGS"] != null && !row["OVERALL_RATINGS"].Equals(DBNull.Value))
+                    {
+                        serviceVendor.OverAllRating = Convert.ToDecimal(row["OVERALL_RATINGS"]);
+                    }
+
+                    serviceVendor.TotalReviews = Convert.ToInt32(row["TOTAL_REVIEWS"]);
+
+                    serviceVendor.FacebookUrl = Convert.ToString(row["FACEBOOK_URL"]);
+                    serviceVendor.Photo = Convert.ToString(row["PHOTO"]);
+                    serviceVendors.Add(serviceVendor);
+                }
+            }
+
+            return serviceVendors;
+        }
+
         public static void SaveOfflineVendorRequest(string customerId, string serviceId, string area)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
