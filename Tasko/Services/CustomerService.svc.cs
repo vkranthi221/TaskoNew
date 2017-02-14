@@ -235,7 +235,7 @@ namespace Tasko.Services
                             vendors.Add(services.FirstOrDefault(i => i.VendorId == "2C086E5F59A0C44AAC70475E6613FF4E"));
                         }
 
-                        vendors.Concat(services.Where(i => i.VendorId != "2C086E5F59A0C44AAC70475E6613FF4E"));
+                        vendors.AddRange(services.Where(i => i.VendorId != "2C086E5F59A0C44AAC70475E6613FF4E"));
                         r.Data = vendors.Where(i => (i.Distance <= distanceCovered && i.Distance != -1) || i.VendorId == "2C086E5F59A0C44AAC70475E6613FF4E").ToList();
                        
                     }
