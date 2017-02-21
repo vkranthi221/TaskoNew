@@ -229,7 +229,14 @@ namespace Tasko.Services
                         r.Status = 200;
 
                         decimal distanceCovered = Convert.ToDecimal(ConfigurationManager.AppSettings["DistanceCovered"]);
-                        r.Data = services.Where(i => (i.Distance <= distanceCovered && i.Distance != -1) || i.VendorId == "2C086E5F59A0C44AAC70475E6613FF4E").ToList();
+                        List<ServiceVendor> vendors = new List<ServiceVendor>();
+                        if (services.Any(i => i.VendorId == "2C086E5F59A0C44AAC70475E6613FF4E"))
+                        {
+                            vendors.Add(services.FirstOrDefault(i => i.VendorId == "2C086E5F59A0C44AAC70475E6613FF4E"));
+                        }
+
+                        vendors.AddRange(services.Where(i => i.VendorId != "2C086E5F59A0C44AAC70475E6613FF4E"));
+                        r.Data = vendors.Where(i => (i.Distance <= distanceCovered && i.Distance != -1) || i.VendorId == "2C086E5F59A0C44AAC70475E6613FF4E").ToList();
                        
                     }
                     else
