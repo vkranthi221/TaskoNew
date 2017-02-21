@@ -886,7 +886,7 @@ GO
 CREATE PROCEDURE [dbo].[usp_LOGIN]
 (
 	@pUserName Varchar(max),
-	@pPassword nvarchar(10),
+	@pPassword Varchar(max),
 	@pMobileNumber varchar(50),
 	@pUserType smallint
 
