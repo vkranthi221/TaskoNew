@@ -2444,7 +2444,7 @@ GO
 CREATE PROCEDURE [dbo].usp_LoginAdminUser
 (
 	@pUserName Varchar(max),
-	@pPassword nvarchar(10)
+	@pPassword varchar(50)
 	
 
 )
