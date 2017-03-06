@@ -568,6 +568,41 @@ INSERT INTO NEARBY_PINCODE VALUES ((SELECT Id FROM CUSTOMER_PINCODE WHERE Pincod
 INSERT INTO NEARBY_PINCODE VALUES ((SELECT Id FROM CUSTOMER_PINCODE WHERE Pincode ='500081'),(SELECT Id FROM CUSTOMER_PINCODE WHERE Pincode ='500084'), '3.4')
 INSERT INTO NEARBY_PINCODE VALUES ((SELECT Id FROM CUSTOMER_PINCODE WHERE Pincode ='500081'),(SELECT Id FROM CUSTOMER_PINCODE WHERE Pincode ='500033'), '4.0')
 
+ALTER TABLE [ORDER] ADD IS_OFFLINE bit
+GO
+UPDATE [ORDER] SET IS_OFFLINE = 0
+GO
+
+ALTER PROCEDURE [dbo].[usp_ConfirmOrder]
+(
+  @pVendorServiceId binary(16),
+  @pCustomerId binary(16),
+  @pSourceAddressId binary(16),
+  @pDestinationAddressId binary(16),
+  @pIsOffline bit
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+  DECLARE @OrderId Varchar(50)
+  SET  @OrderId = dbo.GenerateOrderID()
+
+  INSERT INTO [dbo].[ORDER] VALUES(@OrderId,@pVendorServiceId,@pCustomerId,GetDate(),1,'',@pSourceAddressId,@pDestinationAddressId,null, null,null,null,null, @pIsOffline)
+
+  IF EXISTS (Select ORDER_ID FROM dbo.[ORDER] WHERE ORDER_ID = @OrderId)
+  BEGIN
+     --- We should log the activity only when the above insert statement is success.
+	  DECLARE @pComment nvarchar(max)
+	  SET @pComment = CONCAT('New Order ', @OrderId, ' has been placed.')
+	  EXEC [dbo].[usp_AddActivity] 'ORDER', null, null, @OrderId, @pComment
+  END
+  SELECT @OrderId as ORDER_ID
+END
+GO
+
 IF NOT EXISTS (SELECT * FROM [dbo].[DB_VERSION] WHERE [VERSION] = '3.0.0.0')
 BEGIN
      INSERT INTO [dbo].[DB_VERSION] values('3.0.0.0', Getdate())

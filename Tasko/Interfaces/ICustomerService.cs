@@ -365,7 +365,8 @@ namespace Tasko.Interfaces
          *    "VendorId": "B0269B0769CC8D48AEB92D2513EA14D6",
          *    "VendorName": "Srikanth",
          *    "VendorServiceId": "C9C834D79EE3BC48BF8D5669B2560D24"
-         *  }
+         *  },
+         *  "isOffline": "True if offline, False if online, null for previous implementation"
          *}
          *
          * @apiSuccessExample Success-Response:
@@ -387,7 +388,7 @@ namespace Tasko.Interfaces
          */
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response ConfirmOrder(Order order);
+        Response ConfirmOrder(Order order, bool? isOffline);
 
         /**
          * @api {post} c1/UpdateCustomer Update Customer

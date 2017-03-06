@@ -250,7 +250,7 @@ namespace Tasko.Repository
         /// </summary>
         /// <param name="order">The order.</param>
         /// <returns>order id</returns>
-        public static string ConfirmOrder(Order order)
+        public static string ConfirmOrder(Order order, bool? isOffline)
         {
             string orderId = string.Empty;
             string sourceAddressId = string.Empty;
@@ -275,6 +275,14 @@ namespace Tasko.Repository
 
             BinaryConverter.IsValidGuid(order.CustomerId, TaskoEnum.IdType.CustomerId);
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(order.CustomerId)));
+            if (isOffline.HasValue && isOffline.Value)
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pIsOffline", DbType.Boolean, true));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pIsOffline", DbType.Boolean, false));
+            }
 
             objParameters.Add(SqlHelper.CreateParameter("@pSourceAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(sourceAddressId)));
             objParameters.Add(SqlHelper.CreateParameter("@pDestinationAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(destinationAddressId)));

@@ -282,7 +282,7 @@ namespace Tasko.Services
         /// <returns>
         /// Response Object
         /// </returns>
-        public Response ConfirmOrder(Order order)
+        public Response ConfirmOrder(Order order, bool? isOffline)
         {
             Response r = new Response();
             try
@@ -293,10 +293,20 @@ namespace Tasko.Services
 
                 if (isTokenValid)
                 {
-                    OrderId = CustomerData.ConfirmOrder(order);
+                    OrderId = CustomerData.ConfirmOrder(order, isOffline);
                     if (!string.IsNullOrEmpty(OrderId))
                     {
-                        r = SendNotification(order, OrderId, true);
+                        if (isOffline.HasValue && isOffline.Value)
+                        {
+                            string message = "Customer " + order.CustomerName + " is looking for " + order.ServiceName + " service from you. Customer mobile number is " + order.CustomerMobileNumber + ".Please check Tasko App for more details.";
+                            string sURL = "http://www.metamorphsystems.com/index.php/api/bulk-sms?username=" + "taskoapp" + "&password=" + "Apple123" +
+                                            "&from=" + "TTASKO" + "&to=" + order.VendorMobileNumber + "&message=" + message + "&sms_type=" + 2;
+                            SendMessage(message, sURL);
+                        }
+                        else
+                        {
+                            r = SendNotification(order, OrderId, true);
+                        }
                     }
                 }
                 else
@@ -1506,6 +1516,7 @@ namespace Tasko.Services
                     r.Error = false;
                     r.Message = CommonMessages.SUCCESS;
                     r.Status = 200;
+                    r.Data = services;
                 }
                 else
                 {
@@ -1536,9 +1547,14 @@ namespace Tasko.Services
         /// <returns>Gets the OTP</returns>
         private string InternalGetOTP(string phoneNumber)
         {
-            string otp = InternalGenerateOTP(phoneNumber);
+            string message = InternalGenerateOTP(phoneNumber);
             string sURL = "http://www.metamorphsystems.com/index.php/api/bulk-sms?username=" + "taskoapp" + "&password=" + "Apple123" +
-                            "&from=" + "TTASKO" + "&to=" + phoneNumber + "&message=" + "Your OTP is " + otp + "&sms_type=" + 2;
+                            "&from=" + "TTASKO" + "&to=" + phoneNumber + "&message=" + "Your OTP is " + message + "&sms_type=" + 2;
+            return SendMessage(message, sURL);
+        }
+
+        private static string SendMessage(string message, string sURL)
+        {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(sURL);
             request.MaximumAutomaticRedirections = 4;
             request.Method = "POST";
@@ -1555,13 +1571,12 @@ namespace Tasko.Services
                 string sResponse = readStream.ReadToEnd();
                 response.Close();
                 readStream.Close();
+                return message;
             }
             catch
             {
-                return string.Empty;
+                return message;
             }
-
-            return otp;
         }
 
         /// <summary>
