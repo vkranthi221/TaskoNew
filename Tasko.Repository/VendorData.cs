@@ -662,6 +662,27 @@ namespace Tasko.Repository
             SqlHelper.ExecuteNonQuery("dbo.usp_ResetAllLogins", objParameters.ToArray());
         }
 
+        public static List<OrderSummary> GetOfflineOrdersWithNoRatings()
+        {
+            List<OrderSummary> pendingOrders = new List<OrderSummary>();
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetOfflineOrdersWithNoRatings", objParameters.ToArray());
+
+            while (reader.Read())
+            {
+                OrderSummary order = new OrderSummary();
+                order.OrderId = reader["ORDER_ID"].ToString();
+                order.VendorId = reader["VENDOR_ID"].ToString();
+                order.VendorName = reader["VENDOR_NAME"].ToString();
+                order.ServiceName = reader["SERVICE_NAME"].ToString();
+                pendingOrders.Add(order);
+            }
+
+            reader.Close();
+
+            return pendingOrders;
+        }
+
         #region Notifications
         public static string StoreUser(string name, string vendorId, string gcmRedId, string customerId)
         {

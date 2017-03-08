@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6E35A500-6EFB-47BC-9627-E430964BAFE8}</ProjectGuid>
+    <ProjectGuid>{726C2689-3A5F-40DA-8B29-1A4EA54EA2F1}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tasko.Service</RootNamespace>
-    <AssemblyName>Tasko.Service</AssemblyName>
+    <RootNamespace>Tasko.NotificationService</RootNamespace>
+    <AssemblyName>Tasko.NotificationService</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -33,9 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,22 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TaskoUpdateService.cs">
+    <Compile Include="NotificationService.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="TaskoUpdateService.Designer.cs">
-      <DependentUpon>TaskoUpdateService.cs</DependentUpon>
+    <Compile Include="NotificationService.Designer.cs">
+      <DependentUpon>NotificationService.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="TaskoUpdateService.resx">
-      <DependentUpon>TaskoUpdateService.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tasko.Common\Tasko.Common.csproj">

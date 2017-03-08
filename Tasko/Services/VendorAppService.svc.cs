@@ -729,6 +729,12 @@ namespace Tasko.Services
             return r;
         }
 
+        public void SendNotification(OrderSummary order)
+        {
+            string messageData = "You booked an order for " + order.ServiceName + " with Tasko. Please rate the vendor" + order.VendorName + "for the service he provided.";
+            InternalSendNotification(order.CustomerId, string.Empty, messageData, ConfigurationManager.AppSettings["CustomerAPIKey"].ToString());
+        }
+
         #region Notifications
         public Response StoreVendorGCMUser(string name, string vendorId, string gcmRedId)
         {
