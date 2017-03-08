@@ -589,8 +589,15 @@ SET NOCOUNT ON;
 
   DECLARE @OrderId Varchar(50)
   SET  @OrderId = dbo.GenerateOrderID()
+  DECLARE @OrderStatusId int
+  SET @OrderStatusId = 1 --Pending
 
-  INSERT INTO [dbo].[ORDER] VALUES(@OrderId,@pVendorServiceId,@pCustomerId,GetDate(),1,'',@pSourceAddressId,@pDestinationAddressId,null, null,null,null,null, @pIsOffline)
+  IF(@pIsOffline = 1)
+  BEGIN
+   SET @OrderStatusId = 6 --Completed for Offline Orders
+  END
+
+  INSERT INTO [dbo].[ORDER] VALUES(@OrderId,@pVendorServiceId,@pCustomerId,GetDate(),@OrderStatusId,'',@pSourceAddressId,@pDestinationAddressId,null, null,null,null,null, @pIsOffline)
 
   IF EXISTS (Select ORDER_ID FROM dbo.[ORDER] WHERE ORDER_ID = @OrderId)
   BEGIN
@@ -601,6 +608,25 @@ SET NOCOUNT ON;
   END
   SELECT @OrderId as ORDER_ID
 END
+
+GO
+
+CREATE PROCEDURE [dbo].[usp_GetOfflineOrdersWithNoRatings]
+AS
+BEGIN
+
+SET NOCOUNT ON;
+ 
+SELECT ORD.REQUESTED_DATE,ORD.ORDER_ID, SVCS.NAME AS SERVICE_NAME, V.VENDOR_ID, V.NAME as VENDOR_NAME, ORD.CUSTOMER_ID
+  FROM dbo.[ORDER] ORD
+  INNER JOIN VENDOR_SERVICES VS ON ORD.VENDOR_SERVICE_ID = VS.VENDOR_SERVICE_ID
+  INNER JOIN VENDOR V ON V.VENDOR_ID = VS.VENDOR_ID
+  INNER JOIN dbo.[SERVICES] SVCS ON VS.SERVICE_ID = SVCS.SERVICE_ID 
+  WHERE ORD.IS_OFFLINE = 1 
+  AND ORD.ORDER_ID Not In(Select ORDER_ID from VENDOR_RATING)
+  AND GETDATE() > DATEADD(day,3,ORD.REQUESTED_DATE)
+END
+
 GO
 
 IF NOT EXISTS (SELECT * FROM [dbo].[DB_VERSION] WHERE [VERSION] = '3.0.0.0')

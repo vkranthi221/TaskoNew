@@ -671,6 +671,7 @@ namespace Tasko.Repository
             while (reader.Read())
             {
                 OrderSummary order = new OrderSummary();
+                order.CustomerId = reader["CUSTOMER_ID"].ToString();
                 order.OrderId = reader["ORDER_ID"].ToString();
                 order.VendorId = reader["VENDOR_ID"].ToString();
                 order.VendorName = reader["VENDOR_NAME"].ToString();
