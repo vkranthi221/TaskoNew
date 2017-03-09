@@ -684,6 +684,13 @@ namespace Tasko.Repository
             return pendingOrders;
         }
 
+        public static void UpdateOrderIsNotified(string orderId)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pOrderId", DbType.String, orderId));
+            SqlHelper.ExecuteNonQuery("dbo.usp_UpdateOrderIsNotified", objParameters.ToArray());
+        }
+
         #region Notifications
         public static string StoreUser(string name, string vendorId, string gcmRedId, string customerId)
         {

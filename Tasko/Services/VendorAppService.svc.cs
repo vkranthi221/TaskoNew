@@ -732,7 +732,12 @@ namespace Tasko.Services
         public void SendNotification(OrderSummary order)
         {
             string messageData = "You booked an order for " + order.ServiceName + " with Tasko. Please rate the vendor" + order.VendorName + "for the service he provided.";
-            InternalSendNotification(order.CustomerId, string.Empty, messageData, ConfigurationManager.AppSettings["CustomerAPIKey"].ToString());
+            Response response = InternalSendNotification(order.CustomerId, string.Empty, messageData, ConfigurationManager.AppSettings["CustomerAPIKey"].ToString());
+            if (response != null && response.Message == CommonMessages.SUCCESS)
+            {
+                //// update the order as notified .
+                VendorData.UpdateOrderIsNotified(order.OrderId);
+            }
         }
 
         #region Notifications

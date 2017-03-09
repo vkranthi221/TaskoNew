@@ -570,7 +570,12 @@ INSERT INTO NEARBY_PINCODE VALUES ((SELECT Id FROM CUSTOMER_PINCODE WHERE Pincod
 
 ALTER TABLE [ORDER] ADD IS_OFFLINE bit
 GO
-UPDATE [ORDER] SET IS_OFFLINE = 0
+ UPDATE [ORDER] SET IS_OFFLINE = 0
+GO
+
+ALTER TABLE [ORDER] ADD IS_ORDER_NOTIFIED bit
+GO
+UPDATE [ORDER] SET IS_ORDER_NOTIFIED = 1
 GO
 
 ALTER PROCEDURE [dbo].[usp_ConfirmOrder]
@@ -592,12 +597,14 @@ SET NOCOUNT ON;
   DECLARE @OrderStatusId int
   SET @OrderStatusId = 1 --Pending
 
-  IF(@pIsOffline = 1)
-  BEGIN
-   SET @OrderStatusId = 6 --Completed for Offline Orders
-  END
+  --IF(@pIsOffline = 1)
+  --BEGIN
+  -- SET @OrderStatusId = 6 --Completed for Offline Orders
+  --END
 
-  INSERT INTO [dbo].[ORDER] VALUES(@OrderId,@pVendorServiceId,@pCustomerId,GetDate(),@OrderStatusId,'',@pSourceAddressId,@pDestinationAddressId,null, null,null,null,null, @pIsOffline)
+  INSERT INTO [dbo].[ORDER] VALUES(@OrderId,@pVendorServiceId,@pCustomerId,GetDate(),
+                                    @OrderStatusId,'',@pSourceAddressId,@pDestinationAddressId,
+									null, null,null,null,null, @pIsOffline, 0)
 
   IF EXISTS (Select ORDER_ID FROM dbo.[ORDER] WHERE ORDER_ID = @OrderId)
   BEGIN
@@ -609,9 +616,16 @@ SET NOCOUNT ON;
   SELECT @OrderId as ORDER_ID
 END
 
+
 GO
 
-CREATE PROCEDURE [dbo].[usp_GetOfflineOrdersWithNoRatings]
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[usp_GetOfflineOrdersWithNoRatings]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[usp_GetOfflineOrdersWithNoRatings] AS' 
+END
+GO
+
+ALTER PROCEDURE [dbo].[usp_GetOfflineOrdersWithNoRatings]
 AS
 BEGIN
 
@@ -622,12 +636,26 @@ SELECT ORD.REQUESTED_DATE,ORD.ORDER_ID, SVCS.NAME AS SERVICE_NAME, V.VENDOR_ID, 
   INNER JOIN VENDOR_SERVICES VS ON ORD.VENDOR_SERVICE_ID = VS.VENDOR_SERVICE_ID
   INNER JOIN VENDOR V ON V.VENDOR_ID = VS.VENDOR_ID
   INNER JOIN dbo.[SERVICES] SVCS ON VS.SERVICE_ID = SVCS.SERVICE_ID 
-  WHERE ORD.IS_OFFLINE = 1 
+  WHERE ORD.IS_OFFLINE = 1 AND ORD.IS_ORDER_NOTIFIED = 0 
   AND ORD.ORDER_ID Not In(Select ORDER_ID from VENDOR_RATING)
   AND GETDATE() > DATEADD(day,3,ORD.REQUESTED_DATE)
 END
-
 GO
+
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[usp_UpdateOrderIsNotified]') AND type in (N'P', N'PC'))
+BEGIN
+EXEC dbo.sp_executesql @statement = N'CREATE PROCEDURE [dbo].[usp_UpdateOrderIsNotified] AS' 
+END
+GO
+
+ALTER PROCEDURE [dbo].[usp_UpdateOrderIsNotified]
+(
+	@pOrderId varchar(50)
+)
+AS
+BEGIN
+  UPDATE [dbo].[ORDER]  SET IS_ORDER_NOTIFIED = 1 WHERE ORDER_ID = @pOrderId	
+END
 
 IF NOT EXISTS (SELECT * FROM [dbo].[DB_VERSION] WHERE [VERSION] = '3.0.0.0')
 BEGIN
