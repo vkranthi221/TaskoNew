@@ -657,6 +657,31 @@ BEGIN
   UPDATE [dbo].[ORDER]  SET IS_ORDER_NOTIFIED = 1 WHERE ORDER_ID = @pOrderId	
 END
 
+GO
+ALTER PROCEDURE [dbo].[usp_AddVendorRating]
+(
+  @pOrderId varchar(50),
+  @pCustomerId binary(16),
+  @pVendorId binary(16),
+  @pServiceQuality decimal(18,2),
+  @pPunctuality decimal(18,2),
+  @pCourtesy decimal(18,2),
+  @pPrice decimal(18,2),
+  @pComments nvarchar(max),
+  @pOrderPrice decimal(18,2)
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+  INSERT INTO [dbo].[VENDOR_RATING] VALUES(NewId(),@pServiceQuality,@pPunctuality,@pCourtesy,@pPrice,Getdate(),@pComments,@pOrderId,@pVendorId,@pCustomerId,@pOrderPrice)
+  Update dbo.[ORDER] SET IS_ORDER_NOTIFIED = 1 WHERE ORDER_ID = @pOrderId AND CUSTOMER_ID = @pCustomerId
+
+END
+
+GO
 IF NOT EXISTS (SELECT * FROM [dbo].[DB_VERSION] WHERE [VERSION] = '3.0.0.0')
 BEGIN
      INSERT INTO [dbo].[DB_VERSION] values('3.0.0.0', Getdate())
