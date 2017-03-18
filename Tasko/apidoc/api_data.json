@@ -337,7 +337,7 @@
       "examples": [
         {
           "title": "Param-Example:",
-          "content": "{ \n  \"vendor\": {\n                        \"AddressDetails\": {\n                          \"Address\": \"plot no 404, BaghyaNagar\",\n                          \"AddressId\": null,\n                          \"AddressType\":\"Home\",\n                          \"City\": \"Hyderabad\",\n                          \"Country\": \"India\",\n                          \"Lattitude\": \"40\",\n                          \"Locality\": \"HMT HILLS\",\n                          \"Longitude\": \"600\",\n                          \"Pincode\": \"500072\",\n                          \"State\": \"Hyderabad\"\n                        },\n                        \"BaseRate\": 100,\n                        \"DateOfBirth\": \"7/7/2016 2:12:55 PM\",\n                        \"EmailAddress\": \"sree@gmail.com\",\n                        \"Gender\": 0,\n                        \"IsVendorLive\": false,\n                        \"IsVendorVerified\": true,\n                        \"MobileNumber\": \"9985466195\",\n                        \"Name\": \"srikanth3\",\n                        \"Experience\":\"1\",\n                        \"FacebookUrl\":\"http://facebook.com/xyz\",\n                        \"VendorAlsoKnownAs\":\"srikanth\",\n                        \"NoOfEmployees\": 10,\n                        \"Password\": \"123456\",\n                        \"Photo\": \"test photo\",\n                        \"UserName\": \"srikanth3\",\n                        \"VendorDetails\": {\n                          \"MonthlyCharge\": \"1000\",\n                          \"IsBlocked\": \"false\",\n                          \"IsPowerSeller\": \"true\",\n                          \"AreOrdersBlocked\": \"false\"\n                        },\n                        \"VendorServices\": [\n                                    {\n                                      \"ServiceId\": \"226AC0D8D240344294A5D1FC4DC96273\"\n                                    },\n                                    {\n                                     \"ServiceId\": \"B42A577C337BEB4988E8E02200F28965\"  \n                                    }\n                                 ]\n                      }\n}",
+          "content": "{ \n  \"vendor\": {\n                        \"AddressDetails\": {\n                          \"Address\": \"plot no 404, BaghyaNagar\",\n                          \"AddressId\": null,\n                          \"AddressType\":\"Home\",\n                          \"City\": \"Hyderabad\",\n                          \"Country\": \"India\",\n                          \"Lattitude\": \"40\",\n                          \"Locality\": \"HMT HILLS\",\n                          \"Longitude\": \"600\",\n                          \"Pincode\": \"500072\",\n                          \"State\": \"Hyderabad\",\n                          \"HomeLattitude\": \"40\",\n                          \"HomeLongitude\": \"600\",\n                        },\n                        \"BaseRate\": 100,\n                        \"DateOfBirth\": \"7/7/2016 2:12:55 PM\",\n                        \"EmailAddress\": \"sree@gmail.com\",\n                        \"Gender\": 0,\n                        \"IsVendorLive\": false,\n                        \"IsVendorVerified\": true,\n                        \"MobileNumber\": \"9985466195\",\n                        \"Name\": \"srikanth3\",\n                        \"Experience\":\"1\",\n                        \"FacebookUrl\":\"http://facebook.com/xyz\",\n                        \"VendorAlsoKnownAs\":\"srikanth\",\n                        \"NoOfEmployees\": 10,\n                        \"Password\": \"123456\",\n                        \"Photo\": \"test photo\",\n                        \"UserName\": \"srikanth3\",\n                        \"VendorDetails\": {\n                          \"MonthlyCharge\": \"1000\",\n                          \"IsBlocked\": \"false\",\n                          \"IsPowerSeller\": \"true\",\n                          \"AreOrdersBlocked\": \"false\"\n                        },\n                        \"VendorServices\": [\n                                    {\n                                      \"ServiceId\": \"226AC0D8D240344294A5D1FC4DC96273\"\n                                    },\n                                    {\n                                     \"ServiceId\": \"B42A577C337BEB4988E8E02200F28965\"  \n                                    }\n                                 ]\n                      }\n}",
           "type": "json"
         }
       ]
@@ -5074,15 +5074,22 @@
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "pincode",
-            "description": "<p>Pincode.</p>"
+            "field": "latitude",
+            "description": "<p>Latitude.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "longitude",
+            "description": "<p>Longitude.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Param-Example:",
-          "content": "{\n  \"serviceId\": \"47DAF7A1B95E8040BD9FA90252E72E17\",\n  \"customerId\": \"10E4394670195C4AA1E4B7130A514187\",\n  \"pincode\":  \"500072\"\n}",
+          "content": "{\n  \"serviceId\": \"47DAF7A1B95E8040BD9FA90252E72E17\",\n  \"customerId\": \"10E4394670195C4AA1E4B7130A514187\",\n  \"latitude\": \"17.3850440\",\n  \"longitude\": \"78.4866710\"\n}",
           "type": "json"
         }
       ]

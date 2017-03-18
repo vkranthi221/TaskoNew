@@ -206,9 +206,18 @@ ALTER PROCEDURE [dbo].[usp_UpdateVendorLocation]
 AS
 BEGIN
 
+IF(Len(@pHomeLatitude) > 0 AND @pHomeLatitude != '0' AND Len(@pHomeLongitude) > 0 AND @pHomeLongitude !='0')
+BEGIN
 UPDATE A1 SET A1.LONGITUDE= @pLongitude, A1.LATITIUDE = @pLatitude, A1.COUNTRY = @pCountry, A1.STATE = @pState, A1.LOCALITY = @pLocality, A1.CITY = @pCity, A1.ADDRESS = @pAddress,
 A1.PINCODE = @pPincode, A1.ADDRESS_TYPE = @pAddressType, A1.HOME_LATITIUDE = @pHomeLatitude, A1.HOME_LONGITUDE = @pHomeLongitude FROM [ADDRESS] AS A1
 INNER JOIN VENDOR V ON V.ADDRESS_ID = A1.Address_ID WHERE V.VENDOR_ID = @pVendorId
+END
+ELSE
+BEGIN
+UPDATE A1 SET A1.LONGITUDE= @pLongitude, A1.LATITIUDE = @pLatitude, A1.COUNTRY = @pCountry, A1.STATE = @pState, A1.LOCALITY = @pLocality, A1.CITY = @pCity, A1.ADDRESS = @pAddress,
+A1.PINCODE = @pPincode, A1.ADDRESS_TYPE = @pAddressType FROM [ADDRESS] AS A1
+INNER JOIN VENDOR V ON V.ADDRESS_ID = A1.Address_ID WHERE V.VENDOR_ID = @pVendorId
+END
 
 if @pLongitude = '0' and @pLatitude  = '0'
 Begin
@@ -272,6 +281,35 @@ BEGIN
 	END
 END
 GO
+
+ALTER PROCEDURE [dbo].[usp_AddAddress]
+(
+  @pCountry nvarchar(max),
+  @pState nvarchar(max),
+  @pLatitude nvarchar(max),
+  @pLongitude nvarchar(max),
+  @pLocality nvarchar(max),
+  @pCity nvarchar(max),
+  @pAddress nvarchar(max),
+  @Pincode nvarchar(max),
+  @pAddressType nvarchar(max),
+  @pHomeLongitude nvarchar(max),
+  @pHomeLatitude nvarchar(max)
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+  DECLARE @AddressId binary(16)
+  SET  @AddressId = newId()
+
+  INSERT INTO [dbo].[ADDRESS] VALUES(@AddressId,@pCountry,@pState,@pLatitude,@pLongitude,@pLocality,@pCity,@pAddress,@Pincode,@pAddressType,@pHomeLongitude,@pHomeLatitude)
+
+  SELECT @AddressId as ADDRESS_ID
+END
+
 
 IF NOT EXISTS (SELECT * FROM [dbo].[DB_VERSION] WHERE [VERSION] = '3.0.0.0')
 BEGIN
