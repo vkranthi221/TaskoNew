@@ -102,5 +102,23 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public string Pincode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the home lattitude.
+        /// </summary>
+        /// <value>
+        /// The lattitude.
+        /// </value>
+        [DataMember]
+        public string HomeLattitude { get; set; }
+
+        /// <summary>
+        /// Gets or sets the home longitude.
+        /// </summary>
+        /// <value>
+        /// The longitude.
+        /// </value>
+        [DataMember]
+        public string HomeLongitude { get; set; }
     }
 }

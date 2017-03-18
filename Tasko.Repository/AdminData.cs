@@ -562,6 +562,7 @@ namespace Tasko.Repository
                 objCustomer.Name = reader["NAME"].ToString();
                 objCustomer.MobileNumber = reader["MOBILE_NUMBER"].ToString();
                 objCustomer.EmailAddress = Convert.ToString(reader["EMAIL_ADDRESS"]);
+                objCustomer.RegisteredDate = Convert.ToDateTime(reader["REGISTERED_DATE"]);
                 customers.Add(objCustomer);
             }
 
@@ -1009,6 +1010,8 @@ namespace Tasko.Repository
                 vendorAddress.Pincode = reader["PINCODE"].ToString();
                 vendorAddress.Lattitude = reader["LATITIUDE"].ToString();
                 vendorAddress.Longitude = reader["LONGITUDE"].ToString();
+                vendorAddress.HomeLattitude = reader["HOME_LATTITUDE"].ToString();
+                vendorAddress.HomeLongitude = reader["HOME_LONGITUDE"].ToString();
             }
 
             reader.Close();

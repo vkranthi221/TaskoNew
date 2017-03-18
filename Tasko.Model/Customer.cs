@@ -48,5 +48,8 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public string EmailAddress { get; set; }
+
+        [DataMember]
+        public DateTime RegisteredDate { get; set; }
     }
 }

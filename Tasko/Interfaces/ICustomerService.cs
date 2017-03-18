@@ -1664,13 +1664,15 @@ namespace Tasko.Interfaces
          *    
          * @apiParam {String} serviceId Service Id.
          * @apiParam {String} customerId Customer Id.
-         * @apiParam {String} pincode Pincode.
+         * @apiParam {String} latitude Latitude.
+         * @apiParam {String} longitude Longitude.
          *
          * @apiParamExample {json} Param-Example:
          *  {
          *    "serviceId": "47DAF7A1B95E8040BD9FA90252E72E17",
          *    "customerId": "10E4394670195C4AA1E4B7130A514187",
-         *    "pincode":  "500072"
+         *    "latitude": "17.3850440",
+         *    "longitude": "78.4866710"
          *  }
          *
          * @apiSuccessExample Success-Response:
@@ -1710,7 +1712,7 @@ namespace Tasko.Interfaces
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response GetOfflineServiceVendors(string serviceId, string customerId, string pinCode);
+        Response GetOfflineServiceVendors(string serviceId, string customerId, string latitude, string longitude);
 
         #endregion
     }

@@ -532,7 +532,9 @@ namespace Tasko.Interfaces
                           "Locality": "HMT HILLS",
                           "Longitude": "600",
                           "Pincode": "500072",
-                          "State": "Hyderabad"
+                          "State": "Hyderabad",
+                          "HomeLattitude": "40",
+                          "HomeLongitude": "600",
                         },
                         "BaseRate": 100,
                         "DateOfBirth": "7/7/2016 2:12:55 PM",

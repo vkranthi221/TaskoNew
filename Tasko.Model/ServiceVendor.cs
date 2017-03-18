@@ -110,5 +110,11 @@ namespace Tasko.Model
 
         [DataMember]
         public string Photo { get; set; }
+
+        [DataMember]
+        public decimal HomeLongitude { get; set; }
+
+        [DataMember]
+        public decimal HomeLatitude { get; set; }
     }
 }
