@@ -169,110 +169,8 @@ namespace Tasko.Services
         /// </returns>
         public Response GetServiceVendors(string serviceId, string customerId, string latitude, string longitude)
         {
-            Response r = new Response();
-            try
-            {
-                bool isTokenValid = TokenHelper.ValidateToken();
-                List<ServiceVendor> services = null;
-                if (isTokenValid)
-                {
-                    services = CustomerData.GetServiceVendors(serviceId, customerId);
-                    bool nearVendorFound = false;
-                    if (services != null)
-                    {
-                        foreach (ServiceVendor serviceVendor in services)
-                        {
-                            // This means that vendor is logged out. So we are updating his distance to negative value.
-                            if (serviceVendor.Latitude != 0 && serviceVendor.Longitude != 0)
-                            {
-                                string requestUri = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + latitude + "," + longitude + "&destinations=" + serviceVendor.Latitude + "," + serviceVendor.Longitude;
-
-                                WebRequest request = HttpWebRequest.Create(requestUri);
-                                WebResponse response = request.GetResponse();
-                                StreamReader reader = new StreamReader(response.GetResponseStream());
-                                string responseStringData = reader.ReadToEnd();
-                                if (!string.IsNullOrEmpty(responseStringData))
-                                {
-                                    XmlDocument xmlDoc = new XmlDocument();
-                                    xmlDoc.LoadXml(responseStringData);
-                                    string xpath = "DistanceMatrixResponse/row/element/distance/text";
-                                    XmlNode distance = xmlDoc.SelectSingleNode(xpath);
-                                    if (distance != null && !string.IsNullOrEmpty(distance.InnerText))
-                                    {
-                                        string actualDistance = distance.InnerText.Remove(distance.InnerText.IndexOf(" "));
-                                        if (!string.IsNullOrEmpty(actualDistance))
-                                        {
-                                            nearVendorFound = true;
-                                            serviceVendor.Distance = Convert.ToDecimal(actualDistance);
-                                        }
-                                    }
-
-                                    string durationXpath = "DistanceMatrixResponse/row/element/duration/text";
-                                    XmlNode duration = xmlDoc.SelectSingleNode(durationXpath);
-                                    if (duration != null && !string.IsNullOrEmpty(duration.InnerText))
-                                    {
-                                        serviceVendor.ETA = duration.InnerText;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                serviceVendor.Distance = -1;
-                            }
-                        }
-                    }
-
-                    if (nearVendorFound)
-                    {
-                        r.Error = false;
-                        r.Message = CommonMessages.SUCCESS;
-                        r.Status = 200;
-
-                        decimal distanceCovered = Convert.ToDecimal(ConfigurationManager.AppSettings["DistanceCovered"]);
-                        List<ServiceVendor> vendors = new List<ServiceVendor>();
-                        if (services.Any(i => i.VendorId == "2C086E5F59A0C44AAC70475E6613FF4E"))
-                        {
-                            vendors.Add(services.FirstOrDefault(i => i.VendorId == "2C086E5F59A0C44AAC70475E6613FF4E"));
-                        }
-
-                        vendors.AddRange(services.Where(i => i.VendorId != "2C086E5F59A0C44AAC70475E6613FF4E"));
-                        r.Data = vendors.Where(i => (i.Distance <= distanceCovered && i.Distance != -1) || i.VendorId == "2C086E5F59A0C44AAC70475E6613FF4E").ToList();
-                       
-                    }
-                    else
-                    {
-                        r.Error = true;
-                        r.Message = CommonMessages.NO_NEARBY_VENDORS;
-                        r.Status = 400;
-                    }
-                }
-                else 
-                {
-                    r.Error = true;
-                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
-                    r.Status = 400;
-                }
-
-                ////if (services != null)
-                ////{
-                ////    r.Error = false;
-                ////    r.Message = CommonMessages.SUCCESS;
-                ////    r.Status = 200;
-                ////    r.Data = services;
-                ////}
-               
-            }
-            catch (UserException userException)
-            {
-                r.Message = userException.Message;
-            }
-            catch (Exception ex)
-            {
-                r.Error = true;
-                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
-            }
-
-            return r;
+            decimal distanceCovered = Convert.ToDecimal(ConfigurationManager.AppSettings["DistanceCovered"]);
+            return GetServiceVendors(serviceId, customerId, latitude, longitude, distanceCovered, true);
         }
 
         /// <summary>
@@ -1503,39 +1401,10 @@ namespace Tasko.Services
             return r;
         }
 
-        public Response GetOfflineServiceVendors(string serviceId, string customerId, string pinCode)
+        public Response GetOfflineServiceVendors(string serviceId, string customerId, string latitude, string longitude)
         {
-            Response r = new Response();
-            try
-            {
-                List<ServiceVendor> services = null;
-                bool isTokenValid = TokenHelper.ValidateToken();
-                if (isTokenValid)
-                {
-                    services = CustomerData.GetOfflineServiceVendors(serviceId, customerId, pinCode);
-                    r.Error = false;
-                    r.Message = CommonMessages.SUCCESS;
-                    r.Status = 200;
-                    r.Data = services;
-                }
-                else
-                {
-                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
-                    r.Error = true;
-                    r.Status = 400;
-                }
-            }
-            catch (UserException userException)
-            {
-                r.Message = userException.Message;
-            }
-            catch (Exception ex)
-            {
-                r.Error = true;
-                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
-            }
-
-            return r;
+            decimal distanceCovered = Convert.ToDecimal(ConfigurationManager.AppSettings["OfflineDistanceCovered"]);
+            return GetServiceVendors(serviceId, customerId, latitude, longitude, distanceCovered, false);
         }
         #endregion
 
@@ -1752,6 +1621,116 @@ namespace Tasko.Services
             {
                 CustomerData.UpdateCustomerOrderDetails(message.CustomerETA, message.CustomerDistance, message.OrderId, order.VendorId);
             }
+            return r;
+        }
+        private static Response GetServiceVendors(string serviceId, string customerId, string latitude, string longitude, decimal distanceCovered, bool isOnline)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = TokenHelper.ValidateToken();
+                List<ServiceVendor> services = null;
+                if (isTokenValid)
+                {
+                    services = CustomerData.GetServiceVendors(serviceId, customerId);
+                    bool nearVendorFound = false;
+                    if (services != null)
+                    {
+                        foreach (ServiceVendor serviceVendor in services)
+                        {
+                            decimal vendorLatitude = 0;
+                            decimal vendorLongitude = 0;
+                            if(isOnline)
+                            {
+                                vendorLatitude = serviceVendor.Latitude;
+                                vendorLongitude = serviceVendor.Longitude;
+                            }
+                            else
+                            {
+                                vendorLatitude = serviceVendor.HomeLatitude;
+                                vendorLongitude = serviceVendor.HomeLongitude;
+                            }
+
+                            // This means that vendor is logged out. So we are updating his distance to negative value.
+                            if (vendorLatitude != 0 && vendorLongitude != 0)
+                            {
+                                string requestUri = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + latitude + "," + longitude + "&destinations=" + vendorLatitude + "," + vendorLongitude;
+
+                                WebRequest request = HttpWebRequest.Create(requestUri);
+                                WebResponse response = request.GetResponse();
+                                StreamReader reader = new StreamReader(response.GetResponseStream());
+                                string responseStringData = reader.ReadToEnd();
+                                if (!string.IsNullOrEmpty(responseStringData))
+                                {
+                                    XmlDocument xmlDoc = new XmlDocument();
+                                    xmlDoc.LoadXml(responseStringData);
+                                    string xpath = "DistanceMatrixResponse/row/element/distance/text";
+                                    XmlNode distance = xmlDoc.SelectSingleNode(xpath);
+                                    if (distance != null && !string.IsNullOrEmpty(distance.InnerText))
+                                    {
+                                        string actualDistance = distance.InnerText.Remove(distance.InnerText.IndexOf(" "));
+                                        if (!string.IsNullOrEmpty(actualDistance))
+                                        {
+                                            nearVendorFound = true;
+                                            serviceVendor.Distance = Convert.ToDecimal(actualDistance);
+                                        }
+                                    }
+
+                                    string durationXpath = "DistanceMatrixResponse/row/element/duration/text";
+                                    XmlNode duration = xmlDoc.SelectSingleNode(durationXpath);
+                                    if (duration != null && !string.IsNullOrEmpty(duration.InnerText))
+                                    {
+                                        serviceVendor.ETA = duration.InnerText;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                serviceVendor.Distance = -1;
+                            }
+                        }
+                    }
+
+                    if (nearVendorFound)
+                    {
+                        r.Error = false;
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Status = 200;
+
+                        List<ServiceVendor> vendors = new List<ServiceVendor>();
+                        if (services.Any(i => i.VendorId == "2C086E5F59A0C44AAC70475E6613FF4E"))
+                        {
+                            vendors.Add(services.FirstOrDefault(i => i.VendorId == "2C086E5F59A0C44AAC70475E6613FF4E"));
+                        }
+
+                        vendors.AddRange(services.Where(i => i.VendorId != "2C086E5F59A0C44AAC70475E6613FF4E"));
+                        r.Data = vendors.Where(i => (i.Distance <= distanceCovered && i.Distance != -1) || i.VendorId == "2C086E5F59A0C44AAC70475E6613FF4E").ToList();
+
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Message = CommonMessages.NO_NEARBY_VENDORS;
+                        r.Status = 400;
+                    }
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                    r.Status = 400;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
             return r;
         }
         #endregion

@@ -115,6 +115,8 @@ namespace Tasko.Repository
                 objVendor.AddressDetails.Locality = reader["VENDOR_LOCALITY"].ToString();
                 objVendor.AddressDetails.Longitude = reader["VENDOR_LONGITUDE"].ToString();
                 objVendor.AddressDetails.Pincode = reader["VENDOR_PINCODE"].ToString();
+                objVendor.AddressDetails.HomeLattitude = reader["HOME_LATTITUDE"].ToString();
+                objVendor.AddressDetails.HomeLongitude = reader["HOME_LONGITUDE"].ToString();
                 objVendor.NoOfEmployees = Convert.ToInt32(reader["EMPLOYEE_COUNT"]);
                 objVendor.BaseRate = Convert.ToDouble(reader["BASE_RATE"]);
                 objVendor.MonthlyCharge = Convert.ToDecimal(reader["MONTHLY_CHARGE"]);
@@ -578,6 +580,8 @@ namespace Tasko.Repository
 
             objParameters.Add(SqlHelper.CreateParameter("@pLatitude", DbType.String, addressInfo.Lattitude));
             objParameters.Add(SqlHelper.CreateParameter("@pLongitude", DbType.String, addressInfo.Longitude));
+            objParameters.Add(SqlHelper.CreateParameter("@pHomeLatitude", DbType.String, addressInfo.HomeLattitude));
+            objParameters.Add(SqlHelper.CreateParameter("@pHomeLongitude", DbType.String, addressInfo.HomeLongitude));
             objParameters.Add(SqlHelper.CreateParameter("@pAddress", DbType.String, addressInfo.Address));
             objParameters.Add(SqlHelper.CreateParameter("@pAddressType", DbType.String, addressInfo.AddressType));
             objParameters.Add(SqlHelper.CreateParameter("@pCity", DbType.String, addressInfo.City));
