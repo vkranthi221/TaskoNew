@@ -757,6 +757,7 @@ namespace Tasko.Repository
                 objCustomer.Name = reader["NAME"].ToString();
                 objCustomer.MobileNumber = reader["MOBILE_NUMBER"].ToString();
                 objCustomer.EmailAddress = Convert.ToString(reader["EMAIL_ADDRESS"]);
+                objCustomer.RegisteredDate = Convert.ToDateTime(reader["REGISTERED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");                
             }
 
             reader.Close();

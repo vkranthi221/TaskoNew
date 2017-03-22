@@ -49,7 +49,13 @@ namespace Tasko.Model
         [DataMember]
         public string EmailAddress { get; set; }
 
+        /// <summary>
+        /// Gets or sets the registered date.
+        /// </summary>
+        /// <value>
+        /// The registered date.
+        /// </value>
         [DataMember]
-        public DateTime RegisteredDate { get; set; }
+        public string RegisteredDate { get; set; }
     }
 }

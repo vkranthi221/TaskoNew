@@ -310,7 +310,26 @@ SET NOCOUNT ON;
   SELECT @AddressId as ADDRESS_ID
 END
 
+GO
+ALTER PROCEDURE [dbo].[usp_GetCustomerDetails]
+(
+	@pCustomerId Binary(16)
+)
+AS
+BEGIN
 
+SET NOCOUNT ON;
+
+SELECT [CUSTOMER_ID]
+      ,[NAME]
+      ,[MOBILE_NUMBER]
+      ,[EMAIL_ADDRESS]
+	  ,[REGISTERED_DATE]
+FROM [dbo].[CUSTOMER] (NOLOCK)
+WHERE CUSTOMER_ID = @pCustomerId 
+
+END
+GO
 IF NOT EXISTS (SELECT * FROM [dbo].[DB_VERSION] WHERE [VERSION] = '3.0.0.0')
 BEGIN
      INSERT INTO [dbo].[DB_VERSION] values('3.0.0.0', Getdate())
