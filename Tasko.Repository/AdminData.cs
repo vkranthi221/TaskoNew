@@ -1010,8 +1010,15 @@ namespace Tasko.Repository
                 vendorAddress.Pincode = reader["PINCODE"].ToString();
                 vendorAddress.Lattitude = reader["LATITIUDE"].ToString();
                 vendorAddress.Longitude = reader["LONGITUDE"].ToString();
-                vendorAddress.HomeLattitude = reader["HOME_LATTITUDE"].ToString();
-                vendorAddress.HomeLongitude = reader["HOME_LONGITUDE"].ToString();
+                if (!(reader["HOME_LATITIUDE"] is System.DBNull))
+                {
+                    vendorAddress.HomeLattitude = reader["HOME_LATITIUDE"].ToString();
+                }
+
+                if (!(reader["HOME_LONGITUDE"] is System.DBNull))
+                {
+                    vendorAddress.HomeLongitude = reader["HOME_LONGITUDE"].ToString();
+                }
             }
 
             reader.Close();

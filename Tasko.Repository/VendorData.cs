@@ -85,7 +85,9 @@ namespace Tasko.Repository
         /// Gets the vendor.
         /// </summary>
         /// <param name="vendorId">The vendor identifier.</param>
-        /// <returns>vendor details</returns>
+        /// <returns>
+        /// vendor details
+        /// </returns>
         public static Vendor GetVendor(string vendorId)
         {
             Vendor objVendor = null;
@@ -115,8 +117,16 @@ namespace Tasko.Repository
                 objVendor.AddressDetails.Locality = reader["VENDOR_LOCALITY"].ToString();
                 objVendor.AddressDetails.Longitude = reader["VENDOR_LONGITUDE"].ToString();
                 objVendor.AddressDetails.Pincode = reader["VENDOR_PINCODE"].ToString();
-                objVendor.AddressDetails.HomeLattitude = reader["HOME_LATTITUDE"].ToString();
-                objVendor.AddressDetails.HomeLongitude = reader["HOME_LONGITUDE"].ToString();
+                if (!(reader["HOME_LATITIUDE"] is System.DBNull))
+                {
+                    objVendor.AddressDetails.HomeLattitude = reader["HOME_LATITIUDE"].ToString();
+                }
+
+                if (!(reader["HOME_LONGITUDE"] is System.DBNull))
+                {
+                    objVendor.AddressDetails.HomeLongitude = reader["HOME_LONGITUDE"].ToString();
+                }
+
                 objVendor.NoOfEmployees = Convert.ToInt32(reader["EMPLOYEE_COUNT"]);
                 objVendor.BaseRate = Convert.ToDouble(reader["BASE_RATE"]);
                 objVendor.MonthlyCharge = Convert.ToDecimal(reader["MONTHLY_CHARGE"]);
