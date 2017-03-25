@@ -258,7 +258,7 @@ namespace Tasko.Repository
                 objParameters.Add(SqlHelper.CreateParameter("@pUserName", DbType.String, vendor.UserName));
                 objParameters.Add(SqlHelper.CreateParameter("@pAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorAddressId)));
                 objParameters.Add(SqlHelper.CreateParameter("@pPassword", DbType.String, vendor.Password));
-                objParameters.Add(SqlHelper.CreateParameter("@pDOB", DbType.DateTime, vendor.DateOfBirth));
+                objParameters.Add(SqlHelper.CreateParameter("@pDOB", DbType.DateTime, Convert.ToDateTime(vendor.DateOfBirth)));
                 objParameters.Add(SqlHelper.CreateParameter("@pGender", DbType.Int16, vendor.Gender));
                 objParameters.Add(SqlHelper.CreateParameter("@pPhoto", DbType.String, vendor.Photo));
                 objParameters.Add(SqlHelper.CreateParameter("@pAreOrdersBlocked", DbType.Boolean, vendor.AreOrdersBlocked));

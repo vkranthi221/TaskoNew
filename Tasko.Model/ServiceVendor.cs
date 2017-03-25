@@ -116,5 +116,8 @@ namespace Tasko.Model
 
         [DataMember]
         public decimal HomeLatitude { get; set; }
+
+        [DataMember]
+        public string MobileNumber { get; set; }
     }
 }

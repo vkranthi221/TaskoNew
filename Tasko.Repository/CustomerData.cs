@@ -248,6 +248,7 @@ namespace Tasko.Repository
 
                     serviceVendor.FacebookUrl = Convert.ToString(row["FACEBOOK_URL"]);
                     serviceVendor.Photo = Convert.ToString(row["PHOTO"]);
+                    serviceVendor.MobileNumber = Convert.ToString(row["MOBILE_NUMBER"]);
                     serviceVendors.Add(serviceVendor);
                 }
             }
@@ -607,8 +608,24 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pCity", DbType.String, addressInfo.City));
             objParameters.Add(SqlHelper.CreateParameter("@pAddress", DbType.String, addressInfo.Address));
             objParameters.Add(SqlHelper.CreateParameter("@Pincode", DbType.String, addressInfo.Pincode));
-            objParameters.Add(SqlHelper.CreateParameter("@pHomeLatitude", DbType.String, addressInfo.HomeLattitude));
-            objParameters.Add(SqlHelper.CreateParameter("@pHomeLongitude", DbType.String, addressInfo.HomeLongitude));
+
+            if (string.IsNullOrWhiteSpace(addressInfo.HomeLattitude))
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pHomeLatitude", DbType.String, DBNull.Value));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pHomeLatitude", DbType.String, addressInfo.HomeLattitude));
+            }
+
+            if (string.IsNullOrWhiteSpace(addressInfo.HomeLongitude))
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pHomeLongitude", DbType.String, DBNull.Value));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pHomeLongitude", DbType.String, addressInfo.HomeLongitude));
+            }
 
             addressInfo.AddressType = string.IsNullOrEmpty(addressInfo.AddressType) ? string.Empty : addressInfo.AddressType;
             objParameters.Add(SqlHelper.CreateParameter("@pAddressType", DbType.String, addressInfo.AddressType));
