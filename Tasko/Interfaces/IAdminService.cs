@@ -317,7 +317,8 @@ namespace Tasko.Interfaces
          *
          * @apiParamExample {json} Param-Example:
          * { 
-         *   "serviceId":"6786E5D449D6B74396E8ADAEA1C17E37"
+         *   "serviceId":"6786E5D449D6B74396E8ADAEA1C17E37",
+         *   "isOffline": "True if offline, False if online"
          * }
          *
          * @apiSuccessExample Success-Response:
@@ -372,7 +373,7 @@ namespace Tasko.Interfaces
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response GetOrdersByService(string serviceId);
+        Response GetOrdersByService(string serviceId, bool? isOffline);
 
         /**
          * @api {post} a1/GetVendorsByService Get Vendors By Service

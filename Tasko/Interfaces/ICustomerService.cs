@@ -365,7 +365,8 @@ namespace Tasko.Interfaces
          *    },
          *    "VendorId": "B0269B0769CC8D48AEB92D2513EA14D6",
          *    "VendorName": "Srikanth",
-         *    "VendorServiceId": "C9C834D79EE3BC48BF8D5669B2560D24"
+         *    "VendorServiceId": "C9C834D79EE3BC48BF8D5669B2560D24",
+         *    "BToBCustomerName": "Abs Hotel"
          *  },
          *  "isOffline": "True if offline, False if online, null for previous implementation"
          *}

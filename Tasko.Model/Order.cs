@@ -191,5 +191,8 @@ namespace Tasko.Model
 
         [DataMember]
         public double Price { get; set; }
+
+        [DataMember(IsRequired = false)]
+        public string BToBCustomerName { get; set; }
     }
 }

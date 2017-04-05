@@ -221,7 +221,7 @@ namespace Tasko.Services
         /// </summary>
         /// <param name="serviceId">The service identifier.</param>
         /// <returns>Response Object</returns>
-        public Response GetOrdersByService(string serviceId)
+        public Response GetOrdersByService(string serviceId, bool? isOffline)
         {
             Response r = new Response();
             try
@@ -229,7 +229,8 @@ namespace Tasko.Services
                  bool isTokenValid = TokenHelper.ValidateToken();
                  if (isTokenValid)
                  {
-                     List<OrderSummary> services = AdminData.GetOrdersByService(serviceId);
+                     bool offline = isOffline.HasValue ? isOffline.Value : false;
+                     List<OrderSummary> services = AdminData.GetOrdersByService(serviceId, offline);
 
                      if (services != null)
                      {

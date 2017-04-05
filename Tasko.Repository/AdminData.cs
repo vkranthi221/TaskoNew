@@ -128,12 +128,13 @@ namespace Tasko.Repository
         /// </summary>
         /// <param name="serviceId">The service identifier.</param>
         /// <returns>list of Order summary</returns>
-        public static List<OrderSummary> GetOrdersByService(string serviceId)
+        public static List<OrderSummary> GetOrdersByService(string serviceId, bool isOffline)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
             BinaryConverter.IsValidGuid(serviceId, TaskoEnum.IdType.ServiceId);
             objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(serviceId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pIsOffline", DbType.Int16, isOffline));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetOrdersByService", objParameters.ToArray());
             List<OrderSummary> orders = new List<OrderSummary>();
 
@@ -432,7 +433,7 @@ namespace Tasko.Repository
             }
             else
             {
-                objParameters.Add(SqlHelper.CreateParameter("@pNpMobileNumberame", DbType.String, DBNull.Value));
+                objParameters.Add(SqlHelper.CreateParameter("@pMobileNumber", DbType.String, DBNull.Value));
             }
 
             // EmailAddress

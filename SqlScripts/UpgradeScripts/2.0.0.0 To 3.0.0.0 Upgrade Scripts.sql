@@ -13,7 +13,13 @@ GO
 UPDATE [ORDER] SET IS_ORDER_NOTIFIED = 1
 GO
 
-ALTER TABLE [dbo].[ADDRESS] ADD  [HOME_LONGITUDE] [nvarchar](max) NULL, [HOME_LATITIUDE] [nvarchar](max) NULL
+ALTER TABLE [ORDER] ADD B_TO_B_CUSTOMER_NAME Varchar(MAX)
+GO
+
+ALTER TABLE [dbo].[ADDRESS] ADD  [HOME_LONGITUDE] [NVARCHAR](MAX) NULL, [HOME_LATITIUDE] [NVARCHAR](MAX) NULL
+GO
+
+INSERT INTO CUSTOMER VALUES (0X56BA452B096A7E448DABD357277551BF,'Tasko Customer','taskocustomer@tasko.in','999', 1, GETDATE())
 GO
 
 ALTER PROCEDURE [dbo].[usp_ConfirmOrder]
@@ -22,7 +28,8 @@ ALTER PROCEDURE [dbo].[usp_ConfirmOrder]
   @pCustomerId binary(16),
   @pSourceAddressId binary(16),
   @pDestinationAddressId binary(16),
-  @pIsOffline bit
+  @pIsOffline bit,
+  @pBToBCustomerName varchar(MAX)
 )
 
 AS
@@ -42,7 +49,7 @@ SET NOCOUNT ON;
 
   INSERT INTO [dbo].[ORDER] VALUES(@OrderId,@pVendorServiceId,@pCustomerId,GetDate(),
                                     @OrderStatusId,'',@pSourceAddressId,@pDestinationAddressId,
-									null, null,null,null,null, @pIsOffline, 0)
+									null, null,null,null,null, @pIsOffline, 0, @pBToBCustomerName)
 
   IF EXISTS (Select ORDER_ID FROM dbo.[ORDER] WHERE ORDER_ID = @OrderId)
   BEGIN
@@ -331,6 +338,30 @@ WHERE CUSTOMER_ID = @pCustomerId
 
 END
 GO
+
+ALTER PROCEDURE [dbo].[usp_GetOrdersByService]
+(  
+  @pServiceId Binary(16),
+  @pIsOffline bit
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+SELECT [ORDER_ID],[REQUESTED_DATE], OS.[NAME] AS ORDER_STATUS_NAME, CUST.[NAME] AS CUSTOMER_NAME, SVS.[NAME] AS [SERVICE_NAME], V.[NAME] AS VENDOR_NAME
+   FROM [dbo].[ORDER] ORD
+   INNER JOIN [dbo].[ORDER_STATUS] OS ON OS.ORDER_STATUS_ID = ORD.ORDER_STATUS_ID
+   INNER JOIN [dbo].[CUSTOMER] CUST ON CUST.CUSTOMER_ID = ORD.CUSTOMER_ID
+   INNER JOIN [dbo].[VENDOR_SERVICES] VS ON ORD.VENDOR_SERVICE_ID = VS.VENDOR_SERVICE_ID
+   INNER JOIN [dbo].[SERVICES] SVS ON SVS.SERVICE_ID = VS.SERVICE_ID
+   INNER JOIN [dbo].[VENDOR] V ON V.VENDOR_ID = VS.VENDOR_ID
+
+   WHERE VS.SERVICE_ID = @pServiceId AND ORD.IS_OFFLINE = @pIsOffline
+END
+GO
+
 IF NOT EXISTS (SELECT * FROM [dbo].[DB_VERSION] WHERE [VERSION] = '3.0.0.0')
 BEGIN
      INSERT INTO [dbo].[DB_VERSION] values('3.0.0.0', Getdate())
