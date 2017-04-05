@@ -2025,7 +2025,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Param-Example:",
-          "content": "{ \n  \"serviceId\":\"6786E5D449D6B74396E8ADAEA1C17E37\"\n}",
+          "content": "{ \n  \"serviceId\":\"6786E5D449D6B74396E8ADAEA1C17E37\",\n  \"isOffline\": \"True if offline, False if online\"\n}",
           "type": "json"
         }
       ]
@@ -4099,7 +4099,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Param-Example:",
-          "content": " {\n   \"order\": {\n   \"Comments\": \"\",\n   \"CustomerId\": \"10E4394670195C4AA1E4B7130A514187\",\n   \"CustomerName\": \"srikanth test\",\n   \"CustomerPhone\": \"9999999999\",\n   \"DestinationAddress\": {\n     \"Address\": \"plot no 404, BaghyaNagar\",\n     \"AddressType\":\"Home\",\n     \"City\": \"Hyderabad\",\n     \"Country\": \"India\",\n     \"Lattitude\": \"40\",\n     \"Locality\": \"HMT HILLS\",\n     \"Longitude\": \"600\",\n     \"Pincode\": \"500072\",\n     \"State\": \"Telangana\"\n   },\n   \"Location\": \"kphb\",\n   \"OrderStatus\": \"Requested\",\n   \"OrderStatusId\": 1,\n   \"RequestedDate\": \"/Date(1465353306423+0530)/\",\n   \"ServiceId\": \"BF0860B092FA2447AE6AA8B3609FDCA9\",\n   \"ServiceName\": \"Microwave Service\",\n   \"SourceAddress\": {\n     \"Address\": \"plot no 101, vivekanandaNagar\",\n     \"AddressType\":\"Home\",\n     \"City\": \"Hyderabad\",\n     \"Country\": \"India\",\n     \"Lattitude\": \"10\",\n     \"Locality\": \"kphb\",\n     \"Longitude\": \"200\",\n     \"Pincode\": \"500081\",\n     \"State\": \"Telangana\"\n   },\n   \"VendorId\": \"B0269B0769CC8D48AEB92D2513EA14D6\",\n   \"VendorName\": \"Srikanth\",\n   \"VendorServiceId\": \"C9C834D79EE3BC48BF8D5669B2560D24\"\n },\n \"isOffline\": \"True if offline, False if online, null for previous implementation\"\n}",
+          "content": " {\n   \"order\": {\n   \"Comments\": \"\",\n   \"CustomerId\": \"10E4394670195C4AA1E4B7130A514187\",\n   \"CustomerName\": \"srikanth test\",\n   \"CustomerPhone\": \"9999999999\",\n   \"DestinationAddress\": {\n     \"Address\": \"plot no 404, BaghyaNagar\",\n     \"AddressType\":\"Home\",\n     \"City\": \"Hyderabad\",\n     \"Country\": \"India\",\n     \"Lattitude\": \"40\",\n     \"Locality\": \"HMT HILLS\",\n     \"Longitude\": \"600\",\n     \"Pincode\": \"500072\",\n     \"State\": \"Telangana\"\n   },\n   \"Location\": \"kphb\",\n   \"OrderStatus\": \"Requested\",\n   \"OrderStatusId\": 1,\n   \"RequestedDate\": \"/Date(1465353306423+0530)/\",\n   \"ServiceId\": \"BF0860B092FA2447AE6AA8B3609FDCA9\",\n   \"ServiceName\": \"Microwave Service\",\n   \"SourceAddress\": {\n     \"Address\": \"plot no 101, vivekanandaNagar\",\n     \"AddressType\":\"Home\",\n     \"City\": \"Hyderabad\",\n     \"Country\": \"India\",\n     \"Lattitude\": \"10\",\n     \"Locality\": \"kphb\",\n     \"Longitude\": \"200\",\n     \"Pincode\": \"500081\",\n     \"State\": \"Telangana\"\n   },\n   \"VendorId\": \"B0269B0769CC8D48AEB92D2513EA14D6\",\n   \"VendorName\": \"Srikanth\",\n   \"VendorServiceId\": \"C9C834D79EE3BC48BF8D5669B2560D24\",\n   \"BToBCustomerName\": \"Abs Hotel\"\n },\n \"isOffline\": \"True if offline, False if online, null for previous implementation\"\n}",
           "type": "json"
         }
       ]
