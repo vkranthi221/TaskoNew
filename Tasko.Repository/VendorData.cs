@@ -489,7 +489,7 @@ namespace Tasko.Repository
             }
             else
             {
-                objParameters.Add(SqlHelper.CreateParameter("@pNpMobileNumberame", DbType.String, DBNull.Value));
+                objParameters.Add(SqlHelper.CreateParameter("@pMobileNumber", DbType.String, DBNull.Value));
             }
 
             // EmailAddress
@@ -544,7 +544,15 @@ namespace Tasko.Repository
                 objParameters.Add(SqlHelper.CreateParameter("@pExperience", DbType.String, DBNull.Value));
             }
 
-            objParameters.Add(SqlHelper.CreateParameter("@pFacebookUrl", DbType.String, vendor.FacebookUrl));
+            if (!string.IsNullOrEmpty(vendor.FacebookUrl))
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pFacebookUrl", DbType.String, vendor.FacebookUrl));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pFacebookUrl", DbType.String, DBNull.Value));
+            }
+                        
             objParameters.Add(SqlHelper.CreateParameter("@pIsVendorVerified", DbType.Boolean, vendor.IsVendorVerified));
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateVendor", objParameters.ToArray());
         }
