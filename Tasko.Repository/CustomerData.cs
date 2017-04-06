@@ -410,6 +410,24 @@ namespace Tasko.Repository
             addressInfo.AddressType = string.IsNullOrEmpty(addressInfo.AddressType) ? string.Empty : addressInfo.AddressType;
             objParameters.Add(SqlHelper.CreateParameter("@pAddressType", DbType.String, addressInfo.AddressType));
 
+            if (string.IsNullOrWhiteSpace(addressInfo.HomeLattitude))
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pHomeLatitude", DbType.String, DBNull.Value));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pHomeLatitude", DbType.String, addressInfo.HomeLattitude));
+            }
+
+            if (string.IsNullOrWhiteSpace(addressInfo.HomeLongitude))
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pHomeLongitude", DbType.String, DBNull.Value));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pHomeLongitude", DbType.String, addressInfo.HomeLongitude));
+            }
+
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateCustomerAddress", objParameters.ToArray());
         }
 

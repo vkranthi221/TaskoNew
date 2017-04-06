@@ -362,6 +362,40 @@ SELECT [ORDER_ID],[REQUESTED_DATE], OS.[NAME] AS ORDER_STATUS_NAME, CUST.[NAME] 
 END
 GO
 
+ALTER PROCEDURE [dbo].[usp_UpdateCustomerAddress]
+(
+  @pAddressId binary(16),  
+  @pCountry nvarchar(max),
+  @pState nvarchar(max),
+  @pLatitude nvarchar(max),
+  @pLongitude nvarchar(max),
+  @pLocality nvarchar(max),
+  @pCity nvarchar(max),
+  @pAddress nvarchar(max),
+  @Pincode nvarchar(max),
+  @pAddressType nvarchar(max),
+  @pHomeLongitude nvarchar(max),
+  @pHomeLatitude nvarchar(max)
+)
+
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+  DECLARE @AddressId binary(16)
+  SET  @AddressId = newId()
+
+  UPDATE [dbo].[ADDRESS] SET COUNTRY = @pCountry, STATE= @pState, LATITIUDE = @pLatitude, 
+                         LONGITUDE = @pLongitude,LOCALITY = @pLocality,CITY = @pCity,
+                         [ADDRESS]=@pAddress,PINCODE = @Pincode, ADDRESS_TYPE = @pAddressType,
+						 HOME_LONGITUDE = @pHomeLongitude, HOME_LATITIUDE =@pHomeLatitude
+  WHERE Address_ID = @pAddressId
+
+  SELECT @AddressId as ADDRESS_ID
+END
+GO
+
 IF NOT EXISTS (SELECT * FROM [dbo].[DB_VERSION] WHERE [VERSION] = '3.0.0.0')
 BEGIN
      INSERT INTO [dbo].[DB_VERSION] values('3.0.0.0', Getdate())
