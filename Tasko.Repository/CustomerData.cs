@@ -297,7 +297,15 @@ namespace Tasko.Repository
 
             objParameters.Add(SqlHelper.CreateParameter("@pSourceAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(sourceAddressId)));
             objParameters.Add(SqlHelper.CreateParameter("@pDestinationAddressId", DbType.Binary, BinaryConverter.ConvertStringToByte(destinationAddressId)));
-            objParameters.Add(SqlHelper.CreateParameter("@pBToBCustomerName", DbType.String, order.BToBCustomerName));
+            if (string.IsNullOrWhiteSpace(order.BToBCustomerName))
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pBToBCustomerName", DbType.String, DBNull.Value));
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pBToBCustomerName", DbType.String, order.BToBCustomerName));
+            }
+                        
             orderId = (string)SqlHelper.ExecuteScalar("dbo.usp_ConfirmOrder", objParameters.ToArray());
 
             return orderId;
