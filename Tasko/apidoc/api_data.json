@@ -1933,7 +1933,7 @@
       "examples": [
         {
           "title": "Param-Example:",
-          "content": "{\n  \"orderStatusId\": \"Status of the order\",\n}",
+          "content": "{\n  \"orderStatusId\": \"Status of the order\",\n  \"isOffline\": \"Checks if order is offline or online\"\n}",
           "type": "json"
         }
       ]
@@ -1942,7 +1942,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n  {\n   \"Data\": [\n             {\n               \"__type\": \"OrderSummary:#Tasko.Model\",\n               \"Comments\": null,\n               \"CustomerId\": \"AC4C2A61149B8D4E801E77677891874B\",\n               \"CustomerName\": \"Krishna GK\",\n               \"OrderId\": \"TASKO1000\",\n               \"OrderStatus\": \"OrderConfirmed\",\n               \"RequestedDate\": \"2016-11-02 16:21:40\",\n               \"ServiceId\": null,\n               \"ServiceName\": \"AC Installation\",\n               \"VendorId\": \"CA612785D9B7DC46B6C410D69FF50DFF\",\n               \"VendorName\": \"Krishna Gadagool\"\n             },\n             {\n                 \"__type\": \"OrderSummary:#Tasko.Model\",\n                 \"Comments\": null,\n                 \"CustomerId\": \"AC4C2A61149B8D4E801E77677891874B\",\n                 \"CustomerName\": \"Krishna GK\",\n                 \"OrderId\": \"TASKO1002\",\n                 \"OrderStatus\": \"OrderConfirmed\",\n                 \"RequestedDate\": \"2016-11-02 16:59:17\",\n                 \"ServiceId\": null,\n                 \"ServiceName\": \"Carpentry\",\n                 \"VendorId\": \"CA612785D9B7DC46B6C410D69FF50DFF\",\n                 \"VendorName\": \"Krishna Gadagool\"\n             }\n           ]\n   \"Error\": false,\n   \"Message\": \"Success\",\n   \"Status\": 200\n }\n}",
+          "content": " {\n  {\n   \"Data\": [\n             {\n               \"__type\": \"OrderSummary:#Tasko.Model\",\n               \"Comments\": null,\n               \"CustomerId\": \"AC4C2A61149B8D4E801E77677891874B\",\n               \"CustomerName\": \"Krishna GK\",\n               \"OrderId\": \"TASKO1000\",\n               \"OrderStatus\": \"OrderConfirmed\",\n               \"RequestedDate\": \"2016-11-02 16:21:40\",\n               \"ServiceId\": null,\n               \"ServiceName\": \"AC Installation\",\n               \"VendorId\": \"CA612785D9B7DC46B6C410D69FF50DFF\",\n               \"VendorName\": \"Krishna Gadagool\",\n               \"BToBCustomerName\":\"Offline Customer\"\n             },\n             {\n                 \"__type\": \"OrderSummary:#Tasko.Model\",\n                 \"Comments\": null,\n                 \"CustomerId\": \"AC4C2A61149B8D4E801E77677891874B\",\n                 \"CustomerName\": \"Krishna GK\",\n                 \"OrderId\": \"TASKO1002\",\n                 \"OrderStatus\": \"OrderConfirmed\",\n                 \"RequestedDate\": \"2016-11-02 16:59:17\",\n                 \"ServiceId\": null,\n                 \"ServiceName\": \"Carpentry\",\n                 \"VendorId\": \"CA612785D9B7DC46B6C410D69FF50DFF\",\n                 \"VendorName\": \"Krishna Gadagool\",\n                 \"BToBCustomerName\":\"Offline Customer\"\n             }\n           ]\n   \"Error\": false,\n   \"Message\": \"Success\",\n   \"Status\": 200\n }\n}",
           "type": "json"
         }
       ]
