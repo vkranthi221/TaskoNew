@@ -102,5 +102,8 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public string VendorId { get; set; }
+
+        [DataMember(IsRequired = false)]
+        public string BToBCustomerName { get; set; }
     }
 }

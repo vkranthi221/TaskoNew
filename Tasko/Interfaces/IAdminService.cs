@@ -1211,6 +1211,7 @@ namespace Tasko.Interfaces
         * @apiParamExample {json} Param-Example:
         *  {
         *    "orderStatusId": "Status of the order",
+        *    "isOffline": "Checks if order is offline or online"
         *  }
         *  
         * @apiSuccessExample Success-Response:
@@ -1228,7 +1229,8 @@ namespace Tasko.Interfaces
                       "ServiceId": null,
                       "ServiceName": "AC Installation",
                       "VendorId": "CA612785D9B7DC46B6C410D69FF50DFF",
-                      "VendorName": "Krishna Gadagool"
+                      "VendorName": "Krishna Gadagool",
+                      "BToBCustomerName":"Offline Customer"
                     },
                     {
                         "__type": "OrderSummary:#Tasko.Model",
@@ -1241,7 +1243,8 @@ namespace Tasko.Interfaces
                         "ServiceId": null,
                         "ServiceName": "Carpentry",
                         "VendorId": "CA612785D9B7DC46B6C410D69FF50DFF",
-                        "VendorName": "Krishna Gadagool"
+                        "VendorName": "Krishna Gadagool",
+                        "BToBCustomerName":"Offline Customer"
                     }
                   ]
           "Error": false,
@@ -1262,7 +1265,7 @@ namespace Tasko.Interfaces
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response GetOrders(int orderStatusId);
+        Response GetOrders(int orderStatusId, bool? isOffline);
 
         /**
          * @api {post} c1/GetOrderDetails Get Order details

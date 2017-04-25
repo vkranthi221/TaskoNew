@@ -715,7 +715,7 @@ namespace Tasko.Repository
         #endregion
 
         #region Orders
-        public static List<OrderSummary> GetOrders(int orderStatusId)
+        public static List<OrderSummary> GetOrders(int orderStatusId, bool isOffline)
         {
             List<SqlParameter> objParameters = new List<SqlParameter>();
 
@@ -723,6 +723,7 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pORDERSTATUSID", DbType.Int32, orderStatusId));
             objParameters.Add(SqlHelper.CreateParameter("@pRECORDSPERPAGE", DbType.Int32, 0));
             objParameters.Add(SqlHelper.CreateParameter("@pPAGENO", DbType.Int32, 0));
+            objParameters.Add(SqlHelper.CreateParameter("@pISOFFLINE", DbType.Int16, isOffline));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorOrders", objParameters.ToArray());
             List<OrderSummary> orders = new List<OrderSummary>();
 
@@ -746,6 +747,7 @@ namespace Tasko.Repository
                     order.CustomerId = BinaryConverter.ConvertByteToString((byte[])reader["CUSTOMER_ID"]);
                 }
 
+                order.BToBCustomerName = reader["B_TO_B_CUSTOMER_NAME"].ToString();
                 orders.Add(order);
             }
 

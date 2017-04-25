@@ -889,15 +889,20 @@ namespace Tasko.Services
         #endregion
 
         #region Orders
-        public Response GetOrders(int orderStatusId)
+        public Response GetOrders(int orderStatusId, bool? isOffline)
         {
             Response r = new Response();
             try
             {
+                if (!isOffline.HasValue)
+                {
+                    isOffline = false;
+                }
+
                 bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
-                    List<OrderSummary> objOrders = AdminData.GetOrders(orderStatusId);
+                    List<OrderSummary> objOrders = AdminData.GetOrders(orderStatusId, isOffline.Value);
 
                     if (objOrders != null && objOrders.Count > 0)
                     {
