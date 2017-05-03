@@ -731,7 +731,14 @@ namespace Tasko.Services
 
         public void SendNotification(OrderSummary order)
         {
-            string messageData = "You booked an order for " + order.ServiceName + " with Tasko. Please rate the vendor" + order.VendorName + "for the service he provided.";
+            MessageDetail message = new MessageDetail();
+            string messageData = string.Empty;
+            message.OrderId = order.OrderId;
+            message.Orderstatus = -1;
+            message.VendorName = order.VendorName;
+            message.ServiceName = order.ServiceName;
+            messageData = JsonConvert.SerializeObject(message);
+
             Response response = InternalSendNotification(order.CustomerId, string.Empty, messageData, ConfigurationManager.AppSettings["CustomerAPIKey"].ToString());
             if (response != null && response.Message == CommonMessages.SUCCESS)
             {
