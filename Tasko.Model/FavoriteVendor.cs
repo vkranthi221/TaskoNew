@@ -48,5 +48,8 @@ namespace Tasko.Model
         /// </value>
         [DataMember]
         public int OverallRating { get; set; }
+
+        [DataMember(IsRequired = false)]
+        public string VendorPhoneNumber { get; set; }
     }
 }
