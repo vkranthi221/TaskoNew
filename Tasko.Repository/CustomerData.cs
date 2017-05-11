@@ -576,7 +576,7 @@ namespace Tasko.Repository
                     FavoriteVendor favoriteVendor = new FavoriteVendor();
                     favoriteVendor.VendorId = BinaryConverter.ConvertByteToString((byte[])row["VENDOR_ID"]);
                     favoriteVendor.VendorName = row["VENDOR_NAME"].ToString();
-                    if (!(row["TOTAL_RATINGS"] is System.DBNull))
+                    if (!(row["VENDOR_PHONE"] is System.DBNull))
                     {
                         favoriteVendor.VendorPhoneNumber = row["VENDOR_PHONE"].ToString();
                     }
