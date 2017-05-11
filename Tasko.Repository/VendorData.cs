@@ -378,11 +378,30 @@ namespace Tasko.Repository
 
             if (reader.Read())
             {
-                rating.ServiceQuality = Convert.ToDecimal(reader["QUALITY"]);
-                rating.Punctuality = Convert.ToDecimal(reader["PUNCTUALITY"]);
-                rating.Courtesy = Convert.ToDecimal(reader["COURTESY"]);
-                rating.Price = Convert.ToDecimal(reader["PRICE"]);
-                rating.OverAllRating = Convert.ToDecimal(reader["TOTAL"]);
+                if (!(reader["QUALITY"] is System.DBNull))
+                {
+                    rating.ServiceQuality = Convert.ToDecimal(reader["QUALITY"]);
+                }
+
+                if (!(reader["PUNCTUALITY"] is System.DBNull))
+                {
+                    rating.Punctuality = Convert.ToDecimal(reader["PUNCTUALITY"]);
+                }
+
+                if (!(reader["COURTESY"] is System.DBNull))
+                {
+                    rating.Courtesy = Convert.ToDecimal(reader["COURTESY"]);
+                }
+
+                if (!(reader["PRICE"] is System.DBNull))
+                {
+                    rating.Price = Convert.ToDecimal(reader["PRICE"]);
+                }
+
+                if (!(reader["TOTAL"] is System.DBNull))
+                {
+                    rating.OverAllRating = Convert.ToDecimal(reader["TOTAL"]);
+                }
             }
 
             reader.Close();
