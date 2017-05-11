@@ -574,8 +574,14 @@ namespace Tasko.Repository
                 foreach (DataRow row in datatable.Rows)
                 {
                     FavoriteVendor favoriteVendor = new FavoriteVendor();
-                    favoriteVendor.VendorId = BinaryConverter.ConvertByteToString((byte[])row["VENDOR_ID"]);
-                    favoriteVendor.VendorName = row["VENDOR_NAME"].ToString();
+                    if (!(row["VENDOR_ID"] is System.DBNull))
+                    {
+                        favoriteVendor.VendorId = BinaryConverter.ConvertByteToString((byte[])row["VENDOR_ID"]);
+                    }
+                    if (!(row["VENDOR_NAME"] is System.DBNull))
+                    {
+                        favoriteVendor.VendorName = row["VENDOR_NAME"].ToString();
+                    }
                     if (!(row["VENDOR_PHONE"] is System.DBNull))
                     {
                         favoriteVendor.VendorPhoneNumber = row["VENDOR_PHONE"].ToString();
@@ -591,7 +597,10 @@ namespace Tasko.Repository
                         favoriteVendor.OverallRating = Convert.ToInt32(row["OVERALL_RATINGS"]);
                     }
 
-                    favoriteVendors.Add(favoriteVendor);
+                    if (!string.IsNullOrEmpty(favoriteVendor.VendorId))
+                    {
+                        favoriteVendors.Add(favoriteVendor);
+                    }
                 }
             }
 
