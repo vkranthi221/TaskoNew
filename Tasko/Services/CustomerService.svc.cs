@@ -5,6 +5,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
@@ -205,6 +206,8 @@ namespace Tasko.Services
                         {
                             r = SendNotification(order, OrderId, true);
                         }
+
+                        SendEmail(order);
                     }
                 }
                 else
@@ -237,6 +240,36 @@ namespace Tasko.Services
             }
 
             return r;
+        }
+
+        private void SendEmail(Order order)
+        {
+            using (MailMessage mail = new MailMessage())
+            {
+                mail.From = new MailAddress("taskoorder@gmail.com");
+                mail.To.Add("animesh@tasko.in,chandra@tasko.in");
+                mail.Subject = "New Order " + order.OrderId + " is placed for " + order.ServiceName + " service";
+                StringBuilder body = new StringBuilder();
+                body.Append("Order Details:");
+                body.Append("\n Customer Name: " + order.CustomerName);
+                body.Append("\n Customer Contact Number: " + order.CustomerMobileNumber);
+                if (order.DestinationAddress != null)
+                {
+                    body.Append("\n Customer Address:" + order.DestinationAddress.Address + order.DestinationAddress.City);
+                }
+                body.Append("\n Vendor Name: " + order.VendorName);
+                body.Append("\n Vendor Number: " + order.VendorMobileNumber);
+                mail.Body = body.ToString();
+
+                using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    smtp.UseDefaultCredentials = true;
+                    smtp.Credentials = new NetworkCredential("taskoorder@gmail.com", "tasko$123");
+                    smtp.EnableSsl = true;
+                    smtp.Send(mail);
+
+                }
+            }
         }
 
         public void GetDistance(string latitude, string longitude, string customerLatitude, string customerLongitude, MessageDetail message)

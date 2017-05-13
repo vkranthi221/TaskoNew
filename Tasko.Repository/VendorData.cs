@@ -435,6 +435,7 @@ namespace Tasko.Repository
                     objParameters.Add(SqlHelper.CreateParameter("@pORDERSTATUSID", DbType.Int32, Convert.ToInt32(statusId)));
                     objParameters.Add(SqlHelper.CreateParameter("@pRECORDSPERPAGE", DbType.Int32, recordsPerPage));
                     objParameters.Add(SqlHelper.CreateParameter("@pPAGENO", DbType.Int32, pageNumber));
+                    objParameters.Add(SqlHelper.CreateParameter("@pISOFFLINE", DbType.Boolean, false));
                     IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetVendorOrders", objParameters.ToArray());
 
                     while (reader.Read())
