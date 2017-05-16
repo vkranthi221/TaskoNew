@@ -67,6 +67,8 @@ namespace Tasko.Repository
                     {
                         objOrder.VisitingFee = Convert.ToDouble(ObjOrderInfo.Rows[0]["VISITING_FEE"]);
                     }
+
+                    objOrder.BToBCustomerName = ObjOrderInfo.Rows[0]["B_TO_B_CUSTOMER_NAME"].ToString();
                 }
 
                 
