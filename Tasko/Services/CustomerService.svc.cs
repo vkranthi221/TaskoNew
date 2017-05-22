@@ -195,6 +195,7 @@ namespace Tasko.Services
                     OrderId = CustomerData.ConfirmOrder(order, isOffline);
                     if (!string.IsNullOrEmpty(OrderId))
                     {
+                        order.OrderId = OrderId;
                         if (isOffline.HasValue && isOffline.Value)
                         {
                             string message = "Customer " + order.CustomerName + " is looking for " + order.ServiceName + " service from you. Customer mobile number is " + order.CustomerMobileNumber + ".Please check Tasko App for more details.";
