@@ -334,7 +334,7 @@ namespace Tasko.Interfaces
          *    "Comments": "",
          *    "CustomerId": "10E4394670195C4AA1E4B7130A514187",
          *    "CustomerName": "srikanth test",
-         *    "CustomerPhone": "9999999999",
+         *    "CustomerMobileNumber": "9999999999",
          *    "DestinationAddress": {
          *      "Address": "plot no 404, BaghyaNagar",
          *      "AddressType":"Home",
