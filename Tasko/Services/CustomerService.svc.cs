@@ -248,7 +248,7 @@ namespace Tasko.Services
             using (MailMessage mail = new MailMessage())
             {
                 mail.From = new MailAddress("taskoorder@gmail.com");
-                mail.To.Add("animesh@tasko.in,chandra@tasko.in");
+                mail.To.Add("animesh@tasko.in,chandra.varma@tasko.in");
                 mail.Subject = "New Order " + order.OrderId + " is placed for " + order.ServiceName + " service";
                 StringBuilder body = new StringBuilder();
                 body.Append("Order Details:");
