@@ -2041,7 +2041,7 @@ namespace Tasko.Services
                 bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
-                    AdminData.AddRateCards(cities);
+                    AdminData.AddRateCards(rateCards);
                     r.Error = false;
                     r.Status = 200;
                     r.Message = CommonMessages.SUCCESS;
