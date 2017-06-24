@@ -69,6 +69,7 @@ namespace Tasko.Repository
                     }
 
                     objOrder.BToBCustomerName = ObjOrderInfo.Rows[0]["B_TO_B_CUSTOMER_NAME"].ToString();
+                    objOrder.IsOffline = Convert.ToBoolean(ObjOrderInfo.Rows[0]["IS_OFFLINE"]);
                 }
 
                 

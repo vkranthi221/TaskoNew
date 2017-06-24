@@ -293,7 +293,10 @@ namespace Tasko.Services
                     {
                         VendorData.UpdateOrderStatus(orderId, orderStatus, Comments);
                         Order order = CustomerData.GetOrderDetails(orderId);
-                        r = SendNotification(order, orderId);
+                        if (order != null && !order.IsOffline)
+                        {
+                            r = SendNotification(order, orderId);
+                        }
                         r.Data = order;
                     }
                     else

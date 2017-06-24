@@ -194,5 +194,8 @@ namespace Tasko.Model
 
         [DataMember(IsRequired = false)]
         public string BToBCustomerName { get; set; }
+
+        [DataMember(IsRequired = false)]
+        public bool IsOffline { get; set; }
     }
 }
