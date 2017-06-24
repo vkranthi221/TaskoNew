@@ -1925,7 +1925,7 @@ namespace Tasko.Services
                     {
                         r.Error = true;
                         r.Status = 400;
-                        r.Message = CommonMessages.STATE_NAME_EXISTS;
+                        r.Message = "State already exists";
                     }
                     else
                     {
@@ -2006,7 +2006,7 @@ namespace Tasko.Services
                     else
                     {
                         r.Error = true;
-                        r.Message = CommonMessages.CITIES_NOT_FOUND;
+                        r.Message = "Cities not found";
                         r.Status = 40;
                         r.Data = null;
                     }
@@ -2085,7 +2085,7 @@ namespace Tasko.Services
                     else
                     {
                         r.Error = true;
-                        r.Message = CommonMessages.RATE_CARDS_NOT_FOUND;
+                        r.Message = "Rate Card not found for city";
                         r.Status = 40;
                         r.Data = null;
                     }
