@@ -22,7 +22,9 @@ namespace Tasko.Common
             DestinationAddressId,
             AddressId,
             TokenCode,
-            VendorDocumentId
+            VendorDocumentId,
+            StateId,
+            CityId
         }
         public enum OrderStatus
         {

@@ -195,6 +195,12 @@ namespace Tasko.Common
                     
                     case TaskoEnum.IdType.TokenCode:
                         throw new UserException("Invalid Token Code");
+
+                    case TaskoEnum.IdType.StateId:
+                        throw new UserException("Invalid State Id");
+
+                    case TaskoEnum.IdType.CityId:
+                        throw new UserException("Invalid City Id");
                     default:
                         break;
                 }

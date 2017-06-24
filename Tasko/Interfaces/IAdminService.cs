@@ -2565,5 +2565,317 @@ namespace Tasko.Interfaces
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetOffileVendorRequests();
         #endregion
+
+        #region Regions
+        /**
+         * @api {post} a1/AddState Add State
+         * @apiName AddState
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
+         * @apiParam {Service} service Service Info.
+         * 
+         *
+         * @apiParamExample {json} Param-Example:
+         * { 
+         *   "state":
+         *   {   
+         *     "Name": "Telangana",
+         *   }
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError INVALID_TOKEN_CODE Invalid token code.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Invalid token code",
+          "Status": 400
+        }
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response AddState(State state);
+
+        /**
+         * @api {post} a1/AddCities Add Cities
+         * @apiName AddCities
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
+         * @apiParam {Service} service Service Info.
+         * 
+         *
+         * @apiParamExample {json} Param-Example:
+         * { 
+         * "cities": [
+         *           {
+         *             "Name": "Hyderabad",
+         *             "StateId": "F4878463A2FF5043BF3763F8AA913DE1",
+         *           }
+         *         ]
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError INVALID_TOKEN_CODE Invalid token code.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Invalid token code",
+          "Status": 400
+        }
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response AddCities(List<City> cities);
+
+        /**
+         * @api {post} a1/GetCities Get Cities
+         * @apiName GetCities
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *  
+         *  @apiParam {string} vendorId Vendor Id.
+         *
+         * @apiParamExample {json} Param-Example:
+         * { 
+         *   "stateId":"Pass empty state id to get all cities"
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+           "Data": [
+                    {
+                      "__type": "City:#Tasko.Model",
+                      "Id": "F4878463A2FF5043BF3763F8AA913DE1",
+                      "StateId": "F4878463A2FF5043BF3763F8AA913DE1",
+                      "Name": "Telangana"
+                    }
+                  ],
+                  "Error": false,
+                  "Message": "Success",
+                  "Status": 200
+         }
+         * @apiError CITIES_NOT_FOUND Cities not found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Cities not found",
+            "Status": 400
+          }        
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetCities(string stateId);
+        #endregion
+
+        #region Rate Card
+        /**
+         * @api {post} a1/AddRateCards Add Rate Cards
+         * @apiName AddRateCards
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
+         * @apiParam {Service} service Service Info.
+         * 
+         *
+         * @apiParamExample {json} Param-Example:
+         * { 
+         * "rateCards": [
+         *           {
+         *             "Price": "100",
+         *             "ServiceId": "F4878463A2FF5043BF3763F8AA913DE1",
+         *             "CityId" : "F4878463A2FF5043BF3763F8AA913DE1"
+         *           }
+         *         ]
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError INVALID_TOKEN_CODE Invalid token code.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Invalid token code",
+          "Status": 400
+        }
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response AddRateCards(List<RateCard> rateCards);
+
+        /**
+         * @api {post} a1/GetRateCardsForCity Get rate cards for city
+         * @apiName GetRateCardsForCity
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *  
+         *  @apiParam {string} vendorId Vendor Id.
+         *
+         * @apiParamExample {json} Param-Example:
+         * { 
+         *   "cityId":"AFB2B50F2164804C8E6D26A6C4A32982",
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+           "Data": [
+                    {
+                      "__type": "RateCard:#Tasko.Model",
+                      "ServiceName": "Plumber",
+                      "ServiceId":"AFB2B50F2164804C8E6D26A6C4A32982",
+                      "Price": "100"
+                    }
+                  ],
+                  "Error": false,
+                  "Message": "Success",
+                  "Status": 200
+         }
+         * @apiError RATE_CARD_NOT_FOUND Rate Card not found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Rate Card not found",
+            "Status": 400
+          }        
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetRateCardsForCity(string cityId);
+
+        /**
+         * @api {post} a1/UpdateRateCards Update Rate Cards
+         * @apiName UpdateRateCards
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
+         * @apiParam {Service} service Service Info.
+         * 
+         *
+         * @apiParamExample {json} Param-Example:
+         * { 
+         * "rateCards": [
+         *           {
+         *             "Price": "100",
+         *             "ServiceId": "F4878463A2FF5043BF3763F8AA913DE1",
+         *             "CityId" : "F4878463A2FF5043BF3763F8AA913DE1"
+         *           }
+         *         ]
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError INVALID_TOKEN_CODE Invalid token code.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Invalid token code",
+          "Status": 400
+        }
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response UpdateRateCards(List<RateCard> rateCards);
+        #endregion
     }
 }

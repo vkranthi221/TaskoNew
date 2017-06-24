@@ -1304,5 +1304,108 @@ namespace Tasko.Repository
             return requests.Count > 0 ? requests : null;
         }
         #endregion
+
+        #region Regions
+        public static void AddCities(List<City> cities)
+        {
+            foreach (City city in cities)
+            {
+                BinaryConverter.IsValidGuid(city.StateId, TaskoEnum.IdType.StateId);
+                List<SqlParameter> objParameters = new List<SqlParameter>();
+                objParameters.Add(SqlHelper.CreateParameter("@pStateId", DbType.Binary, BinaryConverter.ConvertStringToByte(city.StateId)));
+                objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.Boolean, city.Name));
+                SqlHelper.ExecuteNonQuery("dbo.usp_AddCity", objParameters.ToArray());
+            }
+        }
+
+        public static bool AddState(State state)
+        {
+            bool isStateAlreadyExists;
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pName", DbType.String, state.Name));
+            isStateAlreadyExists = (bool)SqlHelper.ExecuteScalar("dbo.usp_AddState", objParameters.ToArray());
+            return isStateAlreadyExists;
+        }
+
+        public static List<City> GetCities(string stateId)
+        {
+            List<City> cities = new List<City>();
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            if (!string.IsNullOrEmpty(stateId))
+            {
+                BinaryConverter.IsValidGuid(stateId, TaskoEnum.IdType.StateId);
+            }
+
+            objParameters.Add(SqlHelper.CreateParameter("@pStateId", DbType.String, BinaryConverter.ConvertStringToByte(stateId)));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetCities", objParameters.ToArray());
+            while (reader.Read())
+            {
+                City city = new City();
+                city.Id = BinaryConverter.ConvertByteToString((byte[])reader["ID"]);
+                city.Name = reader["Name"].ToString();
+                city.StateId = BinaryConverter.ConvertByteToString((byte[])reader["StateId"]);
+                cities.Add(city);
+            }
+
+            reader.Close();
+            return cities.Count > 0 ? cities : null;
+        }
+        #endregion
+
+        #region Add Rate Card
+        public static void AddRateCards(List<RateCard> rateCards)
+        {
+            foreach (RateCard rateCard in rateCards)
+            {
+                BinaryConverter.IsValidGuid(rateCard.CityId, TaskoEnum.IdType.CityId);
+                BinaryConverter.IsValidGuid(rateCard.ServiceId, TaskoEnum.IdType.ServiceId);
+                List<SqlParameter> objParameters = new List<SqlParameter>();
+                objParameters.Add(SqlHelper.CreateParameter("@pCityId", DbType.Binary, BinaryConverter.ConvertStringToByte(rateCard.CityId)));
+                objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(rateCard.ServiceId)));
+                objParameters.Add(SqlHelper.CreateParameter("@pPrice", DbType.Decimal, rateCard.Price));
+                SqlHelper.ExecuteNonQuery("dbo.usp_AddRateCard", objParameters.ToArray());
+            }
+        }
+
+        public static List<RateCard> GetRateCardsForCity(string cityId)
+        {
+            List<RateCard> rateCards = new List<RateCard>();
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            if (!string.IsNullOrEmpty(cityId))
+            {
+                BinaryConverter.IsValidGuid(cityId, TaskoEnum.IdType.CityId);
+            }
+
+            objParameters.Add(SqlHelper.CreateParameter("@pCityId", DbType.String, BinaryConverter.ConvertStringToByte(cityId)));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetRateCardsForCity", objParameters.ToArray());
+            while (reader.Read())
+            {
+                RateCard rateCard = new RateCard();
+                rateCard.ServiceId = BinaryConverter.ConvertByteToString((byte[])reader["ServiceId"]);
+                rateCard.CityId = BinaryConverter.ConvertByteToString((byte[])reader["CityId"]);
+                rateCard.Price = Convert.ToDecimal(reader["AmountCharged"]);
+                rateCard.ServiceName = reader["ServiceName"].ToString();
+                rateCards.Add(rateCard);
+            }
+
+            reader.Close();
+            return rateCards.Count > 0 ? rateCards : null;
+        }
+
+        public static void UpdateRateCards(List<RateCard> rateCards)
+        {
+            foreach (RateCard rateCard in rateCards)
+            {
+                List<SqlParameter> objParameters = new List<SqlParameter>();
+                BinaryConverter.IsValidGuid(rateCard.CityId, TaskoEnum.IdType.CityId);
+                BinaryConverter.IsValidGuid(rateCard.ServiceId, TaskoEnum.IdType.ServiceId);
+                objParameters.Add(SqlHelper.CreateParameter("@pCityId", DbType.Binary, BinaryConverter.ConvertStringToByte(rateCard.CityId)));
+                objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(rateCard.ServiceId)));
+                objParameters.Add(SqlHelper.CreateParameter("@pPrice", DbType.Decimal, rateCard.Price));
+                SqlHelper.ExecuteNonQuery("dbo.usp_UpdateRateCards", objParameters.ToArray());
+            }
+        }
+        
+        #endregion
     }
 }
