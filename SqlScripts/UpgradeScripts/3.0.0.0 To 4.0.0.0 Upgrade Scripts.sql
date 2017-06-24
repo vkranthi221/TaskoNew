@@ -205,3 +205,6 @@ BEGIN
      INSERT INTO [dbo].[DB_VERSION] values('4.0.0.0', Getdate())
 END
 GO
+
+INSERT INTO COUNTRY VALUES (NEWID(),'India')
+GO
