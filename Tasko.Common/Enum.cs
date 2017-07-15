@@ -24,7 +24,8 @@ namespace Tasko.Common
             TokenCode,
             VendorDocumentId,
             StateId,
-            CityId
+            CityId,
+            RateCardId
         }
         public enum OrderStatus
         {

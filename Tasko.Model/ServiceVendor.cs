@@ -119,5 +119,11 @@ namespace Tasko.Model
 
         [DataMember]
         public string MobileNumber { get; set; }
+
+        [DataMember(IsRequired = false)]
+        public bool IsEntireCityAccessible { get; set; }
+
+        [DataMember(IsRequired = false)]
+        public string VendorCity { get; set; }
     }
 }

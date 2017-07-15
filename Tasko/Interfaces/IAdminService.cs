@@ -2718,6 +2718,150 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response GetCities(string stateId);
+
+        /**
+         * @api {post} a1/DeleteCities Delete Cities
+         * @apiName DeleteCities
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
+         * @apiParam {Service} service Service Info.
+         * 
+         *
+         * @apiParamExample {json} Param-Example:
+         * { 
+         * "cities": [
+         *           {
+         *             "Id": "F4878463A2FF5043BF3763F8AA913DE1"
+         *           }
+         *         ]
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError INVALID_TOKEN_CODE Invalid token code.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Invalid token code",
+          "Status": 400
+        }
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response DeleteCities(List<string> cities);
+
+        /**
+         * @api {post} a1/GetStates Get States
+         * @apiName GetStates
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *  
+         * @apiSuccessExample Success-Response:
+         {
+           "Data": [
+                    {
+                      "__type": "State:#Tasko.Model",
+                      "Id": "F4878463A2FF5043BF3763F8AA913DE1",
+                      "Name": "Telangana"
+                    }
+                  ],
+                  "Error": false,
+                  "Message": "Success",
+                  "Status": 200
+         }
+         * @apiError STATES_NOT_FOUND States not found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "States not found",
+            "Status": 400
+          }        
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetStates();
+
+        /**
+         * @api {post} a1/DeleteStates Delete States
+         * @apiName DeleteStates
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
+         * @apiParam {Service} service Service Info.
+         * 
+         *
+         * @apiParamExample {json} Param-Example:
+         * { 
+         * "states": [
+         *           {
+         *             "Id": "F4878463A2FF5043BF3763F8AA913DE1"
+         *           }
+         *         ]
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError INVALID_TOKEN_CODE Invalid token code.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Invalid token code",
+          "Status": 400
+        }
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response DeleteStates(List<string> states);
         #endregion
 
         #region Rate Card
@@ -2794,6 +2938,7 @@ namespace Tasko.Interfaces
          * @apiParamExample {json} Param-Example:
          * { 
          *   "cityId":"AFB2B50F2164804C8E6D26A6C4A32982",
+         *   "parentServiceId":"AFB2B50F2164804C8E6D26A6C4A32982"
          * }
          *
          * @apiSuccessExample Success-Response:
@@ -2803,7 +2948,8 @@ namespace Tasko.Interfaces
                       "__type": "RateCard:#Tasko.Model",
                       "ServiceName": "Plumber",
                       "ServiceId":"AFB2B50F2164804C8E6D26A6C4A32982",
-                      "Price": "100"
+                      "Price": "100",
+                      "CityName":"Hyderabad"
                     }
                   ],
                   "Error": false,
@@ -2823,7 +2969,7 @@ namespace Tasko.Interfaces
         [OperationContract]
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response GetRateCardsForCity(string cityId);
+        Response GetRateCardsForCity(string cityId, string parentServiceId);
 
         /**
          * @api {post} a1/UpdateRateCards Update Rate Cards
@@ -2876,6 +3022,56 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response UpdateRateCards(List<RateCard> rateCards);
+
+        /**
+         * @api {post} a1/DeleteRateCards Delete Rate Cards
+         * @apiName DeleteRateCards
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
+         * @apiParam {Service} service Service Info.
+         * 
+         *
+         * @apiParamExample {json} Param-Example:
+         * { 
+         * "rateCards": [
+         *           {
+         *             "Id": "F4878463A2FF5043BF3763F8AA913DE1"
+         *           }
+         *         ]
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError INVALID_TOKEN_CODE Invalid token code.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Invalid token code",
+          "Status": 400
+        }
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response DeleteRateCards(List<string> rateCards);
         #endregion
     }
 }

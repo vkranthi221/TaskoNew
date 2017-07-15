@@ -252,6 +252,8 @@ namespace Tasko.Repository
                     serviceVendor.FacebookUrl = Convert.ToString(row["FACEBOOK_URL"]);
                     serviceVendor.Photo = Convert.ToString(row["PHOTO"]);
                     serviceVendor.MobileNumber = Convert.ToString(row["MOBILE_NUMBER"]);
+                    serviceVendor.IsEntireCityAccessible = Convert.ToBoolean(row["IS_VISIBLE_TO_ENTIRE_CITY"]);
+                    serviceVendor.VendorCity = Convert.ToString(row["CITY"]);
                     serviceVendors.Add(serviceVendor);
                 }
             }

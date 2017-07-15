@@ -1688,39 +1688,64 @@ namespace Tasko.Services
                             // This means that vendor is logged out. So we are updating his distance to negative value.
                             if (vendorLatitude != 0 && vendorLongitude != 0)
                             {
-                                string requestUri = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + latitude + "," + longitude + "&destinations=" + vendorLatitude + "," + vendorLongitude;
-
-                                WebRequest request = HttpWebRequest.Create(requestUri);
-                                WebResponse response = request.GetResponse();
-                                StreamReader reader = new StreamReader(response.GetResponseStream());
-                                string responseStringData = reader.ReadToEnd();
-                                if (!string.IsNullOrEmpty(responseStringData))
+                                if (serviceVendor.IsEntireCityAccessible)
                                 {
-                                    XmlDocument xmlDoc = new XmlDocument();
-                                    xmlDoc.LoadXml(responseStringData);
-                                    string xpath = "DistanceMatrixResponse/row/element/distance/text";
-                                    XmlNode distance = xmlDoc.SelectSingleNode(xpath);
-                                    if (distance != null && !string.IsNullOrEmpty(distance.InnerText))
-                                    {
-                                        string actualDistance = distance.InnerText.Remove(distance.InnerText.IndexOf(" "));
-                                        if (!string.IsNullOrEmpty(actualDistance))
-                                        {
-                                            nearVendorFound = true;
-                                            serviceVendor.Distance = Convert.ToDecimal(actualDistance);
-                                        }
-                                    }
+                                    XmlDocument xDoc = new XmlDocument();
+                                    xDoc.Load("https://maps.googleapis.com/maps/api/geocode/xml?latlng=" + latitude + "," + longitude + "&sensor=false");
 
-                                    string durationXpath = "DistanceMatrixResponse/row/element/duration/text";
-                                    XmlNode duration = xmlDoc.SelectSingleNode(durationXpath);
-                                    if (duration != null && !string.IsNullOrEmpty(duration.InnerText))
+                                    XmlNodeList xNodelst = xDoc.GetElementsByTagName("result");
+                                    XmlNode xNode = xNodelst.Item(0);
+                                    //string adress = xNode.SelectSingleNode("formatted_address").InnerText;
+                                    //string area = xNode.SelectSingleNode("address_component[3]/long_name").InnerText;
+                                    string customerCity = xNode.SelectSingleNode("address_component[4]/long_name").InnerText;
+                                    if (string.IsNullOrEmpty(customerCity) || string.IsNullOrEmpty(serviceVendor.VendorCity) || customerCity.ToLower() != serviceVendor.VendorCity.ToLower())
                                     {
-                                        serviceVendor.ETA = duration.InnerText;
+                                        // setting this to false so that this vendor will not be returned. we are not saving in the db. this is just a temp change to restrict him from returning
+                                        serviceVendor.IsEntireCityAccessible = false;
+                                    }
+                                    else
+                                    {
+                                        nearVendorFound = true;
+                                    }
+                                    //string district = xNode.SelectSingleNode("address_component[5]/long_name").InnerText;
+                                }
+                                else
+                                {
+                                    string requestUri = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + latitude + "," + longitude + "&destinations=" + vendorLatitude + "," + vendorLongitude;
+
+                                    WebRequest request = HttpWebRequest.Create(requestUri);
+                                    WebResponse response = request.GetResponse();
+                                    StreamReader reader = new StreamReader(response.GetResponseStream());
+                                    string responseStringData = reader.ReadToEnd();
+                                    if (!string.IsNullOrEmpty(responseStringData))
+                                    {
+                                        XmlDocument xmlDoc = new XmlDocument();
+                                        xmlDoc.LoadXml(responseStringData);
+                                        string xpath = "DistanceMatrixResponse/row/element/distance/text";
+                                        XmlNode distance = xmlDoc.SelectSingleNode(xpath);
+                                        if (distance != null && !string.IsNullOrEmpty(distance.InnerText))
+                                        {
+                                            string actualDistance = distance.InnerText.Remove(distance.InnerText.IndexOf(" "));
+                                            if (!string.IsNullOrEmpty(actualDistance))
+                                            {
+                                                nearVendorFound = true;
+                                                serviceVendor.Distance = Convert.ToDecimal(actualDistance);
+                                            }
+                                        }
+
+                                        string durationXpath = "DistanceMatrixResponse/row/element/duration/text";
+                                        XmlNode duration = xmlDoc.SelectSingleNode(durationXpath);
+                                        if (duration != null && !string.IsNullOrEmpty(duration.InnerText))
+                                        {
+                                            serviceVendor.ETA = duration.InnerText;
+                                        }
                                     }
                                 }
                             }
                             else
                             {
                                 serviceVendor.Distance = -1;
+                                serviceVendor.IsEntireCityAccessible = false;
                             }
                         }
                     }
@@ -1738,8 +1763,7 @@ namespace Tasko.Services
                         }
 
                         vendors.AddRange(services.Where(i => i.VendorId != "2C086E5F59A0C44AAC70475E6613FF4E"));
-                        r.Data = vendors.Where(i => (i.Distance <= distanceCovered && i.Distance != -1) || i.VendorId == "2C086E5F59A0C44AAC70475E6613FF4E").ToList();
-
+                        r.Data = vendors.Where(i => (i.Distance <= distanceCovered && i.Distance != -1) || i.IsEntireCityAccessible).ToList();
                     }
                     else
                     {

@@ -21,5 +21,8 @@ namespace Tasko.Model
 
         [DataMember]
         public string ServiceName { get; set; }
+
+        [DataMember]
+        public string CityName { get; set; }
     }
 }

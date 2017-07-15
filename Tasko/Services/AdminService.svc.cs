@@ -1992,7 +1992,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = TokenHelper.ValidateToken();
+                bool isTokenValid = true;
                 if (isTokenValid)
                 {
                     List<City> cities = AdminData.GetCities(stateId);
@@ -2010,6 +2010,115 @@ namespace Tasko.Services
                         r.Status = 40;
                         r.Data = null;
                     }
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        public Response DeleteCities(List<string> cities)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = TokenHelper.ValidateToken();
+                if (isTokenValid)
+                {
+                    AdminData.DeleteCities(cities);
+                    r.Error = false;
+                    r.Status = 200;
+                    r.Message = CommonMessages.SUCCESS;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        public Response GetStates()
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = TokenHelper.ValidateToken(); ;
+                if (isTokenValid)
+                {
+                    List<State> states = AdminData.GetStates();
+                    if (states != null)
+                    {
+                        r.Error = false;
+                        r.Status = 200;
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Data = states;
+                    }
+                    else
+                    {
+                        r.Error = true;
+                        r.Message = "States not found";
+                        r.Status = 40;
+                        r.Data = null;
+                    }
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+        public Response DeleteStates(List<string> states)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = TokenHelper.ValidateToken();
+                if (isTokenValid)
+                {
+                    AdminData.DeleteStates(states);
+                    r.Error = false;
+                    r.Status = 200;
+                    r.Message = CommonMessages.SUCCESS;
                 }
                 else
                 {
@@ -2066,7 +2175,7 @@ namespace Tasko.Services
             return r;
         }
 
-        public Response GetRateCardsForCity(string cityId)
+        public Response GetRateCardsForCity(string cityId, string parentServiceId)
         {
             Response r = new Response();
             try
@@ -2074,7 +2183,7 @@ namespace Tasko.Services
                 bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
-                    List<RateCard> rateCards = AdminData.GetRateCardsForCity(cityId);
+                    List<RateCard> rateCards = AdminData.GetRateCardsForCity(cityId, parentServiceId);
                     if (rateCards != null)
                     {
                         r.Error = false;
@@ -2119,6 +2228,39 @@ namespace Tasko.Services
                 if (isTokenValid)
                 {
                     AdminData.UpdateRateCards(rateCards);
+                    r.Error = false;
+                    r.Status = 200;
+                    r.Message = CommonMessages.SUCCESS;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        public Response DeleteRateCards(List<string> rateCards)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = TokenHelper.ValidateToken();
+                if (isTokenValid)
+                {
+                    AdminData.DeleteRateCards(rateCards);
                     r.Error = false;
                     r.Status = 200;
                     r.Message = CommonMessages.SUCCESS;

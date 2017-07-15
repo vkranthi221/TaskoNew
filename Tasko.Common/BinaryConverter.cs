@@ -201,6 +201,9 @@ namespace Tasko.Common
 
                     case TaskoEnum.IdType.CityId:
                         throw new UserException("Invalid City Id");
+
+                    case TaskoEnum.IdType.RateCardId:
+                        throw new UserException("Rate Card Id");
                     default:
                         break;
                 }

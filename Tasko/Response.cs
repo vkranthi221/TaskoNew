@@ -62,6 +62,13 @@ namespace Tasko
     [KnownType(typeof(OfflineVendorRequest))]
     [KnownType(typeof(List<OfflineVendorRequest>))]
     [KnownType(typeof(VendorDocuments))]
+    [KnownType(typeof(List<Vendor>))]
+    [KnownType(typeof(State))]
+    [KnownType(typeof(List<State>))]
+    [KnownType(typeof(City))]
+    [KnownType(typeof(List<City>))]
+    [KnownType(typeof(RateCard))]
+    [KnownType(typeof(List<RateCard>))]
     public class Response
     {
         /// <summary>

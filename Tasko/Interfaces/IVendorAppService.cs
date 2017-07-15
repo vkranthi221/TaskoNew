@@ -922,5 +922,8 @@ namespace Tasko.Interfaces
            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response StoreVendorGCMUser(string name, string vendorId, string gcmRedId);
         #endregion
+
+        #region Social Media
+        #endregion
     }
 }

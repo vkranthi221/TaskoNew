@@ -1336,23 +1336,70 @@ namespace Tasko.Repository
                 BinaryConverter.IsValidGuid(stateId, TaskoEnum.IdType.StateId);
             }
 
-            objParameters.Add(SqlHelper.CreateParameter("@pStateId", DbType.String, BinaryConverter.ConvertStringToByte(stateId)));
-            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetCities", objParameters.ToArray());
+            if (string.IsNullOrEmpty(stateId))
+            {
+                IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetAllCities", objParameters.ToArray());
+                while (reader.Read())
+                {
+                    City city = new City();
+                    city.Id = BinaryConverter.ConvertByteToString((byte[])reader["ID"]);
+                    city.Name = reader["Name"].ToString();
+                    city.StateId = BinaryConverter.ConvertByteToString((byte[])reader["StateId"]);
+                    cities.Add(city);
+                }
+
+                reader.Close();
+            }
+            else
+            {
+                objParameters.Add(SqlHelper.CreateParameter("@pStateId", DbType.Binary, BinaryConverter.ConvertStringToByte(stateId)));
+                IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetCities", objParameters.ToArray());
+                while (reader.Read())
+                {
+                    City city = new City();
+                    city.Id = BinaryConverter.ConvertByteToString((byte[])reader["ID"]);
+                    city.Name = reader["Name"].ToString();
+                    city.StateId = BinaryConverter.ConvertByteToString((byte[])reader["StateId"]);
+                    cities.Add(city);
+                }
+
+                reader.Close();
+            }
+
+           
+            return cities.Count > 0 ? cities : null;
+        }
+
+        public static void DeleteCities(List<string> cities)
+        {
+            foreach (string city in cities)
+            {
+                List<SqlParameter> objParameters = new List<SqlParameter>();
+                BinaryConverter.IsValidGuid(city, TaskoEnum.IdType.CityId);
+                objParameters.Add(SqlHelper.CreateParameter("@pCityId", DbType.Binary, BinaryConverter.ConvertStringToByte(city)));
+                SqlHelper.ExecuteNonQuery("dbo.usp_DeleteCities", objParameters.ToArray());
+            }
+        }
+
+        public static List<State> GetStates()
+        {
+            List<State> states = new List<State>();
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetStates", objParameters.ToArray());
             while (reader.Read())
             {
-                City city = new City();
-                city.Id = BinaryConverter.ConvertByteToString((byte[])reader["ID"]);
-                city.Name = reader["Name"].ToString();
-                city.StateId = BinaryConverter.ConvertByteToString((byte[])reader["StateId"]);
-                cities.Add(city);
+                State state = new State();
+                state.Id = BinaryConverter.ConvertByteToString((byte[])reader["Id"]);
+                state.Name = reader["Name"].ToString();
+                states.Add(state);
             }
 
             reader.Close();
-            return cities.Count > 0 ? cities : null;
+            return states.Count > 0 ? states : null;
         }
         #endregion
 
-        #region Add Rate Card
+        #region Rate Card
         public static void AddRateCards(List<RateCard> rateCards)
         {
             foreach (RateCard rateCard in rateCards)
@@ -1367,7 +1414,7 @@ namespace Tasko.Repository
             }
         }
 
-        public static List<RateCard> GetRateCardsForCity(string cityId)
+        public static List<RateCard> GetRateCardsForCity(string cityId, string parentServiceId)
         {
             List<RateCard> rateCards = new List<RateCard>();
             List<SqlParameter> objParameters = new List<SqlParameter>();
@@ -1375,8 +1422,13 @@ namespace Tasko.Repository
             {
                 BinaryConverter.IsValidGuid(cityId, TaskoEnum.IdType.CityId);
             }
+            if (!string.IsNullOrEmpty(parentServiceId))
+            {
+                BinaryConverter.IsValidGuid(parentServiceId, TaskoEnum.IdType.ServiceId);
+            }
 
-            objParameters.Add(SqlHelper.CreateParameter("@pCityId", DbType.String, BinaryConverter.ConvertStringToByte(cityId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pCityId", DbType.Binary, BinaryConverter.ConvertStringToByte(cityId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pServiceId", DbType.Binary, BinaryConverter.ConvertStringToByte(parentServiceId)));
             IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetRateCardsForCity", objParameters.ToArray());
             while (reader.Read())
             {
@@ -1385,6 +1437,7 @@ namespace Tasko.Repository
                 rateCard.CityId = BinaryConverter.ConvertByteToString((byte[])reader["CityId"]);
                 rateCard.Price = Convert.ToDecimal(reader["AmountCharged"]);
                 rateCard.ServiceName = reader["ServiceName"].ToString();
+                rateCard.CityName = reader["CityName"].ToString();
                 rateCards.Add(rateCard);
             }
 
@@ -1405,7 +1458,29 @@ namespace Tasko.Repository
                 SqlHelper.ExecuteNonQuery("dbo.usp_UpdateRateCards", objParameters.ToArray());
             }
         }
-        
+
+        public static void DeleteRateCards(List<string> rateCards)
+        {
+            foreach (string rateCard in rateCards)
+            {
+                List<SqlParameter> objParameters = new List<SqlParameter>();
+                BinaryConverter.IsValidGuid(rateCard, TaskoEnum.IdType.RateCardId);
+                objParameters.Add(SqlHelper.CreateParameter("@pRateCardId", DbType.Binary, BinaryConverter.ConvertStringToByte(rateCard)));
+                SqlHelper.ExecuteNonQuery("dbo.usp_DeleteRateCards", objParameters.ToArray());
+            }
+        }
         #endregion
+
+
+        public static void DeleteStates(List<string> states)
+        {
+            foreach (string state in states)
+            {
+                List<SqlParameter> objParameters = new List<SqlParameter>();
+                BinaryConverter.IsValidGuid(state, TaskoEnum.IdType.StateId);
+                objParameters.Add(SqlHelper.CreateParameter("@pStateId", DbType.Binary, BinaryConverter.ConvertStringToByte(state)));
+                SqlHelper.ExecuteNonQuery("dbo.usp_DeleteStates", objParameters.ToArray());
+            }
+        }
     }
 }
