@@ -1992,7 +1992,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = true;
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     List<City> cities = AdminData.GetCities(stateId);
@@ -2257,7 +2257,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = TokenHelper.ValidateToken();
+                bool isTokenValid = true;
                 if (isTokenValid)
                 {
                     AdminData.DeleteRateCards(rateCards);
@@ -2270,6 +2270,171 @@ namespace Tasko.Services
                     r.Error = true;
                     r.Status = 400;
                     r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+        #endregion
+
+        #region Social Media
+        public Response GetPostDetails(string postId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = TokenHelper.ValidateToken();
+                SocialMediaPost post = null;
+                if (isTokenValid)
+                {
+                    post = AdminData.GetPostDetails(postId);
+                    r.Error = false;
+                    r.Status = 200;
+                    if (post != null)
+                    {
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Data = post;
+                    }
+                    else
+                    {
+                        r.Message = "Post not found";
+                    }
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        public Response GetPostReports(string postId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = TokenHelper.ValidateToken();
+                List<PostReport> reports = null;
+                if (isTokenValid)
+                {
+                    reports = AdminData.GetPostReports(postId);
+                    r.Error = false;
+                    r.Status = 200;
+                    if (reports != null)
+                    {
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Data = reports;
+                    }
+                    else
+                    {
+                        r.Message = "Reports not found";
+                    }
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        public Response GetPostLikes(string postId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = TokenHelper.ValidateToken();
+                List<PostLikes> likes = null;
+                if (isTokenValid)
+                {
+                    likes = AdminData.GetPostLikes(postId);
+                    r.Error = false;
+                    r.Status = 200;
+                    if (likes != null)
+                    {
+                        r.Message = CommonMessages.SUCCESS;
+                        r.Data = likes;
+                    }
+                    else
+                    {
+                        r.Message = "Likes not found";
+                    }
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        public Response GetAllPosts(short pageNumber, short recordsPerPage)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = TokenHelper.ValidateToken();
+                List<SocialMediaPost> posts = null;
+                if (isTokenValid)
+                {
+                    posts = AdminData.GetAllPosts(pageNumber, recordsPerPage);
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+
+                if (posts != null)
+                {
+                    r.Error = false;
+                    r.Message = CommonMessages.SUCCESS;
+                    r.Status = 200;
+                    r.Data = posts;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Message = string.IsNullOrEmpty(r.Message) ? "No Posts Available" : r.Message;
+                    r.Status = 400;
                 }
             }
             catch (UserException userException)

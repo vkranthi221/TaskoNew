@@ -1442,6 +1442,74 @@ namespace Tasko.Services
         }
         #endregion
 
+        #region Social Media
+        public Response UpdateCustomerLikeForPost(string postId, string customerId, bool isLiked)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = TokenHelper.ValidateToken();
+                if (isTokenValid)
+                {
+                    CustomerData.UpdateCustomerLikeForPost(postId, customerId, isLiked);
+                    r.Error = false;
+                    r.Message = CommonMessages.SUCCESS;
+                    r.Status = 200;
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                    r.Error = true;
+                    r.Status = 400;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        public Response ReportPost(string postId, string customerId, string reason, string comment)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = TokenHelper.ValidateToken();
+                if (isTokenValid)
+                {
+                    CustomerData.ReportPost(postId, customerId, reason, comment);
+                    r.Error = false;
+                    r.Message = CommonMessages.SUCCESS;
+                    r.Status = 200;
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                    r.Error = true;
+                    r.Status = 400;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+        #endregion
+
         #region Private Methods
         /// <summary>
         /// Internals the get otp.
@@ -1516,54 +1584,85 @@ namespace Tasko.Services
 
             if (gcmUser != null)
             {
-                string postData = "collapse_key=score_update&time_to_live=108&delay_while_idle=0&data.message=" + message +
-                                  "&data.time=" + System.DateTime.Now.ToString() +
-                                  "&registration_id=" + gcmUser.GcmRegId;
+                //string postData = "collapse_key=score_update&time_to_live=108&delay_while_idle=0&data.message=" + message +
+                  //                "&data.time=" + System.DateTime.Now.ToString() +
+                    //              "&registration_id=" + gcmUser.GcmRegId;
                 // MESSAGE CONTENT
-                byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+                //byte[] byteArray = Encoding.UTF8.GetBytes(postData);
 
                 // CREATE REQUEST
-                HttpWebRequest Request = (HttpWebRequest)WebRequest.Create("https://fcm.googleapis.com/fcm/send");
-                Request.Method = "post";
-                Request.KeepAlive = false;
-                Request.ContentType = " application/x-www-form-urlencoded;charset=UTF-8";
-                Request.Headers.Add(string.Format("Authorization: key={0}", apiKey));
+                //HttpWebRequest Request = (HttpWebRequest)WebRequest.Create("https://fcm.googleapis.com/fcm/send");
+                //Request.Method = "post";
+                //Request.KeepAlive = false;
+                //Request.ContentType = " application/x-www-form-urlencoded;charset=UTF-8";
+                //Request.Headers.Add(string.Format("Authorization: key={0}", apiKey));
                 ////Request.Headers.Add(string.Format("Sender: id={0}", senderId));
 
-                Request.ContentLength = byteArray.Length;
+                //Request.ContentLength = byteArray.Length;
 
-                Stream dataStream = Request.GetRequestStream();
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Close();
+                //Stream dataStream = Request.GetRequestStream();
+                //dataStream.Write(byteArray, 0, byteArray.Length);
+                //dataStream.Close();
 
-                // SEND MESSAGE
+                //var applicationID = "AIzaSyAyVxRCUPF1PYe8yS-18u4rOSs6IASxbzE";
+                //var deviceId = "AIzaSyAyVxRCUPF1PYe8yS-18u4rOSs6IASxbzE";
+                //string deviceId = "fUuUMUeUbOY:APA91bEdsr5xGNZGao6wKTi_rzCZriNOMl2bwyIjODmAH5M2Ml8hj7lLQX5oguKfErYUvfFlCBm1JBBC_2fjpKC9wQNRTinuH5KkpTcfCT775-fx-wzRhp-ojdsbIWwWvbzf14hjCqYS";
+                WebRequest tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");
+                tRequest.Method = "post";
+                tRequest.ContentType = "application/json";
+                var data = new
+                {
+                    to = gcmUser.GcmRegId,
+                    notification = new
+                    {
+                        body = message,
+                        title = "Tasko Notification",
+                    },
+                    priority = "high"
+                };
+
+                var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+                var json = serializer.Serialize(data);
+                Byte[] byteArray = Encoding.UTF8.GetBytes(json);
+                tRequest.Headers.Add(string.Format("Authorization: key={0}", apiKey));
+                tRequest.ContentLength = byteArray.Length;
                 try
                 {
-                    WebResponse Response = Request.GetResponse();
-                    HttpStatusCode ResponseCode = ((HttpWebResponse)Response).StatusCode;
-                    if (ResponseCode.Equals(HttpStatusCode.Unauthorized) || ResponseCode.Equals(HttpStatusCode.Forbidden))
+                    using (Stream dataStream = tRequest.GetRequestStream())
                     {
-                        r.Message = "Unauthorized - need new token";
-                        r.Error = true;
-                        r.Status = 400;
+                        dataStream.Write(byteArray, 0, byteArray.Length);
+                        using (WebResponse tResponse = tRequest.GetResponse())
+                        {
+                            //using (Stream dataStreamResponse = tResponse.GetResponseStream())
+                            //using (StreamReader tReader = new StreamReader(dataStreamResponse))
+                            //{
+                            //    String sResponseFromServer = tReader.ReadToEnd();
+                            //    //Response.Write(sResponseFromServer);
+                            //}
+                            HttpStatusCode ResponseCode = ((HttpWebResponse)tResponse).StatusCode;
+                            if (ResponseCode.Equals(HttpStatusCode.Unauthorized) || ResponseCode.Equals(HttpStatusCode.Forbidden))
+                            {
+                                r.Message = "Unauthorized - need new token";
+                                r.Error = true;
+                                r.Status = 400;
+                            }
+                            else if (!ResponseCode.Equals(HttpStatusCode.OK))
+                            {
+                                r.Message = CommonMessages.RESPONSE_WRONG;
+                                r.Error = true;
+                                r.Status = 400;
+                            }
+                            else
+                            {
+                                StreamReader Reader = new StreamReader(tResponse.GetResponseStream());
+                                r.Message = CommonMessages.SUCCESS;
+                                r.Error = false;
+                                r.Status = 200;
+                                r.Data = Reader.ReadToEnd();
+                                Reader.Close();
+                            }
+                        }
                     }
-                    else if (!ResponseCode.Equals(HttpStatusCode.OK))
-                    {
-                        r.Message = CommonMessages.RESPONSE_WRONG;
-                        r.Error = true;
-                        r.Status = 400;
-                    }
-                    else
-                    {
-                        StreamReader Reader = new StreamReader(Response.GetResponseStream());
-                        r.Message = CommonMessages.SUCCESS;
-                        r.Error = false;
-                        r.Status = 200;
-                        r.Data = Reader.ReadToEnd();
-                        Reader.Close();
-                    }
-
-                    return r;
                 }
                 catch (Exception e)
                 {
@@ -1571,6 +1670,42 @@ namespace Tasko.Services
                     r.Error = true;
                     r.Status = 400;
                 }
+
+                // SEND MESSAGE
+                //try
+                //{
+                //    WebResponse Response = Request.GetResponse();
+                //    HttpStatusCode ResponseCode = ((HttpWebResponse)Response).StatusCode;
+                //    if (ResponseCode.Equals(HttpStatusCode.Unauthorized) || ResponseCode.Equals(HttpStatusCode.Forbidden))
+                //    {
+                //        r.Message = "Unauthorized - need new token";
+                //        r.Error = true;
+                //        r.Status = 400;
+                //    }
+                //    else if (!ResponseCode.Equals(HttpStatusCode.OK))
+                //    {
+                //        r.Message = CommonMessages.RESPONSE_WRONG;
+                //        r.Error = true;
+                //        r.Status = 400;
+                //    }
+                //    else
+                //    {
+                //        StreamReader Reader = new StreamReader(Response.GetResponseStream());
+                //        r.Message = CommonMessages.SUCCESS;
+                //        r.Error = false;
+                //        r.Status = 200;
+                //        r.Data = Reader.ReadToEnd();
+                //        Reader.Close();
+                //    }
+
+                //    return r;
+                //}
+                //catch (Exception e)
+                //{
+                //    r.Message = "Error";
+                //    r.Error = true;
+                //    r.Status = 400;
+                //}
             }
             else
             {

@@ -204,6 +204,8 @@ namespace Tasko.Common
 
                     case TaskoEnum.IdType.RateCardId:
                         throw new UserException("Rate Card Id");
+                    case TaskoEnum.IdType.SocialMediaPostId:
+                        throw new UserException("Post Id");
                     default:
                         break;
                 }

@@ -8,23 +8,24 @@ using System.Threading.Tasks;
 namespace Tasko.Model
 {
     [DataContract]
-    public class RateCard
+    public class PostReport
     {
         [DataMember]
         public string Id { get; set; }
-        [DataMember]
-        public string ServiceId { get; set; }
 
         [DataMember]
-        public string CityId { get; set; }
+        public string CustomerId { get; set; }
 
         [DataMember]
-        public decimal Price { get; set; }
+        public string PostId { get; set; }
 
         [DataMember]
-        public string ServiceName { get; set; }
+        public string Reason { get; set; }
 
         [DataMember]
-        public string CityName { get; set; }
+        public string Comments { get; set; }
+
+        [DataMember]
+        public string ReportedDate { get; set; }
     }
 }

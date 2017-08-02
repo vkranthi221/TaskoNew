@@ -51,6 +51,8 @@
     <Compile Include="GcmUser.cs" />
     <Compile Include="MessageDetail.cs" />
     <Compile Include="OfflineVendorRequest.cs" />
+    <Compile Include="PostLikes.cs" />
+    <Compile Include="PostReport.cs" />
     <Compile Include="RateCard.cs" />
     <Compile Include="ServiceOverview.cs" />
     <Compile Include="DashboardMeter.cs" />
@@ -68,6 +70,8 @@
     <Compile Include="ServiceVendor.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="SocialMediaLikedCustomer.cs" />
+    <Compile Include="SocialMediaPost.cs" />
     <Compile Include="State.cs" />
     <Compile Include="User.cs" />
     <Compile Include="VendorDetails.cs" />

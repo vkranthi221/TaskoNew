@@ -987,5 +987,176 @@ namespace Tasko.Services
             return r;
         }
         #endregion
+
+        #region Social Media
+        public Response AddPost(SocialMediaPost post)
+        {
+            Response r = new Response();
+
+            try
+            {
+                bool isTokenValid = TokenHelper.ValidateToken();
+                if (isTokenValid)
+                {
+                    if (string.IsNullOrEmpty(VendorData.AddPost(post)))
+                    {
+                        r.Error = true;
+                        r.Status = 400;
+                        r.Message = "Post Already Exists";
+                    }
+                    else
+                    {
+                        r.Error = false;
+                        r.Status = 200;
+                        r.Message = CommonMessages.SUCCESS;
+                    }
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        public Response GetVendorPosts(string vendorId)
+        {
+            Response r = new Response();
+            try
+            {
+                bool isTokenValid = TokenHelper.ValidateToken();
+                List<SocialMediaPost> posts = null;
+                if (isTokenValid)
+                {
+                    posts = VendorData.GetVendorPosts(vendorId);
+                }
+                else
+                {
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+
+                if (posts != null)
+                {
+                    r.Error = false;
+                    r.Message = CommonMessages.SUCCESS;
+                    r.Status = 200;
+                    r.Data = posts;
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Message = string.IsNullOrEmpty(r.Message) ? "No Posts Available" : r.Message;
+                    r.Status = 400;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+        public Response UpdatePost(SocialMediaPost post)
+        {
+            Response r = new Response();
+
+            try
+            {
+                bool isTokenValid = TokenHelper.ValidateToken();
+                if (isTokenValid)
+                {
+                    if (string.IsNullOrEmpty(VendorData.AddPost(post)))
+                    {
+                        r.Error = true;
+                        r.Status = 400;
+                        r.Message = "Post Already Exists";
+                    }
+                    else
+                    {
+                        r.Error = false;
+                        r.Status = 200;
+                        r.Message = CommonMessages.SUCCESS;
+                    }
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+
+        public Response DeletePost(string postId)
+        {
+            Response r = new Response();
+
+            try
+            {
+                bool isTokenValid = TokenHelper.ValidateToken();
+                if (isTokenValid)
+                {
+                    if (string.IsNullOrEmpty(postId))
+                    {
+                        r.Error = true;
+                        r.Status = 400;
+                        r.Message = "Post ID Required";
+                    }
+                    else
+                    {
+                        VendorData.DeletePost(postId);
+                        r.Error = false;
+                        r.Status = 200;
+                        r.Message = CommonMessages.SUCCESS;
+                    }
+                }
+                else
+                {
+                    r.Error = true;
+                    r.Status = 400;
+                    r.Message = CommonMessages.INVALID_TOKEN_CODE;
+                }
+            }
+            catch (UserException userException)
+            {
+                r.Message = userException.Message;
+            }
+            catch (Exception ex)
+            {
+                r.Error = true;
+                r.Data = new ErrorDetails { Message = ex.Message, StackTrace = ex.StackTrace };
+            }
+
+            return r;
+        }
+        #endregion
     }
 }

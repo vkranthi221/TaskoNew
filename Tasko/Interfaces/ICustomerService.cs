@@ -1719,5 +1719,108 @@ namespace Tasko.Interfaces
         Response GetOfflineServiceVendors(string serviceId, string customerId, string latitude, string longitude);
 
         #endregion
+
+        #region Social Media
+        /**
+         * @api {post} c1/UpdateCustomerLikeForPost Updates if customer liked a post
+         * @apiName UpdateCustomerLikeForPost
+         * @apiGroup Customer
+         * 
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *     
+         * @apiParam {string} postId Post Id.         
+         * @apiParam {string} customerId Customer Id.
+         * @apiParam {bool} isLiked Customer Liked post or not.
+         *
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *    "postId": "Post Id" 
+         *    "customerId": "customer Id" 
+         *    "isLiked": true 
+         *  }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError INVALID_DETAILS Invalid Details.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Invalid Details",
+          "Status": 400
+        }
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response UpdateCustomerLikeForPost(string postId, string customerId, bool isLiked);
+
+        /**
+         * @api {post} c1/ReportPost Repots a post with a reason
+         * @apiName ReportPost
+         * @apiGroup Customer
+         * 
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *     
+         * @apiParam {string} postId Post Id.         
+         * @apiParam {string} customerId Customer Id.
+         * @apiParam {string} reason Reason for reporting.         
+         * @apiParam {string} comment Any comment.
+         *
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *    "postId": "Post Id" 
+         *    "customerId": "customer Id" 
+         *    "reason": "Reason for reporting" 
+         *    "comment": "Any comment" 
+         *  }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError INVALID_DETAILS Invalid Details.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Invalid Details",
+          "Status": 400
+        }
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response ReportPost(string postId, string customerId, string reason, string comment);
+        
+        #endregion
     }
 }

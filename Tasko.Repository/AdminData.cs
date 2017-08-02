@@ -1433,6 +1433,7 @@ namespace Tasko.Repository
             while (reader.Read())
             {
                 RateCard rateCard = new RateCard();
+                rateCard.Id = BinaryConverter.ConvertByteToString((byte[])reader["Id"]);
                 rateCard.ServiceId = BinaryConverter.ConvertByteToString((byte[])reader["ServiceId"]);
                 rateCard.CityId = BinaryConverter.ConvertByteToString((byte[])reader["CityId"]);
                 rateCard.Price = Convert.ToDecimal(reader["AmountCharged"]);
@@ -1469,7 +1470,6 @@ namespace Tasko.Repository
                 SqlHelper.ExecuteNonQuery("dbo.usp_DeleteRateCards", objParameters.ToArray());
             }
         }
-        #endregion
 
 
         public static void DeleteStates(List<string> states)
@@ -1481,6 +1481,123 @@ namespace Tasko.Repository
                 objParameters.Add(SqlHelper.CreateParameter("@pStateId", DbType.Binary, BinaryConverter.ConvertStringToByte(state)));
                 SqlHelper.ExecuteNonQuery("dbo.usp_DeleteStates", objParameters.ToArray());
             }
+        }
+        #endregion
+
+        #region Social Media
+        public static SocialMediaPost GetPostDetails(string postId)
+        {
+            SocialMediaPost post = null;
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            BinaryConverter.IsValidGuid(postId, TaskoEnum.IdType.UserId);
+            objParameters.Add(SqlHelper.CreateParameter("@pPostId", DbType.Binary, BinaryConverter.ConvertStringToByte(postId)));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetPostDetails", objParameters.ToArray());
+
+            if (reader.Read())
+            {
+                post = new SocialMediaPost();
+                post.Id = BinaryConverter.ConvertByteToString((byte[])reader["ID"]);
+                post.Message = reader["MESSAGE"].ToString();
+                post.Views = Convert.ToInt32(reader["VIEWS"]);
+                post.Likes = Convert.ToInt32(reader["LIKES"]);
+                post.ImageUrls = new List<string>();
+                objParameters = new List<SqlParameter>();
+                objParameters.Add(SqlHelper.CreateParameter("@pPostId", DbType.Binary, BinaryConverter.ConvertStringToByte(post.Id)));
+                DataTable urlDatatable = SqlHelper.GetDataTable("dbo.usp_GetVendorPostsURL", objParameters.ToArray());
+                if (urlDatatable != null && urlDatatable.Rows.Count > 0)
+                {
+                    foreach (DataRow urlRow in urlDatatable.Rows)
+                    {
+                        post.ImageUrls.Add(urlRow["IMAGEURL"].ToString());
+                    }
+                }
+
+            }
+
+            reader.Close();
+
+            return post;
+        }
+       
+
+        public static List<PostReport> GetPostReports(string postId)
+        {
+             List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            BinaryConverter.IsValidGuid(postId, TaskoEnum.IdType.SocialMediaPostId);
+            objParameters.Add(SqlHelper.CreateParameter("@pPostId", DbType.Binary, BinaryConverter.ConvertStringToByte(postId)));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetPostReports", objParameters.ToArray());
+            List<PostReport> reports = new List<PostReport>();
+
+            while (reader.Read())
+            {
+                PostReport report = new PostReport();
+                report.Id = BinaryConverter.ConvertByteToString((byte[])reader["ID"]);
+                report.CustomerId = BinaryConverter.ConvertByteToString((byte[])reader["CUSTOMER_ID"]);
+                report.PostId = BinaryConverter.ConvertByteToString((byte[])reader["POST_ID"]);
+                report.ReportedDate = Convert.ToDateTime(reader["REPORTED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+                report.Reason = reader["REASON"].ToString();
+                report.Comments = reader["COMMENT"].ToString();
+                reports.Add(report);
+            }
+
+            reader.Close();
+
+            return reports.Count > 0 ? reports : null;
+        }
+        
+        public static List<PostLikes> GetPostLikes(string postId)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            BinaryConverter.IsValidGuid(postId, TaskoEnum.IdType.SocialMediaPostId);
+            objParameters.Add(SqlHelper.CreateParameter("@pPostId", DbType.Binary, BinaryConverter.ConvertStringToByte(postId)));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_GetPostLikes", objParameters.ToArray());
+            List<PostLikes> likes = new List<PostLikes>();
+
+            while (reader.Read())
+            {
+                PostLikes like = new PostLikes();
+                like.CustomerId = BinaryConverter.ConvertByteToString((byte[])reader["CUSTOMERID"]);
+                like.LikedDate = Convert.ToDateTime(reader["LIKED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+                like.CustomerName = reader["NAME"].ToString();
+                likes.Add(like);
+            }
+
+            reader.Close();
+
+            return likes.Count > 0 ? likes : null;
+        }
+        #endregion
+
+        public static List<SocialMediaPost> GetAllPosts(short pageNumber, short recordsPerPage)
+        {
+            List<SocialMediaPost> posts = new List<SocialMediaPost>();
+
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pPageNo", DbType.Int16, pageNumber));
+            objParameters.Add(SqlHelper.CreateParameter("@pRecordsPerPage", DbType.Int16, recordsPerPage));
+            DataTable datatable = SqlHelper.GetDataTable("dbo.usp_GetAllPosts", objParameters.ToArray());
+            if (datatable != null && datatable.Rows.Count > 0)
+            {
+                foreach (DataRow row in datatable.Rows)
+                {
+                    SocialMediaPost post = new SocialMediaPost();
+                    post.Id = BinaryConverter.ConvertByteToString((byte[])row["ID"]);
+                    post.Message = row["MESSAGE"].ToString();
+                    post.Views = Convert.ToInt32(row["VIEWS"]);
+                    post.Likes = Convert.ToInt32(row["LIKES"]);
+                    if (row["POSTED_DATE"] != DBNull.Value)
+                    {
+                        post.PostedDate = Convert.ToDateTime(row["POSTED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+                    }
+                    post.VendorName = row["NAME"].ToString();
+                    posts.Add(post);
+                }
+            }
+
+            return posts;
         }
     }
 }

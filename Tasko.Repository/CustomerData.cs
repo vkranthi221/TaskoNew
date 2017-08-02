@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using Tasko.Common;
 using Tasko.Model;
 
@@ -72,7 +73,7 @@ namespace Tasko.Repository
                     objOrder.IsOffline = Convert.ToBoolean(ObjOrderInfo.Rows[0]["IS_OFFLINE"]);
                 }
 
-                
+
                 if (dataSet.Tables[1] != null && dataSet.Tables[1].Rows.Count > 0)
                 {
                     //// Get the source Address
@@ -190,7 +191,7 @@ namespace Tasko.Repository
                 }
             }
 
-            return services.OrderBy(i=>i.Name).ToList();
+            return services.OrderBy(i => i.Name).ToList();
         }
 
         /// <summary>
@@ -733,7 +734,7 @@ namespace Tasko.Repository
 
             bool isvalid = false;
             if (reader.Read())
-            {   
+            {
                 isvalid = (bool)reader["IsValid"];
             }
 
@@ -798,7 +799,7 @@ namespace Tasko.Repository
                 {
                     logininfo = new LoginInfo();
                     logininfo.TokenId = BinaryConverter.ConvertByteToString((byte[])reader["AUTH_CODE"]);
-                    logininfo.UserId = BinaryConverter.ConvertByteToString((byte[])reader["USERID"]);                   
+                    logininfo.UserId = BinaryConverter.ConvertByteToString((byte[])reader["USERID"]);
                 }
             }
 
@@ -826,7 +827,7 @@ namespace Tasko.Repository
                 objCustomer.Name = reader["NAME"].ToString();
                 objCustomer.MobileNumber = reader["MOBILE_NUMBER"].ToString();
                 objCustomer.EmailAddress = Convert.ToString(reader["EMAIL_ADDRESS"]);
-                objCustomer.RegisteredDate = Convert.ToDateTime(reader["REGISTERED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");                
+                objCustomer.RegisteredDate = Convert.ToDateTime(reader["REGISTERED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
             }
 
             reader.Close();
@@ -924,7 +925,7 @@ namespace Tasko.Repository
             reader.Close();
 
             return phone;
-        }       
+        }
 
         public static void SaveOfflineVendorRequest(string customerId, string serviceId, string area)
         {
@@ -946,5 +947,136 @@ namespace Tasko.Repository
             objParameters.Add(SqlHelper.CreateParameter("@pCustomerETA", DbType.String, customerETA));
             SqlHelper.ExecuteNonQuery("dbo.usp_UpdateCustomerOrder", objParameters.ToArray());
         }
+
+        #region Social Media
+        public static void UpdateCustomerLikeForPost(string postId, string customerId, bool isLiked)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pPostId", DbType.Binary, BinaryConverter.ConvertStringToByte(postId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pIsLiked", DbType.Boolean, isLiked));
+            SqlHelper.ExecuteNonQuery("dbo.usp_UpdateCustomerLikeForPost", objParameters.ToArray());
+        }
+
+        public static void ReportPost(string postId, string customerId, string reason, string comment)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pPostId", DbType.Binary, BinaryConverter.ConvertStringToByte(postId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pCustomerId", DbType.Binary, BinaryConverter.ConvertStringToByte(customerId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pReason", DbType.String, reason));
+            objParameters.Add(SqlHelper.CreateParameter("@pComment", DbType.String, comment));
+            SqlHelper.ExecuteNonQuery("dbo.usp_ReportPost", objParameters.ToArray());
+        }
+        #endregion
+
+        //public static void Test()
+        //{
+        //    string serviceId = "9908FBC6FD4C9F459F2D1631F40E4938";
+        //    string customerId = "002722397B7BC942B02C141CDF780E46";
+        //    bool isOnline = false;
+        //    decimal distanceCovered = 10;
+        //    string latitude = "17.4834";
+        //    string longitude = "78.3871";
+        //    List<ServiceVendor> services = null;
+        //    services = CustomerData.GetServiceVendors(serviceId, customerId);
+        //    bool nearVendorFound = false;
+        //    if (services != null)
+        //    {
+        //        foreach (ServiceVendor serviceVendor in services)
+        //        {
+        //            decimal vendorLatitude = 0;
+        //            decimal vendorLongitude = 0;
+        //            if (isOnline)
+        //            {
+        //                vendorLatitude = serviceVendor.Latitude;
+        //                vendorLongitude = serviceVendor.Longitude;
+        //            }
+        //            else
+        //            {
+        //                vendorLatitude = serviceVendor.HomeLatitude;
+        //                vendorLongitude = serviceVendor.HomeLongitude;
+        //            }
+
+        //            // This means that vendor is logged out. So we are updating his distance to negative value.
+        //            if (vendorLatitude != 0 && vendorLongitude != 0)
+        //            {
+        //                if (serviceVendor.IsEntireCityAccessible)
+        //                {
+        //                    XmlDocument xDoc = new XmlDocument();
+        //                    xDoc.Load("https://maps.googleapis.com/maps/api/geocode/xml?latlng=" + latitude + "," + longitude + "&sensor=false");
+
+        //                    XmlNodeList xNodelst = xDoc.GetElementsByTagName("result");
+        //                    XmlNode xNode = xNodelst.Item(0);
+        //                    //string adress = xNode.SelectSingleNode("formatted_address").InnerText;
+        //                    //string area = xNode.SelectSingleNode("address_component[3]/long_name").InnerText;
+        //                    string customerCity = xNode.SelectSingleNode("address_component[4]/long_name").InnerText;
+        //                    if (string.IsNullOrEmpty(customerCity) || string.IsNullOrEmpty(serviceVendor.VendorCity) || customerCity.ToLower() != serviceVendor.VendorCity.ToLower())
+        //                    {
+        //                        // setting this to false so that this vendor will not be returned. we are not saving in the db. this is just a temp change to restrict him from returning
+        //                        serviceVendor.IsEntireCityAccessible = false;
+        //                    }
+        //                    else
+        //                    {
+        //                        nearVendorFound = true;
+        //                    }
+        //                    //string district = xNode.SelectSingleNode("address_component[5]/long_name").InnerText;
+        //                }
+        //                else
+        //                {
+        //                    string requestUri = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" + latitude + "," + longitude + "&destinations=" + vendorLatitude + "," + vendorLongitude;
+
+        //                    WebRequest request = HttpWebRequest.Create(requestUri);
+        //                    WebResponse response = request.GetResponse();
+        //                    StreamReader reader = new StreamReader(response.GetResponseStream());
+        //                    string responseStringData = reader.ReadToEnd();
+        //                    if (!string.IsNullOrEmpty(responseStringData))
+        //                    {
+        //                        XmlDocument xmlDoc = new XmlDocument();
+        //                        xmlDoc.LoadXml(responseStringData);
+        //                        string xpath = "DistanceMatrixResponse/row/element/distance/text";
+        //                        XmlNode distance = xmlDoc.SelectSingleNode(xpath);
+        //                        if (distance != null && !string.IsNullOrEmpty(distance.InnerText))
+        //                        {
+        //                            string actualDistance = distance.InnerText.Remove(distance.InnerText.IndexOf(" "));
+        //                            if (!string.IsNullOrEmpty(actualDistance))
+        //                            {
+        //                                nearVendorFound = true;
+        //                                serviceVendor.Distance = Convert.ToDecimal(actualDistance);
+        //                            }
+        //                        }
+
+        //                        string durationXpath = "DistanceMatrixResponse/row/element/duration/text";
+        //                        XmlNode duration = xmlDoc.SelectSingleNode(durationXpath);
+        //                        if (duration != null && !string.IsNullOrEmpty(duration.InnerText))
+        //                        {
+        //                            serviceVendor.ETA = duration.InnerText;
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //            else
+        //            {
+        //                serviceVendor.Distance = -1;
+        //                serviceVendor.IsEntireCityAccessible = false;
+        //            }
+        //        }
+        //    }
+
+        //    if (nearVendorFound)
+        //    {
+        //        List<ServiceVendor> vendors = new List<ServiceVendor>();
+        //        if (services.Any(i => i.VendorId == "2C086E5F59A0C44AAC70475E6613FF4E"))
+        //        {
+        //            vendors.Add(services.FirstOrDefault(i => i.VendorId == "2C086E5F59A0C44AAC70475E6613FF4E"));
+        //        }
+
+        //        vendors.AddRange(services.Where(i => i.VendorId != "2C086E5F59A0C44AAC70475E6613FF4E"));
+        //       List<ServiceVendor> vendorss =  vendors.Where(i => (i.Distance <= distanceCovered && i.Distance != -1) || i.IsEntireCityAccessible).ToList();
+        //        if(vendorss != null)
+        //        {
+
+        //        }
+        //    }
+        //}
     }
 }

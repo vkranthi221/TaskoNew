@@ -924,6 +924,218 @@ namespace Tasko.Interfaces
         #endregion
 
         #region Social Media
+
+        /**
+         * @api {post} v1/AddPost Add Social Media Post
+         * @apiName AddPost
+         * @apiGroup Vendor
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
+         * @apiParam {SocialMediaPost} Social Media Post.
+         *
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *     "post": 
+         *       {
+         *         "Message":"Post Message",
+         *         "VendorId":"Vendor id"
+         *         "ImageUrls": [
+         *           {
+         *             "F4878463A2FF5043BF3763F8AA913DE1",
+         *             "F4878463A2FF5043BF3763F8AA913DE1"
+         *           }
+         *         ]
+         *       }
+         *  }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError Invalid Token Code
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Invalid Token Code",
+          "Status": 400
+        }
+         */
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response AddPost(SocialMediaPost post);
+
+        /**
+         * @api {post} v1/GetVendorPosts Gets Vendor Posts
+         * @apiName GetVendorPosts
+         * @apiGroup Vendor
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} Content-Type application/json
+         * @apiHeader {string} User_Id User Id
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "Content-Type": "application/json"
+         *    "User_Id": "Logged in User ID",
+         *  }
+         *  
+         * @apiParam {String} vendorId Vendor Id.     
+         * 
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *    "vendorId": "Vendor Id " 
+         *  }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": [
+                    {
+                       "__type": "SocialMediaPost:#Tasko.Model",
+                      "Id": "Id",
+                      "Message":"Post Message",
+                      "VendorId":"Vendor id",
+                      "Views":"10",
+                      "PostedDate":"date",
+                      "ImageUrls": [
+                        {
+                          "F4878463A2FF5043BF3763F8AA913DE1",
+                          "F4878463A2FF5043BF3763F8AA913DE1"
+                        }
+                      ]
+                    }
+                 ]
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError NO_POSTS_AVAILABLE No posts available.
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "No services available",
+          "Status": 400
+        }
+         */
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetVendorPosts(string vendorId);
+
+        /**
+         * @api {post} v1/UpdatePost Update Social Media Post
+         * @apiName UpdatePost
+         * @apiGroup Vendor
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
+         * @apiParam {SocialMediaPost} Social Media Post.
+         *
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *     "post": 
+         *       {
+         *         "Id": "Id",
+         *         "Message":"Post Message",
+         *         "VendorId":"Vendor id"
+         *         "ImageUrls": [
+         *           {
+         *             "F4878463A2FF5043BF3763F8AA913DE1",
+         *             "F4878463A2FF5043BF3763F8AA913DE1"
+         *           }
+         *         ]
+         *       }
+         *  }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError Invalid Token Code
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Invalid Token Code",
+          "Status": 400
+        }
+         */
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response UpdatePost(SocialMediaPost post);
+
+        /**
+         * @api {post} v1/DeletePost Delete Social Media Post
+         * @apiName DeletePost
+         * @apiGroup Vendor
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *    
+         * @apiParam {string} PostId.
+         *
+         * @apiParamExample {json} Param-Example:
+         *  {
+         *     "postId": "Post Id"
+         *  }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+          "Data": null,
+          "Error": false,
+          "Message": "Success",
+          "Status": 200
+        }
+         * @apiError Invalid Token Code
+         *
+         * @apiErrorExample Error-Response:
+         {
+          "Data": null,
+          "Error": true,
+          "Message": "Invalid Token Code",
+          "Status": 400
+        }
+         */
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+        BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response DeletePost(string postId);
         #endregion
     }
 }

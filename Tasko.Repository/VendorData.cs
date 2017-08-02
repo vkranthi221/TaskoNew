@@ -248,7 +248,7 @@ namespace Tasko.Repository
         /// Gets the vendor sub services.
         /// </summary>
         /// <param name="vendorServiceId">The vendor service identifier.</param>
-        /// <returns>list of vendor sub services</returns>
+        /// <returns>list of vendor sub services</returns>d
         public static List<VendorService> GetVendorSubServices(string vendorServiceId)
         {
             List<VendorService> vendorServices = new List<VendorService>();
@@ -765,6 +765,106 @@ namespace Tasko.Repository
 
             reader.Close();
             return userId;
+        }
+        #endregion
+
+        #region Social Media
+
+        public static string AddPost(SocialMediaPost post)
+        {
+            string postId = string.Empty;
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pMessage", DbType.String, post.Message));
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(post.VendorId)));
+            IDataReader reader = SqlHelper.GetDataReader("dbo.usp_AddPost", objParameters.ToArray());
+            while (reader.Read())
+            {
+                if (reader["ID"] is System.DBNull)
+                {
+                    postId = string.Empty;
+                }
+                else
+                {
+                    postId = BinaryConverter.ConvertByteToString((byte[])reader["ID"]);
+                }
+            }
+
+            if(!string.IsNullOrEmpty(postId))
+            {
+                foreach (string url in post.ImageUrls)
+                {
+                    objParameters = new List<SqlParameter>();
+                    objParameters.Add(SqlHelper.CreateParameter("@pImageURL", DbType.String, url));
+                    objParameters.Add(SqlHelper.CreateParameter("@pPostId", DbType.Binary, BinaryConverter.ConvertStringToByte(postId)));
+                    SqlHelper.ExecuteNonQuery("dbo.usp_AddPostURL", objParameters.ToArray());
+                }
+            }
+
+            reader.Close();
+
+            return postId;
+        }
+
+        public static List<SocialMediaPost> GetVendorPosts(string vendorId)
+        {
+            List<SocialMediaPost> posts = new List<SocialMediaPost>();
+
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+
+            BinaryConverter.IsValidGuid(vendorId, TaskoEnum.IdType.VendorId);
+            objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
+            DataTable datatable = SqlHelper.GetDataTable("dbo.usp_GetVendorPosts", objParameters.ToArray());
+            if (datatable != null && datatable.Rows.Count > 0)
+            {
+                foreach (DataRow row in datatable.Rows)
+                {
+                    SocialMediaPost post = new SocialMediaPost();
+                    post.Id = BinaryConverter.ConvertByteToString((byte[])row["ID"]);
+                    post.Message = row["MESSAGE"].ToString();
+                    post.Views = Convert.ToInt32(row["VIEWS"]);
+                    post.Likes = Convert.ToInt32(row["LIKES"]);
+                    post.ImageUrls = new List<string>();
+                    post.PostedDate = Convert.ToDateTime(row["POSTED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+                    objParameters = new List<SqlParameter>();
+                    objParameters.Add(SqlHelper.CreateParameter("@pPostId", DbType.Binary, BinaryConverter.ConvertStringToByte(post.Id)));
+                    DataTable urlDatatable = SqlHelper.GetDataTable("dbo.usp_GetVendorPostsURL", objParameters.ToArray());
+                    if (urlDatatable != null && urlDatatable.Rows.Count > 0)
+                    {
+                        foreach (DataRow urlRow in urlDatatable.Rows)
+                        {
+                            post.ImageUrls.Add(urlRow["IMAGEURL"].ToString());
+                        }
+                    }
+
+                    posts.Add(post);
+                }
+            }
+
+            return posts;
+        }
+
+        public static void UpdatePost(SocialMediaPost post)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pMessage", DbType.String, post.Message));
+            objParameters.Add(SqlHelper.CreateParameter("@pViews", DbType.Int32, post.Views));
+            objParameters.Add(SqlHelper.CreateParameter("@pPostId", DbType.Binary, BinaryConverter.ConvertStringToByte(post.Id)));
+            // this sp will update the posts and delete the url. we will add them again.
+            SqlHelper.ExecuteNonQuery("dbo.usp_UpdatePost", objParameters.ToArray());
+            foreach (string url in post.ImageUrls)
+            {
+                objParameters = new List<SqlParameter>();
+                objParameters.Add(SqlHelper.CreateParameter("@pImageURL", DbType.String, url));
+                objParameters.Add(SqlHelper.CreateParameter("@pPostId", DbType.Binary, BinaryConverter.ConvertStringToByte(post.Id)));
+                SqlHelper.ExecuteNonQuery("dbo.usp_AddPostURL", objParameters.ToArray());
+            }
+        }
+
+        public static void DeletePost(string postId)
+        {
+            List<SqlParameter> objParameters = new List<SqlParameter>();
+            objParameters.Add(SqlHelper.CreateParameter("@pPostId", DbType.Binary, BinaryConverter.ConvertStringToByte(postId)));
+            SqlHelper.ExecuteNonQuery("dbo.usp_DeletePost", objParameters.ToArray());
         }
         #endregion
     }

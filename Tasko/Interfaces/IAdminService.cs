@@ -2946,6 +2946,7 @@ namespace Tasko.Interfaces
            "Data": [
                     {
                       "__type": "RateCard:#Tasko.Model",
+                      "Id": "Rate card Id"
                       "ServiceName": "Plumber",
                       "ServiceId":"AFB2B50F2164804C8E6D26A6C4A32982",
                       "Price": "100",
@@ -3072,6 +3073,229 @@ namespace Tasko.Interfaces
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         Response DeleteRateCards(List<string> rateCards);
+        #endregion
+
+        #region Social Media
+        /**
+         * @api {post} a1/GetPostDetails Gets the current post details
+         * @apiName GetPostDetails
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *  
+         *  @apiParam {string} postId Post Id.
+         *
+         * @apiParamExample {json} Param-Example:
+         * { 
+         *   "postId":"AFB2B50F2164804C8E6D26A6C4A32982",
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+           "Data": 
+                        {
+                          "__type": "SocialMediaPost:#Tasko.Model",
+                              "Id": "Id",
+                              "Message":"Post Message",
+                              "VendorId":"Vendor id"
+                              "ImageUrls": [
+                                {
+                                  "F4878463A2FF5043BF3763F8AA913DE1",
+                                  "F4878463A2FF5043BF3763F8AA913DE1"
+                                }
+                              ]
+                         },
+                  "Error": false,
+                  "Message": "Success",
+                  "Status": 200
+         }
+         * @apiError POST_NOT_FOUND Post not found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Post not found",
+            "Status": 400
+          }        
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetPostDetails(string postId);
+
+        /**
+         * @api {post} a1/GetPostDetails Gets the current post details
+         * @apiName GetPostDetails
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *  
+         *  @apiParam {string} postId Post Id.
+         *
+         * @apiParamExample {json} Param-Example:
+         * { 
+         *   "postId":"AFB2B50F2164804C8E6D26A6C4A32982",
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+           "Data": 
+                        {
+                          "__type": "SocialMediaPost:#Tasko.Model",
+                              "Id": "Id",
+                              "Message":"Post Message",
+                              "VendorId":"Vendor id"
+                              "ImageUrls": [
+                                {
+                                  "F4878463A2FF5043BF3763F8AA913DE1",
+                                  "F4878463A2FF5043BF3763F8AA913DE1"
+                                }
+                              ]
+                         },
+                  "Error": false,
+                  "Message": "Success",
+                  "Status": 200
+         }
+         * @apiError POST_NOT_FOUND Post not found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Post not found",
+            "Status": 400
+          }        
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetPostReports(string postId);
+
+        /**
+         * @api {post} a1/GetPostLikes Gets the details of customers who liked post
+         * @apiName GetPostLikes
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         *  
+         *  @apiParam {string} postId Post Id.
+         *
+         * @apiParamExample {json} Param-Example:
+         * { 
+         *   "postId":"AFB2B50F2164804C8E6D26A6C4A32982",
+         * }
+         *
+         * @apiSuccessExample Success-Response:
+         {
+           "Data": 
+                        {
+                          "__type": "PostLikes:#Tasko.Model",
+                              "CustomerId": "Id",
+                              "CustomerName":"Test Customer",
+                              "LikedDate":"Date Liked"
+                         },
+                  "Error": false,
+                  "Message": "Success",
+                  "Status": 200
+         }
+         * @apiError LIKES_NOT_FOUND Likes not found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Likes not found",
+            "Status": 400
+          }        
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetPostLikes(string postId);
+
+        /**
+         * @api {post} a1/GetAllPosts Gets All posts
+         * @apiName GetAllPosts
+         * @apiGroup Admin
+         *
+         * @apiHeader {string} Token_Code Token Code
+         * @apiHeader {string} User_Id User Id
+         * @apiHeader {string} Content-Type application/json
+         * 
+         * @apiHeaderExample {json} Header-Example:
+         *  {
+         *    "Token_Code": "Unique Token code that is generated after login" ,
+         *    "User_Id": "Logged in User ID",
+         *    "Content-Type": "application/json"
+         *  }
+         * @apiParam {int} pageNumber Page Number.
+         * 
+         * @apiParam {int} recordsPerPage Records Per Page.
+         *
+         * @apiParamExample {json} Param-Example:
+         * {
+         *  "pageNumber":"",
+         *  "recordsPerPage":""
+         * }
+         * @apiSuccessExample Success-Response:
+         {
+           "Data": [
+                    {
+                       "__type": "SocialMediaPost:#Tasko.Model",
+                      "Id": "Id",
+                      "Message":"Post Message",
+                      "VendorName":"Test Vendor",
+                      "Views":"10",
+                       "Likes":"100",
+                      "PostedDate":"date",
+                    }
+                 ],
+                  "Error": false,
+                  "Message": "Success",
+                  "Status": 200
+         }
+         * @apiError LIKES_NOT_FOUND Likes not found.
+         *
+         * @apiErrorExample Error-Response:
+         {
+            "Data": null,
+            "Error": true,
+            "Message": "Likes not found",
+            "Status": 400
+          }        
+         */
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        Response GetAllPosts(short pageNumber, short recordsPerPage);
         #endregion
     }
 }

@@ -69,6 +69,15 @@ namespace Tasko
     [KnownType(typeof(List<City>))]
     [KnownType(typeof(RateCard))]
     [KnownType(typeof(List<RateCard>))]
+    [KnownType(typeof(SocialMediaPost))]
+    [KnownType(typeof(List<SocialMediaPost>))]
+    [KnownType(typeof(SocialMediaLikedCustomer))]
+    [KnownType(typeof(List<SocialMediaLikedCustomer>))]
+    [KnownType(typeof(PostReport))]
+    [KnownType(typeof(List<PostReport>))]
+    [KnownType(typeof(PostLikes))]
+    [KnownType(typeof(List<PostLikes>))]
+    
     public class Response
     {
         /// <summary>
