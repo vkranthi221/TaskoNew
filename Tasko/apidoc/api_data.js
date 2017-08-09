@@ -1,6 +1,98 @@
 define({ "api": [
   {
     "type": "post",
+    "url": "a1/AddCities",
+    "title": "Add Cities",
+    "name": "AddCities",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Service",
+            "optional": false,
+            "field": "service",
+            "description": "<p>Service Info.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n\"cities\": [\n          {\n            \"Name\": \"Hyderabad\",\n            \"StateId\": \"F4878463A2FF5043BF3763F8AA913DE1\",\n          }\n        ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
     "url": "a1/AddPayment",
     "title": "Add Payment",
     "name": "AddPayment",
@@ -93,6 +185,98 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "a1/AddRateCards",
+    "title": "Add Rate Cards",
+    "name": "AddRateCards",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Service",
+            "optional": false,
+            "field": "service",
+            "description": "<p>Service Info.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n\"rateCards\": [\n          {\n            \"Price\": \"100\",\n            \"ServiceId\": \"F4878463A2FF5043BF3763F8AA913DE1\",\n            \"CityId\" : \"F4878463A2FF5043BF3763F8AA913DE1\"\n          }\n        ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
     "url": "a1/AddService",
     "title": "Add Service",
     "name": "AddService",
@@ -147,6 +331,98 @@ define({ "api": [
         {
           "title": "Param-Example:",
           "content": "{ \n  \"service\":\n  {   \n    \"Name\": \"AC Service\",\n    \"ParentServiceId\": \"\",\n    \"ImageURL\": \"http://api.tasko.in/serviceimages/ac_services.png\",\n    \"Status\": \"0\"\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/AddState",
+    "title": "Add State",
+    "name": "AddState",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Service",
+            "optional": false,
+            "field": "service",
+            "description": "<p>Service Info.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n  \"state\":\n  {   \n    \"Name\": \"Telangana\",\n  }\n}",
           "type": "json"
         }
       ]
@@ -376,6 +652,190 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "a1/DeleteCities",
+    "title": "Delete Cities",
+    "name": "DeleteCities",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Service",
+            "optional": false,
+            "field": "service",
+            "description": "<p>Service Info.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n\"cities\": [\n          {\n            \"Id\": \"F4878463A2FF5043BF3763F8AA913DE1\"\n          }\n        ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/DeleteRateCards",
+    "title": "Delete Rate Cards",
+    "name": "DeleteRateCards",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Service",
+            "optional": false,
+            "field": "service",
+            "description": "<p>Service Info.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n\"rateCards\": [\n          {\n            \"Id\": \"F4878463A2FF5043BF3763F8AA913DE1\"\n          }\n        ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
     "url": "a1/DeleteService",
     "title": "Delete Service",
     "name": "DeleteService",
@@ -469,6 +929,98 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Unable to delete the Service as it is in Use\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/DeleteStates",
+    "title": "Delete States",
+    "name": "DeleteStates",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Service",
+            "optional": false,
+            "field": "service",
+            "description": "<p>Service Info.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n\"states\": [\n          {\n            \"Id\": \"F4878463A2FF5043BF3763F8AA913DE1\"\n          }\n        ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
@@ -708,31 +1260,11 @@ define({ "api": [
         }
       ]
     },
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "complaintStatus",
-            "description": "<p>Complaint status where 0 refers to all complaints.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Param-Example:",
-          "content": "{\n      {\n                  \"complaintStatus\": 1\n                }\n}",
-          "type": "json"
-        }
-      ]
-    },
     "success": {
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"Complaint:#Tasko.Model\",\n              \"ComplaintChats\": null,\n              \"ComplaintId\": \"Complaint#1000\",\n              \"ComplaintStatus\": 0,\n              \"DueDate\": null,\n              \"LoggedDate\": \"2016-07-16 07:16:28\",\n              \"OrderId\": null,\n              \"Title\": \"Test\"\n            }\n          ],\n          \"Error\": false,\n          \"Message\": \"Success\",\n          \"Status\": 200\n}",
+          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"GcmUser:#Tasko.Model\",\n              \"CustomerId\": \"F3E6D9CBF8EF6A4289E1FC3509076D54\",\n              \"GcmId\": \"995FB41FF15F374398985802AF9E0CD5\",\n              \"GcmRegId\": \"APA91bEvA_MLQBs27lR24U_dEXkBoxL5K5VL5l2BkkVoi_6axHy8tEQvEBLRZ-Vlo4FY9u6S0I5PI5EhshJ-jJ5JjgjYBhExk2kuCVa7cFC1KxNgi6QMpzu6IsClEGbbV2ZvG_-H6DC6\",\n              \"Name\": \"srikanth\",\n              \"VendorId\": null\n            }\n          ],\n          \"Error\": false,\n          \"Message\": \"Success\",\n          \"Status\": 200\n}",
           "type": "json"
         }
       ]
@@ -743,15 +1275,15 @@ define({ "api": [
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "COMPLAINT_NOT_FOUND",
-            "description": "<p>Complaints not found.</p>"
+            "field": "USERS_NOT_FOUND",
+            "description": "<p>Users not found.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Error-Response:",
-          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Complaints not found\",\n  \"Status\": 400\n}",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Users not found\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
@@ -800,11 +1332,31 @@ define({ "api": [
         }
       ]
     },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "complaintStatus",
+            "description": "<p>Complaint status where 0 refers to all complaints.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n      {\n                  \"complaintStatus\": 1\n                }\n}",
+          "type": "json"
+        }
+      ]
+    },
     "success": {
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"GcmUser:#Tasko.Model\",\n              \"CustomerId\": \"F3E6D9CBF8EF6A4289E1FC3509076D54\",\n              \"GcmId\": \"995FB41FF15F374398985802AF9E0CD5\",\n              \"GcmRegId\": \"APA91bEvA_MLQBs27lR24U_dEXkBoxL5K5VL5l2BkkVoi_6axHy8tEQvEBLRZ-Vlo4FY9u6S0I5PI5EhshJ-jJ5JjgjYBhExk2kuCVa7cFC1KxNgi6QMpzu6IsClEGbbV2ZvG_-H6DC6\",\n              \"Name\": \"srikanth\",\n              \"VendorId\": null\n            }\n          ],\n          \"Error\": false,\n          \"Message\": \"Success\",\n          \"Status\": 200\n}",
+          "content": " {\n  \"Data\": [\n            {\n              \"__type\": \"Complaint:#Tasko.Model\",\n              \"ComplaintChats\": null,\n              \"ComplaintId\": \"Complaint#1000\",\n              \"ComplaintStatus\": 0,\n              \"DueDate\": null,\n              \"LoggedDate\": \"2016-07-16 07:16:28\",\n              \"OrderId\": null,\n              \"Title\": \"Test\"\n            }\n          ],\n          \"Error\": false,\n          \"Message\": \"Success\",\n          \"Status\": 200\n}",
           "type": "json"
         }
       ]
@@ -815,15 +1367,15 @@ define({ "api": [
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "USERS_NOT_FOUND",
-            "description": "<p>Users not found.</p>"
+            "field": "COMPLAINT_NOT_FOUND",
+            "description": "<p>Complaints not found.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Error-Response:",
-          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Users not found\",\n  \"Status\": 400\n}",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Complaints not found\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
@@ -1020,6 +1572,105 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"No Payments found\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetAllPosts",
+    "title": "Gets All posts",
+    "name": "GetAllPosts",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "pageNumber",
+            "description": "<p>Page Number.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "recordsPerPage",
+            "description": "<p>Records Per Page.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n \"pageNumber\":\"\",\n \"recordsPerPage\":\"\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n  \"Data\": [\n           {\n              \"__type\": \"SocialMediaPost:#Tasko.Model\",\n             \"Id\": \"Id\",\n             \"Message\":\"Post Message\",\n             \"VendorName\":\"Test Vendor\",\n             \"Views\":\"10\",\n              \"Likes\":\"100\",\n             \"PostedDate\":\"date\",\n           }\n        ],\n         \"Error\": false,\n         \"Message\": \"Success\",\n         \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "LIKES_NOT_FOUND",
+            "description": "<p>Likes not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Likes not found\",\n   \"Status\": 400\n }",
           "type": "json"
         }
       ]
@@ -1247,6 +1898,98 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": "{\n \"Data\": null,\n \"Error\": true,\n \"Message\": \"Invalid token code\",\n \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetCities",
+    "title": "Get Cities",
+    "name": "GetCities",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "vendorId",
+            "description": "<p>Vendor Id.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n  \"stateId\":\"Pass empty state id to get all cities\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n  \"Data\": [\n           {\n             \"__type\": \"City:#Tasko.Model\",\n             \"Id\": \"F4878463A2FF5043BF3763F8AA913DE1\",\n             \"StateId\": \"F4878463A2FF5043BF3763F8AA913DE1\",\n             \"Name\": \"Telangana\"\n           }\n         ],\n         \"Error\": false,\n         \"Message\": \"Success\",\n         \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "CITIES_NOT_FOUND",
+            "description": "<p>Cities not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Cities not found\",\n   \"Status\": 400\n }",
           "type": "json"
         }
       ]
@@ -2281,6 +3024,374 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "a1/GetPostDetails",
+    "title": "Gets the current post details",
+    "name": "GetPostDetails",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "postId",
+            "description": "<p>Post Id.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n  \"postId\":\"AFB2B50F2164804C8E6D26A6C4A32982\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n  \"Data\": \n               {\n                 \"__type\": \"SocialMediaPost:#Tasko.Model\",\n                     \"Id\": \"Id\",\n                     \"Message\":\"Post Message\",\n                     \"VendorId\":\"Vendor id\"\n                     \"ImageUrls\": [\n                       {\n                         \"F4878463A2FF5043BF3763F8AA913DE1\",\n                         \"F4878463A2FF5043BF3763F8AA913DE1\"\n                       }\n                     ]\n                },\n         \"Error\": false,\n         \"Message\": \"Success\",\n         \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "POST_NOT_FOUND",
+            "description": "<p>Post not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Post not found\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetPostDetails",
+    "title": "Gets the current post details",
+    "name": "GetPostDetails",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "postId",
+            "description": "<p>Post Id.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n  \"postId\":\"AFB2B50F2164804C8E6D26A6C4A32982\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n  \"Data\": \n               {\n                 \"__type\": \"SocialMediaPost:#Tasko.Model\",\n                     \"Id\": \"Id\",\n                     \"Message\":\"Post Message\",\n                     \"VendorId\":\"Vendor id\"\n                     \"ImageUrls\": [\n                       {\n                         \"F4878463A2FF5043BF3763F8AA913DE1\",\n                         \"F4878463A2FF5043BF3763F8AA913DE1\"\n                       }\n                     ]\n                },\n         \"Error\": false,\n         \"Message\": \"Success\",\n         \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "POST_NOT_FOUND",
+            "description": "<p>Post not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Post not found\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetPostLikes",
+    "title": "Gets the details of customers who liked post",
+    "name": "GetPostLikes",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "postId",
+            "description": "<p>Post Id.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n  \"postId\":\"AFB2B50F2164804C8E6D26A6C4A32982\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n  \"Data\": \n               {\n                 \"__type\": \"PostLikes:#Tasko.Model\",\n                     \"CustomerId\": \"Id\",\n                     \"CustomerName\":\"Test Customer\",\n                     \"LikedDate\":\"Date Liked\"\n                },\n         \"Error\": false,\n         \"Message\": \"Success\",\n         \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "LIKES_NOT_FOUND",
+            "description": "<p>Likes not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Likes not found\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetRateCardsForCity",
+    "title": "Get rate cards for city",
+    "name": "GetRateCardsForCity",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "vendorId",
+            "description": "<p>Vendor Id.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n  \"cityId\":\"AFB2B50F2164804C8E6D26A6C4A32982\",\n  \"parentServiceId\":\"AFB2B50F2164804C8E6D26A6C4A32982\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n  \"Data\": [\n           {\n             \"__type\": \"RateCard:#Tasko.Model\",\n             \"Id\": \"Rate card Id\"\n             \"ServiceName\": \"Plumber\",\n             \"ServiceId\":\"AFB2B50F2164804C8E6D26A6C4A32982\",\n             \"Price\": \"100\",\n             \"CityName\":\"Hyderabad\"\n           }\n         ],\n         \"Error\": false,\n         \"Message\": \"Success\",\n         \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "RATE_CARD_NOT_FOUND",
+            "description": "<p>Rate Card not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Rate Card not found\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
     "url": "a1/GetServiceOverview",
     "title": "Get Service Overview",
     "name": "GetServiceOverview",
@@ -2466,6 +3577,78 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"Services not found\",\n   \"Status\": 400\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/GetStates",
+    "title": "Get States",
+    "name": "GetStates",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n  \"Data\": [\n           {\n             \"__type\": \"State:#Tasko.Model\",\n             \"Id\": \"F4878463A2FF5043BF3763F8AA913DE1\",\n             \"Name\": \"Telangana\"\n           }\n         ],\n         \"Error\": false,\n         \"Message\": \"Success\",\n         \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "STATES_NOT_FOUND",
+            "description": "<p>States not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "{\n   \"Data\": null,\n   \"Error\": true,\n   \"Message\": \"States not found\",\n   \"Status\": 400\n }",
           "type": "json"
         }
       ]
@@ -3093,6 +4276,98 @@ define({ "api": [
         {
           "title": "Param-Example:",
           "content": "{\n    \"payment\": {\n    \"PaymentId\": \"TASKOPAY1002\"\n    \"VendorId\": \"F9756A47F455F64DAD4B24E49A257188\",\n    \"DueDate\": \"23/6/2016\",\n    \"PaidDate\": \"10/7/2016\",\n    \"Amount\": 400,\n    \"Status\": \"Completed\",\n    \"Description\": \"OutStanding Charge\",\n    \"PayForMonth\": \"June 2016\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_TOKEN_CODE",
+            "description": "<p>Invalid token code.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid token code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IAdminService.cs",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "a1/UpdateRateCards",
+    "title": "Update Rate Cards",
+    "name": "UpdateRateCards",
+    "group": "Admin",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Service",
+            "optional": false,
+            "field": "service",
+            "description": "<p>Service Info.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{ \n\"rateCards\": [\n          {\n            \"Price\": \"100\",\n            \"ServiceId\": \"F4878463A2FF5043BF3763F8AA913DE1\",\n            \"CityId\" : \"F4878463A2FF5043BF3763F8AA913DE1\"\n          }\n        ]\n}",
           "type": "json"
         }
       ]
@@ -4099,7 +5374,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Param-Example:",
-          "content": " {\n   \"order\": {\n   \"Comments\": \"\",\n   \"CustomerId\": \"10E4394670195C4AA1E4B7130A514187\",\n   \"CustomerName\": \"srikanth test\",\n   \"CustomerPhone\": \"9999999999\",\n   \"DestinationAddress\": {\n     \"Address\": \"plot no 404, BaghyaNagar\",\n     \"AddressType\":\"Home\",\n     \"City\": \"Hyderabad\",\n     \"Country\": \"India\",\n     \"Lattitude\": \"40\",\n     \"Locality\": \"HMT HILLS\",\n     \"Longitude\": \"600\",\n     \"Pincode\": \"500072\",\n     \"State\": \"Telangana\"\n   },\n   \"Location\": \"kphb\",\n   \"OrderStatus\": \"Requested\",\n   \"OrderStatusId\": 1,\n   \"RequestedDate\": \"/Date(1465353306423+0530)/\",\n   \"ServiceId\": \"BF0860B092FA2447AE6AA8B3609FDCA9\",\n   \"ServiceName\": \"Microwave Service\",\n   \"SourceAddress\": {\n     \"Address\": \"plot no 101, vivekanandaNagar\",\n     \"AddressType\":\"Home\",\n     \"City\": \"Hyderabad\",\n     \"Country\": \"India\",\n     \"Lattitude\": \"10\",\n     \"Locality\": \"kphb\",\n     \"Longitude\": \"200\",\n     \"Pincode\": \"500081\",\n     \"State\": \"Telangana\"\n   },\n   \"VendorId\": \"B0269B0769CC8D48AEB92D2513EA14D6\",\n   \"VendorName\": \"Srikanth\",\n   \"VendorServiceId\": \"C9C834D79EE3BC48BF8D5669B2560D24\",\n   \"BToBCustomerName\": \"Abs Hotel\"\n },\n \"isOffline\": \"True if offline, False if online, null for previous implementation\"\n}",
+          "content": " {\n   \"order\": {\n   \"Comments\": \"\",\n   \"CustomerId\": \"10E4394670195C4AA1E4B7130A514187\",\n   \"CustomerName\": \"srikanth test\",\n   \"CustomerMobileNumber\": \"9999999999\",\n   \"DestinationAddress\": {\n     \"Address\": \"plot no 404, BaghyaNagar\",\n     \"AddressType\":\"Home\",\n     \"City\": \"Hyderabad\",\n     \"Country\": \"India\",\n     \"Lattitude\": \"40\",\n     \"Locality\": \"HMT HILLS\",\n     \"Longitude\": \"600\",\n     \"Pincode\": \"500072\",\n     \"State\": \"Telangana\"\n   },\n   \"Location\": \"kphb\",\n   \"OrderStatus\": \"Requested\",\n   \"OrderStatusId\": 1,\n   \"RequestedDate\": \"/Date(1465353306423+0530)/\",\n   \"ServiceId\": \"BF0860B092FA2447AE6AA8B3609FDCA9\",\n   \"ServiceName\": \"Microwave Service\",\n   \"SourceAddress\": {\n     \"Address\": \"plot no 101, vivekanandaNagar\",\n     \"AddressType\":\"Home\",\n     \"City\": \"Hyderabad\",\n     \"Country\": \"India\",\n     \"Lattitude\": \"10\",\n     \"Locality\": \"kphb\",\n     \"Longitude\": \"200\",\n     \"Pincode\": \"500081\",\n     \"State\": \"Telangana\"\n   },\n   \"VendorId\": \"B0269B0769CC8D48AEB92D2513EA14D6\",\n   \"VendorName\": \"Srikanth\",\n   \"VendorServiceId\": \"C9C834D79EE3BC48BF8D5669B2560D24\",\n   \"BToBCustomerName\": \"Abs Hotel\",\n   \"VendorMobileNumber\":\"9999999999\"\n },\n \"isOffline\": \"True if offline, False if online, null for previous implementation\"\n}",
           "type": "json"
         }
       ]
@@ -5601,6 +6876,119 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "c1/ReportPost",
+    "title": "Repots a post with a reason",
+    "name": "ReportPost",
+    "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "postId",
+            "description": "<p>Post Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "customerId",
+            "description": "<p>Customer Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "reason",
+            "description": "<p>Reason for reporting.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "comment",
+            "description": "<p>Any comment.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"postId\": \"Post Id\" \n  \"customerId\": \"customer Id\" \n  \"reason\": \"Reason for reporting\" \n  \"comment\": \"Any comment\" \n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_DETAILS",
+            "description": "<p>Invalid Details.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid Details\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
     "url": "c1/SaveOfflineVendorRequest",
     "title": "Save Offline Vendor Request",
     "name": "SaveOfflineVendorRequest",
@@ -6195,6 +7583,112 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "c1/UpdateCustomerLikeForPost",
+    "title": "Updates if customer liked a post",
+    "name": "UpdateCustomerLikeForPost",
+    "group": "Customer",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "postId",
+            "description": "<p>Post Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "customerId",
+            "description": "<p>Customer Id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "bool",
+            "optional": false,
+            "field": "isLiked",
+            "description": "<p>Customer Liked post or not.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"postId\": \"Post Id\" \n  \"customerId\": \"customer Id\" \n  \"isLiked\": true \n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "INVALID_DETAILS",
+            "description": "<p>Invalid Details.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid Details\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/ICustomerService.cs",
+    "groupTitle": "Customer"
+  },
+  {
+    "type": "post",
     "url": "c1/UpdateVendorRating",
     "title": "Update Vendor Rating",
     "name": "UpdateVendorRating",
@@ -6472,6 +7966,98 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "v1/AddPost",
+    "title": "Add Social Media Post",
+    "name": "AddPost",
+    "group": "Vendor",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "SocialMediaPost",
+            "optional": false,
+            "field": "Social",
+            "description": "<p>Media Post.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n   \"post\": \n     {\n       \"Message\":\"Post Message\",\n       \"VendorId\":\"Vendor id\"\n       \"ImageUrls\": [\n         {\n           \"F4878463A2FF5043BF3763F8AA913DE1\",\n           \"F4878463A2FF5043BF3763F8AA913DE1\"\n         }\n       ]\n     }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Invalid",
+            "description": "<p>Token Code</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid Token Code\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IVendorAppService.cs",
+    "groupTitle": "Vendor"
+  },
+  {
+    "type": "post",
     "url": "v1/ChangePassword",
     "title": "Change password",
     "name": "ChangePassword",
@@ -6575,6 +8161,98 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid old password\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IVendorAppService.cs",
+    "groupTitle": "Vendor"
+  },
+  {
+    "type": "post",
+    "url": "v1/DeletePost",
+    "title": "Delete Social Media Post",
+    "name": "DeletePost",
+    "group": "Vendor",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "PostId.",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n   \"postId\": \"Post Id\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Invalid",
+            "description": "<p>Token Code</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid Token Code\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
@@ -6872,6 +8550,98 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"No ratings for vendor\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IVendorAppService.cs",
+    "groupTitle": "Vendor"
+  },
+  {
+    "type": "post",
+    "url": "v1/GetVendorPosts",
+    "title": "Gets Vendor Posts",
+    "name": "GetVendorPosts",
+    "group": "Vendor",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"Content-Type\": \"application/json\"\n  \"User_Id\": \"Logged in User ID\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "vendorId",
+            "description": "<p>Vendor Id.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n  \"vendorId\": \"Vendor Id \" \n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": [\n            {\n               \"__type\": \"SocialMediaPost:#Tasko.Model\",\n              \"Id\": \"Id\",\n              \"Message\":\"Post Message\",\n              \"VendorId\":\"Vendor id\",\n              \"Views\":\"10\",\n              \"PostedDate\":\"date\",\n              \"ImageUrls\": [\n                {\n                  \"F4878463A2FF5043BF3763F8AA913DE1\",\n                  \"F4878463A2FF5043BF3763F8AA913DE1\"\n                }\n              ]\n            }\n         ]\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NO_POSTS_AVAILABLE",
+            "description": "<p>No posts available.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"No services available\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
@@ -7538,6 +9308,98 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Error while updating OrderStatus\",\n  \"Status\": 400\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./Interfaces/IVendorAppService.cs",
+    "groupTitle": "Vendor"
+  },
+  {
+    "type": "post",
+    "url": "v1/UpdatePost",
+    "title": "Update Social Media Post",
+    "name": "UpdatePost",
+    "group": "Vendor",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Token_Code",
+            "description": "<p>Token Code</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "User_Id",
+            "description": "<p>User Id</p>"
+          },
+          {
+            "group": "Header",
+            "type": "string",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Token_Code\": \"Unique Token code that is generated after login\" ,\n  \"User_Id\": \"Logged in User ID\",\n  \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "SocialMediaPost",
+            "optional": false,
+            "field": "Social",
+            "description": "<p>Media Post.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Param-Example:",
+          "content": "{\n   \"post\": \n     {\n       \"Id\": \"Id\",\n       \"Message\":\"Post Message\",\n       \"VendorId\":\"Vendor id\"\n       \"ImageUrls\": [\n         {\n           \"F4878463A2FF5043BF3763F8AA913DE1\",\n           \"F4878463A2FF5043BF3763F8AA913DE1\"\n         }\n       ]\n     }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": false,\n  \"Message\": \"Success\",\n  \"Status\": 200\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Invalid",
+            "description": "<p>Token Code</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " {\n  \"Data\": null,\n  \"Error\": true,\n  \"Message\": \"Invalid Token Code\",\n  \"Status\": 400\n}",
           "type": "json"
         }
       ]
