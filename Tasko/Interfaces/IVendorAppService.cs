@@ -996,6 +996,9 @@ namespace Tasko.Interfaces
          *  }
          *  
          * @apiParam {String} vendorId Vendor Id.     
+         * @apiParam {int} pageNumber Page Number.
+         *
+         * @apiParam {int} recordsPerPage Records Per Page.
          * 
          * @apiParamExample {json} Param-Example:
          *  {
@@ -1011,7 +1014,10 @@ namespace Tasko.Interfaces
                       "Message":"Post Message",
                       "VendorId":"Vendor id",
                       "Views":"10",
+                      "Likes":"1",,
+                      "VendorName":"Test",
                       "PostedDate":"date",
+                      "VendorImageURL":"Vendor Image URL",
                       "ImageUrls": [
                         {
                           "F4878463A2FF5043BF3763F8AA913DE1",
@@ -1036,7 +1042,7 @@ namespace Tasko.Interfaces
          */
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
         BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Response GetVendorPosts(string vendorId);
+        Response GetVendorPosts(string vendorId,int pageNumber, int recordsPerPage);
 
         /**
          * @api {post} v1/UpdatePost Update Social Media Post

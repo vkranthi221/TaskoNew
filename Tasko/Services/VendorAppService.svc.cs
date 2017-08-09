@@ -906,6 +906,7 @@ namespace Tasko.Services
                 }
             }
         }
+
         private static Response InternalSendNotification(string customerId, string vendorId, string message, string apiKey)
         {
             Response r = new Response();
@@ -921,54 +922,56 @@ namespace Tasko.Services
 
             if (gcmUser != null)
             {
-                string postData = "collapse_key=score_update&time_to_live=108&delay_while_idle=0&data.message=" + message +
-                                  "&data.time=" + System.DateTime.Now.ToString() +
-                                  "&registration_id=" + gcmUser.GcmRegId;
-                // MESSAGE CONTENT
-                byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+                WebRequest tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");
+                tRequest.Method = "post";
+                tRequest.ContentType = "application/json";
+                var data = new
+                {
+                    to = gcmUser.GcmRegId,
+                    notification = new
+                    {
+                        body = message,
+                        title = "Tasko Notification",
+                    },
+                    priority = "high"
+                };
 
-                // CREATE REQUEST
-                HttpWebRequest Request = (HttpWebRequest)WebRequest.Create("https://fcm.googleapis.com/fcm/send");
-                Request.Method = "post";
-                Request.KeepAlive = false;
-                Request.ContentType = " application/x-www-form-urlencoded;charset=UTF-8";
-                Request.Headers.Add(string.Format("Authorization: key={0}", apiKey));
-                ////Request.Headers.Add(string.Format("Sender: id={0}", senderId));
-
-                Request.ContentLength = byteArray.Length;
-
-                Stream dataStream = Request.GetRequestStream();
-                dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Close();
-
-                // SEND MESSAGE
+                var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+                var json = serializer.Serialize(data);
+                Byte[] byteArray = Encoding.UTF8.GetBytes(json);
+                tRequest.Headers.Add(string.Format("Authorization: key={0}", apiKey));
+                tRequest.ContentLength = byteArray.Length;
                 try
                 {
-                    WebResponse Response = Request.GetResponse();
-                    HttpStatusCode ResponseCode = ((HttpWebResponse)Response).StatusCode;
-                    if (ResponseCode.Equals(HttpStatusCode.Unauthorized) || ResponseCode.Equals(HttpStatusCode.Forbidden))
+                    using (Stream dataStream = tRequest.GetRequestStream())
                     {
-                        r.Message = "Unauthorized - need new token";
-                        r.Error = true;
-                        r.Status = 400;
+                        dataStream.Write(byteArray, 0, byteArray.Length);
+                        using (WebResponse tResponse = tRequest.GetResponse())
+                        {
+                            HttpStatusCode ResponseCode = ((HttpWebResponse)tResponse).StatusCode;
+                            if (ResponseCode.Equals(HttpStatusCode.Unauthorized) || ResponseCode.Equals(HttpStatusCode.Forbidden))
+                            {
+                                r.Message = "Unauthorized - need new token";
+                                r.Error = true;
+                                r.Status = 400;
+                            }
+                            else if (!ResponseCode.Equals(HttpStatusCode.OK))
+                            {
+                                r.Message = CommonMessages.RESPONSE_WRONG;
+                                r.Error = true;
+                                r.Status = 400;
+                            }
+                            else
+                            {
+                                StreamReader Reader = new StreamReader(tResponse.GetResponseStream());
+                                r.Message = CommonMessages.SUCCESS;
+                                r.Error = false;
+                                r.Status = 200;
+                                r.Data = Reader.ReadToEnd();
+                                Reader.Close();
+                            }
+                        }
                     }
-                    else if (!ResponseCode.Equals(HttpStatusCode.OK))
-                    {
-                        r.Message = CommonMessages.RESPONSE_WRONG;
-                        r.Error = true;
-                        r.Status = 400;
-                    }
-                    else
-                    {
-                        StreamReader Reader = new StreamReader(Response.GetResponseStream());
-                        r.Message = CommonMessages.SUCCESS;
-                        r.Error = false;
-                        r.Status = 200;
-                        r.Data = Reader.ReadToEnd();
-                        Reader.Close();
-                    }
-
-                    return r;
                 }
                 catch (Exception e)
                 {
@@ -1031,7 +1034,7 @@ namespace Tasko.Services
             return r;
         }
 
-        public Response GetVendorPosts(string vendorId)
+        public Response GetVendorPosts(string vendorId, int pageNumber, int recordsPerPage)
         {
             Response r = new Response();
             try
@@ -1040,7 +1043,7 @@ namespace Tasko.Services
                 List<SocialMediaPost> posts = null;
                 if (isTokenValid)
                 {
-                    posts = VendorData.GetVendorPosts(vendorId);
+                    posts = VendorData.GetVendorPosts(vendorId, pageNumber, recordsPerPage);
                 }
                 else
                 {

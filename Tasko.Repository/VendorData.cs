@@ -805,7 +805,7 @@ namespace Tasko.Repository
             return postId;
         }
 
-        public static List<SocialMediaPost> GetVendorPosts(string vendorId)
+        public static List<SocialMediaPost> GetVendorPosts(string vendorId, int pageNumber, int recordsPerPage)
         {
             List<SocialMediaPost> posts = new List<SocialMediaPost>();
 
@@ -813,6 +813,8 @@ namespace Tasko.Repository
 
             BinaryConverter.IsValidGuid(vendorId, TaskoEnum.IdType.VendorId);
             objParameters.Add(SqlHelper.CreateParameter("@pVendorId", DbType.Binary, BinaryConverter.ConvertStringToByte(vendorId)));
+            objParameters.Add(SqlHelper.CreateParameter("@pRECORDSPERPAGE", DbType.Int32, recordsPerPage));
+            objParameters.Add(SqlHelper.CreateParameter("@pPAGENO", DbType.Int32, pageNumber));
             DataTable datatable = SqlHelper.GetDataTable("dbo.usp_GetVendorPosts", objParameters.ToArray());
             if (datatable != null && datatable.Rows.Count > 0)
             {
@@ -825,6 +827,7 @@ namespace Tasko.Repository
                     post.Likes = Convert.ToInt32(row["LIKES"]);
                     post.ImageUrls = new List<string>();
                     post.PostedDate = Convert.ToDateTime(row["POSTED_DATE"]).ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+                    post.VendorImageURL = row["PHOTO"].ToString();
                     objParameters = new List<SqlParameter>();
                     objParameters.Add(SqlHelper.CreateParameter("@pPostId", DbType.Binary, BinaryConverter.ConvertStringToByte(post.Id)));
                     DataTable urlDatatable = SqlHelper.GetDataTable("dbo.usp_GetVendorPostsURL", objParameters.ToArray());

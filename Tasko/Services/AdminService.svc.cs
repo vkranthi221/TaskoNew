@@ -2257,7 +2257,7 @@ namespace Tasko.Services
             Response r = new Response();
             try
             {
-                bool isTokenValid = true;
+                bool isTokenValid = TokenHelper.ValidateToken();
                 if (isTokenValid)
                 {
                     AdminData.DeleteRateCards(rateCards);

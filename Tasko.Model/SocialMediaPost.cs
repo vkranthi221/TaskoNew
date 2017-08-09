@@ -33,5 +33,7 @@ namespace Tasko.Model
 
         [DataMember]
         public string VendorName { get; set; }
+        [DataMember]
+        public string VendorImageURL { get; set; }
     }
 }
